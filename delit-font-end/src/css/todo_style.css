@@ -1,0 +1,74 @@
+:root {
+  /* 
+      FIRST WE'LL DEFINE OUR SWATCHES, i.e. THE COMPLEMENTARY
+      COLORS THAT WE'LL USE TOGETHER IN MULTIPLE PLACES THAT
+      TOGETHER WILL MAKE UP A GIVEN THEME
+  */
+  --swatch-foundation:    #EEEEDD; /* USED FOR BODY BACKGROUND */
+  --swatch-primary:       #E6E6E6; /* DOMINANT COLOR, USED FOR MOST BACKGROUNDS */
+  --swatch-complement:    #E1E4CB; /* USED IN FORGROUND OF PRIMARY FOR TEXT AND BORDERS */
+  --swatch_contrast:      #111111; /* USED IN MOUSE-OVER SELECTION OF LARGE ELEMENTS */
+  --swatch-accent:        #669966; /* USED IN MOUSE-OVER SELECTION OF TEXT AND BORDERS */    
+  --my-font-family:          "Robaaaoto";
+  --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+}
+
+body {
+  background-color: #40E0D0;
+  font-family: 'Lexend Exa';
+}
+
+div.banner {
+  background-image: linear-gradient(to bottom,         
+  #b8b8, #636723);
+  color: white;
+  font-size: 48pt;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 10px;
+  padding-left: 10%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  height : 250px;
+}
+
+.home_new_list_button {
+  font-size: 32pt;
+}
+.home_new_list_button:hover {
+  box-shadow: 1px 2px;
+}
+
+.todo-list-link, .card-content, .todo-list-header{
+  padding : 5px !important;
+  margin-bottom: 0px;
+}
+.card-title {
+  cursor:pointer;
+}
+.header:hover {
+  background-color: hotpink;
+}
+
+.card, .card-content {
+  padding : 10px;
+}
+
+nav .brand-logo {
+  font-size: medium;
+  margin-left: 7px;
+}
+
+nav .brand-logo:hover {
+  background-color: hotpink;
+}
+
+nav .tester {
+  position: relative;
+  left:45%;
+}
+
+.container {
+  max-width: none;
+}
