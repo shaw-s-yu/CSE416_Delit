@@ -22,6 +22,7 @@ class App extends Component {
           <Switch>
             <Route path="/login" component={LoginScreen} />
             <Route path="/register" component={RegisterScreen} />
+            <Route path="/:any" component={LoginScreen} />
           </Switch>
         </div>
         <img className="delit-logo left" src={logo} alt="" ></img>
