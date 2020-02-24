@@ -9,8 +9,8 @@ const mongodbReducer = (state = initState, action) => {
         const socket = io('https://delit-back-end.herokuapp.com/');
         if (socket !== "undefined") {
             console.log('hiherok')
-            socket.on("output", () => { })
-            socket.on("cleared", () => { })
+            socket.on("register_output", (data) => { console.log(data) })
+            socket.on("login_output", (data) => { console.log(data) })
         }
 
 

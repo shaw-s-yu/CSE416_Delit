@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import LoginScreen from './components/home/LoginScreen';
+import RegisterScreen from './components/home/RegisterScreen';
 import logo from './img/Project_Logo.PNG';
 import { createSocketHandler } from './store/database/HomeScreenHandler'
 
@@ -19,7 +20,8 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <Route exact path="/" component={LoginScreen} />
+            <Route path="/login" component={LoginScreen} />
+            <Route path="/register" component={RegisterScreen} />
           </Switch>
         </div>
         <img className="delit-logo left" src={logo} alt="" ></img>
