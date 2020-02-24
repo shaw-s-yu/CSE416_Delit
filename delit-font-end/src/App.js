@@ -20,6 +20,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
+            <Route exact path="/" component={LoginScreen} />
             <Route path="/login" component={LoginScreen} />
             <Route path="/register" component={RegisterScreen} />
             <Route path="/:any" component={LoginScreen} />
