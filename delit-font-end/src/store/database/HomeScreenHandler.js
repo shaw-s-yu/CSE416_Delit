@@ -26,3 +26,7 @@ export const registerHandler = (data, socket) => (dispatch, getState) => {
       dispatch({ type: actionCreators.REGISTER_SUCCESS, value: msg })
   })
 };
+
+export const clearErrorHandler = () => (dispatch, getState) => {
+  dispatch({ type: actionCreators.CLEAR_ERROR });
+}

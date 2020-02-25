@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginHandler } from '../../store/database/HomeScreenHandler'
+import { loginHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
 import { NavLink, Redirect } from 'react-router-dom';
 
 
@@ -43,8 +43,8 @@ class LoginScreen extends React.Component {
                     <label htmlFor="password">Password</label>
                     <input className="active" type="password" name="password" id="password" onChange={this.handleChange} value={password} />
                 </div>
-                <p style={{ color: 'red' }}>{auth.authError ? auth.authError : ""}</p>
-                <li><NavLink to="/register">Doesn't have account, sign up</NavLink></li>
+                {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
+                <li><NavLink to="/register" onClick={this.props.clearError}>Doesn't have account, sign up</NavLink></li>
                 <div className="input-field">
                     <button type="submit" className="btn pink lighten-1 z-depth-0">Login</button>
                 </div>
@@ -64,7 +64,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    login: (data, socket) => dispatch(loginHandler(data, socket))
+    login: (data, socket) => dispatch(loginHandler(data, socket)),
+    clearError: () => dispatch(clearErrorHandler()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);;

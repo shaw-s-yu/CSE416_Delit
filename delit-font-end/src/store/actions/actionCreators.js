@@ -11,13 +11,14 @@ export const REGISTER_ERROR = 'REGISTER_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 // THESE CREATORS MAKE ACTIONS ASSOCIATED WITH USER ACCOUNTS
 
 export function registerSuccess() {
     return { type: 'REGISTER_SUCCESS' }
 };
-export function registerError(error) { 
+export function registerError(error) {
     return { type: 'REGISTER_ERROR', error }
 };
 export function loginSuccess() {
