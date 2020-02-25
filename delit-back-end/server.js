@@ -22,6 +22,8 @@ mongo.connect('mongodb://admin:admin@cluster0-shard-00-00-ndsy5.mongodb.net:2701
                 callback(true, 'At least one field has not been filled')
             else if (password !== password2)
                 callback(true, 'Password doesn\'t match')
+            else if (password.length < 6)
+                callback(true, 'Invalid password, too short')
             else {
                 user.find({ email: email }).toArray((err, res) => {
                     console.log(res[0])
