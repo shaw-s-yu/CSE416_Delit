@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
-import mongodbReducer from './mongodbReducer'
+import backendReducer from './backendReducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  mongodb: mongodbReducer,
+  backend: backendReducer,
 });
 
 export default rootReducer;

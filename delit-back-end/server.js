@@ -13,39 +13,44 @@ mongo.connect('mongodb://admin:admin@cluster0-shard-00-00-ndsy5.mongodb.net:2701
         let user = db.db('delit').collection('users');
         console.log(user)
 
-        socket.on('register_input', (data) => {
+        socket.on('register_input', (data, callback) => {
             let email = data.email;
             let password = data.password;
             let password2 = data.password2;
 
             if (email === '' || password === '' || password2 === '')
-                client.emit('register_output', 'At least one field has not been filled')
+                callback(true, 'At least one field has not been filled')
             else if (password !== password2)
-                client.emit('register_output', 'Password doesn\'t match')
+                callback(true, 'Password doesn\'t match')
             else {
-                user.insert({
-                    email: email,
-                    password: password
-                }, () => {
-                    client.emit("register_output", 'REGISTER COMPLETE');
-
+                user.find({ email: email }).toArray((err, res) => {
+                    console.log(res[0])
+                    if (res[0])
+                        callback(true, 'This email already registered');
+                    else
+                        user.insert({
+                            email: email,
+                            password: password
+                        }, () => {
+                            callback(false, email)
+                        })
                 })
             }
         });
 
-        socket.on('login_input', (data) => {
+        socket.on('login_input', (data, callback) => {
             let email = data.email;
             let password = data.password;
 
             if (email === '' || password === '')
-                client.emit('login_output', 'At least one field has not been filled')
+                callback(true, 'At least one field has not been filled')
             else {
                 user.find({ email: email }).toArray((err, res) => {
                     console.log(res[0])
                     if (!res[0] || res[0].password !== password)
-                        client.emit("login_output", 'email/password doesn\'t match');
+                        callback(true, 'email/password doesn\'t match');
                     else
-                        client.emit('login_output', 'LOGIN COMPLETE')
+                        callback(false, email)
                 })
 
             }

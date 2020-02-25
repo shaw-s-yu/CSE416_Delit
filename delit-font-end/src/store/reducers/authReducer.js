@@ -10,25 +10,21 @@ const authReducer = (state = initState, action) => {
   switch (action.type) {
     case actionCreators.LOGIN_ERROR:
       return {
-        ...state,
-        authError: 'Login fail',
+        authError: action.value,
       };
     case actionCreators.LOGIN_SUCCESS:
       return {
-        ...state,
-        authError: null,
+        email: action.value,
       };
     case actionCreators.LOGOUT_SUCCESS:
       return state;
     case actionCreators.REGISTER_SUCCESS:
       return {
-        ...state,
-        authError: null,
+        email: action.value,
       };
     case actionCreators.REGISTER_ERROR:
       return {
-        ...state,
-        authError: action.err.message,
+        authError: action.value,
       };
     default:
       return state;
