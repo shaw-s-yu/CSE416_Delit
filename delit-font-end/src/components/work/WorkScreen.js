@@ -1,6 +1,7 @@
 import React from 'react';
 import TopNavbar from './TopNavbar'
-import TopToolbar from './TopToolbar'
+import PropertyWindow from './PropertyWindow'
+
 
 class WorkScreen extends React.Component {
 
@@ -8,6 +9,9 @@ class WorkScreen extends React.Component {
         return (
             <div>
                 <TopNavbar />
+                <div className="workscreen-workplace">
+                    <PropertyWindow />
+                </div>
             </div>
 
         )

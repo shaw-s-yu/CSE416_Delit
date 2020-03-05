@@ -5,3 +5,14 @@
 .workscreen-dropdown {
     width: 33.33333%;
 }
+
+.workscreen-workplace{
+    width: 100%;
+    height: 70%;
+    background-color: white;
+    position: absolute;
+}
+
+.workscreen-window{
+    background-color: wheat;
+}

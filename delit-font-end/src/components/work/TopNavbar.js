@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, NavItem, Icon, Dropdown, Button } from 'react-materialize'
+import { Navbar, NavItem, Icon } from 'react-materialize'
 import TopToolbar from './TopToolbar';
 
 
@@ -26,7 +26,7 @@ class TopNavbar extends React.Component {
                     preventScrolling: true
                 }}
             >
-                <NavItem><a href="/dashboard"></a></NavItem>
+                <NavItem><a href="/dashboard">Back</a></NavItem>
                 <NavItem href="components.html">User</NavItem>
             </Navbar>
         )

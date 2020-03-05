@@ -24,11 +24,17 @@ class TopToolbar extends React.Component {
                 <Dropdown
                     options={dropdownOption}
                     trigger={<Button node="button" className="workscreen-dropdown">File</Button>}>
-                    <div>sample item</div>
+                    <div>Import</div>
+                    <div>Export</div>
+                    <div>Save</div>
+                    <div>Save as</div>
+
                 </Dropdown>
                 <Dropdown
                     options={dropdownOption}
                     trigger={<Button node="button" className="workscreen-dropdown">Edit</Button>}>
+                    <d>Copy</d>
+                    <d>Paste</d>
                 </Dropdown>
                 <Dropdown
                     options={dropdownOption}
