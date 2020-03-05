@@ -5,14 +5,13 @@ import { Rnd } from 'react-rnd';
 class PropertyWindow extends React.Component {
 
     render() {
+
         return (
             <Rnd
-                className="workscreen-window"
+                className="workscreen-window-property"
                 default={{
                     x: 0,
                     y: 0,
-                    width: 320,
-                    height: 200,
                 }}
             >
                 Property Window
