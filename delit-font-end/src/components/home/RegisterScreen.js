@@ -13,7 +13,7 @@ class RegisterScreen extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.handleModalOpen1()
+        this.props.register(this.state, this.props.socket)
     }
 
     handleChange = (e) => {

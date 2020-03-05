@@ -44,6 +44,7 @@ mongo.connect('mongodb://admin:admin@cluster0-shard-00-00-ndsy5.mongodb.net:2701
         socket.on('login_input', (data, callback) => {
             let emailWithCase = data.email;
             let email = emailWithCase.toLowerCase();
+            console.log(email)
             let password = data.password;
 
             if (email === '' || password === '')
