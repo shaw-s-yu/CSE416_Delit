@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { registerHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class RegisterScreen extends React.Component {
 
@@ -13,7 +13,7 @@ class RegisterScreen extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.register(this.state, this.props.socket);
+        this.props.handleModalOpen1()
     }
 
     handleChange = (e) => {
@@ -25,6 +25,10 @@ class RegisterScreen extends React.Component {
         }));
     }
 
+    goLogin = () => {
+        this.props.clearError();
+        this.props.handleGoLogin();
+    }
     render() {
         const { email, password, password2 } = this.state;
         const { auth } = this.props
@@ -46,7 +50,7 @@ class RegisterScreen extends React.Component {
                     <input className="active" type="password" name="password2" id="password2" onChange={this.handleChange} value={password2} />
                 </div>
                 {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
-                <li><NavLink to="/login" onClick={this.props.clearError}>Already have account, go login</NavLink></li>
+                <li className='login-link' onClick={this.goLogin}>Already have account, go login</li>
                 <div className="input-field">
                     <button type="submit" className="btn pink lighten-1 z-depth-0">Sign up</button>
                 </div>

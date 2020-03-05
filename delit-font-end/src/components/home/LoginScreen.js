@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loginHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { Button } from 'react-materialize';
 
 
 class LoginScreen extends React.Component {
@@ -9,6 +10,8 @@ class LoginScreen extends React.Component {
     state = {
         email: "",
         password: "",
+        modelActive1: false,
+        modelActive2: false,
     }
 
     handleSubmit = (e) => {
@@ -23,6 +26,12 @@ class LoginScreen extends React.Component {
             ...state,
             [target.id]: target.value,
         }));
+    }
+
+
+    goRegister = () => {
+        this.props.clearError();
+        this.props.handleGoRegister();
     }
 
     render() {
@@ -44,9 +53,10 @@ class LoginScreen extends React.Component {
                     <input className="active" type="password" name="password" id="password" onChange={this.handleChange} value={password} />
                 </div>
                 {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
-                <li><NavLink to="/register" onClick={this.props.clearError}>Doesn't have account, sign up</NavLink></li>
+                <li className='login-link' onClick={this.goRegister}>New to Delit? sign up</li>
+                <li className='login-link' onClick={this.props.handleModalOpen1}>Forget your password?</li>
                 <div className="input-field">
-                    <button type="submit" className="btn pink lighten-1 z-depth-0">Login</button>
+                    <Button type="submit" waves='orange'>Login</Button>
                 </div>
             </form>
         );

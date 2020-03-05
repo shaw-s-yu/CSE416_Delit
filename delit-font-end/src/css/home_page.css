@@ -8,3 +8,28 @@
     right: 100%;
     width: 30%;
 }
+
+.login-link{
+    color: #039be5;
+    cursor: pointer;
+}
+
+.login-link:hover{
+    background-color: chartreuse;
+}
+
+.modal-footer{
+    display:none;
+}
+
+.home-page{
+    background-image: url('../img/Sketch003.jpg');
+    height: 100%; 
+    width: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+}
