@@ -6,6 +6,7 @@ import './css/todo_layout.css'
 import './css/todo_style.css'
 import './css/home_page.css'
 import './css/dashboard.css'
+import './css/workscreen.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

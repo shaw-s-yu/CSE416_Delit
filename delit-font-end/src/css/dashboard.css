@@ -63,8 +63,13 @@
 }
 
 .dashboard-itemcard-btn{
+    background-color: red;
     margin-right: 20px;
     bottom: 10px;
+}
+
+.dashboard-itemcard-btn:hover {
+    background-color: green;
 }
 
 .pointer{

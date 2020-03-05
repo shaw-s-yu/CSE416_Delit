@@ -8,7 +8,6 @@ class WorkScreen extends React.Component {
         return (
             <div>
                 <TopNavbar />
-                <TopToolbar />
             </div>
 
         )

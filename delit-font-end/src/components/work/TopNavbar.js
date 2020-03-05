@@ -1,5 +1,6 @@
 import React from 'react';
-import { Navbar, NavItem, Icon } from 'react-materialize'
+import { Navbar, NavItem, Icon, Dropdown, Button } from 'react-materialize'
+import TopToolbar from './TopToolbar';
 
 
 class TopNavbar extends React.Component {
@@ -8,7 +9,10 @@ class TopNavbar extends React.Component {
         return (
             <Navbar
                 alignLinks="right"
-                brand={<a className="brand-logo" href="/">Delit</a>}
+                brand={<a className="brand-logo" href="#">Logo</a>}
+                extendWith={
+                    <TopToolbar />
+                }
                 menuIcon={<Icon>menu</Icon>}
                 options={{
                     draggable: true,
@@ -22,8 +26,8 @@ class TopNavbar extends React.Component {
                     preventScrolling: true
                 }}
             >
-                <NavItem>User</NavItem>
-                <NavItem>User</NavItem>
+                <NavItem><a href="/dashboard"></a></NavItem>
+                <NavItem href="components.html">User</NavItem>
             </Navbar>
         )
     }
