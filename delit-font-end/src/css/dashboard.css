@@ -38,3 +38,35 @@
     margin-left:90%;
     margin-top:-110px;
 }
+
+.dashboard-display{
+    background-color: aliceblue;
+    margin-left:20%;
+    margin-top:7px;
+    width:80%;
+    height:70%;
+    position: absolute;
+}
+
+.dashboard-pagination{
+    bottom:10px;
+    width:40%;
+    left:30%;
+    position: absolute;
+}
+
+.dashboard-itemlist{
+    width:88%;
+    left:6%;
+    top:56px;
+    position: absolute;
+}
+
+.dashboard-itemcard-btn{
+    margin-right: 20px;
+    bottom: 10px;
+}
+
+.pointer{
+    cursor: pointer;
+}

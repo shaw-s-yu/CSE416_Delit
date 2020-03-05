@@ -22,8 +22,8 @@ class TopNavbar extends React.Component {
                     preventScrolling: true
                 }}
             >
-                <NavItem>Getting started</NavItem>
-                <NavItem>Components</NavItem>
+                <NavItem>User</NavItem>
+                <NavItem>User</NavItem>
             </Navbar>
         )
     }
