@@ -5,29 +5,23 @@ import { Button, Icon } from 'react-materialize'
 class MapWindow extends React.Component {
 
     state = {
-        width: 1500,
-        height: 1000,
+        scale: 50,
     }
 
     handleZoomIn = () => {
-        console.log('zoom in ')
-        let { scale, width, height } = this.state;
+        let { scale } = this.state;
         scale = scale * 2;
-        width = width * 2;
-        height = height * 2;
-        this.setState({ scale: scale, width: width, height: height })
+        this.setState({ scale: scale })
     }
 
     handleZoomOut = () => {
-        let { scale, width, height } = this.state;
+        let { scale } = this.state;
         scale = scale / 2;
-        width = width / 2;
-        height = height / 2;
-        this.setState({ scale: scale, width: width, height: height })
+        this.setState({ scale: scale })
     }
 
     render() {
-        const { width, height } = this.state;
+        const { scale } = this.state;
         return (
             <div>
                 <Button small
@@ -45,11 +39,13 @@ class MapWindow extends React.Component {
                     icon={<Icon>zoom_out</Icon>}
                     onClick={this.handleZoomOut}>
                 </Button>
-                <div className="display-place" onMouseDown={e => e.stopPropagation()}>
+                <div className="display-place" id="display-place" onMouseDown={e => e.stopPropagation()}>
 
-                    <img src={logo} className="map" style={{
-                        width: width,
-                        height: height
+                    <img src={logo} className="map" id="map" style={{
+                        width: scale + "%",
+                        height: scale + "%",
+                        left: scale < 100 ? (100 - scale) / 2 + "%" : 0,
+                        top: scale < 100 ? (100 - scale) / 2 + "%" : 0
                     }}></img>
                 </div>
             </div>
