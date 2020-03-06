@@ -11,7 +11,7 @@ class LayerWindow extends React.Component {
         const y = 0;
         return (
             <Rnd
-                className="workscreen-window-layer"
+                className="workscreen-window"
                 default={{
                     x: x,
                     y: y,

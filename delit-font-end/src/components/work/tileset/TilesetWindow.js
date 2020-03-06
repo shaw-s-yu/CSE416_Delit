@@ -12,7 +12,7 @@ class TilesetWindow extends React.Component {
         console.log(x, y)
         return (
             <Rnd
-                className="workscreen-window-tilesets"
+                className="workscreen-window"
                 default={{
                     x: x,
                     y: y,

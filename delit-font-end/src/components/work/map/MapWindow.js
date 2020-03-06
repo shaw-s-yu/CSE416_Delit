@@ -1,5 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
+import DisplayPlace from './DisplayPlace'
 
 const rect = document.body.getBoundingClientRect();
 
@@ -13,7 +14,7 @@ class MapWindow extends React.Component {
         console.log(typeof x, y)
         return (
             <Rnd
-                className="workscreen-window-layer"
+                className="workscreen-window"
                 default={{
                     x: x,
                     y: y,
@@ -21,7 +22,7 @@ class MapWindow extends React.Component {
                     height: height * 0.7
                 }}
             >
-                Map Window
+                <DisplayPlace />
             </Rnd>
 
         )

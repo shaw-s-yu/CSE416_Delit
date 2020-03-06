@@ -1,9 +1,9 @@
 import React from 'react';
 import TopNavbar from './TopNavbar'
-import PropertyWindow from './PropertyWindow'
-import LayerWindow from './LayerWindow'
-import TilesetWindow from './TilesetWindow'
-import MapWindow from './MapWindow'
+import PropertyWindow from './property/PropertyWindow'
+import LayerWindow from './layer/LayerWindow'
+import TilesetWindow from './tileset/TilesetWindow'
+import MapWindow from './map/MapWindow'
 
 class WorkScreen extends React.Component {
 

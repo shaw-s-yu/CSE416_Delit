@@ -13,17 +13,38 @@
     position: absolute;
 }
 
-.workscreen-window-property{
+.workscreen-window{
     background-color: wheat;
     border: 2px solid black;
 }
 
-.workscreen-window-layer{
-    background-color: wheat;
+.react-transform-component{
+    background-color: white;
     border: 2px solid black;
+    top:5%;
+    left:5%;
+    width: 90% !important;
+    height:70% !important;
+    
 }
 
-.workscreen-window-tilesets{
-    background-color: wheat;
-    border: 2px solid black;
+.TransformComponent-module_container__3NwNd{
+    overflow: auto !important;
+  }
+
+.display-place{
+    background-color: whitesmoke;
+    position: absolute;
+    top:20%;
+    left:5%;
+    width: 90%;
+    height: 80%;
+    overflow: auto;
+}
+
+.map{
+    transition-duration: 1s;
+    position: absolute;
+    top:0%;
+    left:0%;
 }

@@ -9,7 +9,7 @@ class PropertyWindow extends React.Component {
         const { width, height } = rect;
         return (
             <Rnd
-                className="workscreen-window-property"
+                className="workscreen-window"
                 default={{
                     x: 0,
                     y: 0,
