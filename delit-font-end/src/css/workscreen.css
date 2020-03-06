@@ -16,20 +16,14 @@
 .workscreen-window-property{
     background-color: wheat;
     border: 2px solid black;
-    width:20% !important;
-    height:100% !important;
 }
 
 .workscreen-window-layer{
     background-color: wheat;
     border: 2px solid black;
-    width: 20% !important;
-    height: 40% !important;
 }
 
 .workscreen-window-tilesets{
     background-color: wheat;
     border: 2px solid black;
-    width: 20% !important;
-    height: 60% !important;
 }

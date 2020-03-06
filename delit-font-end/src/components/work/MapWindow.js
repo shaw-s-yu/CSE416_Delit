@@ -3,23 +3,25 @@ import { Rnd } from 'react-rnd';
 
 const rect = document.body.getBoundingClientRect();
 
-class LayerWindow extends React.Component {
+class MapWindow extends React.Component {
+
 
     render() {
         const { width, height } = rect
-        const x = width * 0.8;
+        const x = width * 0.2;
         const y = 0;
+        console.log(typeof x, y)
         return (
             <Rnd
                 className="workscreen-window-layer"
                 default={{
                     x: x,
                     y: y,
-                    width: width * 0.2,
-                    height: height * 0.7 * 0.4
+                    width: width * 0.6,
+                    height: height * 0.7
                 }}
             >
-                Layer Window
+                Map Window
             </Rnd>
 
         )
@@ -27,4 +29,4 @@ class LayerWindow extends React.Component {
 
 }
 
-export default LayerWindow;
+export default MapWindow;
