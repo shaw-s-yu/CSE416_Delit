@@ -5,25 +5,29 @@ import { Button, Icon } from 'react-materialize'
 class MapWindow extends React.Component {
 
     state = {
-        scale: 1,
+        width: 1500,
+        height: 1000,
     }
 
     handleZoomIn = () => {
-        const scale = this.state.scale * 2;
-        this.setState({ scale: scale }, () => {
-            console.log(scale)
-        })
+        console.log('zoom in ')
+        let { scale, width, height } = this.state;
+        scale = scale * 2;
+        width = width * 2;
+        height = height * 2;
+        this.setState({ scale: scale, width: width, height: height })
     }
 
     handleZoomOut = () => {
-        const scale = this.state.scale / 2;
-        this.setState({ scale: scale }, () => {
-            console.log(scale)
-        })
+        let { scale, width, height } = this.state;
+        scale = scale / 2;
+        width = width / 2;
+        height = height / 2;
+        this.setState({ scale: scale, width: width, height: height })
     }
 
     render() {
-        const scale = this.state.scale;
+        const { width, height } = this.state;
         return (
             <div>
                 <Button small
@@ -43,7 +47,10 @@ class MapWindow extends React.Component {
                 </Button>
                 <div className="display-place" onMouseDown={e => e.stopPropagation()}>
 
-                    <img src={logo} className="map" style={{ transform: "translate(-110px, -110px) scale(" + scale + ")" }}></img>
+                    <img src={logo} className="map" style={{
+                        width: width,
+                        height: height
+                    }}></img>
                 </div>
             </div>
 
