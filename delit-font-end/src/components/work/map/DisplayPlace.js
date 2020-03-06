@@ -33,7 +33,7 @@ class MapWindow extends React.Component {
                 <Button small
                     waves="red"
                     node="button"
-                    className="col s3 work-top-button"
+                    className=""
                     icon={<Icon>zoom_in</Icon>}
                     onClick={this.handleZoomIn}>
                 </Button>
@@ -41,7 +41,7 @@ class MapWindow extends React.Component {
                 <Button small
                     waves="red"
                     node="button"
-                    className="col s3 work-top-button"
+                    className=""
                     icon={<Icon>zoom_out</Icon>}
                     onClick={this.handleZoomOut}>
                 </Button>
