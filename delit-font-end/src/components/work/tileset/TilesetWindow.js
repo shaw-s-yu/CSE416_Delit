@@ -1,5 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
+import TileMap from './TileMap'
 
 const rect = document.body.getBoundingClientRect();
 
@@ -21,7 +22,7 @@ class TilesetWindow extends React.Component {
                 }}
 
             >
-                Tileset Window
+                <TileMap />
             </Rnd>
 
         )

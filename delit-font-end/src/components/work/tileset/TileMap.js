@@ -1,14 +1,17 @@
 import React from 'react';
-import logo from '../../../img/Sketch003.jpg'
 import { Button, Icon } from 'react-materialize'
+import Canvas from '../canvas/Canvas'
 
-class MapWindow extends React.Component {
+class TileMap extends React.Component {
 
     state = {
         scale: 50,
     }
 
+    canvas = React.createRef();
+
     handleZoomIn = () => {
+
         let { scale } = this.state;
         scale = scale * 2;
         this.setState({ scale: scale })
@@ -39,14 +42,15 @@ class MapWindow extends React.Component {
                     icon={<Icon>zoom_out</Icon>}
                     onClick={this.handleZoomOut}>
                 </Button>
-                <div className="display-place" id="display-place" onMouseDown={e => e.stopPropagation()}>
+                <div className="display-place" onMouseDown={e => e.stopPropagation()}>
 
-                    <img src={logo} className="map" id="map" style={{
+                    <Canvas canvas={this.canvas} className="map" style={{
                         width: scale + "%",
                         height: scale + "%",
                         left: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                        top: scale < 100 ? (100 - scale) / 2 + "%" : 0
-                    }}></img>
+                        top: scale < 100 ? (100 - scale) / 2 + "%" : 0,
+                        border: "1px solid #d3d3d3"
+                    }} />
                 </div>
             </div>
 
@@ -55,4 +59,4 @@ class MapWindow extends React.Component {
 
 }
 
-export default MapWindow;
+export default TileMap;

@@ -35,7 +35,7 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createSocket: () => dispatch(createSocketHandler())
+    createSocket: () => dispatch(createSocketHandler()),
   }
 }
 
