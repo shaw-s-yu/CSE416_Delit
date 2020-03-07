@@ -10,7 +10,6 @@ class TilesetWindow extends React.Component {
         const { width, height } = rect
         const x = width * 0.8;
         const y = height * 0.7 * 0.4;
-        console.log(x, y)
         return (
             <Rnd
                 className="workscreen-window"

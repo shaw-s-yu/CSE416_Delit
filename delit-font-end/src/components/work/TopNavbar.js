@@ -9,7 +9,7 @@ class TopNavbar extends React.Component {
         return (
             <Navbar
                 alignLinks="right"
-                brand={<a className="brand-logo" href="#">Logo</a>}
+                brand={<a className="brand-logo" href="/dashboard">Logo</a>}
                 extendWith={
                     <TopToolbar />
                 }

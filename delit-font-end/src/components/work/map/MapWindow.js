@@ -1,6 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import TileMap from '../tileset/TileMap'
+// import TileMap from '../tileset/TileMap'
 
 const rect = document.body.getBoundingClientRect();
 
@@ -11,7 +11,6 @@ class MapWindow extends React.Component {
         const { width, height } = rect
         const x = width * 0.2;
         const y = 0;
-        console.log(typeof x, y)
         return (
             <Rnd
                 className="workscreen-window"
@@ -22,7 +21,7 @@ class MapWindow extends React.Component {
                     height: height * 0.7
                 }}
             >
-                <TileMap />
+                map window
             </Rnd>
 
         )

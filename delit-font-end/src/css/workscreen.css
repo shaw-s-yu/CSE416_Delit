@@ -40,6 +40,7 @@
     width: 90%;
     height: 80%;
     overflow: auto;
+    cursor: auto;
 }
 
 .map{
@@ -53,4 +54,10 @@
     width: 100%;
     height: 100%;
     background-color: thistle;
+    cursor: pointer;
+}
+
+.selected-grid{
+    position: absolute;
+    border:2px solid black
 }
