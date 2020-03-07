@@ -30,13 +30,14 @@
     background-color: bisque;
 }
 
-.collection .collection-item:hover {
-    background-color: chartreuse;
-}
 
 .dashboard-searchbutton{
     margin-left:90%;
     margin-top:-110px;
+}
+
+.dashboard-searchbutton:hover{
+    background-color: indigo !important;
 }
 
 .dashboard-display{
@@ -74,4 +75,21 @@
 
 .pointer{
     cursor: pointer;
+}
+
+.dashboard-btn{
+    width: 100%;
+    height: 100%;
+    margin-top: 0% !important;
+}
+
+.dashboard-btn:hover{
+    background-color: darkblue;
+}
+
+.project-card{
+    background-color: deepskyblue;
+}
+.project-card:hover{
+    background-color: deeppink;
 }

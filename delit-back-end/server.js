@@ -20,6 +20,7 @@ mongo.connect('mongodb://admin:admin@cluster0-shard-00-00-ndsy5.mongodb.net:2701
             let password2 = data.password2;
 
             if (email === '' || password === '' || password2 === '')
+
                 callback(true, 'At least one field has not been filled')
             else if (password !== password2)
                 callback(true, 'Password doesn\'t match')

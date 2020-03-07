@@ -18,7 +18,7 @@ class ItemList extends React.Component {
                     projects && projects.map(project => {
                         return (
                             <Card
-                                className="cyan darken-1 pointer hoverable"
+                                className="pointer project-card"
                                 closeIcon={<Icon>close</Icon>}
                                 revealIcon={<Icon>more_vert</Icon>}
                                 textClassName="white-text"

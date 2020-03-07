@@ -49,7 +49,6 @@ class HomeScreen extends React.Component {
 
     handleChange = (e) => {
         const { target } = e;
-
         this.setState(state => ({
             ...state,
             [target.id]: target.value,
