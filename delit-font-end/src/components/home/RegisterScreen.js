@@ -84,7 +84,7 @@ class RegisterScreen extends React.Component {
                         </section>
                     } />
                 <Dialog
-                    header="Reset Password"
+                    header="Verify Your Email"
                     open={this.state.modelActive2}
                     actions={[
                         <Button waves="orange" onClick={this.handleModalClose2}>Submit</Button>,
