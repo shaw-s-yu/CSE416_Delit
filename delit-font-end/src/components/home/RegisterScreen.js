@@ -52,7 +52,7 @@ class RegisterScreen extends React.Component {
                 {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
                 <li className='login-link' onClick={this.goLogin}>Already have account, go login</li>
                 <div className="input-field">
-                    <button type="submit" className="btn pink lighten-1 z-depth-0" onClick={this.props.handleModalOpen1}>Sign up</button>
+                    <button type="submit" className="btn pink lighten-1 z-depth-0">Sign up</button>
                 </div>
             </form>
         );

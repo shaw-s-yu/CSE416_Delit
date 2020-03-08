@@ -39,7 +39,7 @@
     left:5%;
     width: 90%;
     height: 80%;
-    overflow: scroll;
+    overflow: auto;
     cursor: auto;
 }
 
@@ -59,6 +59,5 @@
 
 .selected-grid{
     position: absolute;
-    border:2px solid black;
-    cursor: pointer;
+    border:2px solid black
 }

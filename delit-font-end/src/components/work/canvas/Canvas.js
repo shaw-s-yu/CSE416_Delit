@@ -36,6 +36,13 @@ class Canvas extends React.Component {
         let gridHeight = height / this.state.numRow
         let selected = this.getGridIndex(clickX, clickY, gridWidth, gridHeight)
         this.setState({ selected: selected })
+        //     selected: {
+        //         left: selected.left - 1,
+        //         top: selected.top - 1,
+        //         width: selected.width,
+        //         height: selected.height
+        //     }
+        // })
     }
 
     getGridIndex = (x, y, w, h) => {
@@ -54,8 +61,7 @@ class Canvas extends React.Component {
     render = () => {
         const { selected, numColumn, numRow } = this.state;
         let dim = {}
-
-        if (this.canvas.current !== null && selected !== null && typeof selected !== 'undefined') {
+        if (this.canvas.current !== null && selected !== null) {
             const { x, y } = selected
             dim = {
                 left: x * 100 / numColumn + "%",
