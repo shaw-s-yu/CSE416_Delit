@@ -27,16 +27,23 @@
 
 .collection .collection-item {
     cursor: pointer;
-    background-color: bisque;
+    background-color: transparent;
 }
 
-.collection .collection-item:hover {
-    background-color: chartreuse;
+.collection-item {
+    padding: 0px 0px !important;
+}
+
+.collection {
+    border: none;
 }
 
 .dashboard-searchbutton{
     margin-left:90%;
     margin-top:-110px;
+}
+.dashboard-searchbutton:hover {
+    background-color: violet !important;
 }
 
 .dashboard-display{
@@ -72,6 +79,20 @@
     background-color: green;
 }
 
-.pointer{
+.dashboard-sidebtn{
+    width: 100%;
+    height: 100%;
+    border: 5px solid black;
+    border-radius: 10px;
+    background-color: purple;
+}
+
+.dashboard-itemcard{
+    display: block;
     cursor: pointer;
+    background-color: royalblue;
+}
+
+.dashboard-itemcard:hover {
+    background-color: violet;
 }

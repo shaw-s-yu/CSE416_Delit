@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collection, CollectionItem } from 'react-materialize'
+import { Collection, CollectionItem, Button } from 'react-materialize'
 
 
 class Sidebar extends React.Component {
@@ -9,11 +9,11 @@ class Sidebar extends React.Component {
 
 
       <Collection className='dashboard-sidebar'>
-        <CollectionItem className='dashboard-sideItem'><p className="text-center">Create A New Project</p></CollectionItem>
-        <CollectionItem className='dashboard-sideItem'><p className="text-center">All Projects</p></CollectionItem>
-        <CollectionItem className='dashboard-sideItem'><p className="text-center">Projects Created By Me</p></CollectionItem>
-        <CollectionItem className='dashboard-sideItem'><p className="text-center">Projects Shared With Me</p></CollectionItem>
-        <CollectionItem className='dashboard-sideItem'><p className="text-center">Manage My Tilesets</p></CollectionItem>
+        <CollectionItem className='dashboard-sideItem'><Button waves='red' className="dashboard-sidebtn">Create A New Project</Button></CollectionItem>
+        <CollectionItem className='dashboard-sideItem'><Button waves='red' className="dashboard-sidebtn">All Projects</Button></CollectionItem>
+        <CollectionItem className='dashboard-sideItem'><Button waves='red' className="dashboard-sidebtn">Projects Created By Me</Button></CollectionItem>
+        <CollectionItem className='dashboard-sideItem'><Button waves='red' className="dashboard-sidebtn">Projects Shared With Me</Button></CollectionItem>
+        <CollectionItem className='dashboard-sideItem'><Button waves='red' className="dashboard-sidebtn">Manage My Tilesets</Button></CollectionItem>
       </Collection>
     )
   }
