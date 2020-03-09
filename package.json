@@ -30,9 +30,7 @@
     "build": "concurrently \"npm-run-all -p server-build client-build",
     "server-build": "cd server && npm build",
     "client-build": "react-scripts build",
-    "install": "concurrently \"npm-run-all -p server-install client-install",
-    "server-install": "cd server && npm install",
-    "client-install": "npm install",
+    "install": "(cd server && npm install) & npm install",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
