@@ -6,6 +6,7 @@ Tiled Web Version
 
 
 ## HOW TO DEPLOY TO FIREBASE
+Our front-end is deployed into firebase hosting.
 
 ```
  cd into this directory
@@ -26,3 +27,12 @@ Tiled Web Version
 ## HOW TO SWITCH TO RUN LOCALY
 
 comment switch on src/store/reducers/backendReducer.js line 8 and line 9
+
+## HOW TO DEPLOTY TO HEROKU     
+Our back-end is deployed into heroku.
+```
+ cd server
+ git add .
+ git commit -m 'better performance'
+ git push heroku master
+```
