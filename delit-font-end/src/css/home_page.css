@@ -30,3 +30,7 @@
     background-size: cover;
     position: absolute;
 }
+
+.home-submitbtn {
+    margin-top: 20px;
+}

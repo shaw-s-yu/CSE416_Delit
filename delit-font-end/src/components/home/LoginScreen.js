@@ -71,7 +71,7 @@ class LoginScreen extends React.Component {
                 {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
                 <li className='login-link' onClick={this.goRegister}>New to Delit? sign up</li>
                 <li className='login-link' onClick={this.handleModalOpen1}>Forget your password?</li>
-                <Button waves='orange' onClick={this.handleSubmit}>Login</Button>
+                <Button waves='orange' className='home-submitbtn' onClick={this.handleSubmit}>Login</Button>
                 <Dialog
                     header="Verification"
                     open={this.state.modelActive1}

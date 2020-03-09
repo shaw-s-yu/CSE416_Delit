@@ -67,7 +67,7 @@ class RegisterScreen extends React.Component {
                 <TextInput label="Enter Your Password" id='password2' value={password2} onChange={this.handleChange} />
                 {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
                 <li className='login-link' onClick={this.goLogin}>Already have account, go login</li>
-                <Button waves='orange' onClick={this.handleModalOpen1}>Sign Up</Button>
+                <Button waves='orange' className='home-submitbtn' onClick={this.handleModalOpen1}>Sign Up</Button>
                 <Dialog
                     header="Verification"
                     open={this.state.modelActive1}
