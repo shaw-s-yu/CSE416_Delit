@@ -34,3 +34,7 @@
 .home-submitbtn {
     margin-top: 20px;
 }
+
+.home-submitbtn:hover {
+    background-color: brown;
+}
