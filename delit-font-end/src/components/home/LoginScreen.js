@@ -66,8 +66,8 @@ class LoginScreen extends React.Component {
         return (
             <div className="white login-form right">
                 <h5 className="grey-text text-darken-3">Login</h5>
-                <TextInput label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
-                <TextInput label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
+                <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
+                <TextInput type="password" label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
                 {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
                 <li className='login-link' onClick={this.goRegister}>New to Delit? sign up</li>
                 <li className='login-link' onClick={this.handleModalOpen1}>Forget your password?</li>

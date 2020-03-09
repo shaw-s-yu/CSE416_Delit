@@ -62,9 +62,9 @@ class RegisterScreen extends React.Component {
         return (
             <div className="white login-form right">
                 <h5 className="grey-text text-darken-3">Sign up</h5>
-                <TextInput label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
-                <TextInput label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
-                <TextInput label="Enter Your Password" id='password2' value={password2} onChange={this.handleChange} />
+                <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
+                <TextInput type="password" label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
+                <TextInput type="password" label="Enter Your Password" id='password2' value={password2} onChange={this.handleChange} />
                 {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
                 <li className='login-link' onClick={this.goLogin}>Already have account, go login</li>
                 <Button waves='orange' className='home-submitbtn' onClick={this.handleModalOpen1}>Sign Up</Button>
