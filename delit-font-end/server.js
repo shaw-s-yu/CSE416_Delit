@@ -11,7 +11,6 @@ mongo.connect('mongodb://admin:admin@cluster0-shard-00-00-ndsy5.mongodb.net:2701
     // Connect to Socket.io
     client.on('connection', (socket) => {
         let user = db.db('delit').collection('users');
-        console.log(user)
 
         socket.on('register_input', (data, callback) => {
             let emailWithCase = data.email;
