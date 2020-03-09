@@ -14,3 +14,15 @@ Tiled Web Version
  firebase login
  firebase deploy
 ```
+
+## HOW TO RUN THIS PROJECT 
+
+```
+ cd into this directory
+ npm install
+ npm start
+```
+
+## HOW TO SWITCH TO RUN LOCALY
+
+comment switch on src/store/reducers/backendReducer.js line 8 and line 9
