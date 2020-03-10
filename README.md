@@ -1,4 +1,4 @@
-# CSE416
+# Delit
 Tiled Web Version
 
 
@@ -29,10 +29,13 @@ Our front-end is deployed into firebase hosting.
 comment switch on src/store/reducers/backendReducer.js line 8 and line 9
 
 ## HOW TO DEPLOTY TO HEROKU     
-Our back-end is deployed into heroku.
+Our back-end is deployed into heroku.  Project is real-delit
 ```
  cd server
+ heroku login
+ heroku git:remote -a real-delit
  git add .
  git commit -m 'better performance'
  git push heroku master
 ```
+if push failed try fetch & merge
