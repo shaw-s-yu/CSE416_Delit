@@ -23,7 +23,6 @@ class PropertyWindow extends React.Component {
                     <CollapsibleItem
                         expanded={false}
                         header="Map Property"
-                        icon={<Icon>filter_drama</Icon>}
                         node="div"
                     >
                         <PropertyList />
@@ -31,7 +30,6 @@ class PropertyWindow extends React.Component {
                     <CollapsibleItem
                         expanded
                         header="Tileset Property"
-                        icon={<Icon>place</Icon>}
                         node="div"
                     >
                         <PropertyList />

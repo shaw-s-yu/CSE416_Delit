@@ -13,13 +13,16 @@ class PropertyList extends React.Component {
         ],
     }
 
-    handleUnselect = () => {
+    handleUnselect = (e) => {
+        if (e) e.stopPropagation()
+        console.log('fe')
         let { properties } = this.state;
         properties.map(p => {
             p.nselected = false;
             p.vselected = false;
             return p;
         })
+        this.setState({ properties: properties })
     }
 
     handleSelect = (index, type, e) => {
@@ -37,7 +40,7 @@ class PropertyList extends React.Component {
         if (properties[index].nselected === true)
             return (<input className="property-input" onMouseDown={e => e.stopPropagation()} key={data} autoFocus />)
         else
-            return (<div onDoubleClick={this.handleSelect.bind(this, index, "nselected")} key={data}>{data}</div>)
+            return (<div onClick={this.handleUnselect} onDoubleClick={this.handleSelect.bind(this, index, "nselected")} key={data}>{data}</div>)
     }
 
     showValue = (data, index) => {
@@ -45,7 +48,7 @@ class PropertyList extends React.Component {
         if (properties[index].vselected === true)
             return (<input className="property-input" onMouseDown={e => e.stopPropagation()} key={data} autoFocus />)
         else
-            return (<div onDoubleClick={this.handleSelect.bind(this, index, "vselected")} key={data}>{data}</div>)
+            return (<div onClick={this.handleUnselect} onDoubleClick={this.handleSelect.bind(this, index, "vselected")} key={data}>{data}</div>)
     }
 
     render() {
