@@ -12,7 +12,6 @@ class PropertyList extends React.Component {
     handleSelect = (e) => {
         e.persist()
         e.stopPropagation();
-        console.dir(e.target)
         this.setState({ selected: e.target.innerText })
     }
 
