@@ -1,5 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
+import PropertyList from './PropertyList'
 
 const rect = document.body.getBoundingClientRect();
 
@@ -17,7 +18,7 @@ class PropertyWindow extends React.Component {
                     height: height * 0.7
                 }}
             >
-                Property Window
+                <PropertyList />
             </Rnd>
 
         )
