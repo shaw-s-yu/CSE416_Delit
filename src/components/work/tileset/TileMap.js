@@ -10,14 +10,15 @@ class TileMap extends React.Component {
 
     canvas = React.createRef();
 
-    handleZoomIn = () => {
-
+    handleZoomIn = (e) => {
+        e.stopPropagation()
         let { scale } = this.state;
         scale = scale * 2;
         this.setState({ scale: scale })
     }
 
-    handleZoomOut = () => {
+    handleZoomOut = (e) => {
+        e.stopPropagation()
         let { scale } = this.state;
         scale = scale / 2;
         this.setState({ scale: scale })
