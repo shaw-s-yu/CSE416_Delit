@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Rnd } from 'react-rnd';
 import TileMap from './TileMap'
+import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';
 
 const rect = document.body.getBoundingClientRect();
 
@@ -19,7 +21,7 @@ class TilesetWindow extends React.Component {
                     width: width * 0.2,
                     height: height * 0.7 * 0.6,
                 }}
-
+                onClick={this.props.handleUnselect}
             >
                 <TileMap />
             </Rnd>
@@ -29,4 +31,8 @@ class TilesetWindow extends React.Component {
 
 }
 
-export default TilesetWindow;
+const mapDispatchToProps = (dispatch) => ({
+    handleUnselect: () => dispatch(unselectTilesetHandler()),
+})
+
+export default connect(null, mapDispatchToProps)(TilesetWindow);;

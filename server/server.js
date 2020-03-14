@@ -26,7 +26,6 @@ mongo.connect('mongodb://admin:admin@cluster0-shard-00-00-ndsy5.mongodb.net:2701
                 callback(true, 'Invalid password, too short')
             else {
                 user.find({ email: email }).toArray((err, res) => {
-                    console.log(res[0])
                     if (res[0])
                         callback(true, 'This email already registered');
                     else

@@ -1,6 +1,8 @@
 import React from 'react';
 import squirtle from '../../../img/squirtle.jpg'
 import TileGrid from './TileGrid'
+import { connect } from 'react-redux';
+import { selectTilesetHandler } from '../../../store/database/WorkScreenHandler';
 
 class Canvas extends React.Component {
 
@@ -28,6 +30,7 @@ class Canvas extends React.Component {
     }
 
     handleSelect = (e) => {
+        e.stopPropagation();
         let rect = this.canvas.current.getBoundingClientRect()
         let { left, top, width, height } = rect;
         let clickX = e.clientX - left
@@ -35,14 +38,7 @@ class Canvas extends React.Component {
         let gridWidth = width / this.state.numColumn
         let gridHeight = height / this.state.numRow
         let selected = this.getGridIndex(clickX, clickY, gridWidth, gridHeight)
-        this.setState({ selected: selected })
-        //     selected: {
-        //         left: selected.left - 1,
-        //         top: selected.top - 1,
-        //         width: selected.width,
-        //         height: selected.height
-        //     }
-        // })
+        this.props.handleSelect(selected);
     }
 
     getGridIndex = (x, y, w, h) => {
@@ -59,7 +55,8 @@ class Canvas extends React.Component {
     }
 
     render = () => {
-        const { selected, numColumn, numRow } = this.state;
+        const { numColumn, numRow } = this.state;
+        const { selected } = this.props;
         let dim = {}
         if (this.canvas.current !== null && selected !== null) {
             const { x, y } = selected
@@ -81,4 +78,18 @@ class Canvas extends React.Component {
 }
 
 
-export default Canvas;
+const mapStateToProps = (state) => {
+    const { tileset } = state;
+    let selected = tileset.selected ? tileset.selected : null;
+    return {
+        selected: selected
+    }
+};
+
+
+const mapDispatchToProps = (dispatch) => ({
+    handleSelect: (selected) => dispatch(selectTilesetHandler(selected)),
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Canvas);;

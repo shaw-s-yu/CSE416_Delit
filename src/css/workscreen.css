@@ -18,20 +18,6 @@
     border: 2px solid black;
 }
 
-.react-transform-component{
-    background-color: white;
-    border: 2px solid black;
-    top:5%;
-    left:5%;
-    width: 90% !important;
-    height:70% !important;
-    
-}
-
-.TransformComponent-module_container__3NwNd{
-    overflow: auto !important;
-  }
-
 .display-place{
     background-color: whitesmoke;
     position: absolute;
