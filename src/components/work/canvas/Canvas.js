@@ -71,7 +71,7 @@ class Canvas extends React.Component {
         return (
             <div style={this.props.style} className={this.props.className}>
                 <canvas ref={this.canvas} className="canvas" onClick={this.handleSelect}></canvas>
-                {selected ? <div style={dim} className="selected-grid"></div> : selected}
+                {selected ? <div style={dim} className="selected-grid" onClick={e => e.stopPropagation()}></div> : selected}
             </div >
         )
     }

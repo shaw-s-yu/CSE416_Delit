@@ -20,7 +20,7 @@ class PropertyList extends React.Component {
         if (name === selected)
             return (<input onMouseDown={e => e.stopPropagation()} key={name} />)
         else
-            return (<div onClick={this.handleSelect} key={name}>{name}</div>)
+            return (<div onDoubleClick={this.handleSelect} key={name}>{name}</div>)
     }
 
     render() {

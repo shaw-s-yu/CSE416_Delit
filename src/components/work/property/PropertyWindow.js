@@ -1,5 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
+import { Collapsible, CollapsibleItem, Icon } from 'react-materialize'
 import PropertyList from './PropertyList'
 
 const rect = document.body.getBoundingClientRect();
@@ -18,7 +19,25 @@ class PropertyWindow extends React.Component {
                     height: height * 0.7
                 }}
             >
-                <PropertyList />
+                <Collapsible accordion>
+                    <CollapsibleItem
+                        expanded={false}
+                        header="Map Property"
+                        icon={<Icon>filter_drama</Icon>}
+                        node="div"
+                    >
+                        <PropertyList />
+                    </CollapsibleItem>
+                    <CollapsibleItem
+                        expanded
+                        header="Tileset Property"
+                        icon={<Icon>place</Icon>}
+                        node="div"
+                    >
+                        <PropertyList />
+                    </CollapsibleItem>
+
+                </Collapsible>
             </Rnd>
 
         )
