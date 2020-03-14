@@ -1,13 +1,22 @@
 .delit-logo{
-    margin-top: 80px;
+    position: absolute;
+    top: 20%;
     height:60%;
     width: 60%;
+    border: 2px solid black;
+    box-shadow: 10px 10px grey;
 }
 
 .login-form{
-    right: 100%;
+    position: absolute;
+    top:10%;
+    left: 65%;
     width: 30%;
     margin-top: 80px;
+    border: 2px solid black;
+    box-shadow: 10px 10px grey;
+    padding-right: 5%;
+    background-color: white;
 }
 
 .login-link{

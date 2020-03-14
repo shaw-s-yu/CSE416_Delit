@@ -48,9 +48,9 @@
 
 .dashboard-display{
     background-color: aliceblue;
-    margin-left:20%;
-    margin-top:7px;
-    width:80%;
+    margin-left:25%;
+    margin-top:8px;
+    width:75%;
     height:70%;
     position: absolute;
 }
@@ -80,11 +80,12 @@
 }
 
 .dashboard-sidebtn{
+    color: black;
     width: 100%;
     height: 100%;
-    border: 5px solid black;
-    border-radius: 10px;
-    background-color: purple;
+    border: 3px solid black;
+    border-top: none;
+    background-color: rgb(189, 189, 189);
 }
 
 .dashboard-itemcard{
