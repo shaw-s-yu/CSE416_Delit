@@ -3,6 +3,7 @@ import TopNavbar from './TopNavbar'
 import Sidebar from './Sidebar'
 import Searchbar from './Searchbar'
 import ItemList from './ItemList'
+import './dashboard.css'
 import { Pagination, Icon } from 'react-materialize'
 
 

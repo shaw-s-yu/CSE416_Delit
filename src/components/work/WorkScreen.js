@@ -4,6 +4,7 @@ import PropertyWindow from './property/PropertyWindow'
 import LayerWindow from './layer/LayerWindow'
 import TilesetWindow from './tileset/TilesetWindow'
 import MapWindow from './map/MapWindow'
+import './workscreen.css'
 
 class WorkScreen extends React.Component {
 
