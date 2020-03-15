@@ -15,7 +15,6 @@ class PropertyList extends React.Component {
 
     handleUnselect = (e) => {
         if (e) e.stopPropagation()
-        console.log('fe')
         let { properties } = this.state;
         properties.map(p => {
             p.nselected = false;
@@ -31,24 +30,64 @@ class PropertyList extends React.Component {
         let { properties } = this.state;
         this.handleUnselect();
         properties[index][type] = true
-        console.log(properties)
         this.setState({ properties: properties })
     }
 
-    showName = (data, index) => {
+    handleChange = (index, e) => {
+        e.persist()
+        const target = e.target;
         const { properties } = this.state;
-        if (properties[index].nselected === true)
-            return (<input className="property-input" onMouseDown={e => e.stopPropagation()} key={data} autoFocus />)
-        else
-            return (<div onClick={this.handleUnselect} onDoubleClick={this.handleSelect.bind(this, index, "nselected")} key={data}>{data}</div>)
+        properties[index][target.id] = target.value;
+        this.setState({ properties: properties });
     }
 
-    showValue = (data, index) => {
+    showName = (index) => {
         const { properties } = this.state;
-        if (properties[index].vselected === true)
-            return (<input className="property-input" onMouseDown={e => e.stopPropagation()} key={data} autoFocus />)
+        const property = properties[index]
+        if (properties[index].nselected === true)
+            return (
+                <input
+                    className="property-input"
+                    onMouseDown={e => e.stopPropagation()}
+                    onChange={this.handleChange.bind(this, index)}
+                    autoFocus
+                    id='name'
+                    value={property.name}
+                />
+            )
         else
-            return (<div onClick={this.handleUnselect} onDoubleClick={this.handleSelect.bind(this, index, "vselected")} key={data}>{data}</div>)
+            return (
+                <div
+                    onClick={this.handleUnselect}
+                    onDoubleClick={this.handleSelect.bind(this, index, "nselected")}
+                >
+                    {property.name}
+                </div>
+            )
+    }
+
+    showValue = (index) => {
+        const { properties } = this.state;
+        const property = properties[index]
+        if (property.vselected === true)
+            return (
+                <input
+                    className="property-input"
+                    onMouseDown={e => e.stopPropagation()}
+                    onChange={this.handleChange.bind(this, index)}
+                    autoFocus
+                    id='value'
+                    value={property.value}
+                />
+            )
+        else
+            return (
+                <div
+                    onClick={this.handleUnselect}
+                    onDoubleClick={this.handleSelect.bind(this, index, "vselected")} >
+                    {property.value}
+                </div>
+            )
     }
 
     render() {
@@ -60,8 +99,8 @@ class PropertyList extends React.Component {
                         properties && properties.map((property, index) => {
                             return (
                                 <div className="property-row" key={index}>
-                                    <div className="property-box">{this.showName(property.name, index)}</div>
-                                    <div className="property-box">{this.showValue(property.value, index)}</div>
+                                    <div className="property-box">{this.showName(index)}</div>
+                                    <div className="property-box">{this.showValue(index)}</div>
                                 </div>
                             )
                         })
