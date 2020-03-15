@@ -21,6 +21,9 @@
     border: 2px solid black;
 }
 
+.scrollarea{
+    height: 100%;
+}
 .display-place{
     background-color: skyblue;
     position: absolute;
@@ -65,13 +68,8 @@
     margin:-1rem;
 }
 
-.property-input{
-    border: 1px solid #cecece !important;
-    background-color: rgb(214, 214, 214) !important;
-    height: auto !important;
-    width: 100% !important;
-    margin: 0px 0px 0px 0px !important;
-    caret-color: rgb(255, 0, 0);
+.property-input:focus{
+    border: 1px solid skyblue;
 }
 
 .collapsible{
