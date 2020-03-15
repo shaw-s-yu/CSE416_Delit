@@ -6,7 +6,7 @@ class Searchbar extends React.Component {
 
     render() {
         const left = this.props.open ? 350 : 100;
-        const width = this.props.open ? 65 : 90;
+        const width = this.props.open ? 65 : 85;
         return (
             <div>
                 <div className="dashboard-search" style={
