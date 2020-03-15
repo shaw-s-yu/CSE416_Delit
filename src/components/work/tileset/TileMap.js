@@ -42,7 +42,8 @@ class TileMap extends React.Component {
                     node="button"
                     className=""
                     icon={<Icon>zoom_in</Icon>}
-                    onClick={this.handleZoomIn}>
+                    onClick={this.handleZoomIn}
+                    onMouseDown={e => e.stopPropagation()}>
                 </Button>
 
                 <Button small
@@ -50,7 +51,8 @@ class TileMap extends React.Component {
                     node="button"
                     className=""
                     icon={<Icon>zoom_out</Icon>}
-                    onClick={this.handleZoomOut}>
+                    onClick={this.handleZoomOut}
+                    onMouseDown={e => e.stopPropagation()}>
                 </Button>
                 <div className="display-place" onMouseDown={this.handleUnselect}>
 

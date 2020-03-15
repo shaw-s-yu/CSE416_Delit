@@ -16,6 +16,6 @@ export const initWindowHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.WINDOW_INIT });
 }
 
-export const moveinitWindowHandler = () => (dispatch, getState) => {
+export const moveWindowHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.WINDOW_MOVE });
 }

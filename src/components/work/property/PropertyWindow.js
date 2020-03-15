@@ -13,7 +13,7 @@ class PropertyWindow extends React.Component {
             <Rnd
                 className="workscreen-window"
                 default={window}
-                onMouseDown={() => { }}
+                onMouseDown={() => { this.props.handleToTop('property') }}
             >
                 <Collapsible accordion onMouseDown={e => e.stopPropagation()}>
                     <CollapsibleItem
@@ -49,7 +49,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleUnselect: () => dispatch(handler.unselectTilesetHandler()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyWindow)

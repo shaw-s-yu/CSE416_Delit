@@ -4,7 +4,14 @@ import * as actionCreators from '../actions/actionCreators'
 
 
 const workScreenReducer = (state = initState, action) => {
-
+    if (action.type === actionCreators.WINDOW_SELECT) {
+        let { order } = state;
+        order.push(order.splice(order.indexOf("map"), 1)[0]);
+        return {
+            ...state,
+            order: order
+        }
+    }
     return state;
 }
 
@@ -45,4 +52,5 @@ const initState = {
     property: propertyWindow,
     map: mapWindow,
     layer: layerWindow,
+    order: ['map', 'property', 'layer', 'tileset'],
 };

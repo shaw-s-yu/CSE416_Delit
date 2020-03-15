@@ -12,7 +12,7 @@ class MapWindow extends React.Component {
             <Rnd
                 className="workscreen-window"
                 default={window}
-                onMouseDown={() => { }}
+                onMouseDown={() => { this.props.handleToTop('map') }}
             >
                 map window
             </Rnd>
@@ -30,7 +30,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleUnselect: () => dispatch(handler.unselectTilesetHandler()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapWindow)

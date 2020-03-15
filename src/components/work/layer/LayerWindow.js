@@ -11,7 +11,7 @@ class LayerWindow extends React.Component {
             <Rnd
                 className="workscreen-window"
                 default={window}
-                onMouseDown={() => { }}
+                onMouseDown={() => { this.props.handleToTop('layer') }}
             >
                 Layer Window
             </Rnd>
@@ -29,7 +29,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleUnselect: () => dispatch(handler.unselectTilesetHandler()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

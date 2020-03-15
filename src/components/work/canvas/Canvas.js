@@ -80,9 +80,11 @@ class Canvas extends React.Component {
 
 const mapStateToProps = (state) => {
     const { tileset } = state;
+    const { order } = state.workScreen
     let selected = tileset.selected ? tileset.selected : null;
     return {
-        selected: selected
+        selected: selected,
+        order: order
     }
 };
 

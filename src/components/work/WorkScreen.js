@@ -10,16 +10,35 @@ import { connect } from 'react-redux';
 
 class WorkScreen extends React.Component {
 
+    state = {
+        order: ['map', 'property', 'layer', 'tileset']
+    }
 
-    render() {
+    handleToTop = (window) => {
+        let { order } = this.state;
+        order.push(order.splice(order.indexOf(window), 1)[0]);
+        this.setState({ order: order })
+    }
+
+    render = () => {
+
+        const { order } = this.state;
         return (
             <div>
                 <TopNavbar />
                 <div>
-                    <MapWindow />
-                    <PropertyWindow />
-                    <LayerWindow />
-                    <TilesetWindow />
+                    {
+                        order && order.map(window => {
+                            if (window === "map")
+                                return <MapWindow key="map" handleToTop={this.handleToTop} />
+                            else if (window === "property")
+                                return <PropertyWindow key="property" handleToTop={this.handleToTop} />
+                            else if (window === 'layer')
+                                return <LayerWindow key="layer" handleToTop={this.handleToTop} />
+                            else
+                                return <TilesetWindow key="tileset" handleToTop={this.handleToTop} />
+                        })
+                    }
                 </div>
             </div >
 
@@ -31,9 +50,9 @@ class WorkScreen extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    console.log(state)
+    const { order } = state.workScreen
     return {
-
+        order: order,
     }
 };
 

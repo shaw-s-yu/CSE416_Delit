@@ -8,13 +8,18 @@ import { connect } from 'react-redux';
 
 class TilesetWindow extends React.Component {
 
+    handleSelect = () => {
+        this.props.handleUnselect()
+        this.props.handleToTop('tileset');
+    }
+
     render() {
         const { window } = this.props;
         return (
             <Rnd
                 className="workscreen-window"
                 default={window}
-                onMouseDown={this.props.handleUnselect}
+                onMouseDown={this.handleSelect}
             >
                 <TileMap />
             </Rnd>
