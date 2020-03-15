@@ -12,12 +12,15 @@
     height:70%;
     width: 20%;
     position: absolute;
+    overflow-x: hidden;
+    transition: 0.5s;
+    background-color: lightblue;
 }
 
 .dashboard-search{
     width: 60%;
-    margin-left: 25%;
     background-color: aliceblue;
+    transition: 0.5s;
 }
 
 .text-center{
@@ -48,11 +51,10 @@
 
 .dashboard-display{
     background-color: aliceblue;
-    margin-left:25%;
     margin-top:8px;
-    width:75%;
     height:70%;
     position: absolute;
+    transition: 0.5s;
 }
 
 .dashboard-pagination{

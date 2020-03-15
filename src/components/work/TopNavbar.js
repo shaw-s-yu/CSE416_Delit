@@ -1,33 +1,33 @@
 import React from 'react';
-import { Navbar, NavItem, Icon } from 'react-materialize'
-import TopToolbar from './TopToolbar';
-
-
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Checkbox } from 'react-materialize'
 class TopNavbar extends React.Component {
 
     render() {
         return (
-            <Navbar
-                alignLinks="right"
-                brand={<a className="brand-logo" href="/dashboard">Logo</a>}
-                extendWith={
-                    <TopToolbar />
-                }
-                menuIcon={<Icon>menu</Icon>}
-                options={{
-                    draggable: true,
-                    edge: 'left',
-                    inDuration: 250,
-                    onCloseEnd: null,
-                    onCloseStart: null,
-                    onOpenEnd: null,
-                    onOpenStart: null,
-                    outDuration: 200,
-                    preventScrolling: true
-                }}
-            >
-                <NavItem><div href="/dashboard">Back</div></NavItem>
-                <NavItem href="components.html">User</NavItem>
+            <Navbar bg="light" expand="lg">
+                <Navbar.Brand href="/dashboard">Home</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <NavDropdown title="File" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Edit" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="View" id="basic-nav-dropdown">
+                            <Checkbox label="Hide Property Window" />
+                            <Checkbox label="Hide Layer Window" />
+                            <Checkbox label="Hide Tileset Window" />
+                        </NavDropdown>
+                    </Nav>
+                    <Navbar.Brand href="/">User</Navbar.Brand>
+                </Navbar.Collapse>
             </Navbar>
         )
     }

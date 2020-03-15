@@ -19,11 +19,12 @@ class PropertyWindow extends React.Component {
                     height: height * 0.7
                 }}
             >
-                <Collapsible accordion>
+                <Collapsible accordion onMouseDown={e => e.stopPropagation()}>
                     <CollapsibleItem
                         expanded={false}
                         header="Map Property"
                         node="div"
+                        icon={<Icon>arrow_drop_down</Icon>}
                     >
                         <PropertyList />
                     </CollapsibleItem>
@@ -31,6 +32,7 @@ class PropertyWindow extends React.Component {
                         expanded
                         header="Tileset Property"
                         node="div"
+                        icon={<Icon>arrow_drop_down</Icon>}
                     >
                         <PropertyList />
                     </CollapsibleItem>

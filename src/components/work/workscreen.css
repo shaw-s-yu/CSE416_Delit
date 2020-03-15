@@ -1,9 +1,12 @@
 .workscreen-toptoolbar{
-    background-color: greenyellow;
+    background-color: rgb(156, 156, 156);
 }
 
 .workscreen-dropdown {
-    width: 33.33333%;
+    margin-left: 3%;
+    width: 28%;
+    background-color: ghostwhite;
+    color: black;
 }
 
 .workscreen-workplace{
@@ -63,21 +66,28 @@
 }
 
 .property-input{
-    border: 1px solid #9e9e9e !important;
+    border: 1px solid #cecece !important;
     background-color: rgb(214, 214, 214) !important;
     height: auto !important;
-    width: 90% !important;
-    margin-bottom: auto !important;
+    width: 100% !important;
+    margin: 0px 0px 0px 0px !important;
+    caret-color: rgb(255, 0, 0);
 }
 
 .collapsible{
     margin: auto !important;
+    margin-top: 3px !important;
 }
 
 .collapsible-header{
-    border: 3px solid #9e9e9e;
     background-color: thistle;
+    margin-top: -3px;
+    border-top: 1px solid black;
 }
 .collapsible-header:hover{
     background-color: turquoise;
+}
+
+.collapsible-body{
+    background-color: cornsilk;
 }

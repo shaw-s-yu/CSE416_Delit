@@ -1,6 +1,5 @@
 import React from 'react';
 import TopNavbar from './TopNavbar'
-import Sidebar from './Sidebar'
 import Searchbar from './Searchbar'
 import ItemList from './ItemList'
 import './dashboard.css'
@@ -8,13 +7,28 @@ import { Pagination, Icon } from 'react-materialize'
 
 
 class Dashboard extends React.Component {
+    state = {
+        sidebarActive: true,
+    }
 
+    handleSidebarOpen = () => {
+        let { sidebarActive } = this.state;
+        sidebarActive = !sidebarActive;
+        this.setState({ sidebarActive: sidebarActive });
+    }
     render() {
+        const { sidebarActive } = this.state;
+        const left = sidebarActive ? 300 : 50;
+        const width = sidebarActive ? 70 : 90;
         return (
             <div>
-                <TopNavbar />
-                <Sidebar />
-                <div className="dashboard-display">
+                <TopNavbar open={sidebarActive} handleSidebarOpen={this.handleSidebarOpen} />
+                <div className="dashboard-display" style={
+                    {
+                        marginLeft: left + "px",
+                        width: width + "%",
+                    }
+                }>
                     <ItemList history={this.props.history} />
                     <Pagination
                         activePage={2}
@@ -25,7 +39,7 @@ class Dashboard extends React.Component {
                         className="dashboard-pagination center"
                     />
                 </div>
-                <Searchbar />
+                <Searchbar open={sidebarActive} />
 
             </div>
 
