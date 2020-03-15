@@ -1,27 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Rnd } from 'react-rnd';
 import TileMap from './TileMap'
-import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';
+import * as handler from '../../../store/database/WorkScreenHandler';
+import { connect } from 'react-redux';
 
-const rect = document.body.getBoundingClientRect();
+
 
 class TilesetWindow extends React.Component {
 
     render() {
-        const { width, height } = rect
-        const x = width * 0.8;
-        const y = height * 0.7 * 0.4;
+        const { window } = this.props;
         return (
             <Rnd
                 className="workscreen-window"
-                default={{
-                    x: x,
-                    y: y,
-                    width: width * 0.2,
-                    height: height * 0.7 * 0.6,
-                }}
-                onClick={this.props.handleUnselect}
+                default={window}
+                onMouseDown={this.props.handleUnselect}
             >
                 <TileMap />
             </Rnd>
@@ -31,8 +24,16 @@ class TilesetWindow extends React.Component {
 
 }
 
+
+const mapStateToProps = (state) => {
+    const { tileset } = state.workScreen
+    return {
+        window: tileset,
+    }
+};
+
 const mapDispatchToProps = (dispatch) => ({
-    handleUnselect: () => dispatch(unselectTilesetHandler()),
+    handleUnselect: () => dispatch(handler.unselectTilesetHandler()),
 })
 
-export default connect(null, mapDispatchToProps)(TilesetWindow);;
+export default connect(mapStateToProps, mapDispatchToProps)(TilesetWindow)

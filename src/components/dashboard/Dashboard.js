@@ -14,6 +14,7 @@ class Dashboard extends React.Component {
     handleSidebarOpen = () => {
         let { sidebarActive } = this.state;
         sidebarActive = !sidebarActive;
+        console.log(sidebarActive)
         this.setState({ sidebarActive: sidebarActive });
     }
     render() {

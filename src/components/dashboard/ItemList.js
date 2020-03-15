@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon, Button } from 'react-materialize'
+import { Card, Button } from 'react-materialize'
 import { connect } from 'react-redux';
 
 
@@ -19,8 +19,6 @@ class ItemList extends React.Component {
                         return (
                             <Card
                                 className="dashboard-itemcard waves-red waves-effect"
-                                closeIcon={<Icon>close</Icon>}
-                                revealIcon={<Icon>more_vert</Icon>}
                                 textClassName="white-text"
                                 title={project.name}
                                 onClick={this.handleGoEdit}

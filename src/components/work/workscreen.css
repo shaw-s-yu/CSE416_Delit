@@ -91,3 +91,7 @@
 .collapsible-body{
     background-color: cornsilk;
 }
+
+.window-to-top{
+    z-index: 100;
+}

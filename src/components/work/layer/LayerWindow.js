@@ -1,23 +1,17 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-
-const rect = document.body.getBoundingClientRect();
+import * as handler from '../../../store/database/WorkScreenHandler';
+import { connect } from 'react-redux';
 
 class LayerWindow extends React.Component {
 
     render() {
-        const { width, height } = rect
-        const x = width * 0.8;
-        const y = 0;
+        const { window } = this.props
         return (
             <Rnd
                 className="workscreen-window"
-                default={{
-                    x: x,
-                    y: y,
-                    width: width * 0.2,
-                    height: height * 0.7 * 0.4
-                }}
+                default={window}
+                onMouseDown={() => { }}
             >
                 Layer Window
             </Rnd>
@@ -27,4 +21,15 @@ class LayerWindow extends React.Component {
 
 }
 
-export default LayerWindow;
+const mapStateToProps = (state) => {
+    const { layer } = state.workScreen
+    return {
+        window: layer,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    handleUnselect: () => dispatch(handler.unselectTilesetHandler()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Button, Icon } from 'react-materialize'
 import Canvas from '../canvas/Canvas'
+import { connect } from 'react-redux';
+import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';
+
 
 class TileMap extends React.Component {
 
@@ -24,6 +27,12 @@ class TileMap extends React.Component {
         this.setState({ scale: scale })
     }
 
+    handleUnselect = (e) => {
+        this.props.handleUnselect()
+        e.stopPropagation();
+    }
+
+
     render() {
         const { scale } = this.state;
         return (
@@ -43,7 +52,7 @@ class TileMap extends React.Component {
                     icon={<Icon>zoom_out</Icon>}
                     onClick={this.handleZoomOut}>
                 </Button>
-                <div className="display-place" onMouseDown={e => e.stopPropagation()}>
+                <div className="display-place" onMouseDown={this.handleUnselect}>
 
                     <Canvas canvas={this.canvas} className="map" style={{
                         width: scale + "%",
@@ -60,4 +69,9 @@ class TileMap extends React.Component {
 
 }
 
-export default TileMap;
+
+const mapDispatchToProps = (dispatch) => ({
+    handleUnselect: () => dispatch(unselectTilesetHandler()),
+})
+
+export default connect(null, mapDispatchToProps)(TileMap)

@@ -5,11 +5,13 @@ import LayerWindow from './layer/LayerWindow'
 import TilesetWindow from './tileset/TilesetWindow'
 import MapWindow from './map/MapWindow'
 import './workscreen.css'
+import { connect } from 'react-redux';
+
 
 class WorkScreen extends React.Component {
 
-    render() {
 
+    render() {
         return (
             <div>
                 <TopNavbar />
@@ -18,13 +20,25 @@ class WorkScreen extends React.Component {
                     <PropertyWindow />
                     <LayerWindow />
                     <TilesetWindow />
-
                 </div>
-            </div>
+            </div >
 
         )
     }
 
 }
 
-export default WorkScreen;
+
+
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+
+    }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkScreen)

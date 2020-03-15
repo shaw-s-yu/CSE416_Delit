@@ -1,6 +1,5 @@
 import React from 'react';
-import { Collection, CollectionItem, Button } from 'react-materialize'
-
+import { Collection, CollectionItem, Icon, Button } from 'react-materialize'
 class SideNav extends React.Component {
 
 
@@ -9,13 +8,24 @@ class SideNav extends React.Component {
     const width = open ? 250 : 0;
     return (
 
-      <div className='dashboard-sidebar' style={{ width: width + "px" }}>
-        <ul class="collection">
-          <li class="collection-item">Alvin</li>
-          <li class="collection-item">Alvin</li>
-          <li class="collection-item">Alvin</li>
-          <li class="collection-item">Alvin</li>
-        </ul>
+      <div className='dashboard-sidebar' style={{ width: width + "px", whiteSpace: "nowrap" }}>
+        <Collection>
+          <Button
+            className="red right"
+            floating
+            icon={<Icon>clear</Icon>}
+            small
+            node="button"
+            waves="light"
+            onClick={this.props.handleSidebarOpen}
+          />
+          <Button className="red" node="button" waves="light">Create New Project</Button>
+
+          <CollectionItem><div className='item-text'>All Projects</div></CollectionItem>
+          <CollectionItem><div className='item-text'>Project Created By Me</div></CollectionItem>
+          <CollectionItem><div className='item-text'>Project Shared With Me</div></CollectionItem>
+          <CollectionItem><div className='item-text'>Manage My Tilesets</div></CollectionItem>
+        </Collection>
       </div>
 
     )

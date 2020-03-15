@@ -28,7 +28,7 @@ class TopNavbar extends React.Component {
                         <Navbar.Brand href="/">User</Navbar.Brand>
                     </Navbar.Collapse>
                 </Navbar>
-                <SideNav open={open} />
+                <SideNav open={open} handleSidebarOpen={this.props.handleSidebarOpen} />
             </>
         )
     }

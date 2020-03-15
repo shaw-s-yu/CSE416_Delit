@@ -9,12 +9,14 @@
 }
 
 .dashboard-sidebar {
+    margin-top:8px;
     height:70%;
     width: 20%;
     position: absolute;
     overflow-x: hidden;
     transition: 0.5s;
     background-color: lightblue;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
 
 .dashboard-search{
@@ -35,14 +37,33 @@
 
 .collection-item {
     padding: 0px 0px !important;
+    font-size: large;
+    height: 6rem !important;
+    transition: 0.5s;
+    text-align: center;
+}
+
+.item-text {
+    position: absolute;
+    margin-top: 2rem;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.collection-item:hover{
+    color:white;
+    background-color: royalblue;
+
 }
 
 .collection {
     border: none;
+    margin-top: 1rem;
+    
 }
 
 .dashboard-searchbutton{
-    margin-left:90%;
+    margin-left:80%;
     margin-top:-110px;
 }
 .dashboard-searchbutton:hover {
@@ -55,6 +76,7 @@
     height:70%;
     position: absolute;
     transition: 0.5s;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
 
 .dashboard-pagination{
@@ -94,8 +116,13 @@
     display: block;
     cursor: pointer;
     background-color: royalblue;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
 
 .dashboard-itemcard:hover {
     background-color: violet;
+}
+
+.navbar {
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }

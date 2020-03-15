@@ -2,22 +2,18 @@ import React from 'react';
 import { Rnd } from 'react-rnd';
 import { Collapsible, CollapsibleItem, Icon } from 'react-materialize'
 import PropertyList from './PropertyList'
-
-const rect = document.body.getBoundingClientRect();
+import * as handler from '../../../store/database/WorkScreenHandler';
+import { connect } from 'react-redux';
 
 class PropertyWindow extends React.Component {
 
     render() {
-        const { width, height } = rect;
+        const { window } = this.props
         return (
             <Rnd
                 className="workscreen-window"
-                default={{
-                    x: 0,
-                    y: 0,
-                    width: width * 0.2,
-                    height: height * 0.7
-                }}
+                default={window}
+                onMouseDown={() => { }}
             >
                 <Collapsible accordion onMouseDown={e => e.stopPropagation()}>
                     <CollapsibleItem
@@ -45,4 +41,15 @@ class PropertyWindow extends React.Component {
 
 }
 
-export default PropertyWindow;
+const mapStateToProps = (state) => {
+    const { property } = state.workScreen
+    return {
+        window: property,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    handleUnselect: () => dispatch(handler.unselectTilesetHandler()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PropertyWindow)
