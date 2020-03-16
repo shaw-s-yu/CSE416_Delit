@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable'
+import { Button } from 'react-materialize'
 
 class PropertyList extends React.Component {
 
@@ -24,44 +25,47 @@ class PropertyList extends React.Component {
     render() {
         const { properties } = this.state;
         return (
+            <>
+                <Table striped bordered hover size="sm" className="property-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-            <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
+                        {
+                            properties && properties.map((property, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>
+                                            <ContentEditable
+                                                innerRef={property.nref}
+                                                onChange={this.handleChange.bind(this, index, 'name')}
+                                                html={property.name}
+                                                disabled={false}
+                                                className="property-input"
+                                            />
+                                        </td>
+                                        <td>
+                                            <ContentEditable
+                                                innerRef={property.vref}
+                                                onChange={this.handleChange.bind(this, index, 'value')}
+                                                html={property.value}
+                                                disabled={false}
+                                                className="property-input"
+                                            />
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
 
-                    {
-                        properties && properties.map((property, index) => {
-                            return (
-                                <tr>
-                                    <td>
-                                        <ContentEditable
-                                            innerRef={property.nref}
-                                            onChange={this.handleChange.bind(this, index, 'name')}
-                                            html={property.name}
-                                            disabled={false}
-                                            className="input-group"
-                                        />
-                                    </td>
-                                    <td>
-                                        <ContentEditable
-                                            innerRef={property.vref}
-                                            onChange={this.handleChange.bind(this, index, 'value')}
-                                            html={property.value}
-                                            disabled={false}
-                                            className="input-group"
-                                        />
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </Table>
+                </Table>
+                <Button waves='orange' className='load-more-btn'>Load More</Button>
+            </>
         )
     }
 }

@@ -68,6 +68,11 @@
     margin:-1rem;
 }
 
+.property-input{
+    width: 80px !important;
+    word-wrap: break-word;
+}
+
 .property-input:focus{
     border: 1px solid skyblue;
 }
@@ -75,6 +80,7 @@
 .collapsible{
     margin: auto !important;
     margin-top: 3px !important;
+    max-height: 90%;
 }
 
 .collapsible-header{
@@ -88,8 +94,24 @@
 
 .collapsible-body{
     background-color: cornsilk;
+    padding:0 !important;
+    width: 100%;
 }
 
 .window-to-top{
     z-index: 100;
+}
+
+.load-more-btn{
+    font-size: x-small;
+    text-align: center;
+    white-space: nowrap;
+    width: 60%;
+    left: 20%;
+    padding: 0;
+    background-color: rgb(2, 177, 177);
+}
+
+.scrollbar-container{
+    padding-bottom: 22px;
 }

@@ -4,12 +4,12 @@ import * as actionCreators from '../actions/actionCreators'
 
 
 const workScreenReducer = (state = initState, action) => {
-    if (action.type === actionCreators.WINDOW_SELECT) {
-        let { order } = state;
-        order.push(order.splice(order.indexOf("map"), 1)[0]);
+    if (action.type === actionCreators.WINDOW_RESIZE) {
+        let window = state[action.name];
+        window.size = action.value;
         return {
             ...state,
-            order: order
+            [action.name]: window,
         }
     }
     return state;
@@ -20,31 +20,23 @@ export default workScreenReducer;
 const rect = document.body.getBoundingClientRect();
 const { width, height } = rect
 const tilesetWindow = {
-    x: width * 0.8,
-    y: height * 0.7 * 0.4,
-    width: width * 0.2,
-    height: height * 0.7 * 0.6,
+    position: { x: width * 0.8, y: height * 0.28 },
+    size: { width: width * 0.2, height: height * 0.42 },
 }
 
 const propertyWindow = {
-    x: 0,
-    y: 0,
-    width: width * 0.2,
-    height: height * 0.7
+    position: { x: 0, y: 0 },
+    size: { width: width * 0.2, height: height * 0.7 },
 }
 
 const mapWindow = {
-    x: width * 0.2,
-    y: 0,
-    width: width * 0.6,
-    height: height * 0.7
+    position: { x: width * 0.2, y: 0 },
+    size: { width: width * 0.6, height: height * 0.7 },
 }
 
 const layerWindow = {
-    x: width * 0.8,
-    y: 0,
-    width: width * 0.2,
-    height: height * 0.7 * 0.4
+    position: { x: width * 0.8, y: 0 },
+    size: { width: width * 0.2, height: height * 0.28 },
 }
 
 const initState = {

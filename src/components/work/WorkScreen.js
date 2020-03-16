@@ -50,9 +50,8 @@ class WorkScreen extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const { order } = state.workScreen
     return {
-        order: order,
+
     }
 };
 
