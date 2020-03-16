@@ -21,12 +21,12 @@ class TopNavbar extends React.Component {
                             <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="View" id="basic-nav-dropdown">
-                            <Checkbox label="Hide Property Window" value="property" />
-                            <Checkbox label="Hide Layer Window" value="layer" />
-                            <Checkbox label="Hide Tileset Window" value="tileset" />
+                            <Checkbox label="Hide Property Window" value="property" id="property" />
+                            <Checkbox label="Hide Layer Window" value="layer" id="layer" />
+                            <Checkbox label="Hide Tileset Window" value="tileset" id="tileset" />
                         </NavDropdown>
                     </Nav>
-                    <Navbar.Brand href="/">User</Navbar.Brand>
+                    <Navbar.Brand href="/">Logout</Navbar.Brand>
                 </Navbar.Collapse>
             </Navbar>
         )

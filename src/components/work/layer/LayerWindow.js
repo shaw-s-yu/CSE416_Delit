@@ -1,7 +1,8 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
-import Titlebar from '../navbars/Titlebar'
+import Titlebar from '../tools/Titlebar'
+import LayerList from './LayerList'
 import * as handler from '../../../store/database/WorkScreenHandler';
 
 class LayerWindow extends React.Component {
@@ -27,6 +28,8 @@ class LayerWindow extends React.Component {
                 onResize={this.handleOnResize}
             >
                 <Titlebar title="Layer Window" />
+                <LayerList />
+
             </Rnd>
 
         )

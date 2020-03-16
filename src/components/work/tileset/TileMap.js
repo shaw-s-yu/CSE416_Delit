@@ -35,12 +35,14 @@ class TileMap extends React.Component {
 
     render() {
         const { scale } = this.state;
+        const { className } = this.props
         return (
-            <div>
+            <div className={className}>
                 <Button small
-                    waves="red"
+                    waves="light"
                     node="button"
-                    className=""
+                    className="tilest-zoomin-btn"
+                    floating
                     icon={<Icon>zoom_in</Icon>}
                     onClick={this.handleZoomIn}
                     onMouseDown={e => e.stopPropagation()}>
@@ -49,11 +51,22 @@ class TileMap extends React.Component {
                 <Button small
                     waves="red"
                     node="button"
-                    className=""
+                    className="tilest-zoomout-btn"
+                    floating
                     icon={<Icon>zoom_out</Icon>}
                     onClick={this.handleZoomOut}
                     onMouseDown={e => e.stopPropagation()}>
                 </Button>
+
+                <Button small
+                    waves="red"
+                    node="button"
+                    className="tilest-delete-btn"
+                    floating
+                    icon={<Icon>clear</Icon>}
+                    onMouseDown={e => e.stopPropagation()}>
+                </Button>
+
                 <div className="display-place" onMouseDown={this.handleUnselect}>
 
                     <Canvas canvas={this.canvas} className="map" style={{
@@ -71,9 +84,13 @@ class TileMap extends React.Component {
 
 }
 
+const mapStateToProps = (state) => {
+    return {
+    }
+};
 
 const mapDispatchToProps = (dispatch) => ({
     handleUnselect: () => dispatch(unselectTilesetHandler()),
 })
 
-export default connect(null, mapDispatchToProps)(TileMap)
+export default connect(mapStateToProps, mapDispatchToProps)(TileMap)
