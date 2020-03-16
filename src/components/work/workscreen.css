@@ -56,6 +56,8 @@
 
 .property-input{
     word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden !important;
     font: medium -moz-fixed;
     font: -webkit-small-control;
     overflow: auto;
@@ -127,14 +129,14 @@
 
 .property-add-btn{
     position: absolute;
-    margin-left: 15%;
+    margin-left: 15px;
     top:100%;
-    margin-top: -20%;
+    margin-top: -40px;
 }
 
 .property-clear-btn{
     position: absolute;
-    margin-left: 40%;
+    margin-left: 70px;
     top:100%;
-    margin-top: -20%;
+    margin-top: -40px;
 }

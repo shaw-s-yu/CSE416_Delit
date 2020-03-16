@@ -28,6 +28,7 @@ class PropertyWindow extends React.Component {
     render() {
         const { size, position } = this.props.window
         const { layer, map, selected } = this.props
+
         return (
 
             <Rnd
@@ -39,6 +40,8 @@ class PropertyWindow extends React.Component {
                 }}
                 onResize={this.handleOnResize}
                 onClick={this.props.handleUnselect}
+                minWidth={202}
+                minHeight={391}
             >
                 <Titlebar title="Property Window" />
                 <Collapsible accordion onMouseDown={e => e.stopPropagation()}>
