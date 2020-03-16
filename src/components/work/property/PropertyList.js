@@ -30,9 +30,9 @@ class PropertyList extends React.Component {
         const { selected, window } = this.props;
         if (!selected)
             return 'table-row'
-        else if (selected.name !== window)
+        else if (selected.window !== window)
             return 'table-row'
-        else if (selected.value !== index)
+        else if (selected.index !== index)
             return 'table-row'
         else
             return 'table-row table-row-selected'

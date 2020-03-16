@@ -7,8 +7,8 @@ const propertyReducer = (state = initState, action) => {
         return {
             ...state,
             selected: {
-                name: action.name,
-                value: action.value,
+                window: action.window,
+                index: action.index,
             }
         }
     } else if (action.type === actionCreators.PROPERTY_UNSELECT) {
@@ -22,6 +22,15 @@ const propertyReducer = (state = initState, action) => {
         return {
             ...state,
             [action.name]: properties
+        }
+    } else if (action.type === actionCreators.PROPERTY_DELETE) {
+        const { window, index } = state.selected
+        let properties = state[window]
+        properties.splice(index, 1)
+        return {
+            ...state,
+            [window]: properties,
+            selected: null
         }
     }
 

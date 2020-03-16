@@ -21,6 +21,7 @@
 .login-link{
     color: #039be5;
     cursor: pointer;
+    margin-left:10%;
 }
 
 .login-link:hover{

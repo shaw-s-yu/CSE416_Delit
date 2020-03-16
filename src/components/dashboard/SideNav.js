@@ -5,13 +5,13 @@ class SideNav extends React.Component {
 
   render() {
     const { open } = this.props;
-    const width = open ? 250 : 0;
+    const width = open ? 270 : 0;
     return (
 
       <div className='dashboard-sidebar' style={{ width: width + "px", whiteSpace: "nowrap" }}>
         <Collection>
           <Button
-            className="red right"
+            className="right side-clear-btn"
             floating
             icon={<Icon>clear</Icon>}
             small
@@ -19,7 +19,7 @@ class SideNav extends React.Component {
             waves="light"
             onClick={this.props.handleSidebarOpen}
           />
-          <Button className="red" node="button" waves="light">Create New Project</Button>
+          <Button className="side-create-btn" node="button" waves="light">Create New Project</Button>
 
           <CollectionItem><div className='item-text'>All Projects</div></CollectionItem>
           <CollectionItem><div className='item-text'>Project Created By Me</div></CollectionItem>

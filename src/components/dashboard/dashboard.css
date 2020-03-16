@@ -126,3 +126,26 @@
 .navbar {
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
+
+.side-create-btn{
+    background-color: red;
+    width: 70%;
+    font-size: xx-small;
+    padding: 0;
+    transition: ease-in 0.5s;
+}
+
+.side-clear-btn:hover{
+    background-color: salmon;
+}
+
+.side-clear-btn{
+    background-color: red;
+    top: 0.5rem;
+    margin-right: 1rem;
+    transition: ease-in 0.5s;
+}
+
+.side-clear-btn:hover{
+    background-color: salmon;
+}

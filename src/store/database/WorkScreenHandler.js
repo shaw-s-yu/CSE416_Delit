@@ -16,8 +16,8 @@ export const resizeWindowHandler = (name, value) => (dispatch, getState) => {
     dispatch({ type: actionCreators.WINDOW_RESIZE, name: name, value: value });
 }
 
-export const selectPropertyHandler = (name, value) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.PROPERTY_SELECT, name: name, value: value });
+export const selectPropertyHandler = (window, index) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.PROPERTY_SELECT, window: window, index: index });
 }
 
 export const unselectPropertyHandler = () => (dispatch, getState) => {
@@ -26,4 +26,8 @@ export const unselectPropertyHandler = () => (dispatch, getState) => {
 
 export const changePropertyHandler = (name, index, type, value) => (dispatch, getState) => {
     dispatch({ type: actionCreators.PROPERTY_CHANGE, window: name, index: index, name: type, value: value });
+}
+
+export const deletePropertyHandler = () => (dispatch, getState) => {
+    dispatch({ type: actionCreators.PROPERTY_DELETE });
 }

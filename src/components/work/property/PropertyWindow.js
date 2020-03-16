@@ -20,6 +20,11 @@ class PropertyWindow extends React.Component {
         })
     }
 
+    handleDelete = (e) => {
+        e.stopPropagation();
+        this.props.handleDelete();
+    }
+
     render() {
         const { size, position } = this.props.window
         const { layer, map, selected } = this.props
@@ -31,7 +36,6 @@ class PropertyWindow extends React.Component {
                 default={position}
                 onMouseDown={() => {
                     this.props.handleToTop('property')
-                    this.props.handleUnselect()
                 }}
                 onResize={this.handleOnResize}
                 onClick={this.props.handleUnselect}
@@ -64,7 +68,7 @@ class PropertyWindow extends React.Component {
                     small
                     node="button"
                     waves="light"
-                    onClick={this.props.handleSidebarOpen}
+                    onClick={this.handleDelete}
                 />
                 <Button
                     className="red property-add-btn"
@@ -97,6 +101,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     handleOnResize: (name, value) => dispatch(handler.resizeWindowHandler(name, value)),
     handleUnselect: () => dispatch(handler.unselectPropertyHandler()),
+    handleDelete: () => dispatch(handler.deletePropertyHandler())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyWindow)
