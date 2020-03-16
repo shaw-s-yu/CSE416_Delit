@@ -4,6 +4,7 @@ import TileMap from './TileMap'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
 import Titlebar from '../navbars/Titlebar'
+import { Collapsible, CollapsibleItem, Icon, Button } from 'react-materialize'
 
 
 class TilesetWindow extends React.Component {
@@ -26,7 +27,7 @@ class TilesetWindow extends React.Component {
     }
 
     render() {
-        let { size, position } = this.props.window;
+        const { size, position } = this.props.window;
         return (
             <Rnd
                 className="workscreen-window"
@@ -37,7 +38,35 @@ class TilesetWindow extends React.Component {
                 id='fe'
             >
                 <Titlebar title="Tileset Window" />
-                <TileMap />
+                <Collapsible accordion onMouseDown={e => e.stopPropagation()}>
+                    <CollapsibleItem
+                        expanded={false}
+                        header="Map Property"
+                        node="div"
+                        icon={<Icon>arrow_drop_down</Icon>}
+                    >
+                        <TileMap />
+                    </CollapsibleItem>
+                    <CollapsibleItem
+                        expanded
+                        header="Layer Property"
+                        node="div"
+                        icon={<Icon>arrow_drop_down</Icon>}
+                    >
+                        <TileMap />
+                    </CollapsibleItem>
+
+                </Collapsible>
+
+                <Button small
+                    waves="red"
+                    node="button"
+                    className="tilest-add-btn"
+                    floating
+                    icon={<Icon>add</Icon>}
+                    onMouseDown={e => e.stopPropagation()}>
+                </Button>
+
             </Rnd>
 
         )
