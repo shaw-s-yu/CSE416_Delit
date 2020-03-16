@@ -35,8 +35,9 @@ class TileMap extends React.Component {
 
     render() {
         const { scale } = this.state;
+        const { className } = this.props
         return (
-            <div className="tileset-display">
+            <div className={className}>
                 <Button small
                     waves="light"
                     node="button"

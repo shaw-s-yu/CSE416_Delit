@@ -2,10 +2,9 @@ import React from 'react';
 import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
 import Titlebar from '../tools/Titlebar'
-import Collapsible from '../tools/Collapsible'
 import * as handler from '../../../store/database/WorkScreenHandler';
+import Toolbar from './Toolbar'
 import TileMap from '../tileset/TileMap'
-import PropertyList from '../property/PropertyList'
 
 
 class MapWindow extends React.Component {
@@ -31,14 +30,18 @@ class MapWindow extends React.Component {
                 onResize={this.handleOnResize}
             >
                 <Titlebar title="Map Window" />
-
-                <Collapsible data={
-                    [
-                        { title: 'dummy1', content: <PropertyList />, open: false },
-                        { title: 'dummy2', content: <PropertyList />, open: true },
-                    ]
-                }
-                    maxHeight='265px' />
+                <Toolbar
+                    content={[
+                        <i className="fas fa-undo" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-redo" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-upload" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-download" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-save" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-stamp" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-eraser" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-fill" style={{ fontSize: '24px' }} />,
+                    ]} />
+                <TileMap className="map-window-display" />
             </Rnd>
 
         )

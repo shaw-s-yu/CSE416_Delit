@@ -25,13 +25,11 @@
     height: 100%;
 }
 .display-place{
-    transition: ease-in-out 0.5s;
     background-color: skyblue;
     overflow: auto;
     cursor: auto;
     width: calc(100% - 1px);
     height: 100%;
-    /* position: absolute; */
 }
 
 .map{
@@ -218,4 +216,33 @@ li.active{
     position: absolute;
     left: 0%;
     cursor: pointer;
+}
+
+.toolbar{
+    height: 40px;
+    width: 90%;
+    margin-left:5%;
+    margin-top: 5px;
+    outline: 2px solid grey;
+}
+
+.toolbar-cell{
+    display: inline-block;
+    padding: 8px 8px;
+    width: 40px;
+    height: 40px;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.toolbar-cell:hover{
+    background-color: lightskyblue;
+}
+
+.map-window-display{
+    background-color: skyblue;
+    overflow: auto;
+    cursor: auto;
+    width: calc(100% - 1px);
+    height: calc(100% -45px);
 }

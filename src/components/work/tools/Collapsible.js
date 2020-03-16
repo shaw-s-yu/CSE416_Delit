@@ -38,7 +38,7 @@ class Titlebar extends React.Component {
                                     onMouseDown={e => e.stopPropagation()}
                                 >
                                     {d.title}
-                                    <Icon small className="collapsible-title-icon">{open[index] ? 'arrow_drop_up' : 'arrow_drop_down'}</Icon>
+                                    <Icon small className="collapsible-title-icon">{open[index] ? 'chevron_right' : 'keyboard_arrow_down'}</Icon>
                                 </div>
                                 <div className={"collapsible-content "} style={{ maxHeight: open[index] ? maxHeight : '0px' }}>
                                     {d.content}
