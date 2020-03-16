@@ -244,5 +244,11 @@ li.active{
     overflow: auto;
     cursor: auto;
     width: calc(100% - 1px);
-    height: calc(100% -45px);
+    height: calc(100% - 71px);
+}
+
+.layer-list{
+    width: 100%;
+    height: calc(100% - 50px);
+    background-color: lightskyblue;
 }
