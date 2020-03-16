@@ -53,34 +53,25 @@
     position: absolute;
     border:2px solid black
 }
-.property-row{
-    border:2px solid black ;
-    margin-top: -2px;
-    display: flex;
-}
-.property-box{
-    width:50%;
-    border-left: 2px solid black;
-    margin-left: -2px;
-}
-
-.property-plane{
-    margin:-1rem;
-}
 
 .property-input{
-    width: 80px !important;
     word-wrap: break-word;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    overflow: auto;
+    padding: 2px;
 }
 
 .property-input:focus{
-    border: 1px solid skyblue;
+    outline: 3px solid skyblue;
+    transition:.15s ease-in-out
 }
 
 .collapsible{
     margin: auto !important;
     margin-top: 3px !important;
     max-height: 90%;
+    box-shadow: none;
 }
 
 .collapsible-header{
@@ -93,9 +84,10 @@
 }
 
 .collapsible-body{
-    background-color: cornsilk;
+    background-color: white;
     padding:0 !important;
     width: 100%;
+    border-bottom: none !important;
 }
 
 .window-to-top{
@@ -114,4 +106,21 @@
 
 .scrollbar-container{
     padding-bottom: 22px;
+}
+
+.property-window{
+    min-width: 202.35;
+    min-height: 442.867;
+}
+
+.property-table{
+    cursor: pointer;
+}
+
+.table-row{
+    transition:.15s ease-in-out
+}
+
+.table-row-selected{
+    outline: 3px solid skyblue;
 }
