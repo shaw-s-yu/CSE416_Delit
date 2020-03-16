@@ -3,44 +3,43 @@ import { Table } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable'
 import { Button } from 'react-materialize'
 import { connect } from 'react-redux';
+import * as handler from '../../../store/database/WorkScreenHandler';
 
 class PropertyList extends React.Component {
 
 
     state = {
-        properties: [
-            { name: 'name1', value: 'value1', nref: React.createRef(), vref: React.createRef(), selected: false },
-            { name: 'name2', value: 'value2', nref: React.createRef(), vref: React.createRef(), selected: false },
-            { name: 'name3', value: 'value3', nref: React.createRef(), vref: React.createRef(), selected: false },
-        ]
+
     };
 
 
-    handleChange = (index, type, evt) => {
-        let { properties } = this.state;
-        properties[index][type] = evt.target.value;
-        this.setState({ properties: properties });
+    handleChange = (index, name, e) => {
+        const { window } = this.props;
+        this.props.handleChange(window, index, name, e.target.value)
+        this.setState({ nothing: 'nothing' })
     };
 
     handleSelect = (index, e) => {
-        let { properties } = this.state;
-        properties.forEach(p => p.selected = false)
-        properties[index].selected = true;
-        this.setState({ properties: properties });
-
+        const { window } = this.props;
+        this.setState({ nothing: 'nothing' }, () => {
+            this.props.handleSelect(window, index);
+        })
     }
 
     getClassName = (index) => {
-        const { properties } = this.state;
-        if (properties[index].selected)
-            return 'table-row table-row-selected'
-        else
+        const { selected, window } = this.props;
+        if (!selected)
             return 'table-row'
+        else if (selected.name !== window)
+            return 'table-row'
+        else if (selected.value !== index)
+            return 'table-row'
+        else
+            return 'table-row table-row-selected'
     }
 
 
     render() {
-        const { properties } = this.state;
         let { width } = this.props;
         if (typeof width === 'number') width += 'px'
         width = width.split('px')[0] / 2.3
@@ -49,6 +48,8 @@ class PropertyList extends React.Component {
             width: width,
             flexShrink: 0,
         }
+
+        const { data } = this.props
         return (
             <>
                 <Table striped bordered hover size="sm" className="property-table">
@@ -61,7 +62,7 @@ class PropertyList extends React.Component {
                     <tbody>
 
                         {
-                            properties && properties.map((property, index) => {
+                            data && data.map((property, index) => {
                                 return (
                                     <tr key={index} onClick={() => this.handleSelect(index)} className={this.getClassName(index)}>
                                         <td style={style}>
@@ -99,9 +100,16 @@ class PropertyList extends React.Component {
 
 const mapStateToProps = (state) => {
     const { width } = state.workScreen.property.size
+    const { selected } = state.property
     return {
         width: width,
+        selected: selected,
     }
 };
 
-export default connect(mapStateToProps)(PropertyList)
+const mapDispatchToProps = (dispatch) => ({
+    handleSelect: (name, value) => dispatch(handler.selectPropertyHandler(name, value)),
+    handleChange: (name, index, type, value) => dispatch(handler.changePropertyHandler(name, index, type, value))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PropertyList)

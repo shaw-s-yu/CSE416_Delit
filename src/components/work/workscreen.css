@@ -124,3 +124,17 @@
 .table-row-selected{
     background-color:  skyblue !important;
 }
+
+.property-add-btn{
+    position: absolute;
+    margin-left: 15%;
+    top:100%;
+    margin-top: -20%;
+}
+
+.property-clear-btn{
+    position: absolute;
+    margin-left: 40%;
+    top:100%;
+    margin-top: -20%;
+}

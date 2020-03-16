@@ -1,6 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import { Collapsible, CollapsibleItem, Icon } from 'react-materialize'
+import { Collapsible, CollapsibleItem, Icon, Button } from 'react-materialize'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import PropertyList from './PropertyList'
 import { connect } from 'react-redux';
@@ -22,14 +22,19 @@ class PropertyWindow extends React.Component {
 
     render() {
         const { size, position } = this.props.window
+        const { layer, map, selected } = this.props
         return (
 
             <Rnd
                 className="workscreen-window"
                 size={size}
                 default={position}
-                onMouseDown={() => { this.props.handleToTop('property') }}
+                onMouseDown={() => {
+                    this.props.handleToTop('property')
+                    this.props.handleUnselect()
+                }}
                 onResize={this.handleOnResize}
+                onClick={this.props.handleUnselect}
             >
                 <Titlebar title="Property Window" />
                 <Collapsible accordion onMouseDown={e => e.stopPropagation()}>
@@ -39,18 +44,37 @@ class PropertyWindow extends React.Component {
                         node="div"
                         icon={<Icon>arrow_drop_down</Icon>}
                     >
-                        <PropertyList />
+                        <PropertyList data={layer} window='layer' />
                     </CollapsibleItem>
                     <CollapsibleItem
                         expanded
-                        header="Tileset Property"
+                        header="Layer Property"
                         node="div"
                         icon={<Icon>arrow_drop_down</Icon>}
                     >
-                        <PropertyList />
+                        <PropertyList data={map} window='map' />
                     </CollapsibleItem>
 
                 </Collapsible>
+                <Button
+                    className="red property-clear-btn"
+                    floating
+                    icon={<Icon>clear</Icon>}
+                    disabled={selected ? false : true}
+                    small
+                    node="button"
+                    waves="light"
+                    onClick={this.props.handleSidebarOpen}
+                />
+                <Button
+                    className="red property-add-btn"
+                    floating
+                    icon={<Icon>add</Icon>}
+                    small
+                    node="button"
+                    waves="light"
+                    onClick={this.props.handleSidebarOpen}
+                />
             </Rnd>
 
 
@@ -61,13 +85,18 @@ class PropertyWindow extends React.Component {
 
 const mapStateToProps = (state) => {
     const { property } = state.workScreen
+    const { layer, map, selected } = state.property
     return {
         window: property,
+        layer,
+        map,
+        selected
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     handleOnResize: (name, value) => dispatch(handler.resizeWindowHandler(name, value)),
+    handleUnselect: () => dispatch(handler.unselectPropertyHandler()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyWindow)
