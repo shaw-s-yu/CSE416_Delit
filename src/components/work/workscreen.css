@@ -63,7 +63,7 @@
 }
 
 .property-input:focus{
-    outline: 3px solid skyblue;
+    outline: 3px solid rosybrown;
     transition:.15s ease-in-out
 }
 
@@ -122,5 +122,5 @@
 }
 
 .table-row-selected{
-    outline: 3px solid skyblue;
+    background-color:  skyblue !important;
 }
