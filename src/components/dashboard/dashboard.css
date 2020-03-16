@@ -48,6 +48,8 @@
     margin-top: 2rem;
     vertical-align: middle;
     display: table-cell;
+    text-align: center;
+    width: 100%;
 }
 
 .collection-item:hover{

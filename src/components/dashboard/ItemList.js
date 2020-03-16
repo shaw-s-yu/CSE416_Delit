@@ -64,10 +64,11 @@ class ItemList extends React.Component {
                                 <div className="dd-header-title">Project1</div>
                             </div>
                             <ul className="product-gallery-thumbs__list">
-                                {images.map(function (image, imageIndex) {
+                                { images && images.map(function (image, imageIndex) {
                                     return (
-                                        <li key={images.src}>
-                                            <img src={images.src} alt={images.alt} />
+                                        <li key={image.src}>
+                                            <img src={image.src} alt={image.alt} />
+                                            <div>{image.alt}</div>
                                         </li>
                                     );
                                 })}
