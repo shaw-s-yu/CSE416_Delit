@@ -14,12 +14,10 @@ class ItemList extends React.Component {
 
     state = {
         modelActive1: false,
-        aaaa: true,
-        hello:'ffa',
-        xdd: false,
     }
 
-    handleTeamOpen1 = () => {
+    handleTeamOpen1 = (e) => {
+        e.stopPropagation();
         this.setState({ modelActive1: true });
     }
 
