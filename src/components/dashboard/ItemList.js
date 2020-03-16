@@ -16,7 +16,8 @@ class ItemList extends React.Component {
         modelActive1: false,
     }
 
-    handleTeamOpen1 = () => {
+    handleTeamOpen1 = (e) => {
+        e.stopPropagation();
         this.setState({ modelActive1: true });
     }
 
