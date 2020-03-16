@@ -15,7 +15,8 @@ class ItemList extends React.Component {
     state = {
         modelActive1: false,
         aaaa: true,
-        hello:'ffa'
+        hello:'ffa',
+        xdd: false,
     }
 
     handleTeamOpen1 = () => {
