@@ -1,8 +1,12 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
-import Titlebar from '../navbars/Titlebar'
+import Titlebar from '../tools/Titlebar'
+import Collapsible from '../tools/Collapsible'
 import * as handler from '../../../store/database/WorkScreenHandler';
+import TileMap from '../tileset/TileMap'
+import PropertyList from '../property/PropertyList'
+
 
 class MapWindow extends React.Component {
 
@@ -27,6 +31,14 @@ class MapWindow extends React.Component {
                 onResize={this.handleOnResize}
             >
                 <Titlebar title="Map Window" />
+
+                <Collapsible data={
+                    [
+                        { title: 'dummy1', content: <PropertyList />, open: false },
+                        { title: 'dummy2', content: <PropertyList />, open: true },
+                    ]
+                }
+                    maxHeight='265px' />
             </Rnd>
 
         )

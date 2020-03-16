@@ -187,3 +187,35 @@
 li.active{
     height:70%;
 }
+
+.collapsible-wrap{
+    /* display: flex; */
+
+}
+
+.collapsible-title{
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    background-color: rosybrown;
+    transition: ease-in 0.2s;
+    display: inline-block;
+}
+
+.collapsible-title:hover{
+    cursor: pointer;
+    background-color: sandybrown;
+}
+
+.collapsible-content{
+    max-height: 0px;
+    transition: ease-out 0.5s;
+    overflow: hidden;
+}
+
+.collapsible-title-icon{
+    margin-top: -5px;
+    position: absolute;
+    left: 0%;
+    cursor: pointer;
+}

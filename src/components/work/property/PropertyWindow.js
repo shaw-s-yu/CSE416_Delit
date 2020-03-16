@@ -1,11 +1,12 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import { Collapsible, CollapsibleItem, Icon, Button } from 'react-materialize'
+import { Icon, Button } from 'react-materialize'
+import Collapsible from '../tools/Collapsible'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import PropertyList from './PropertyList'
 import { connect } from 'react-redux';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import Titlebar from '../navbars/Titlebar'
+import Titlebar from '../tools/Titlebar'
 
 class PropertyWindow extends React.Component {
 
@@ -44,25 +45,16 @@ class PropertyWindow extends React.Component {
                 minHeight={391}
             >
                 <Titlebar title="Property Window" />
-                <Collapsible accordion onMouseDown={e => e.stopPropagation()}>
-                    <CollapsibleItem
-                        expanded={false}
-                        header="Map Property"
-                        node="div"
-                        icon={<Icon>arrow_drop_down</Icon>}
-                    >
-                        <PropertyList data={layer} window='layer' />
-                    </CollapsibleItem>
-                    <CollapsibleItem
-                        expanded
-                        header="Layer Property"
-                        node="div"
-                        icon={<Icon>arrow_drop_down</Icon>}
-                    >
-                        <PropertyList data={map} window='map' />
-                    </CollapsibleItem>
+                <Collapsible data={
+                    [
+                        { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
+                        { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
+                    ]
+                }
+                    maxHeight='265px'
+                />
 
-                </Collapsible>
+
                 <Button
                     className="red property-clear-btn"
                     floating
