@@ -11,7 +11,7 @@ class Dialog extends React.Component {
                 fixedFooter={false}
                 header={this.props.header}
                 open={this.props.open}
-                style={{ maxHeight: 'none' }}
+                style={{width:'400px', height:'600px'}}
                 options={{
                     dismissible: false,
                     endingTop: '10%',

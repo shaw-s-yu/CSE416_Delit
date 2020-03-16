@@ -149,3 +149,44 @@
 .side-clear-btn:hover{
     background-color: salmon;
 }
+
+
+.dialogHeader {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+
+.img{
+    border: 1px solid #fff;
+    border-radius: 4px;
+    padding: 5px;
+    width: 78px;
+    height: 78px;
+}
+  
+
+.imageContainer {
+    margin-top: 10px;
+    width: 350px;
+    height: 80px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    object-fit: cover;
+    
+  }
+
+.imageContainer:hover{
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.imageDescription {
+    display: inline-block;
+    width: calc(100% - 100px);
+    text-align: right;
+    font-size: 15px;
+}
