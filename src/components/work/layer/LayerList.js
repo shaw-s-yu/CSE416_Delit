@@ -13,12 +13,12 @@ class LayerWindow extends React.Component {
                 {layers && layers.map(layer => {
                     return (
                         <>
-                            <div className='layer-list-item'>
+                            <div className='layer-list-item' onMouseDown={e => e.stopPropagation()}>
                                 <span>{layer.name}</span>
 
 
                             </div>
-                            <div className="layer-item-btn-box">
+                            <div className="layer-item-btn-box" onMouseDown={e => e.stopPropagation()}>
                                 <i className="fas fa-trash-alt better-btn layer-item-up-btn" />
                                 <i className="fas fa-arrow-down better-btn layer-item-down-btn" />
                                 <i className="fas fa-arrow-up better-btn layer-item-delete-btn" />
