@@ -114,15 +114,25 @@
     position: absolute;
 }
 
-.dashboard-itemcard-btn{
+.dashboard-itemcard-edit-btn{
     background-color: white;
     color: black;
-    margin-right: 1.2vw;
-    bottom: 0.8vw;
+    float: right;
+    margin-top: -60px;
+    margin-right: 3vw;
+    white-space: nowrap;
 }
 
-.dashboard-itemcard-btn:hover {
-    background-color: turquoise;
+.dashboard-itemcard-team-btn{
+    background-color: white;
+    color: black;
+    float: right;
+    margin-top: -60px;
+    margin-right: 13vw;
+}
+
+.dashboard-itemcard-edit-btn:hover .dashboard-itemcard-team-btn:hover{
+    background-color: red;
 }
 
 .dashboard-sidebtn{

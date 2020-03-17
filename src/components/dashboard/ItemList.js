@@ -75,8 +75,8 @@ class ItemList extends React.Component {
                                     Last Modified By: {project.lastModified}
 
                                 </Card>
-                                <Button waves='orange' className="dashboard-itemcard-btn right" onClick={this.handleTeamOpen1}>Team</Button>
-                                <Button waves='orange' className="dashboard-itemcard-btn right">Edit</Button>
+                                <Button waves='orange' className="dashboard-itemcard-edit-btn" onClick={this.handleTeamOpen1}>Team</Button>
+                                <Button waves='orange' className="dashboard-itemcard-team-btn">Edit</Button>
                             </>
                         );
                     })
