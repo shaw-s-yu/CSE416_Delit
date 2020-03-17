@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Icon } from 'react-materialize'
 import Canvas from '../canvas/Canvas'
 import { connect } from 'react-redux';
 import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';

@@ -15,7 +15,7 @@ class TopNavbar extends React.Component {
                 <Navbar class="dashboard-top-navbar" bg="white" expand="lg">
                     <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><Icon>list</Icon></Navbar.Brand>
                     <Navbar.Brand href="/dashboard"> <div class="logo" >Delit</div></Navbar.Brand>
-                    {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link>Team</Nav.Link>
@@ -26,7 +26,7 @@ class TopNavbar extends React.Component {
                             </NavDropdown>
                         </Nav>
                         <Navbar.Brand href="/">User</Navbar.Brand>
-                    </Navbar.Collapse> */}
+                    </Navbar.Collapse>
                 </Navbar>
                 <SideNav open={open} handleSidebarOpen={this.props.handleSidebarOpen} />
             </>

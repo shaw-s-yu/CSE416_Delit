@@ -1,6 +1,5 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import { Icon, Button } from 'react-materialize'
 import Collapsible from '../tools/Collapsible'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import PropertyList from './PropertyList'
@@ -53,18 +52,6 @@ class PropertyWindow extends React.Component {
                 }
                     maxHeight='265px'
                 />
-
-
-                {/* <Button
-                    className="red property-clear-btn"
-                    floating
-                    icon={<Icon>clear</Icon>}
-                    disabled={selected ? false : true}
-                    small
-                    node="button"
-                    waves="light"
-                    onClick={this.handleDelete}
-                /> */}
                 <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={e => e.stopPropagation()} />
                 <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} />
 
