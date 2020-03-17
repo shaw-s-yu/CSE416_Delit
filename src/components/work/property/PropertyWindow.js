@@ -55,7 +55,7 @@ class PropertyWindow extends React.Component {
                 />
 
 
-                <Button
+                {/* <Button
                     className="red property-clear-btn"
                     floating
                     icon={<Icon>clear</Icon>}
@@ -64,16 +64,10 @@ class PropertyWindow extends React.Component {
                     node="button"
                     waves="light"
                     onClick={this.handleDelete}
-                />
-                <Button
-                    className="red property-add-btn"
-                    floating
-                    icon={<Icon>add</Icon>}
-                    small
-                    node="button"
-                    waves="light"
-                    onClick={this.props.handleSidebarOpen}
-                />
+                /> */}
+                <i className={"fas fa-trash-alt property-clear-btn better-btn red "+ (selected?"":"btn-disabled")} onClick={this.handleDelete}/>
+                <i className={"fas fa-plus property-add-btn better-btn red "} onClick={this.props.handleSidebarOpen}/>
+                
             </Rnd>
 
 

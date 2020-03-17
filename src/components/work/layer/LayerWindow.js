@@ -1,6 +1,7 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
+import RangeSlider from 'react-bootstrap-range-slider';
 import Titlebar from '../tools/Titlebar'
 import LayerList from './LayerList'
 import * as handler from '../../../store/database/WorkScreenHandler';
@@ -29,8 +30,9 @@ class LayerWindow extends React.Component {
             >
                 <Titlebar title="Layer Window" />
                 <LayerList />
-                <i className="fas fa-plus layer-add-btn" />
+                <i className="fas fa-plus layer-add-btn better-btn" />
                 <span className="opacity-text">OPACITY</span>
+                <div className="layer-range"> <RangeSlider /></div>
             </Rnd>
 
         )

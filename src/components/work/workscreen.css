@@ -132,6 +132,10 @@
     margin-left: 15px;
     top:100%;
     margin-top: -40px;
+    width: 24px !important;
+    height: 24px !important;
+    padding-left: 4px !important;
+    padding-top: 4px !important;
 }
 
 .property-clear-btn{
@@ -139,9 +143,13 @@
     margin-left: 70px;
     top:100%;
     margin-top: -40px;
+    width: 24px !important;
+    height: 24px !important;
+    padding-left: 4px !important;
+    padding-top: 4px !important;
 }
 
-.tilest-zoomin-btn{
+.tileset-zoomin-btn{
     background-color: red;
     transition: ease-in-out 0.5s;
     position: absolute;
@@ -149,9 +157,14 @@
     margin-left:-80px;
     top:100%;
     margin-top: -40px;
+    font-size: 16px;
+    width: 24px !important;
+    height: 24px !important;
+    padding-left: 4px !important;
+    padding-top: 4px !important;
 }
 
-.tilest-zoomout-btn{
+.tileset-zoomout-btn{
     background-color: red;
     transition: ease-in-out 0.5s;
     position: absolute;
@@ -159,24 +172,36 @@
     margin-left:-40px;
     top:100%;
     margin-top: -40px;
+    width: 24px !important;
+    height: 24px !important;
+    padding-left: 4px !important;
+    padding-top: 4px !important;
 }
 
-.tilest-add-btn{
+.tileset-add-btn{
     background-color: red;
     transition: ease-in-out 0.5s;
     position: absolute;
     margin-left:10px;
     top:100%;
     margin-top: -40px;
+    width: 24px !important;
+    height: 24px !important;
+    padding-left: 4px !important;
+    padding-top: 4px !important;
 }
 
-.tilest-delete-btn{
+.tileset-delete-btn{
     background-color: red;
     transition: ease-in-out 0.5s;
     position: absolute;
     margin-left:50px;
     top:100%;
     margin-top: -40px;
+    width: 24px !important;
+    height: 24px !important;
+    padding-left: 5px !important;
+    padding-top: 4px !important;
 }
 .tileset-display{
     height: 100%;
@@ -188,7 +213,6 @@ li.active{
 
 .collapsible-wrap{
     /* display: flex; */
-
 }
 
 .collapsible-title{
@@ -257,20 +281,28 @@ li.active{
 .layer-add-btn{
     margin-top: 5px;
     margin-left: 10px;
+    
+    
+    
+    background-color: red;
+    
+    
+}
+
+.better-btn{
+    border-radius: 80%;
+    cursor: pointer;
+    transition: ease-in 0.3s;
     font-size: 16px;
     width: 20px;
     height: 20px;
     padding-left: 3px;
     padding-top: 2.7px;
-    background-color: red;
-    border-radius: 80%;
-    cursor: pointer;
-    transition: ease-in 0.3s;
 }
 
-.layer-add-btn:hover{
+.better-btn:hover{
     background-color: rgb(255, 119, 7);
-    box-shadow: 2px solid rgb(255, 119, 7);
+    box-shadow: 0 0 3pt 2pt red
 }
 
 .opacity-text{
@@ -278,5 +310,23 @@ li.active{
     position: absolute;
     font-size: 12px;
     margin-top: 7px;
+}
 
+.layer-range{
+    width: 50%;
+    margin-left: 50%;
+    margin-top: -40px;
+    height: 20px;
+    position: absolute;
+}
+
+
+.btn-disabled{
+    background-color: gray !important;
+    cursor: auto;
+}
+
+.btn-disabled:hover{
+    box-shadow: none !important;
+    
 }

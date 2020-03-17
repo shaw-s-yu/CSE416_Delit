@@ -151,3 +151,9 @@
 .side-clear-btn:hover{
     background-color: salmon;
 }
+
+.modal{
+    height: 400px;
+    width: 500px;
+    overflow: auto;
+}
