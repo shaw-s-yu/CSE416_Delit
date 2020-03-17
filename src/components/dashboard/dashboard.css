@@ -128,11 +128,18 @@
     color: black;
     float: right;
     margin-top: -60px;
-    margin-right: 13vw;
+    margin-right: 10vw;
 }
 
-.dashboard-itemcard-edit-btn:hover .dashboard-itemcard-team-btn:hover{
-    background-color: red;
+.dashboard-itemcard-edit-btn:hover{
+    color: white;
+    background-color: salmon;
+}
+
+
+.dashboard-itemcard-team-btn:hover{
+    color: white;
+    background-color: salmon;
 }
 
 .dashboard-sidebtn{
