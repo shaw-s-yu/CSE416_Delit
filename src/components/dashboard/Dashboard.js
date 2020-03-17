@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
     render() {
         const { sidebarActive } = this.state;
         const left = sidebarActive ? 19 : 0;
-        const width = sidebarActive ? 80 : 100;
+        const width = sidebarActive ? 81 : 100;
         return (
             <div>
                 <TopNavbar open={sidebarActive} handleSidebarOpen={this.handleSidebarOpen} />
