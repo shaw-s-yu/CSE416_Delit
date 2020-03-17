@@ -1,15 +1,43 @@
 {
     "users": [
         {
+            "_id": "5e53f06e905f950017b5c953",
             "email": "123@123.com",
             "password": 123123
         },
         {
+            "_id": "5e549434097acb0017c6fc1a",
             "email": "jie.dai@stonybrook.edu",
             "password": 123456
         }
     ],
-    "projects": [],
-    "maps": [],
-    "tilesets": []
+    "projects": [
+        {
+            "_id": "",
+            "name": "",
+            "owner": {                    
+                "_id": "5e53f06e905f950017b5c953",
+                "email": "123@123.com"
+            },
+            "editor": [
+            {
+                "_id": "5e549434097acb0017c6fc1a",
+                "email": "jie.dai@stonybrook.edu"
+            }],
+            "mapId": "",
+            "tiledSetsID": ""
+        }
+    ],
+    "maps": [
+        {
+            "_id": "",
+            "MapJsonFile": ""
+        }
+    ],
+    "tilesets": [
+        {
+            "_id": "",
+            "tiledSetsImage": ""
+        }
+    ]
 }
