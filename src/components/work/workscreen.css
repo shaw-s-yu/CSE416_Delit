@@ -310,9 +310,9 @@ li.active{
 }
 
 .layer-range{
-    width: 50%;
+    width: 40%;
     margin-left: 50%;
-    margin-top: -40px;
+    margin-top: -25px;
     height: 20px;
     position: absolute;
 }

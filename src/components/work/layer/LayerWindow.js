@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 import Titlebar from '../tools/Titlebar'
 import LayerList from './LayerList'
 import * as handler from '../../../store/database/WorkScreenHandler';
+import Slider from '@material-ui/core/Slider';
+
 
 
 class LayerWindow extends React.Component {
 
-    state = {
-        value: { min: 2, max: 10 },
-    };
 
     handleOnResize = (e, direction, ref, delta, position) => {
         this.props.handleToTop('layer');
@@ -39,7 +38,16 @@ class LayerWindow extends React.Component {
                 <i className="fas fa-plus layer-add-btn better-btn" />
                 <span className="opacity-text">OPACITY</span>
                 <div className="layer-range">
-
+                    <Slider
+                        defaultValue={30}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="discrete-slider"
+                        valueLabelDisplay="auto"
+                        marks
+                        min={10}
+                        max={110}
+                        onMouseDown={e => e.stopPropagation()}
+                    />
                 </div>
             </Rnd>
 
@@ -60,3 +68,9 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)
+
+
+
+function valuetext(value) {
+    return value + "%";
+}
