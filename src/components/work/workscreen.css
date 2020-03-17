@@ -244,10 +244,9 @@ li.active{
 
 .toolbar{
     height: 40px;
-    width: 90%;
-    margin-left:5%;
-    margin-top: 5px;
-    outline: 2px solid grey;
+    width: 100%;
+    padding-left: 40px;
+    overflow: hidden;
 }
 
 .toolbar-cell{
@@ -261,6 +260,7 @@ li.active{
 
 .toolbar-cell:hover{
     background-color: lightskyblue;
+    box-shadow: 0 0 2pt 2pt grey;
 }
 
 .map-window-display{

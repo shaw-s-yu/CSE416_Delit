@@ -24,6 +24,7 @@ const propertyReducer = (state = initState, action) => {
             [action.name]: properties
         }
     } else if (action.type === actionCreators.PROPERTY_DELETE) {
+        if (state.selected === null) return { ...state }
         const { window, index } = state.selected
         let properties = state[window]
         properties.splice(index, 1)
