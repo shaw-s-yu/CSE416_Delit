@@ -5,13 +5,13 @@ import { TextInput, Button } from 'react-materialize'
 class Searchbar extends React.Component {
 
     render() {
-        const left = this.props.open ? 360 : 75;
+        const left = this.props.open ? 23 : 5;
         const width = this.props.open ? 64 : 83;
         return (
             <div>
                 <div className="dashboard-search" style={
                     {
-                        marginLeft: left + "px",
+                        marginLeft: left + "%",
                         width: width + "%",
                     }}>
                     <TextInput label="Enter search" />

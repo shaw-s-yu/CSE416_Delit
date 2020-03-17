@@ -19,14 +19,14 @@ class Dashboard extends React.Component {
     }
     render() {
         const { sidebarActive } = this.state;
-        const left = sidebarActive ? 300 : 0;
+        const left = sidebarActive ? 19 : 0;
         const width = sidebarActive ? 80 : 100;
         return (
             <div>
                 <TopNavbar open={sidebarActive} handleSidebarOpen={this.handleSidebarOpen} />
                 <div className="dashboard-display" style={
                     {
-                        marginLeft: left + "px",
+                        marginLeft: left + "%",
                         width: width + "%",
                     }
                 }>
