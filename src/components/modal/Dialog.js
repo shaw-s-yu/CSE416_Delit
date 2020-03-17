@@ -1,38 +1,36 @@
 import React from 'react';
 import { Modal } from 'react-materialize'
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-class Dialog extends React.Component {
+class BetterDialog extends React.Component {
 
     render() {
 
         return (
-            <Modal
-                bottomSheet={false}
-                fixedFooter={false}
-                header={this.props.header}
+            <Dialog
                 open={this.props.open}
-                style={{width:'40vw', height:'60vw', overflow: 'auto'}}
-                options={{
-                    dismissible: false,
-                    endingTop: '10%',
-                    inDuration: 250,
-                    onCloseEnd: null,
-                    onCloseStart: null,
-                    onOpenEnd: null,
-                    onOpenStart: null,
-                    opacity: 0.5,
-                    outDuration: 250,
-                    preventScrolling: false,
-                    startingTop: '4%'
-                }}
-                actions={this.props.actions}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
-                {this.props.content}
-            </Modal>
+                <DialogTitle id="alert-dialog-title">{this.props.header}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {this.props.content}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    {this.props.actions}
+                </DialogActions>
+            </Dialog>
 
         )
     }
 
 }
 
-export default Dialog;
+export default BetterDialog;
