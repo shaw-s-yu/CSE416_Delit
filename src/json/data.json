@@ -1,5 +1,14 @@
 {
-    "users": [],
+    "users": [
+        {
+            "email": "123@123.com",
+            "password": 123123
+        },
+        {
+            "email": "jie.dai@stonybrook.edu",
+            "password": 123456
+        }
+    ],
     "projects": [],
     "maps": [],
     "tilesets": []
