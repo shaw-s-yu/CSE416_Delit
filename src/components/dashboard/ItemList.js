@@ -63,29 +63,28 @@ class ItemList extends React.Component {
                 }
 
                 <Dialog
-                    header={projects.name}
+                    header={<div className="dialogHeader">Project1</div>}
                     open={this.state.modelActive1}
                     actions={[
                         <Button waves="orange" onClick={this.handleTeamOpen2}>invite</Button>,
                         <Button waves="orange" onClick={this.handleTeamClose1}>Close</Button>
                     ]}
                     content={
-                        <div className="dd-wrapper">
-                            <div className="dd-header">
-                                <div className="dd-header-title">Project1</div>
-                            </div>
                             <div className="members">
                                 <ul className="product-gallery-thumbs__list">
                                     {images.map(function (image, imageIndex) {
                                         return (
-                                            <li key={image.src}>
-                                                <img src={image.src} alt={image.alt} />{image.alt}
-                                            </li>
+                                            <div className="imageContainer">
+                                                <li key={image.src}>
+                                                    <img className="img" src={image.src} alt={image.alt} />
+                                                    <div className="imageDescription">{image.alt}</div>
+                                                </li>
+                                            </div>
                                         );
                                     })}
                                 </ul>
                             </div>
-                        </div>
+
                     } />
 
                 <Dialog
