@@ -48,8 +48,8 @@ class LayerWindow extends React.Component {
                         aria-labelledby="discrete-slider"
                         valueLabelDisplay="auto"
                         marks
-                        min={10}
-                        max={110}
+                        min={0}
+                        max={100}
                         onMouseDown={e => e.stopPropagation()}
                     />
                 </div>
