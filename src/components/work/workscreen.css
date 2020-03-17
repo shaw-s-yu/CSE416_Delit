@@ -25,7 +25,6 @@
     height: 100%;
 }
 .display-place{
-    background-color: skyblue;
     overflow: auto;
     cursor: auto;
     width: calc(100% - 1px);
@@ -45,8 +44,11 @@
 }
 
 .selected-grid{
+    background-color: blue;    
+    opacity: 0.5;
     position: absolute;
-    border:2px solid black
+    border:2px solid black;
+    transition: ease-in 0.5s;
 }
 
 .property-input{
@@ -267,11 +269,10 @@ li.active{
 }
 
 .map-window-display{
-    background-color: skyblue;
     overflow: auto;
     cursor: auto;
     width: calc(100% - 1px);
-    height: calc(100% - 71px);
+    height: calc(100% - 72px);
 }
 
 .layer-list{

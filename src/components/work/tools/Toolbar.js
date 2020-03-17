@@ -2,6 +2,10 @@ import React from 'react';
 
 class Titlebar extends React.Component {
 
+    stopPropagation = e => {
+        e.stopPropagation();
+    }
+
     render() {
         const { content, rightContent, className } = this.props;
         return (
@@ -9,7 +13,7 @@ class Titlebar extends React.Component {
                 {
                     content && content.map((c, i) => {
                         return (
-                            <div className="toolbar-cell" key={i}>
+                            <div className="toolbar-cell" key={i} onMouseDown={this.stopPropagation}>
                                 {c}
                             </div>
                         )
@@ -18,7 +22,7 @@ class Titlebar extends React.Component {
                 {
                     rightContent && rightContent.map((c, i) => {
                         return (
-                            <div className="toolbar-right-cell" key={i}>
+                            <div className="toolbar-right-cell" key={i} onMouseDown={this.stopPropagation}>
                                 {c}
                             </div>
                         )

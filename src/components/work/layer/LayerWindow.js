@@ -23,6 +23,10 @@ class LayerWindow extends React.Component {
 
     }
 
+    stopPropagation = e => {
+        e.stopPropagation()
+    }
+
     render() {
         const { size, position } = this.props.window
         return (
@@ -35,7 +39,7 @@ class LayerWindow extends React.Component {
             >
                 <Titlebar title="Layer Window" />
                 <LayerList />
-                <i className="fas fa-plus layer-add-btn better-btn" />
+                <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={this.stopPropagation} />
                 <span className="opacity-text">OPACITY:</span>
                 <div className="layer-range">
                     <Slider

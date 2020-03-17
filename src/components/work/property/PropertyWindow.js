@@ -52,8 +52,8 @@ class PropertyWindow extends React.Component {
                 }
                     maxHeight='265px'
                 />
-                <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={e => e.stopPropagation()} />
-                <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} />
+                <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={this.props.handleStopPropagation} />
+                <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} onMouseDown={this.props.handleStopPropagation} />
 
             </Rnd>
 
@@ -70,7 +70,8 @@ const mapStateToProps = (state) => {
         window: property,
         layer,
         map,
-        selected
+        selected,
+        handleStopPropagation: e => e.stopPropagation(),
     }
 };
 
