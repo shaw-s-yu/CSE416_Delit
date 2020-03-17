@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loginHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
 import { Redirect } from 'react-router-dom';
 import { Button, TextInput } from 'react-materialize';
-import Dialog from '../modal/Dialog'
+import Dialog from '../tools/Dialog'
 
 
 class LoginScreen extends React.Component {

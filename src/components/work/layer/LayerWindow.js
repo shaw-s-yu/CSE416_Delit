@@ -1,7 +1,7 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
-import Titlebar from '../tools/Titlebar'
+import Titlebar from '../../tools/Titlebar'
 import LayerList from './LayerList'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import Slider from '@material-ui/core/Slider';

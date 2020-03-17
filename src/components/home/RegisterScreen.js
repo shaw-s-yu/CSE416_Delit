@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { registerHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
 import { Redirect } from 'react-router-dom';
 import { Button, TextInput } from 'react-materialize';
-import Dialog from '../modal/Dialog'
+import Dialog from '../tools/Dialog'
 
 class RegisterScreen extends React.Component {
 
@@ -70,7 +70,7 @@ class RegisterScreen extends React.Component {
 
                 {/* <li className='login-link' onClick={this.goLogin}>Already have account, go login</li> */}
                 <p className='login-link'><b><a onClick={this.goLogin}>Already have account, go login</a></b></p>
-                
+
                 <div className='center'><Button waves='orange' className='home-submitbtn' onClick={this.handleModalOpen1}>Sign Up</Button></div>
                 <Dialog
                     header="Verification"

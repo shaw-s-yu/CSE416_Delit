@@ -4,6 +4,8 @@ import ContentEditable from 'react-contenteditable'
 import { Button } from 'react-materialize'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
+import Pagination from '../../tools/Pagination'
+
 
 class PropertyList extends React.Component {
 
@@ -94,7 +96,7 @@ class PropertyList extends React.Component {
                     </tbody>
 
                 </Table>
-                <Button waves='orange' className='load-more-btn'>Load More</Button>
+                <Pagination className="property-list-pagination" size="small" color="secondary" />
             </>
         )
     }

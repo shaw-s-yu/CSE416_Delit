@@ -1,9 +1,9 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
-import Titlebar from '../tools/Titlebar'
+import Titlebar from '../../tools/Titlebar'
 import * as handler from '../../../store/database/WorkScreenHandler';
-import Toolbar from '../tools/Toolbar'
+import Toolbar from '../../tools/Toolbar'
 import TileMap from '../tileset/TileMap'
 
 

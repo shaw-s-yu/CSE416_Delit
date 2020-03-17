@@ -1,11 +1,11 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import Collapsible from '../tools/Collapsible'
+import Collapsible from '../../tools/Collapsible'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import PropertyList from './PropertyList'
 import { connect } from 'react-redux';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import Titlebar from '../tools/Titlebar'
+import Titlebar from '../../tools/Titlebar'
 
 class PropertyWindow extends React.Component {
 

@@ -235,3 +235,8 @@
     text-align: right;
     font-size: 15px;
 }
+
+nav {
+    background-color: unset;
+    box-shadow: unset;
+}
