@@ -78,11 +78,13 @@
 }
 
 .dashboard-searchbutton{
-    margin-left:80%;
+    background-color: rgb(52, 196, 181);
+    color: white;
+    margin-left:87.5%;
     margin-top:-110px;
 }
 .dashboard-searchbutton:hover {
-    background-color: violet !important;
+    background-color: salmon !important;
 }
 
 .dashboard-display{
@@ -109,13 +111,14 @@
 }
 
 .dashboard-itemcard-btn{
-    background-color: red;
+    background-color: white;
+    color: black;
     margin-right: 20px;
     bottom: 10px;
 }
 
 .dashboard-itemcard-btn:hover {
-    background-color: green;
+    background-color: turquoise;
 }
 
 .dashboard-sidebtn{
@@ -130,12 +133,12 @@
 .dashboard-itemcard{
     display: block;
     cursor: pointer;
-    background-color: royalblue;
+    background-color: rgb(52, 196, 181);
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
 
 .dashboard-itemcard:hover {
-    background-color: violet;
+    background-color: salmon;
 }
 
 .navbar {
