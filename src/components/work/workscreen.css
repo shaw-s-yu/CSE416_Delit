@@ -333,6 +333,8 @@ li.active{
     box-shadow: 0 0 1px 1px black;
     transition: ease-in 0.3s;
     cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .layer-list-item:hover {
@@ -341,19 +343,16 @@ li.active{
 }
 
 .layer-item-up-btn{
-    margin-left: calc(100% - 80px);
-    margin-top: -21px;
-    position: absolute;
+    display: inline-block;
+    float: right;
 }
 
 .layer-item-down-btn{
-    margin-left: calc(100% - 56px);
-    margin-top: -21px;
-    position: absolute;
+    display: inline-block;
+    float: right;
 }
 
 .layer-item-delete-btn{
-    margin-left: calc(100% - 32px);
-    margin-top: -21px;
-    position: absolute;
+    display: inline-block;
+    float: right;
 }
