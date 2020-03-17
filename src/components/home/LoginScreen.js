@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loginHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
 import { Redirect } from 'react-router-dom';
-import { Button, TextInput } from 'react-materialize';
+import { TextInput } from 'react-materialize';
 import Dialog from '../modal/Dialog'
-
+import { Grid, Button } from '@material-ui/core'
 
 class LoginScreen extends React.Component {
 
@@ -65,18 +65,40 @@ class LoginScreen extends React.Component {
 
         return (
             <div className="login-form">
-                <div className="grey-text text-darken-3"><div class="loginHeader1">Delit</div></div>
-                <div className="loginHeader2">Account Login</div>
-                <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
-                <TextInput type="password" label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
-                {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
+                <Grid
+                    container
+                    direction="column"
+                >
+                    <Grid Item>
+                        <div className="grey-text text-darken-3">
+                            <div className="loginHeader1">Delit</div>
+                        </div>
+                        <div className="loginHeader2">Account Login</div>
+                    </Grid>
+                    <Grid
+                        item
+                        justify="center"
+                    >
+                        <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
+                        <TextInput type="password" label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
+                        {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
 
-                {/* <li className='login-link' onClick={this.goRegister}>New to Delit? sign up</li>
-                <li className='login-link' onClick={this.handleModalOpen1}>Forget your password?</li>  */}
-                <p className='login-link'><b><a onClick={this.goRegister}>New to Delit? sign up</a></b></p>
-                <p className='login-link'><b><a onClick={this.handleModalOpen1}>Forget your password?</a> </b></p>
+                        <p className='login-link'><b><a onClick={this.goRegister}>New to Delit? sign up</a></b></p>
+                        <p className='login-link'><b><a onClick={this.handleModalOpen1}>Forget your password?</a> </b></p>
+                    </Grid>
+                    <Grid
+                        container
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Button className="home-submitbtn" color="primary" variant="contained" onClick={this.handleSubmit} size="large">
+                            Sign in
+                        </Button>
+                    </Grid>
 
-                <div className='center'><Button waves='orange' className='home-submitbtn' onClick={this.handleSubmit}>Sign in</Button></div>
+
+
+                </Grid>
 
                 <Dialog
                     header="Verification"
