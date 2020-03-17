@@ -5,10 +5,10 @@ class SideNav extends React.Component {
 
   render() {
     const { open } = this.props;
-    const width = open ? 270 : 0;
+    const width = open ? 17 : 0;
     return (
 
-      <div className='dashboard-sidebar' style={{ width: width + "px", whiteSpace: "nowrap" }}>
+      <div className='dashboard-sidebar' style={{ width: width + "%", whiteSpace: "nowrap" }}>
         <Collection>
 
           <CollectionItem><div className='item-text'>Create New Project</div></CollectionItem>
