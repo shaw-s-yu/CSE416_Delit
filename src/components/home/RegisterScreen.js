@@ -62,7 +62,7 @@ class RegisterScreen extends React.Component {
         return (
             <div className="white login-form right">
                 <div className="grey-text text-darken-3"><div class="loginHeader1">Delit</div></div>
-                <h5 className="loginHeader2">Sign up</h5>
+                <div className="loginHeader2">Sign up</div>
                 <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
                 <TextInput type="password" label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
                 <TextInput type="password" label="Enter Your Password" id='password2' value={password2} onChange={this.handleChange} />
