@@ -7,25 +7,38 @@
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
 
+.loginHeader1 {
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(61, 207, 193);
+}
+
+.loginHeader2 {
+    font-size: 30px;
+    text-align: center;
+    color: black;
+}
+
 .login-form{
-    position: absolute;
-    top:20%;
-    left: 65%;
+    position: absolute ;
+    top:25%;
+    left: 35%;
     width: 30%;
     border: 2px solid black;
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
-    padding-right: 5%;
     background-color: white;
 }
 
 .login-link{
     color: #039be5;
     cursor: pointer;
-    margin-left:10%;
+    margin-left:3%;
 }
 
 .login-link:hover{
-    background-color: chartreuse;
+    text-decoration: underline;
+    text-decoration-color: gray;
 }
 
 .home-page{
@@ -41,9 +54,11 @@
 }
 
 .home-submitbtn {
-    margin-top: 20px;
+    margin-top: 15px;
+    font-size: 13px;
 }
 
 .home-submitbtn:hover {
-    background-color: brown;
+    color: white;
+    background-color: rgb(61, 207, 193);
 }
