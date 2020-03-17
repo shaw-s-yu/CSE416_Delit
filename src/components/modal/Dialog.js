@@ -11,7 +11,7 @@ class Dialog extends React.Component {
                 fixedFooter={false}
                 header={this.props.header}
                 open={this.props.open}
-                style={{width:'400px', height:'600px'}}
+                style={{width:'400px', height:'600px', overflow: 'auto'}}
                 options={{
                     dismissible: false,
                     endingTop: '10%',

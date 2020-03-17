@@ -40,6 +40,19 @@ class ItemList extends React.Component {
         this.props.history.push('/project/fwef')
     }
 
+
+    addTextBox = () => {
+        var textBox = document.createElement(TextInput);
+        document.getElementById("textBoxes").appendChild(textBox);
+    }
+
+    removeTextBox = () => {
+        var textBoxesContainer = document.getElementById("textBoxes")
+        textBoxesContainer.children().last().remove()
+
+    }
+
+
     render() {
         const projects = this.props.projects;
         return (
@@ -91,12 +104,15 @@ class ItemList extends React.Component {
                     header="Project1"
                     open={this.state.modelActive2}
                     actions={[
+                        <Button waves="orange" onclik={this.addTextBox}>Add More?</Button>,
+                        <Button waves="orange" onclik={this.removeTextBox}>Remove?</Button>,
                         <Button waves="orange" onClick={this.handleTeamClose2}>Close</Button>
                     ]}
+                    var totalTextbox = '1'
                     content={
-                        <section className="dialog_content">
+                        <section className="dialog_content" id="textBoxes">
                             <p><strong>Please Enter The Email You Want To Invite</strong></p>
-                            <TextInput label="Enter The Email" id='vemail'/>
+                            <TextInput label="Enter The Email" class="input_textbox"/>
                         </section>
                     } />
             </div>
