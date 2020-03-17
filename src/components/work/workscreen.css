@@ -150,7 +150,6 @@
 }
 
 .tileset-zoomin-btn{
-    background-color: red;
     transition: ease-in-out 0.5s;
     position: absolute;
     left:100%;
@@ -165,7 +164,6 @@
 }
 
 .tileset-zoomout-btn{
-    background-color: red;
     transition: ease-in-out 0.5s;
     position: absolute;
     left:100%;
@@ -179,7 +177,6 @@
 }
 
 .tileset-add-btn{
-    background-color: red;
     transition: ease-in-out 0.5s;
     position: absolute;
     margin-left:10px;
@@ -192,7 +189,6 @@
 }
 
 .tileset-delete-btn{
-    background-color: red;
     transition: ease-in-out 0.5s;
     position: absolute;
     margin-left:50px;
@@ -209,10 +205,6 @@
 
 li.active{
     height:70%;
-}
-
-.collapsible-wrap{
-    /* display: flex; */
 }
 
 .collapsible-title{
@@ -242,10 +234,11 @@ li.active{
     cursor: pointer;
 }
 
-.toolbar{
+.map-toolbar{
     height: 40px;
     width: 100%;
     padding-left: 40px;
+    padding-right: 32px;
     overflow: hidden;
 }
 
@@ -258,7 +251,17 @@ li.active{
     cursor: pointer;
 }
 
-.toolbar-cell:hover{
+.toolbar-right-cell{
+    display: inline-block;
+    float: right;
+    padding: 8px 8px;
+    width: 40px;
+    height: 40px;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.toolbar-cell:hover, .toolbar-right-cell:hover{
     background-color: lightskyblue;
     box-shadow: 0 0 2pt 2pt grey;
 }
@@ -274,7 +277,6 @@ li.active{
 .layer-list{
     width: 100%;
     height: calc(100% - 50px);
-    background-color: lightskyblue;
     padding: 5px 5px;
 }
 
@@ -282,12 +284,6 @@ li.active{
 .layer-add-btn{
     margin-top: 5px;
     margin-left: 10px;
-    
-    
-    
-    background-color: red;
-    
-    
 }
 
 .better-btn{
@@ -329,7 +325,6 @@ li.active{
 
 .btn-disabled:hover{
     box-shadow: none !important;
-
 }
 
 .layer-list-item {

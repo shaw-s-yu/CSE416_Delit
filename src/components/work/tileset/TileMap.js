@@ -39,10 +39,6 @@ class TileMap extends React.Component {
         return (
             <div className={className}>
 
-                <i className="fas fa-search-plus tileset-zoomin-btn better-btn red" />
-                <i className="fas fa-search-minus tileset-zoomout-btn better-btn red" />
-                <i className="fas fa-trash-alt tileset-delete-btn better-btn red" />
-
                 <div className="display-place" onMouseDown={this.handleUnselect}>
 
                     <Canvas canvas={this.canvas} className="map" style={{

@@ -69,6 +69,7 @@ class PropertyList extends React.Component {
                                             <ContentEditable
                                                 innerRef={property.nref}
                                                 onChange={this.handleChange.bind(this, index, 'name')}
+                                                onMouseDown={e => e.stopPropagation()}
                                                 html={property.name}
                                                 disabled={false}
                                                 className="property-input"
@@ -79,6 +80,7 @@ class PropertyList extends React.Component {
                                             <ContentEditable
                                                 innerRef={property.vref}
                                                 onChange={this.handleChange.bind(this, index, 'value')}
+                                                onMouseDown={e => e.stopPropagation()}
                                                 html={property.value}
                                                 disabled={false}
                                                 className="property-input"

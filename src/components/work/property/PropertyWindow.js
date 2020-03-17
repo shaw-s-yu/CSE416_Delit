@@ -65,8 +65,8 @@ class PropertyWindow extends React.Component {
                     waves="light"
                     onClick={this.handleDelete}
                 /> */}
-                <i className={"fas fa-trash-alt property-clear-btn better-btn red " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={e => e.stopPropagation()} />
-                <i className={"fas fa-plus property-add-btn better-btn red "} onClick={this.props.handleSidebarOpen} />
+                <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={e => e.stopPropagation()} />
+                <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} />
 
             </Rnd>
 

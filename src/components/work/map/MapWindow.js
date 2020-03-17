@@ -3,7 +3,7 @@ import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
 import Titlebar from '../tools/Titlebar'
 import * as handler from '../../../store/database/WorkScreenHandler';
-import Toolbar from './Toolbar'
+import Toolbar from '../tools/Toolbar'
 import TileMap from '../tileset/TileMap'
 
 
@@ -31,6 +31,7 @@ class MapWindow extends React.Component {
             >
                 <Titlebar title="Map Window" />
                 <Toolbar
+                    className="map-toolbar"
                     content={[
                         <i className="fas fa-undo" style={{ fontSize: '24px' }} />,
                         <i className="fas fa-redo" style={{ fontSize: '24px' }} />,
@@ -40,7 +41,12 @@ class MapWindow extends React.Component {
                         <i className="fas fa-stamp" style={{ fontSize: '24px' }} />,
                         <i className="fas fa-eraser" style={{ fontSize: '24px' }} />,
                         <i className="fas fa-fill" style={{ fontSize: '24px' }} />,
-                    ]} />
+                    ]}
+                    rightContent={[
+                        <i className="fas fa-search-minus" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-search-plus" style={{ fontSize: '24px' }} />,
+                    ]}
+                />
                 <TileMap className="map-window-display" />
             </Rnd>
 

@@ -17,9 +17,9 @@ class LayerWindow extends React.Component {
                             <div className='layer-list-item'>
                                 {layer.name}
                             </div>
-                            <i className="fas fa-arrow-up layer-add-btn better-btn layer-item-up-btn" />
-                            <i className="fas fa-arrow-down layer-add-btn better-btn layer-item-down-btn" />
-                            <i className="fas fa-trash-alt layer-add-btn better-btn layer-item-delete-btn" />
+                            <i className="fas fa-arrow-up better-btn layer-item-up-btn" />
+                            <i className="fas fa-arrow-down better-btn layer-item-down-btn" />
+                            <i className="fas fa-trash-alt better-btn layer-item-delete-btn" />
                         </>
                     )
                 })}
