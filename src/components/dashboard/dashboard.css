@@ -1,4 +1,9 @@
-
+.logo {
+    color:turquoise;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+}
 
 .dashboard-sideItem {
     width:100%;
@@ -9,13 +14,16 @@
 }
 
 .dashboard-sidebar {
+    text-align: center;
+    color: white;
+    font-weight: bold;
     margin-top:8px;
     height:70%;
     width: 20%;
     position: absolute;
     overflow-x: hidden;
     transition: 0.5s;
-    background-color: lightblue;
+    background-color: rgb(52, 196, 181);
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
 
@@ -23,6 +31,11 @@
     width: 60%;
     background-color: aliceblue;
     transition: 0.5s;
+}
+
+.dashboard-top-navbar{
+    color: whitesmoke;
+    text-align: center;
 }
 
 .text-center{
@@ -54,7 +67,7 @@
 
 .collection-item:hover{
     color:white;
-    background-color: royalblue;
+    background-color: salmon;
 
 }
 
@@ -65,11 +78,13 @@
 }
 
 .dashboard-searchbutton{
-    margin-left:80%;
+    background-color: rgb(52, 196, 181);
+    color: white;
+    margin-left:87.5%;
     margin-top:-110px;
 }
 .dashboard-searchbutton:hover {
-    background-color: violet !important;
+    background-color: salmon !important;
 }
 
 .dashboard-display{
@@ -96,13 +111,14 @@
 }
 
 .dashboard-itemcard-btn{
-    background-color: red;
+    background-color: white;
+    color: black;
     margin-right: 20px;
     bottom: 10px;
 }
 
 .dashboard-itemcard-btn:hover {
-    background-color: green;
+    background-color: turquoise;
 }
 
 .dashboard-sidebtn{
@@ -117,12 +133,12 @@
 .dashboard-itemcard{
     display: block;
     cursor: pointer;
-    background-color: royalblue;
+    background-color: rgb(52, 196, 181);
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
 
 .dashboard-itemcard:hover {
-    background-color: violet;
+    background-color: salmon;
 }
 
 .navbar {
@@ -130,7 +146,7 @@
 }
 
 .side-create-btn{
-    background-color: red;
+    background-color: rgb(52, 196, 181);
     width: 70%;
     font-size: xx-small;
     padding: 0;
@@ -138,21 +154,19 @@
     white-space: nowrap;
 }
 
-.side-clear-btn:hover{
-    background-color: salmon;
-}
-
 .side-clear-btn{
-    background-color: red;
+    align-content: center center;
+    background-position: center;
+    background-color:salmon;
     top: 0.5rem;
     margin-right: 1rem;
+    text-align: center;
     transition: ease-in 0.5s;
 }
 
 .side-clear-btn:hover{
-    background-color: salmon;
+    background-color: turquoise;
 }
-
 
 .dialogHeader {
     text-align: center;
