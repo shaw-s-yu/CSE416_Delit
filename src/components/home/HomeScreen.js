@@ -52,7 +52,7 @@ class HomeScreen extends React.Component {
         return (
 
             <div className="home-page">
-                <img className="delit-logo left" src={logo} alt="" ></img>
+                {/* <img className="delit-logo left" src={logo} alt="" ></img> */}
                 {this.getScreen()}
             </div>
 

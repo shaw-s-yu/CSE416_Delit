@@ -1,22 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.dc90ff1e.chunk.css",
-    "main.js": "/static/js/main.3f7b142d.chunk.js",
-    "main.js.map": "/static/js/main.3f7b142d.chunk.js.map",
+    "main.css": "/static/css/main.00549164.chunk.css",
+    "main.js": "/static/js/main.e3c114d4.chunk.js",
+    "main.js.map": "/static/js/main.e3c114d4.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.de987c7b.js",
     "runtime-main.js.map": "/static/js/runtime-main.de987c7b.js.map",
     "static/css/2.703eff56.chunk.css": "/static/css/2.703eff56.chunk.css",
-    "static/js/2.c16163f4.chunk.js": "/static/js/2.c16163f4.chunk.js",
-    "static/js/2.c16163f4.chunk.js.map": "/static/js/2.c16163f4.chunk.js.map",
+    "static/js/2.873edaa0.chunk.js": "/static/js/2.873edaa0.chunk.js",
+    "static/js/2.873edaa0.chunk.js.map": "/static/js/2.873edaa0.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.b777d318c5c8d122a9b272343ff1c91d.js": "/precache-manifest.b777d318c5c8d122a9b272343ff1c91d.js",
+    "precache-manifest.2b30f4495e128de8b91af39ad1312f48.js": "/precache-manifest.2b30f4495e128de8b91af39ad1312f48.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.703eff56.chunk.css.map": "/static/css/2.703eff56.chunk.css.map",
-    "static/css/main.dc90ff1e.chunk.css.map": "/static/css/main.dc90ff1e.chunk.css.map",
-    "static/js/2.c16163f4.chunk.js.LICENSE.txt": "/static/js/2.c16163f4.chunk.js.LICENSE.txt",
-    "static/media/Project_Logo.PNG": "/static/media/Project_Logo.14dc221b.PNG",
+    "static/css/main.00549164.chunk.css.map": "/static/css/main.00549164.chunk.css.map",
+    "static/js/2.873edaa0.chunk.js.LICENSE.txt": "/static/js/2.873edaa0.chunk.js.LICENSE.txt",
+    "static/media/Project_Logo.PNG": "/static/media/Project_Logo.549c7d2d.PNG",
     "static/media/home_page.css": "/static/media/Sketch003.cf7c36fc.jpg",
-    "static/media/css.css": "/static/media/UMBXrPdOoHOnxExyjdBeaiPdA4M5.e12c9c5a.woff2",
     "static/media/mdb.css": "/static/media/arrow_right.8ef6a08c.svg",
     "static/media/all.min.css": "/static/media/fa-solid-900.cdfec5cf.woff",
     "static/media/squirtle.jpg": "/static/media/squirtle.24d233b5.jpg"
@@ -24,8 +23,8 @@
   "entrypoints": [
     "static/js/runtime-main.de987c7b.js",
     "static/css/2.703eff56.chunk.css",
-    "static/js/2.c16163f4.chunk.js",
-    "static/css/main.dc90ff1e.chunk.css",
-    "static/js/main.3f7b142d.chunk.js"
+    "static/js/2.873edaa0.chunk.js",
+    "static/css/main.00549164.chunk.css",
+    "static/js/main.e3c114d4.chunk.js"
   ]
 }
