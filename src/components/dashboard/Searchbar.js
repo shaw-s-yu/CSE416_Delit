@@ -15,8 +15,8 @@ class Searchbar extends React.Component {
                         width: width + "%",
                     }}>
                     <TextInput label="Enter search" />
+                    <Button type="submit" waves='orange' className="dashboard-searchbutton">Search</Button>
                 </div>
-                <Button type="submit" waves='orange' className="dashboard-searchbutton">Search</Button>
             </div>
 
         )
