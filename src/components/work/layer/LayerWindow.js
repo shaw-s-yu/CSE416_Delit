@@ -18,6 +18,10 @@ class LayerWindow extends React.Component {
         })
     }
 
+    handleChange = (e) =>{
+
+    }
+
     render() {
         const { size, position } = this.props.window
         return (
@@ -32,7 +36,7 @@ class LayerWindow extends React.Component {
                 <LayerList />
                 <i className="fas fa-plus layer-add-btn better-btn" />
                 <span className="opacity-text">OPACITY</span>
-                <div className="layer-range"> <RangeSlider /></div>
+                <div className="layer-range"> <RangeSlider onMouseDown={e=>e.stopPropagation()} onChange={this.onChangehandler}/></div>
             </Rnd>
 
         )

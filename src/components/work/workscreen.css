@@ -134,7 +134,7 @@
     margin-top: -40px;
     width: 24px !important;
     height: 24px !important;
-    padding-left: 4px !important;
+    padding-left: 5px !important;
     padding-top: 4px !important;
 }
 
@@ -145,7 +145,7 @@
     margin-top: -40px;
     width: 24px !important;
     height: 24px !important;
-    padding-left: 4px !important;
+    padding-left: 5px !important;
     padding-top: 4px !important;
 }
 
@@ -187,7 +187,7 @@
     margin-top: -40px;
     width: 24px !important;
     height: 24px !important;
-    padding-left: 4px !important;
+    padding-left: 5px !important;
     padding-top: 4px !important;
 }
 
@@ -275,6 +275,7 @@ li.active{
     width: 100%;
     height: calc(100% - 50px);
     background-color: lightskyblue;
+    padding: 5px 5px;
 }
 
 
@@ -328,5 +329,36 @@ li.active{
 
 .btn-disabled:hover{
     box-shadow: none !important;
-    
+
+}
+
+.layer-list-item {
+    margin-top: 5px;
+    background-color:white;
+    box-shadow: 0 0 1px 1px black;
+    transition: ease-in 0.3s;
+    cursor: pointer;
+}
+
+.layer-list-item:hover {
+    box-shadow: 0 0 2px 2px black;
+    background-color: burlywood;
+}
+
+.layer-item-up-btn{
+    margin-left: calc(100% - 80px);
+    margin-top: -21px;
+    position: absolute;
+}
+
+.layer-item-down-btn{
+    margin-left: calc(100% - 56px);
+    margin-top: -21px;
+    position: absolute;
+}
+
+.layer-item-delete-btn{
+    margin-left: calc(100% - 32px);
+    margin-top: -21px;
+    position: absolute;
 }

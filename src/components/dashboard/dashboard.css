@@ -135,6 +135,7 @@
     font-size: xx-small;
     padding: 0;
     transition: ease-in 0.5s;
+    white-space: nowrap;
 }
 
 .side-clear-btn:hover{

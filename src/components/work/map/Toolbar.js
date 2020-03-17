@@ -7,9 +7,9 @@ class Titlebar extends React.Component {
         return (
             <div className='toolbar'>
                 {
-                    content && content.map(c => {
+                    content && content.map((c,i) => {
                         return (
-                            <div className="toolbar-cell">
+                            <div className="toolbar-cell" key={i}>
                                 {c}
                             </div>
                         )

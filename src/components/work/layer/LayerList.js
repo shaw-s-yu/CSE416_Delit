@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button } from 'react-materialize'
 
 
 class LayerWindow extends React.Component {
@@ -7,9 +8,21 @@ class LayerWindow extends React.Component {
 
 
     render() {
+        const { layers } = this.props
         return (
             <div className="layer-list">
-
+                {layers && layers.map(layer => {
+                    return (
+                        <>
+                            <div className='layer-list-item'>
+                                {layer.name}
+                            </div>
+                            <i className="fas fa-arrow-up layer-add-btn better-btn layer-item-up-btn" />
+                            <i className="fas fa-arrow-down layer-add-btn better-btn layer-item-down-btn" />
+                            <i className="fas fa-trash-alt layer-add-btn better-btn layer-item-delete-btn" />
+                        </>
+                    )
+                })}
             </div>
 
         )
@@ -18,9 +31,13 @@ class LayerWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { layer } = state.workScreen
+    const layers = [
+        { name: "backgroud layer", },
+        { name: "block layer", },
+        { name: "dummy layer", },
+    ]
     return {
-        window: layer,
+        layers: layers
     }
 };
 
