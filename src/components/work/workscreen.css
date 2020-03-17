@@ -328,6 +328,7 @@ li.active{
 }
 
 .layer-list-item {
+    height: 20px;
     margin-top: 5px;
     background-color:white;
     box-shadow: 0 0 1px 1px black;
@@ -340,6 +341,14 @@ li.active{
 .layer-list-item:hover {
     box-shadow: 0 0 2px 2px black;
     background-color: burlywood;
+}
+
+.layer-item-btn-box{
+    margin-top: -20px;
+    margin-left: calc(100% - 60px);
+    width: 60px;
+    height: 20px;
+    display: absolute;
 }
 
 .layer-item-up-btn{
