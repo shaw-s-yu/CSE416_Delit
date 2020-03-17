@@ -48,14 +48,7 @@ class TilesetWindow extends React.Component {
                     maxHeight='265px'
                 />
 
-                <Button small
-                    waves="red"
-                    node="button"
-                    className="tilest-add-btn"
-                    floating
-                    icon={<Icon>add</Icon>}
-                    onMouseDown={e => e.stopPropagation()}>
-                </Button>
+                <i className="fas fa-plus tileset-add-btn better-btn red" />
 
             </Rnd>
 

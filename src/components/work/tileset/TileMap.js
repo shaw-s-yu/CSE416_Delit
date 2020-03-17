@@ -38,34 +38,10 @@ class TileMap extends React.Component {
         const { className } = this.props
         return (
             <div className={className}>
-                <Button small
-                    waves="light"
-                    node="button"
-                    className="tilest-zoomin-btn"
-                    floating
-                    icon={<Icon>zoom_in</Icon>}
-                    onClick={this.handleZoomIn}
-                    onMouseDown={e => e.stopPropagation()}>
-                </Button>
 
-                <Button small
-                    waves="red"
-                    node="button"
-                    className="tilest-zoomout-btn"
-                    floating
-                    icon={<Icon>zoom_out</Icon>}
-                    onClick={this.handleZoomOut}
-                    onMouseDown={e => e.stopPropagation()}>
-                </Button>
-
-                <Button small
-                    waves="red"
-                    node="button"
-                    className="tilest-delete-btn"
-                    floating
-                    icon={<Icon>clear</Icon>}
-                    onMouseDown={e => e.stopPropagation()}>
-                </Button>
+                <i className="fas fa-search-plus tileset-zoomin-btn better-btn red" />
+                <i className="fas fa-search-minus tileset-zoomout-btn better-btn red" />
+                <i className="fas fa-trash-alt tileset-delete-btn better-btn red" />
 
                 <div className="display-place" onMouseDown={this.handleUnselect}>
 
