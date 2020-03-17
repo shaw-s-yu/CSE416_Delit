@@ -366,3 +366,7 @@ li.active{
     display: inline-block;
     float: right;
 }
+
+body{
+    background-color: lightblue;
+}
