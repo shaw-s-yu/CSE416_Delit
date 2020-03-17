@@ -1,14 +1,17 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
-import RangeSlider from 'react-bootstrap-range-slider';
 import Titlebar from '../tools/Titlebar'
 import LayerList from './LayerList'
 import * as handler from '../../../store/database/WorkScreenHandler';
+import InputRange from 'react-input-range';
+
 
 class LayerWindow extends React.Component {
 
-    state = {}
+    state = {
+        value: { min: 2, max: 10 },
+    };
 
     handleOnResize = (e, direction, ref, delta, position) => {
         this.props.handleToTop('layer');
@@ -18,7 +21,7 @@ class LayerWindow extends React.Component {
         })
     }
 
-    handleChange = (e) =>{
+    handleChange = (e) => {
 
     }
 
@@ -36,7 +39,14 @@ class LayerWindow extends React.Component {
                 <LayerList />
                 <i className="fas fa-plus layer-add-btn better-btn" />
                 <span className="opacity-text">OPACITY</span>
-                <div className="layer-range"> <RangeSlider onMouseDown={e=>e.stopPropagation()} onChange={this.onChangehandler}/></div>
+                <div className="layer-range">
+
+                </div>
+                <InputRange
+                    maxValue={20}
+                    minValue={0}
+                    value={this.state.value}
+                    onChange={value => this.setState({ value })} />
             </Rnd>
 
         )

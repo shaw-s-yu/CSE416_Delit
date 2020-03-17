@@ -5,8 +5,8 @@ import { TextInput, Button } from 'react-materialize'
 class Searchbar extends React.Component {
 
     render() {
-        const left = this.props.open ? 350 : 100;
-        const width = this.props.open ? 55 : 75;
+        const left = this.props.open ? 350 : 0;
+        const width = this.props.open ? 55 : 100;
         return (
             <div>
                 <div className="dashboard-search" style={
