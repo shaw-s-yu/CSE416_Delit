@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button, TextInput } from 'react-materialize'
 import { connect } from 'react-redux';
-import Dialog from '../modal/Dialog'
+import Dialog from '../tools/Dialog'
 
 const images = [
     {

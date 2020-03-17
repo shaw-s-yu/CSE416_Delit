@@ -6,6 +6,9 @@ import { TextInput } from 'react-materialize';
 import Dialog from '../modal/Dialog'
 import { Grid, Button } from '@material-ui/core'
 
+import Dialog from '../tools/Dialog'
+
+
 class LoginScreen extends React.Component {
 
     state = {

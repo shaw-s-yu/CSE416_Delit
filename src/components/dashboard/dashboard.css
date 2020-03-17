@@ -73,16 +73,15 @@
 }
 
 .collection {
-    border: none;
-    margin-top: 1rem;
-    
+    border: none;    
 }
 
 .dashboard-searchbutton{
     background-color: rgb(52, 196, 181);
     color: white;
-    margin-left:70vw;
-    margin-top:-110px;
+    position: absolute;
+    left:90%;
+    margin-top: -60px;
     padding-left: 0.5vw;
     padding-right: 0.5vw;
     font-size: 12px;
@@ -233,4 +232,9 @@
     width: calc(100% - 100px);
     text-align: right;
     font-size: 15px;
+}
+
+nav {
+    background-color: unset;
+    box-shadow: unset;
 }

@@ -366,3 +366,19 @@ li.active{
     display: inline-block;
     float: right;
 }
+
+body{
+    background-color: lightblue;
+}
+
+.property-list-pagination{
+    background-color: none;
+}
+
+.MuiPagination-root{
+    background-color: none !important;
+}
+
+nav {
+    background-color: unset !important;
+}

@@ -3,8 +3,8 @@ import { Rnd } from 'react-rnd';
 import TileMap from './TileMap'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
-import Titlebar from '../tools/Titlebar'
-import Collapsible from '../tools/Collapsible'
+import Titlebar from '../../tools/Titlebar'
+import Collapsible from '../../tools/Collapsible'
 
 class TilesetWindow extends React.Component {
 
