@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Titlebar from '../tools/Titlebar'
 import LayerList from './LayerList'
 import * as handler from '../../../store/database/WorkScreenHandler';
-import InputRange from 'react-input-range';
 
 
 class LayerWindow extends React.Component {
@@ -42,11 +41,6 @@ class LayerWindow extends React.Component {
                 <div className="layer-range">
 
                 </div>
-                <InputRange
-                    maxValue={20}
-                    minValue={0}
-                    value={this.state.value}
-                    onChange={value => this.setState({ value })} />
             </Rnd>
 
         )
