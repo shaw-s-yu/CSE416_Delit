@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap'
 import ContentEditable from 'react-contenteditable'
-import { Button } from 'react-materialize'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
 import Pagination from '../../tools/Pagination'
