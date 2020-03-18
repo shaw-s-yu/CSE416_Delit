@@ -112,7 +112,7 @@ class RegisterScreen extends React.Component {
                         </Grid>
                     }
                     open={this.state.modelActive1}
-                    maxWidth="sm"
+                    maxWidth="md"
                     fullWidth="true"
                     actions={[
                         <Grid
