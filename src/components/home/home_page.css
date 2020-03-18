@@ -61,7 +61,7 @@
 }
 
 .home-submitbtn:hover {
-    background-color: tomato !important;
+    background-color: salmon !important;
 }
 
 .home-dialog-subBtn {
@@ -71,5 +71,5 @@
 }
 
 .home-dialog-subBtn:hover {
-    background-color: tomato !important;
+    background-color: salmon !important;
 }
