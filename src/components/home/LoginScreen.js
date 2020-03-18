@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import { loginHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
 import { Redirect } from 'react-router-dom';
 import { TextInput } from 'react-materialize';
-import Dialog from '../modal/Dialog'
 import { Grid, Button } from '@material-ui/core'
-
 import Dialog from '../tools/Dialog'
 
 
