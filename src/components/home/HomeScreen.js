@@ -1,7 +1,6 @@
 import React from 'react';
 import LoginScreen from './LoginScreen';
 import RegisterScreen from './RegisterScreen';
-import logo from '../../img/Project_Logo.PNG';
 import './home_page.css'
 
 

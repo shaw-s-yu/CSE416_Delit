@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Nav, Navbar } from 'react-bootstrap'
 import SideNav from './SideNav'
 import { Icon } from 'react-materialize'
 
@@ -12,18 +12,12 @@ class TopNavbar extends React.Component {
         const { open } = this.props;
         return (
             <>
-                <Navbar class="dashboard-top-navbar" bg="white" expand="lg">
+                <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
                     <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><Icon>list</Icon></Navbar.Brand>
-                    <Navbar.Brand href="/dashboard"> <div class="logo" >Delit</div></Navbar.Brand>
+                    <Navbar.Brand href="/dashboard"> <div className="logo" >Delit</div></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            {/* <Nav.Link>Team</Nav.Link>
-                            <NavDropdown title="File" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            </NavDropdown> */}
                         </Nav>
                         <Navbar.Brand href="/">Log Out</Navbar.Brand>
                     </Navbar.Collapse>

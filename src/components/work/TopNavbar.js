@@ -8,7 +8,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
-import { FormGroup, FormControlLabel,} from "@material-ui/core";
+import { FormControlLabel, } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -27,7 +27,6 @@ function TopNavbar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorEl2, setAnchorEl2] = React.useState(null);
     const [anchorEl3, setAnchorEl3] = React.useState(null);
-    const [setChecked] = React.useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -53,9 +52,6 @@ function TopNavbar() {
         setAnchorEl3(null);
     };
 
-    const handleChange = event => {
-        setChecked(event.target.checked);
-    };
 
     return (
         <div className={classes.root} >
@@ -104,23 +100,23 @@ function TopNavbar() {
                             >
                                 <MenuItem>
                                     <FormControlLabel
-                                        control={<Checkbox  />}
+                                        control={<Checkbox />}
                                         label="Show property window"
                                     />
                                 </MenuItem>
                                 <MenuItem>
-                                <FormControlLabel
-                                    control={<Checkbox   value="jason" />}
-                                    label="Show layers window"
-                                />
+                                    <FormControlLabel
+                                        control={<Checkbox value="jason" />}
+                                        label="Show layers window"
+                                    />
                                 </MenuItem>
                                 <MenuItem>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox   value="antoine" />
-                                    }
-                                    label="Show tile sets window"
-                                />
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox value="antoine" />
+                                        }
+                                        label="Show tile sets window"
+                                    />
                                 </MenuItem>
                             </Menu>
                         </Grid>
