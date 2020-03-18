@@ -61,7 +61,7 @@ function TopNavbar() {
         <div className={classes.root} >
             <AppBar position="static" className={classes.root}>
                 <Toolbar>
-                    <Typography variant="h5" className={classes.logo}>
+                    <Typography variant="h3" className={classes.logo}>
                         <a href="/dashboard" className=" nav-title">DELIT</a>
                     </Typography>
                     <Grid
@@ -72,7 +72,9 @@ function TopNavbar() {
                     >
                         <Grid item>
                             <Button aria-haspopup="true" onClick={handleClick}>
-                                File
+                                <Typography variant="h5" gutterBottom>
+                                    File
+                                </Typography>
                             </Button>
                             <Menu
                                 id="map-file"
@@ -89,7 +91,9 @@ function TopNavbar() {
                         </Grid>
                         <Grid item>
                             <Button aria-haspopup="true" onClick={handleClick2}>
-                                View
+                                <Typography variant="h5" gutterBottom>
+                                    View
+                                </Typography>
                             </Button>
                             <Menu
                                 id="map-view"
@@ -122,7 +126,9 @@ function TopNavbar() {
                         </Grid>
                         <Grid item>
                             <Button aria-haspopup="true" onClick={handleClick3}>
-                                Edit
+                                <Typography variant="h5" gutterBottom>
+                                    Edit
+                                </Typography>
                             </Button>
                             <Menu
                                 id="map-edit"
@@ -137,7 +143,11 @@ function TopNavbar() {
                         </Grid>
                     </Grid>
 
-                    <Button color="inherit" href="/">Logout</Button>
+                    <Button color="inherit" href="/">
+                        <Typography variant="h5" gutterBottom>
+                            Logout
+                        </Typography>
+                    </Button>
                 </Toolbar>
             </AppBar>
         </div>
