@@ -57,9 +57,11 @@
     font-size: 25px;
     width: 300px;
     height: 40px;
+    padding-bottom: 40px;
 }
 
-.home-submitbtn:hover {
-    color: white;
-    background-color:  turquoise !important;
+.home-dialog-subBtn {
+    font-size: 15px;
+    width: 150px;
+    height: 40px;
 }

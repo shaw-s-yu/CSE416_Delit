@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { loginHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
 import { Redirect } from 'react-router-dom';
 import { TextInput } from 'react-materialize';
-import { Grid, Button } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import Dialog from '../tools/Dialog'
-
+import Typography from "@material-ui/core/Typography";
+import { Button} from "react-bootstrap";
+import TextField from '@material-ui/core/TextField';
 
 class LoginScreen extends React.Component {
 
@@ -92,50 +94,95 @@ class LoginScreen extends React.Component {
                         justify="center"
                         alignItems="center"
                     >
-                        <Button className="home-submitbtn" color="primary" variant="contained" onClick={this.handleSubmit} size="large">
+                        <Button className="home-submitbtn" variant="primary" onClick={this.handleSubmit} type="submit" >
                             Sign in
                         </Button>
                     </Grid>
-
-
-
                 </Grid>
 
                 <Dialog
-                    header="Verification"
+                    header={
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Typography variant="h5" gutterBottom align="justify">
+                                Verification
+                            </Typography>
+                        </Grid>
+                    }
                     open={this.state.modelActive1}
+                    maxWidth="sm"
+                    fullWidth="true"
                     actions={[
-                        <Button onClick={this.handleModalOpen2} color="primary">Submit</Button>,
-                        <Button onClick={this.handleModalClose1} color="primary">Cancel</Button>,
+                        <Grid
+                            container
+                            direction="row"
+                            justify="space-evenly"
+                            alignItems="center"
+                        >,
+                            <Button className="home-dialog-subBtn" onClick={this.handleModalOpen2} variant="primary" size="lg">Submit</Button>,
+                            <Button className="home-dialog-subBtn" onClick={this.handleModalClose1} variant="primary" size="lg">Cancel</Button>,
+                        </Grid>
                     ]}
                     content={
-                        <section className="dialog_content">
-                            <p><strong>Please Enter Your Email</strong></p>
-                            <p>We will send you a verification code</p>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Typography variant="subtitle1" gutterBottom>
+                                Please Enter Your Email
+                            </Typography>
+                            <Typography variant="subtitle1" gutterBottom>
+                                We will send you a verification code
+                            </Typography>
                             <TextInput label="Enter Your Email" id='vemail' value={vemail} onChange={this.handleChange} />
-                        </section>
+                        </Grid>
                     } />
 
                 <Dialog
-                    header="Reset Password"
+                    header={
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Typography variant="h5" gutterBottom align="justify">
+                                Reset Password
+                            </Typography>
+                        </Grid>
+                    }
+                    maxWidth="md"
+                    fullWidth="true"
                     open={this.state.modelActive2}
                     actions={[
-                        <Button onClick={this.handleModalClose2} color="primary">Submit</Button>,
-                        <Button onClick={this.handleModalClose2} color="primary">Close</Button>
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Submit</Button>,
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Close</Button>
                     ]}
                     content={
-                        <section className="dialog_content">
-                            <p><strong>We have sent you a verification code</strong></p>
-                            <TextInput label="Enter Your Verification Code" id='vcode' value={vcode}
-                                onChange={this.handleChange} />
-                            <Button onClick={this.handleResend} color="primary" variant="contained"> Resend <span style={{ color: "red" }}> (60s) </span> </Button>
-                            <p><strong>Password</strong></p>
-                            <TextInput label="Enter Your New Password" id='vpass' value={vpass}
-                                onChange={this.handleChange} />
-                            <p><strong>Password</strong></p>
-                            <TextInput label="Confirm Your New Password" id='vpass2' value={vpass2}
-                                onChange={this.handleChange} />
-                        </section>
+                       <section className="dialog_content">
+                            <Grid
+                            container
+                            justify="center"
+                            alignItems="center"
+                            >
+                                <Typography variant="subtitle1" gutterBottom>
+                                    <strong>We have sent you a verification code</strong>
+                                </Typography>
+                            </Grid>
+                                <TextInput label="Enter Your Verification Code" id='vcode' value={vcode}
+                                    onChange={this.handleChange} />
+                                <Button onClick={this.handleResend} variant="info" style={{ textTransform: "none"}}> Resend <span style={{ color: "red" }}> (60s) </span> </Button>
+                                <TextInput label="Enter Your New Password" id='vpass' value={vpass}
+                                    onChange={this.handleChange} />
+                                <TextInput label="Confirm Your New Password" id='vpass2' value={vpass2}
+                                    onChange={this.handleChange} />
+                       </section>
                     } />
             </div>
         );
