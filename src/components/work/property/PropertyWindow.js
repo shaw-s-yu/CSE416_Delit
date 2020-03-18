@@ -10,10 +10,6 @@ import Titlebar from '../../tools/Titlebar'
 class PropertyWindow extends React.Component {
 
     state = {
-        columns: [
-            { title: 'Property', field: 'property' },
-            { title: 'Value', field: 'value' },
-        ]
     }
 
     handleOnResize = (e, direction, ref, delta, position) => {
@@ -50,8 +46,8 @@ class PropertyWindow extends React.Component {
                 <Collapsible data={
                     [
                         { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
-                        { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: false },
-                        { title: 'Show Mini Map', content: <MiniMap data={minimap} window='minimap' />, open: true },
+                        { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
+                        { title: 'Show Mini Map', content: <MiniMap data={minimap} window='minimap' />, open: false },
                     ]
                 }
                     maxHeight='265px'
