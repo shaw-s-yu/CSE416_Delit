@@ -6,10 +6,17 @@ import PropertyList from './PropertyList'
 import { connect } from 'react-redux';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Titlebar from '../../tools/Titlebar'
-
+import { Typography } from "@material-ui/core";
+import {ExpansionPanelSummary, ExpansionPanel, ExpansionPanelDetails} from "@material-ui/core";
+import PropertyTable from "./PropertyTable";
+import { ExpandMore } from '@material-ui/icons';
 class PropertyWindow extends React.Component {
 
     state = {
+        columns: [
+            { title: 'Property', field: 'property' },
+            { title: 'Value', field: 'value' },
+        ]
     }
 
     handleOnResize = (e, direction, ref, delta, position) => {
@@ -28,7 +35,6 @@ class PropertyWindow extends React.Component {
     render() {
         const { size, position } = this.props.window
         const { layer, map, selected } = this.props
-
         return (
 
             <Rnd
@@ -44,16 +50,21 @@ class PropertyWindow extends React.Component {
                 minHeight={391}
             >
                 <Titlebar title="Property Window" />
-                <Collapsible data={
-                    [
-                        { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
-                        { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
-                    ]
-                }
-                    maxHeight='265px'
-                />
-                <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={this.props.handleStopPropagation} />
-                <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} onMouseDown={this.props.handleStopPropagation} />
+                <ExpansionPanel>
+                    <ExpansionPanelSummary
+                        expandIcon={<ExpandMore />}
+                        aria-controls="layerPanel-content"
+                        id="layerPanel-header"
+                    >
+                        <Typography>Map</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography>
+                            <PropertyTable/>
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+
 
             </Rnd>
 
@@ -82,3 +93,16 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyWindow)
+
+
+// <Titlebar title="Property Window" />
+//     <Collapsible data={
+//         [
+//             { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
+//             { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
+//         ]
+//     }
+//     maxHeight='265px'
+// />
+// <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={this.props.handleStopPropagation} />
+// <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} onMouseDown={this.props.handleStopPropagation} />
