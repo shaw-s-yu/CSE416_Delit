@@ -47,7 +47,7 @@ class TilesetWindow extends React.Component {
                     maxHeight='265px'
                 />
 
-                <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={this.props.handleStopPropagation} />
+                <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={this.props.handleStopPropagation} onClick={this.props.handleGoPaint} />
                 <i className="fas fa-search-plus tileset-zoomin-btn better-btn " onMouseDown={this.props.handleStopPropagation} />
                 <i className="fas fa-search-minus tileset-zoomout-btn better-btn " onMouseDown={this.props.handleStopPropagation} />
                 <i className="fas fa-trash-alt tileset-delete-btn better-btn " onMouseDown={this.props.handleStopPropagation} />

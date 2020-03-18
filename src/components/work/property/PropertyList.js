@@ -96,7 +96,7 @@ class PropertyList extends React.Component {
                     </tbody>
 
                 </Table>
-                <Pagination className="property-list-pagination" size="small" color="secondary" />
+                <Pagination className="property-list-pagination center" size="small" color="secondary" />
             </>
         )
     }
