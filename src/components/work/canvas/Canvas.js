@@ -33,11 +33,21 @@ class Canvas extends React.Component {
         e.stopPropagation();
         let rect = this.canvas.current.getBoundingClientRect()
         let { left, top, width, height } = rect;
+        const { numColumn, numRow } = this.state;
         let clickX = e.clientX - left
         let clickY = e.clientY - top
         let gridWidth = width / this.state.numColumn
         let gridHeight = height / this.state.numRow
         let selected = this.getGridIndex(clickX, clickY, gridWidth, gridHeight)
+        const { x, y } = selected;
+        // selected = {
+        //     ...selected,
+        //     left: left + width / numColumn * x,
+        //     top: top + top / numRow * y,
+        //     width: width / numColumn,
+        //     height: height / numRow,
+        // }
+        selected = null
         this.props.handleSelect(selected);
         console.log(left, top, width, height)
 
@@ -59,14 +69,15 @@ class Canvas extends React.Component {
     render = () => {
         const { numColumn, numRow } = this.state;
         const { selected } = this.props;
+        console.log(selected)
         let dim = {}
         if (this.canvas.current !== null && selected !== null) {
-            const { x, y } = selected
+            const { left, top, width, height } = selected
             dim = {
-                left: x * 100 / numColumn + "%",
-                top: "calc(" + y * 100 / numRow + "% + 42px)",
-                width: 100 / numColumn + "%",
-                height: 100 / numRow + "%"
+                left: left,
+                top: top,
+                width: width,
+                height: height,
             }
         }
 
