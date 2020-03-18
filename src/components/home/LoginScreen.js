@@ -129,7 +129,6 @@ class LoginScreen extends React.Component {
                         </Grid>
                     }
                     open={this.state.modelActive1}
-                    maxWidth="sm"
                     fullWidth={true}
                     actions={[
                         <Grid
@@ -172,7 +171,6 @@ class LoginScreen extends React.Component {
                             </Typography>
                         </Grid>
                     }
-                    maxWidth="md"
                     fullWidth={true}
                     open={this.state.modelActive2}
                     actions={[
