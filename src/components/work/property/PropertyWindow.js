@@ -50,20 +50,16 @@ class PropertyWindow extends React.Component {
                 minHeight={391}
             >
                 <Titlebar title="Property Window" />
-                <ExpansionPanel>
-                    <ExpansionPanelSummary
-                        expandIcon={<ExpandMore />}
-                        aria-controls="layerPanel-content"
-                        id="layerPanel-header"
-                    >
-                        <Typography>Map</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <Typography>
-                            <PropertyTable/>
-                        </Typography>
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
+                <Collapsible data={
+                    [
+                        { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
+                        { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
+                    ]
+                }
+                             maxHeight='265px'
+                />
+                <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={this.props.handleStopPropagation} />
+                <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} onMouseDown={this.props.handleStopPropagation} />
 
 
             </Rnd>
@@ -95,14 +91,3 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyWindow)
 
 
-// <Titlebar title="Property Window" />
-//     <Collapsible data={
-//         [
-//             { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
-//             { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
-//         ]
-//     }
-//     maxHeight='265px'
-// />
-// <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={this.props.handleStopPropagation} />
-// <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} onMouseDown={this.props.handleStopPropagation} />
