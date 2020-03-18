@@ -10,9 +10,9 @@ class LayerWindow extends React.Component {
         const { layers } = this.props
         return (
             <div className="layer-list">
-                {layers && layers.map(layer => {
+                {layers && layers.map((layer, index) => {
                     return (
-                        <>
+                        <div key={index}>
                             <div className='layer-list-item' onMouseDown={e => e.stopPropagation()}>
                                 <span>{layer.name}</span>
 
@@ -24,7 +24,7 @@ class LayerWindow extends React.Component {
                                 <i className="fas fa-arrow-up better-btn layer-item-delete-btn" />
                             </div>
 
-                        </>
+                        </div>
                     )
                 })}
             </div>

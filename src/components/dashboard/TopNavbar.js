@@ -12,9 +12,9 @@ class TopNavbar extends React.Component {
         const { open } = this.props;
         return (
             <>
-                <Navbar class="dashboard-top-navbar" bg="white" expand="lg">
+                <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
                     <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><Icon>list</Icon></Navbar.Brand>
-                    <Navbar.Brand href="/dashboard"> <div class="logo" >Delit</div></Navbar.Brand>
+                    <Navbar.Brand href="/dashboard"> <div className="logo" >Delit</div></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">

@@ -8,7 +8,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
-import { FormControlLabel,} from "@material-ui/core";
+import { FormControlLabel, } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -99,23 +99,23 @@ function TopNavbar() {
                             >
                                 <MenuItem>
                                     <FormControlLabel
-                                        control={<Checkbox  />}
+                                        control={<Checkbox />}
                                         label="Show property window"
                                     />
                                 </MenuItem>
                                 <MenuItem>
-                                <FormControlLabel
-                                    control={<Checkbox   value="jason" />}
-                                    label="Show layers window"
-                                />
+                                    <FormControlLabel
+                                        control={<Checkbox value="jason" />}
+                                        label="Show layers window"
+                                    />
                                 </MenuItem>
                                 <MenuItem>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox   value="antoine" />
-                                    }
-                                    label="Show tile sets window"
-                                />
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox value="antoine" />
+                                        }
+                                        label="Show tile sets window"
+                                    />
                                 </MenuItem>
                             </Menu>
                         </Grid>

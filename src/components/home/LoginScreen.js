@@ -7,7 +7,6 @@ import { Grid } from '@material-ui/core'
 import Dialog from '../tools/Dialog'
 import Typography from "@material-ui/core/Typography";
 import { Button } from "react-bootstrap";
-
 class LoginScreen extends React.Component {
 
     state = {
@@ -89,22 +88,21 @@ class LoginScreen extends React.Component {
                     container
                     direction="column"
                 >
-                    <Grid Item>
+                    <Grid>
                         <div className="grey-text text-darken-3">
                             <div className="loginHeader1">Delit</div>
                         </div>
                         <div className="loginHeader2">Account Login</div>
                     </Grid>
                     <Grid
-                        item
-                        justify="center"
+
                     >
                         <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
                         <TextInput type="password" label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
                         {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
 
-                        <p className='login-link'><b><a onClick={this.goRegister}>New to Delit? sign up</a></b></p>
-                        <p className='login-link'><b><a onClick={this.handleModalOpen1}>Forget your password?</a> </b></p>
+                        <p className='login-link'><b onClick={this.goRegister}>New to Delit? sign up</b></p>
+                        <p className='login-link'><b onClick={this.handleModalOpen1}>Forget your password?</b></p>
                     </Grid>
                     <Grid
                         container
@@ -131,8 +129,8 @@ class LoginScreen extends React.Component {
                         </Grid>
                     }
                     open={this.state.modelActive1}
-                    maxWidth="md"
-                    fullWidth="true"
+                    maxWidth="sm"
+                    fullWidth={true}
                     actions={[
                         <Grid
                             container
@@ -140,8 +138,8 @@ class LoginScreen extends React.Component {
                             justify="space-evenly"
                             alignItems="center"
                         >,
-                            <Button className="home-dialog-subBtn" onClick={this.handleModalOpen2} variant="primary" size="lg">Submit</Button>,
-                            <Button className="home-dialog-subBtn" onClick={this.handleModalClose1} variant="primary" size="lg">Cancel</Button>,
+                            <Button key="1" className="home-dialog-subBtn" onClick={this.handleModalOpen2} variant="primary" size="lg">Submit</Button>,
+                            <Button key="2" className="home-dialog-subBtn" onClick={this.handleModalClose1} variant="primary" size="lg">Cancel</Button>,
                         </Grid>
                     ]}
                     content={
@@ -175,11 +173,11 @@ class LoginScreen extends React.Component {
                         </Grid>
                     }
                     maxWidth="md"
-                    fullWidth="true"
+                    fullWidth={true}
                     open={this.state.modelActive2}
                     actions={[
-                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Submit</Button>,
-                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Close</Button>
+                        <Button key="1" className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Submit</Button>,
+                        <Button key="2" className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Close</Button>
                     ]}
                     content={
                         <section className="dialog_content">

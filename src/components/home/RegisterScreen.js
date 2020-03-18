@@ -103,7 +103,7 @@ class RegisterScreen extends React.Component {
                         <TextInput type="password" label="Enter Your Password" id='password2' value={password2}
                             onChange={this.handleChange} />
                         {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
-                        <p className='login-link'><b><a onClick={this.goLogin}>Already have account, go login</a></b>
+                        <p className='login-link'><b><div onClick={this.goLogin}>Already have account, go login</div></b>
                         </p>
                     </Grid>
                     <Grid

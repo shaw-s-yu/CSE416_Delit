@@ -94,9 +94,9 @@ class ItemList extends React.Component {
                     content={
                         <div className="members">
                             <ul className="product-gallery-thumbs__list">
-                                {images.map(function (image, imageIndex) {
+                                {images.map(function (image, index) {
                                     return (
-                                        <div className="imageContainer">
+                                        <div className="imageContainer" key={index}>
                                             <li key={image.src}>
                                                 <img className="img" src={image.src} alt={image.alt} />
                                                 <div className="imageDescription">{image.alt}</div>

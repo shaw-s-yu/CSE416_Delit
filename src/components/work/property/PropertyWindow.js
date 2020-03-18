@@ -7,7 +7,6 @@ import MiniMap from './MiniMap'
 import { connect } from 'react-redux';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Titlebar from '../../tools/Titlebar'
-
 class PropertyWindow extends React.Component {
 
     state = {
@@ -55,7 +54,7 @@ class PropertyWindow extends React.Component {
                         { title: 'Show Mini Map', content: <PropertyList data={minimap} window='minimap' />, open: true },
                     ]
                 }
-                             maxHeight='265px'
+                    maxHeight='265px'
                 />
                 <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={this.props.handleStopPropagation} />
                 <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} onMouseDown={this.props.handleStopPropagation} />
