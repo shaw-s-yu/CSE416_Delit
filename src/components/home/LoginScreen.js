@@ -105,8 +105,8 @@ class LoginScreen extends React.Component {
                     header="Verification"
                     open={this.state.modelActive1}
                     actions={[
-                        <Button waves="orange" onClick={this.handleModalOpen2}>Submit</Button>,
-                        <Button waves="orange" onClick={this.handleModalClose1}>Close</Button>
+                        <Button onClick={this.handleModalOpen2} color="primary">Submit</Button>,
+                        <Button onClick={this.handleModalClose1} color="primary">Cancel</Button>,
                     ]}
                     content={
                         <section className="dialog_content">
@@ -120,15 +120,15 @@ class LoginScreen extends React.Component {
                     header="Reset Password"
                     open={this.state.modelActive2}
                     actions={[
-                        <Button waves="orange" onClick={this.handleModalClose2}>Submit</Button>,
-                        <Button waves="orange" onClick={this.handleModalClose2}>Close</Button>
+                        <Button onClick={this.handleModalClose2} color="primary">Submit</Button>,
+                        <Button onClick={this.handleModalClose2} color="primary">Close</Button>
                     ]}
                     content={
                         <section className="dialog_content">
                             <p><strong>We have sent you a verification code</strong></p>
                             <TextInput label="Enter Your Verification Code" id='vcode' value={vcode}
                                 onChange={this.handleChange} />
-                            <Button waves="orange" onClick={this.handleResend}> Resend <span style={{ color: "red" }}> (60s) </span></Button>
+                            <Button onClick={this.handleResend} color="primary" variant="contained"> Resend <span style={{ color: "red" }}> (60s) </span> </Button>
                             <p><strong>Password</strong></p>
                             <TextInput label="Enter Your New Password" id='vpass' value={vpass}
                                 onChange={this.handleChange} />

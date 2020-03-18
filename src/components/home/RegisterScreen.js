@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { registerHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
 import { Redirect } from 'react-router-dom';
-import { Button, TextInput } from 'react-materialize';
+import { TextInput } from 'react-materialize';
+import Button from '@material-ui/core/Button';
 import Dialog from '../tools/Dialog'
 
 class RegisterScreen extends React.Component {
@@ -71,13 +72,13 @@ class RegisterScreen extends React.Component {
                 {/* <li className='login-link' onClick={this.goLogin}>Already have account, go login</li> */}
                 <p className='login-link'><b><a onClick={this.goLogin}>Already have account, go login</a></b></p>
 
-                <div className='center'><Button waves='orange' className='home-submitbtn' onClick={this.handleModalOpen1}>Sign Up</Button></div>
+                <div className='center'><Button waves='orange' className='home-submitbtn' color="primary" variant="contained" onClick={this.handleModalOpen1}>Sign Up</Button></div>
                 <Dialog
                     header="Verification"
                     open={this.state.modelActive1}
                     actions={[
-                        <Button waves="orange" onClick={this.handleModalOpen2}>Submit</Button>,
-                        <Button waves="orange" onClick={this.handleModalClose1}>Close</Button>
+                        <Button onClick={this.handleModalOpen2} color="primary">Submit</Button>,
+                        <Button onClick={this.handleModalClose1} color="primary">Cancel</Button>,
                     ]}
                     content={
                         <section className="dialog_content">
@@ -91,15 +92,15 @@ class RegisterScreen extends React.Component {
                     header="Verify Your Email"
                     open={this.state.modelActive2}
                     actions={[
-                        <Button waves="orange" onClick={this.handleModalClose2}>Submit</Button>,
-                        <Button waves="orange" onClick={this.handleModalClose2}>Close</Button>
+                        <Button onClick={this.handleModalClose2} color="primary">Submit</Button>,
+                        <Button onClick={this.handleModalClose2} color="primary">Close</Button>
                     ]}
                     content={
                         <section className="dialog_content">
                             <p><strong>We have sent you a verification code</strong></p>
                             <TextInput label="Enter Your Verification Code" id='vcode' value={vcode}
                                 onChange={this.handleChange} />
-                            <Button waves="orange" onClick={this.handleResend}> Resend <span style={{ color: "red" }}> (60s) </span></Button>
+                            <Button onClick={this.handleResend} color="primary" variant="contained"> Resend <span style={{ color: "red" }}> (60s) </span> </Button>
                         </section>
                     } />
             </div>
