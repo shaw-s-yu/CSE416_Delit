@@ -64,7 +64,7 @@ class RegisterScreen extends React.Component {
             let id = setInterval(() => {
                 let { time } = this.state;
                 time -= 1
-                if (time === 0) clearInterval(id)
+                if (time === -1) clearInterval(id)
                 else this.setState({ time: time })
             }, 1000)
         })
