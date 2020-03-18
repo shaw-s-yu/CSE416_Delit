@@ -30,7 +30,7 @@ class PropertyWindow extends React.Component {
 
     render() {
         const { size, position } = this.props.window
-        const { layer, map, selected } = this.props
+        const { layer, map, minimap, selected } = this.props
         return (
 
             <Rnd
@@ -49,7 +49,8 @@ class PropertyWindow extends React.Component {
                 <Collapsible data={
                     [
                         { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
-                        { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
+                        { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: false },
+                        { title: 'Show Mini Map', content: <PropertyList data={minimap} window='minimap' />, open: true },
                     ]
                 }
                     maxHeight='265px'

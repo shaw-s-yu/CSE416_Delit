@@ -52,7 +52,6 @@ function TopNavbar() {
         setAnchorEl3(null);
     };
 
-
     return (
         <div className={classes.root} >
             <AppBar position="static" className={classes.root}>
