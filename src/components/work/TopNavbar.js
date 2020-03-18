@@ -62,7 +62,7 @@ export default function TopNavbar() {
             <AppBar position="static" className={classes.root}>
                 <Toolbar>
                     <Typography variant="h5" className={classes.logo}>
-                        <a href="/dashboard">DELT</a>
+                        <a href="/dashboard">DELIT</a>
                     </Typography>
                     <Grid
                         container
