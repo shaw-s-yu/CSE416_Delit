@@ -61,11 +61,15 @@
 }
 
 .home-submitbtn:hover {
-    background-color: tomato !important;
+    background-color: salmon !important;
 }
 
 .home-dialog-subBtn {
     font-size: 15px;
     width: 150px;
     height: 40px;
+}
+
+.home-dialog-subBtn:hover {
+    background-color: salmon !important;
 }
