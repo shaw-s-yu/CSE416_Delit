@@ -1,11 +1,11 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {registerHandler, clearErrorHandler} from '../../store/database/HomeScreenHandler'
-import {Redirect} from 'react-router-dom';
-import {TextInput} from 'react-materialize';
+import { connect } from 'react-redux';
+import { registerHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
+import { Redirect } from 'react-router-dom';
+import { TextInput } from 'react-materialize';
 import Button from "react-bootstrap/Button";
 import Dialog from '../tools/Dialog'
-import {Grid} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
 class RegisterScreen extends React.Component {
@@ -17,7 +17,8 @@ class RegisterScreen extends React.Component {
         modelActive1: false,
         modelActive2: false,
         vemail: "",
-        vcode: ""
+        vcode: "",
+        time: 0,
     }
 
     handleSubmit = (e) => {
@@ -26,7 +27,7 @@ class RegisterScreen extends React.Component {
     }
 
     handleChange = (e) => {
-        const {target} = e;
+        const { target } = e;
 
         this.setState(state => ({
             ...state,
@@ -41,27 +42,44 @@ class RegisterScreen extends React.Component {
 
 
     handleModalOpen1 = () => {
-        this.setState({modelActive1: true});
+        this.setState({ modelActive1: true });
     }
 
     handleModalClose1 = () => {
-        this.setState({modelActive1: false});
+        this.setState({ modelActive1: false });
     }
 
     handleModalOpen2 = () => {
         this.handleModalClose1();
-        this.setState({modelActive2: true});
+        this.setState({ modelActive2: true });
     }
 
     handleModalClose2 = () => {
-        this.setState({modelActive2: false});
+        this.setState({ modelActive2: false });
+    }
+
+    handleResend = () => {
+        if (this.state.time !== 0 || this.state.modelActive2 !== true) return
+        this.setState({ time: 60 }, () => {
+            let id = setInterval(() => {
+                let { time } = this.state;
+                time -= 1
+                if (time === 0) clearInterval(id)
+                else this.setState({ time: time })
+            }, 1000)
+        })
+    }
+
+    handleButton = () => {
+        const { time } = this.state
+        return time === 0 ? false : true;
     }
 
     render() {
-        const {email, password, password2, vemail, vcode} = this.state;
-        const {auth} = this.props
+        const { email, password, password2, vemail, vcode, time } = this.state;
+        const { auth } = this.props
         if (auth.email)
-            return <Redirect to="/dashboard"/>;
+            return <Redirect to="/dashboard" />;
         return (
             <div className="white login-form right">
                 <Grid
@@ -79,11 +97,11 @@ class RegisterScreen extends React.Component {
                         justify="center"
                     >
                         <TextInput type="email" label="Enter Your Email" id='email' value={email}
-                                   onChange={this.handleChange}/>
+                            onChange={this.handleChange} />
                         <TextInput type="password" label="Enter Your Password" id='password' value={password}
-                                   onChange={this.handleChange}/>
+                            onChange={this.handleChange} />
                         <TextInput type="password" label="Enter Your Password" id='password2' value={password2}
-                                   onChange={this.handleChange}/>
+                            onChange={this.handleChange} />
                         {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
                         <p className='login-link'><b><a onClick={this.goLogin}>Already have account, go login</a></b>
                         </p>
@@ -94,7 +112,7 @@ class RegisterScreen extends React.Component {
                         alignItems="center"
                     >
                         <Button className="home-submitbtn" variant="primary" onClick={this.handleModalOpen1}
-                                type="submit">Sign Up</Button>
+                            type="submit">Sign Up</Button>
                     </Grid>
                 </Grid>
 
@@ -140,7 +158,7 @@ class RegisterScreen extends React.Component {
                             </Typography>
                             <TextInput label="Enter Your Email" id='vemail' value={vemail} onChange={this.handleChange} />
                         </Grid>
-                    }/>
+                    } />
                 <Dialog
                     header={
                         <Grid
@@ -173,10 +191,10 @@ class RegisterScreen extends React.Component {
                                 </Typography>
                             </Grid>
                             <TextInput label="Enter Your Verification Code" id='vcode' value={vcode}
-                                       onChange={this.handleChange}/>
-                            <Button onClick={this.handleResend} variant="info" style={{ textTransform: "none"}}> Resend <span style={{ color: "red" }}> (60s) </span> </Button>
+                                onChange={this.handleChange} />
+                            <Button onClick={this.handleResend} variant="info" disabled={this.handleButton()}> Resend <span style={{ color: "red" }}> {time + "s"} </span> </Button>
                         </section>
-                    }/>
+                    } />
             </div>
         );
     };

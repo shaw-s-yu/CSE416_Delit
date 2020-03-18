@@ -69,3 +69,7 @@
     width: 150px;
     height: 40px;
 }
+
+.home-dialog-subBtn:hover {
+    background-color: tomato !important;
+}
