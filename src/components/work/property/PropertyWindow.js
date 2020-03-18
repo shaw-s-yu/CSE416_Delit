@@ -7,7 +7,6 @@ import MiniMap from './MiniMap'
 import { connect } from 'react-redux';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Titlebar from '../../tools/Titlebar'
-import MiniMap from './MiniMap';
 class PropertyWindow extends React.Component {
 
     state = {
