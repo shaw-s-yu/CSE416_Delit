@@ -6,8 +6,7 @@ import { TextInput } from 'react-materialize';
 import { Grid } from '@material-ui/core'
 import Dialog from '../tools/Dialog'
 import Typography from "@material-ui/core/Typography";
-import { Button} from "react-bootstrap";
-import TextField from '@material-ui/core/TextField';
+import { Button } from "react-bootstrap";
 
 class LoginScreen extends React.Component {
 
@@ -20,6 +19,7 @@ class LoginScreen extends React.Component {
         vcode: "",
         vpass: "",
         vpass2: "",
+        time: 0,
     }
 
     handleSubmit = (e) => {
@@ -59,10 +59,27 @@ class LoginScreen extends React.Component {
         this.setState({ modelActive2: false });
     }
 
-    render() {
-        const { email, password, vemail, vpass, vpass2, vcode } = this.state;
-        const { auth } = this.props;
+    handleResend = () => {
+        if (this.state.time !== 0 || this.state.modelActive2 !== true) return
+        this.setState({ time: 60 }, () => {
+            let id = setInterval(() => {
+                let { time } = this.state;
+                time -= 1
+                if (time === -1) clearInterval(id)
+                else this.setState({ time: time })
+            }, 1000)
+        })
+    }
 
+    handleButton = () => {
+        const { time } = this.state
+        return time === 0 ? false : true;
+    }
+
+
+    render() {
+        const { email, password, vemail, vpass, vpass2, vcode, time } = this.state;
+        const { auth } = this.props;
         if (auth.email)
             return <Redirect to="/dashboard" />;
 
@@ -114,7 +131,7 @@ class LoginScreen extends React.Component {
                         </Grid>
                     }
                     open={this.state.modelActive1}
-                    maxWidth="sm"
+                    maxWidth="md"
                     fullWidth="true"
                     actions={[
                         <Grid
@@ -165,24 +182,24 @@ class LoginScreen extends React.Component {
                         <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Close</Button>
                     ]}
                     content={
-                       <section className="dialog_content">
+                        <section className="dialog_content">
                             <Grid
-                            container
-                            justify="center"
-                            alignItems="center"
+                                container
+                                justify="center"
+                                alignItems="center"
                             >
                                 <Typography variant="subtitle1" gutterBottom>
                                     <strong>We have sent you a verification code</strong>
                                 </Typography>
                             </Grid>
-                                <TextInput label="Enter Your Verification Code" id='vcode' value={vcode}
-                                    onChange={this.handleChange} />
-                                <Button onClick={this.handleResend} variant="info" style={{ textTransform: "none"}}> Resend <span style={{ color: "red" }}> (60s) </span> </Button>
-                                <TextInput label="Enter Your New Password" id='vpass' value={vpass}
-                                    onChange={this.handleChange} />
-                                <TextInput label="Confirm Your New Password" id='vpass2' value={vpass2}
-                                    onChange={this.handleChange} />
-                       </section>
+                            <TextInput label="Enter Your Verification Code" id='vcode' value={vcode}
+                                onChange={this.handleChange} />
+                            <Button onClick={this.handleResend} variant="info" disabled={this.handleButton()}> Resend <span style={{ color: "red" }}> {time + "s"} </span> </Button>
+                            <TextInput label="Enter Your New Password" id='vpass' value={vpass}
+                                onChange={this.handleChange} />
+                            <TextInput label="Confirm Your New Password" id='vpass2' value={vpass2}
+                                onChange={this.handleChange} />
+                        </section>
                     } />
             </div>
         );

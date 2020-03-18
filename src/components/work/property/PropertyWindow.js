@@ -6,10 +6,7 @@ import PropertyList from './PropertyList'
 import { connect } from 'react-redux';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Titlebar from '../../tools/Titlebar'
-import { Typography } from "@material-ui/core";
-import {ExpansionPanelSummary, ExpansionPanel, ExpansionPanelDetails} from "@material-ui/core";
-import PropertyTable from "./PropertyTable";
-import { ExpandMore } from '@material-ui/icons';
+
 class PropertyWindow extends React.Component {
 
     state = {
