@@ -27,15 +27,11 @@
 
 
 .display-place{
-    overflow: auto;
     cursor: auto;
-    width: calc(100% - 1px);
-    height: 100%;
 }
 
 .map{
     transition-duration: 1s;
-    
 }
 
 .canvas{
@@ -48,9 +44,9 @@
 .selected-grid{
     background-color: blue;    
     opacity: 0.5;
-    position: absolute;
     border:2px solid black;
     transition: ease-in 0.5s;
+    position: absolute;
 }
 
 .property-input{

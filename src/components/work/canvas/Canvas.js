@@ -39,6 +39,8 @@ class Canvas extends React.Component {
         let gridHeight = height / this.state.numRow
         let selected = this.getGridIndex(clickX, clickY, gridWidth, gridHeight)
         this.props.handleSelect(selected);
+        console.log(left, top, width, height)
+
     }
 
     getGridIndex = (x, y, w, h) => {
@@ -62,7 +64,7 @@ class Canvas extends React.Component {
             const { x, y } = selected
             dim = {
                 left: x * 100 / numColumn + "%",
-                top: y * 100 / numRow + "%",
+                top: "calc(" + y * 100 / numRow + "% + 42px)",
                 width: 100 / numColumn + "%",
                 height: 100 / numRow + "%"
             }

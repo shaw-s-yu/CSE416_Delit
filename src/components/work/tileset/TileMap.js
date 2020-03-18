@@ -41,11 +41,11 @@ class TileMap extends React.Component {
                 <div className="display-place" onMouseDown={this.handleUnselect}>
 
                     <Canvas canvas={this.canvas} className="map" style={{
-                        width: scale + "%",
-                        height: scale + "%",
-                        left: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                        top: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                        border: "1px solid #d3d3d3"
+                        // width: scale + "%",
+                        // height: scale + "%",
+                        // left: scale < 100 ? (100 - scale) / 2 + "%" : 0,
+                        // top: scale < 100 ? (100 - scale) / 2 + "%" : 0,
+                        // border: "1px solid #d3d3d3"
                     }} />
                 </div>
             </div>
