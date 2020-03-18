@@ -1,10 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { registerHandler, clearErrorHandler } from '../../store/database/HomeScreenHandler'
-import { Redirect } from 'react-router-dom';
-import { TextInput } from 'react-materialize';
-import Button from '@material-ui/core/Button';
+import {connect} from 'react-redux';
+import {registerHandler, clearErrorHandler} from '../../store/database/HomeScreenHandler'
+import {Redirect} from 'react-router-dom';
+import {TextInput} from 'react-materialize';
+import Button from "react-bootstrap/Button";
 import Dialog from '../tools/Dialog'
+import {Grid} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 class RegisterScreen extends React.Component {
 
@@ -24,7 +26,7 @@ class RegisterScreen extends React.Component {
     }
 
     handleChange = (e) => {
-        const { target } = e;
+        const {target} = e;
 
         this.setState(state => ({
             ...state,
@@ -39,70 +41,142 @@ class RegisterScreen extends React.Component {
 
 
     handleModalOpen1 = () => {
-        this.setState({ modelActive1: true });
+        this.setState({modelActive1: true});
     }
 
     handleModalClose1 = () => {
-        this.setState({ modelActive1: false });
+        this.setState({modelActive1: false});
     }
 
     handleModalOpen2 = () => {
         this.handleModalClose1();
-        this.setState({ modelActive2: true });
+        this.setState({modelActive2: true});
     }
 
     handleModalClose2 = () => {
-        this.setState({ modelActive2: false });
+        this.setState({modelActive2: false});
     }
 
     render() {
-        const { email, password, password2, vemail, vcode } = this.state;
-        const { auth } = this.props
+        const {email, password, password2, vemail, vcode} = this.state;
+        const {auth} = this.props
         if (auth.email)
-            return <Redirect to="/dashboard" />;
+            return <Redirect to="/dashboard"/>;
         return (
             <div className="white login-form right">
-                <div className="grey-text text-darken-3"><div class="loginHeader1">Delit</div></div>
-                <div className="loginHeader2">Sign up</div>
-                <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
-                <TextInput type="password" label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
-                <TextInput type="password" label="Enter Your Password" id='password2' value={password2} onChange={this.handleChange} />
-                {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
+                <Grid
+                    container
+                    direction="column"
+                >
+                    <Grid Item>
+                        <div className="grey-text text-darken-3">
+                            <div className="loginHeader1">Delit</div>
+                        </div>
+                        <div className="loginHeader2">Sign up</div>
+                    </Grid>
+                    <Grid
+                        item
+                        justify="center"
+                    >
+                        <TextInput type="email" label="Enter Your Email" id='email' value={email}
+                                   onChange={this.handleChange}/>
+                        <TextInput type="password" label="Enter Your Password" id='password' value={password}
+                                   onChange={this.handleChange}/>
+                        <TextInput type="password" label="Enter Your Password" id='password2' value={password2}
+                                   onChange={this.handleChange}/>
+                        {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
+                        <p className='login-link'><b><a onClick={this.goLogin}>Already have account, go login</a></b>
+                        </p>
+                    </Grid>
+                    <Grid
+                        container
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Button className="home-submitbtn" variant="primary" onClick={this.handleModalOpen1}
+                                type="submit">Sign Up</Button>
+                    </Grid>
+                </Grid>
 
-                {/* <li className='login-link' onClick={this.goLogin}>Already have account, go login</li> */}
-                <p className='login-link'><b><a onClick={this.goLogin}>Already have account, go login</a></b></p>
-
-                <div className='center'><Button waves='orange' className='home-submitbtn' color="primary" variant="contained" onClick={this.handleModalOpen1}>Sign Up</Button></div>
                 <Dialog
-                    header="Verification"
+                    header={
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Typography variant="h4" gutterBottom align="justify">
+                                Verification
+                            </Typography>
+                        </Grid>
+                    }
                     open={this.state.modelActive1}
+                    maxWidth="sm"
+                    fullWidth="true"
                     actions={[
-                        <Button onClick={this.handleModalOpen2} color="primary">Submit</Button>,
-                        <Button onClick={this.handleModalClose1} color="primary">Cancel</Button>,
+                        <Grid
+                            container
+                            direction="row"
+                            justify="space-evenly"
+                            alignItems="center"
+                        >,
+                            <Button className="home-dialog-subBtn" onClick={this.handleModalOpen2} variant="primary" size="lg">Submit</Button>,
+                            <Button className="home-dialog-subBtn" onClick={this.handleModalClose1} variant="primary" size="lg">Cancel</Button>,
+                        </Grid>
                     ]}
                     content={
-                        <section className="dialog_content">
-                            <p><strong>Please Enter Your Email</strong></p>
-                            <p>We will send you a verification code</p>
-                            <TextInput label="Enter Your Email" id='vemail' value={vemail}
-                                onChange={this.handleChange} />
-                        </section>
-                    } />
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Typography variant="subtitle1" gutterBottom>
+                                Please Enter Your Email
+                            </Typography>
+                            <Typography variant="subtitle1" gutterBottom>
+                                We will send you a verification code
+                            </Typography>
+                            <TextInput label="Enter Your Email" id='vemail' value={vemail} onChange={this.handleChange} />
+                        </Grid>
+                    }/>
                 <Dialog
-                    header="Verify Your Email"
+                    header={
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Typography variant="h4" gutterBottom align="justify">
+                                Verify Your Email
+                            </Typography>
+                        </Grid>
+                    }
+                    maxWidth="md"
+                    fullWidth="true"
                     open={this.state.modelActive2}
                     actions={[
-                        <Button onClick={this.handleModalClose2} color="primary">Submit</Button>,
-                        <Button onClick={this.handleModalClose2} color="primary">Close</Button>
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Submit</Button>,
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Close</Button>
                     ]}
                     content={
                         <section className="dialog_content">
-                            <p><strong>We have sent you a verification code</strong></p>
+                            <Grid
+                                container
+                                justify="center"
+                                alignItems="center"
+                            >
+                                <Typography variant="subtitle1" gutterBottom>
+                                    <strong>We have sent you a verification code</strong>
+                                </Typography>
+                            </Grid>
                             <TextInput label="Enter Your Verification Code" id='vcode' value={vcode}
-                                onChange={this.handleChange} />
-                            <Button onClick={this.handleResend} color="primary" variant="contained"> Resend <span style={{ color: "red" }}> (60s) </span> </Button>
+                                       onChange={this.handleChange}/>
+                            <Button onClick={this.handleResend} variant="info" style={{ textTransform: "none"}}> Resend <span style={{ color: "red" }}> (60s) </span> </Button>
                         </section>
-                    } />
+                    }/>
             </div>
         );
     };
@@ -122,4 +196,5 @@ const mapDispatchToProps = (dispatch) => ({
     clearError: () => dispatch(clearErrorHandler()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);;
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);
+;
