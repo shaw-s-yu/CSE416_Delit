@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from "@material-ui/core/Grid";
-
+import Checkbox from "@material-ui/core/Checkbox";
+import { FormGroup, FormControlLabel,} from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -21,12 +22,12 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function TopNavbar() {
+function TopNavbar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorEl2, setAnchorEl2] = React.useState(null);
     const [anchorEl3, setAnchorEl3] = React.useState(null);
-
+    const [setChecked] = React.useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -51,12 +52,17 @@ export default function TopNavbar() {
     const handleClose3 = () => {
         setAnchorEl3(null);
     };
+
+    const handleChange = event => {
+        setChecked(event.target.checked);
+    };
+
     return (
         <div className={classes.root} >
             <AppBar position="static" className={classes.root}>
                 <Toolbar>
                     <Typography variant="h5" className={classes.logo}>
-                        <a href="/dashboard" className=" nav-title">DELT</a>
+                        <a href="/dashboard" className=" nav-title">DELIT</a>
                     </Typography>
                     <Grid
                         container
@@ -92,9 +98,26 @@ export default function TopNavbar() {
                                 open={Boolean(anchorEl2)}
                                 onClose={handleClose2}
                             >
-                                <MenuItem onClick={handleClose2}>Show property window</MenuItem>
-                                <MenuItem onClick={handleClose2}>Show layers window</MenuItem>
-                                <MenuItem onClick={handleClose2}>Show tile sets window</MenuItem>
+                                <MenuItem>
+                                    <FormControlLabel
+                                        control={<Checkbox  />}
+                                        label="Show property window"
+                                    />
+                                </MenuItem>
+                                <MenuItem>
+                                <FormControlLabel
+                                    control={<Checkbox   value="jason" />}
+                                    label="Show layers window"
+                                />
+                                </MenuItem>
+                                <MenuItem>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox   value="antoine" />
+                                    }
+                                    label="Show tile sets window"
+                                />
+                                </MenuItem>
                             </Menu>
                         </Grid>
                         <Grid item>
@@ -120,39 +143,4 @@ export default function TopNavbar() {
         </div>
     );
 }
-
-// class TopNavbar extends React.Component {
-//
-//     render() {
-//         return (
-
-{/*<Navbar bg="light" expand="lg">*/ }
-{/*    <Navbar.Brand>Home</Navbar.Brand>*/ }
-{/*    <Navbar.Toggle aria-controls="basic-navbar-nav" />*/ }
-{/*    <Navbar.Collapse id="basic-navbar-nav">*/ }
-{/*        <Nav className="mr-auto">*/ }
-{/*            <NavDropdown title="File" id="basic-nav-dropdown">*/ }
-{/*                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>*/ }
-{/*                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>*/ }
-{/*                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>*/ }
-{/*            </NavDropdown>*/ }
-{/*            <NavDropdown title="Edit" id="basic-nav-dropdown">*/ }
-{/*                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>*/ }
-{/*                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>*/ }
-{/*                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>*/ }
-{/*            </NavDropdown>*/ }
-{/*            <NavDropdown title="View" id="basic-nav-dropdown">*/ }
-{/*                <Checkbox label="Hide Property Window" value="property" id="property" />*/ }
-{/*                <Checkbox label="Hide Layer Window" value="layer" id="layer" />*/ }
-{/*                <Checkbox label="Hide Tileset Window" value="tileset" id="tileset" />*/ }
-{/*            </NavDropdown>*/ }
-{/*        </Nav>*/ }
-{/*        <Navbar.Brand href="/">Logout</Navbar.Brand>*/ }
-{/*    </Navbar.Collapse>*/ }
-{/*</Navbar>*/ }
-//         )
-//     }
-//
-// }
-//
-// export default TopNavbar;
+export default TopNavbar;
