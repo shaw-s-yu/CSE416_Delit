@@ -24,13 +24,32 @@ const useStyles = makeStyles(theme => ({
 export default function TopNavbar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl2, setAnchorEl2] = React.useState(null);
+    const [anchorEl3, setAnchorEl3] = React.useState(null);
+
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
     };
 
+    const handleClick2 = event => {
+        setAnchorEl2(event.currentTarget);
+    };
+
+    const handleClick3 = event => {
+        setAnchorEl3(event.currentTarget);
+    };
+
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleClose2 = () => {
+        setAnchorEl2(null);
+    };
+
+    const handleClose3 = () => {
+        setAnchorEl3(null);
     };
     return (
         <div className={classes.root} >
@@ -46,7 +65,7 @@ export default function TopNavbar() {
                         alignItems="center"
                     >
                         <Grid item>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                            <Button aria-haspopup="true" onClick={handleClick}>
                                 File
                             </Button>
                             <Menu
@@ -63,34 +82,34 @@ export default function TopNavbar() {
                             </Menu>
                         </Grid>
                         <Grid item>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                            <Button aria-haspopup="true" onClick={handleClick2}>
                                 View
                             </Button>
                             <Menu
                                 id="map-view"
-                                anchorEl={anchorEl}
+                                anchorEl={anchorEl2}
                                 keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
+                                open={Boolean(anchorEl2)}
+                                onClose={handleClose2}
                             >
-                                <MenuItem onClick={handleClose}>Show property window</MenuItem>
-                                <MenuItem onClick={handleClose}>Show layers window</MenuItem>
-                                <MenuItem onClick={handleClose}>Show tilesets window</MenuItem>
+                                <MenuItem onClick={handleClose2}>Show property window</MenuItem>
+                                <MenuItem onClick={handleClose2}>Show layers window</MenuItem>
+                                <MenuItem onClick={handleClose2}>Show tile sets window</MenuItem>
                             </Menu>
                         </Grid>
                         <Grid item>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                            <Button aria-haspopup="true" onClick={handleClick3}>
                                 Edit
                             </Button>
                             <Menu
                                 id="map-edit"
-                                anchorEl={anchorEl}
+                                anchorEl={anchorEl3}
                                 keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
+                                open={Boolean(anchorEl3)}
+                                onClose={handleClose3}
                             >
-                                <MenuItem onClick={handleClose}>Copy</MenuItem>
-                                <MenuItem onClick={handleClose}>Paste</MenuItem>
+                                <MenuItem onClick={handleClose3}>Copy</MenuItem>
+                                <MenuItem onClick={handleClose3}>Paste</MenuItem>
                             </Menu>
                         </Grid>
                     </Grid>
