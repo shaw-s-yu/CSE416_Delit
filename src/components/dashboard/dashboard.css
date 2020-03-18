@@ -66,10 +66,13 @@
     width: 100%;
 }
 
+.item-text-selected{
+    
+}
+
 .collection-item:hover{
     color:white;
     background-color: salmon;
-
 }
 
 .collection {
