@@ -24,6 +24,8 @@
 .scrollarea{
     height: 100%;
 }
+
+
 .display-place{
     overflow: auto;
     cursor: auto;
@@ -33,7 +35,7 @@
 
 .map{
     transition-duration: 1s;
-    position: absolute;
+    
 }
 
 .canvas{

@@ -1,11 +1,7 @@
 import React from 'react';
-import { Table } from 'react-bootstrap'
-import ContentEditable from 'react-contenteditable'
-import { Button } from 'react-materialize'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
-import Pagination from '../../tools/Pagination'
-
+import TileMap from '../tileset/TileMap'
 
 class MiniMap extends React.Component {
 
@@ -42,7 +38,7 @@ class MiniMap extends React.Component {
 
 
     render() {
- 
+
         return (
             <TileMap className="map-window-display" />
         )
@@ -63,4 +59,4 @@ const mapDispatchToProps = (dispatch) => ({
     handleChange: (name, index, type, value) => dispatch(handler.changePropertyHandler(name, index, type, value))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PropertyList)
+export default connect(mapStateToProps, mapDispatchToProps)(MiniMap)

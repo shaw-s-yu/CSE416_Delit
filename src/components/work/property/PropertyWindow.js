@@ -6,6 +6,7 @@ import PropertyList from './PropertyList'
 import { connect } from 'react-redux';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Titlebar from '../../tools/Titlebar'
+import MiniMap from './MiniMap';
 class PropertyWindow extends React.Component {
 
     state = {
@@ -50,7 +51,7 @@ class PropertyWindow extends React.Component {
                     [
                         { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
                         { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: false },
-                        { title: 'Show Mini Map', content: <PropertyList data={minimap} window='minimap' />, open: true },
+                        { title: 'Show Mini Map', content: <MiniMap data={minimap} window='minimap' />, open: true },
                     ]
                 }
                     maxHeight='265px'
