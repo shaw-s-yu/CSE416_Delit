@@ -60,6 +60,10 @@
     padding-bottom: 40px;
 }
 
+.home-submitbtn:hover {
+    background-color: tomato !important;
+}
+
 .home-dialog-subBtn {
     font-size: 15px;
     width: 150px;
