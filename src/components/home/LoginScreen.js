@@ -108,7 +108,7 @@ class LoginScreen extends React.Component {
                             justify="center"
                             alignItems="center"
                         >
-                            <Typography variant="h5" gutterBottom align="justify">
+                            <Typography variant="h4" gutterBottom align="justify">
                                 Verification
                             </Typography>
                         </Grid>
@@ -152,7 +152,7 @@ class LoginScreen extends React.Component {
                             justify="center"
                             alignItems="center"
                         >
-                            <Typography variant="h5" gutterBottom align="justify">
+                            <Typography variant="h4" gutterBottom align="justify">
                                 Reset Password
                             </Typography>
                         </Grid>
