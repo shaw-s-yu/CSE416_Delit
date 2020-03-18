@@ -66,10 +66,6 @@
     width: 100%;
 }
 
-.item-text-selected{
-    
-}
-
 .collection-item:hover{
     color:white;
     background-color: salmon;
@@ -240,4 +236,8 @@
 nav {
     background-color: unset;
     box-shadow: unset;
+}
+
+.dashboard-sidebar-selected {
+    background-color: royalblue !important; 
 }

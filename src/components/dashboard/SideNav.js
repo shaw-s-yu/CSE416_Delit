@@ -47,7 +47,7 @@ class SideNav extends React.Component {
   }
 
   getClassName = (name) => {
-    return this.state[name] ? "red" : "";
+    return this.state[name] ? "dashboard-sidebar-selected" : "";
   }
 
 
