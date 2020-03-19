@@ -306,18 +306,16 @@ li.active{
 }
 
 .opacity-text{
-    margin-left: 5%;
-    position: absolute;
+    margin-left: 20px;
     font-size: 12px;
     margin-top: 7px;
 }
 
 .layer-range{
-    width: 40%;
-    margin-left: 50%;
+    width: calc(100% - 140px);
+    margin-left: 120px;
     margin-top: -25px;
     height: 20px;
-    position: absolute;
 }
 
 
