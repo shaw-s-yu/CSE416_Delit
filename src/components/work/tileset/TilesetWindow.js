@@ -9,7 +9,7 @@ import Collapsible from '../../tools/Collapsible'
 class TilesetWindow extends React.Component {
 
     state = {
-
+        resizing: false,
     }
     handleSelect = () => {
         this.props.handleUnselect()
@@ -20,13 +20,27 @@ class TilesetWindow extends React.Component {
     handleOnResize = (e, direction, ref, delta, position) => {
         this.props.handleToTop('tileset');
         const { width, height } = ref.style
-        this.setState({ rander: 'go' }, () => {
+        this.setState({ resizing: true }, () => {
+            this.props.handleOnResize("tileset", { width, height })
+        })
+    }
+
+    handleStopResize = (e, direction, ref, delta, position) => {
+        this.props.handleToTop('tileset');
+        const { width, height } = ref.style
+        this.setState({ resizing: false }, () => {
             this.props.handleOnResize("tileset", { width, height })
         })
     }
 
     render() {
         const { size, position } = this.props.window;
+        const { width, height } = size;
+        const { resizing } = this.state;
+        const style = {
+            maxWidth: width,
+            maxHeight: height - 110,
+        }
         return (
             <Rnd
                 className="workscreen-window"
@@ -34,17 +48,19 @@ class TilesetWindow extends React.Component {
                 size={size}
                 onMouseDown={this.handleSelect}
                 onResize={this.handleOnResize}
+                onResizeStop={this.handleStopResize}
                 id='fe'
             >
                 <Titlebar title="Tileset Window" />
 
                 <Collapsible data={
                     [
-                        { title: 'Tileset 1', content: <TileMap />, open: false },
-                        { title: 'Tileset 2', content: <TileMap />, open: true },
+                        { title: 'Tileset 1', content: <TileMap style={style} />, open: false },
+                        { title: 'Tileset 2', content: <TileMap style={style} />, open: true },
                     ]
                 }
-                    maxHeight='265px'
+                    maxHeight={style.maxHeight}
+                    resizing={resizing}
                 />
 
                 <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={this.props.handleStopPropagation} onClick={this.props.handleGoPaint} />

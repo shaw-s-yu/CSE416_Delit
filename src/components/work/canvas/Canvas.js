@@ -12,45 +12,61 @@ class Canvas extends React.Component {
         numRow: 0,
         numColumn: 0,
         selected: null,
+        selecteds: [],
+        imgWidth: 0,
+        imgHeight: 0,
     }
 
     canvas = React.createRef()
 
     componentDidMount = () => {
         const { width, height } = this.state;
-        let ctx = this.canvas.current.getContext('2d');
+        this.ctx = this.canvas.current.getContext('2d');
         let img = new Image();
         img.src = squirtle;
-        let tileGrid = new TileGrid(ctx, img, width, height);
-        img.onload = () => {
-            tileGrid.draw();
-            let { numRow, numColumn } = tileGrid
-            this.setState({ numRow: numRow, numColumn: numColumn })
+        this.tileGrid = new TileGrid(this.ctx, img, width, height);
+        const self = this
+        img.onload = function () {
+            self.tileGrid.buildModel();
+            const { numRow, numColumn } = self.tileGrid
+            self.setState({
+                numRow: numRow,
+                numColumn: numColumn,
+                imgWidth: width * numColumn,
+                imgHeight: height * numRow,
+            }, () => {
+                self.tileGrid.draw();
+            })
         }
     }
 
     handleSelect = (e) => {
+
         e.stopPropagation();
         let rect = this.canvas.current.getBoundingClientRect()
         let { left, top, width, height } = rect;
-        const { numColumn, numRow } = this.state;
         let clickX = e.clientX - left
         let clickY = e.clientY - top
         let gridWidth = width / this.state.numColumn
         let gridHeight = height / this.state.numRow
         let selected = this.getGridIndex(clickX, clickY, gridWidth, gridHeight)
-        const { x, y } = selected;
-        // selected = {
-        //     ...selected,
-        //     left: left + width / numColumn * x,
-        //     top: top + top / numRow * y,
-        //     width: width / numColumn,
-        //     height: height / numRow,
-        // }
-        selected = null
-        this.props.handleSelect(selected);
-        console.log(left, top, width, height)
-
+        console.log(selected);
+        // const { x, y } = selected;
+        // // selected = {
+        // //     ...selected,
+        // //     left: left + width / numColumn * x,
+        // //     top: top + top / numRow * y,
+        // //     width: width / numColumn,
+        // //     height: height / numRow,
+        // // }
+        // selected = null
+        // this.props.handleSelect(selected);
+        // let { selecteds } = this.state;
+        // console.log(selecteds)
+        // this.tileGrid.clearSelected(selecteds)
+        // this.tileGrid.drawSelected(x, y)
+        // selecteds.push({ x: x, y: y })
+        // this.setState(selecteds)
     }
 
     getGridIndex = (x, y, w, h) => {
@@ -67,25 +83,11 @@ class Canvas extends React.Component {
     }
 
     render = () => {
-        const { numColumn, numRow } = this.state;
-        const { selected } = this.props;
-        console.log(selected)
-        let dim = {}
-        if (this.canvas.current !== null && selected !== null) {
-            const { left, top, width, height } = selected
-            dim = {
-                left: left,
-                top: top,
-                width: width,
-                height: height,
-            }
-        }
-
+        const { imgWidth, imgHeight } = this.state;
         return (
-            <div style={this.props.style} className={this.props.className}>
-                <canvas ref={this.canvas} className="canvas" onClick={this.handleSelect}></canvas>
-                {selected ? <div style={dim} className="selected-grid" onClick={e => e.stopPropagation()}></div> : selected}
-            </div >
+            // <div style={this.props.style} className={this.props.className}>
+            <canvas ref={this.canvas} className="canvas" onClick={this.handleSelect} width={this.state.imgWidth} height={this.state.imgHeight}></canvas>
+            // </div >
         )
     }
 }

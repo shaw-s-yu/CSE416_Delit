@@ -8,8 +8,8 @@ const workScreenReducer = (state = initState, action) => {
         let window = state[action.name];
         const { width, height } = action.value
         window.size = {
-            width: parseInt(width.split('px')[0]) < 120 ? 120 + 'px' : width,
-            height,
+            width: parseInt(width),
+            height: parseInt(height),
         }
         return {
             ...state,

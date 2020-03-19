@@ -38,9 +38,8 @@ class MiniMap extends React.Component {
 
 
     render() {
-
         return (
-            <TileMap className="map-window-display" />
+            <TileMap style={this.props.style} />
         )
     }
 }

@@ -29,6 +29,7 @@ class LayerWindow extends React.Component {
 
     render() {
         const { size, position } = this.props.window
+
         return (
             <Rnd
                 className="workscreen-window"

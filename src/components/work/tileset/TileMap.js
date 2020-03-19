@@ -33,21 +33,17 @@ class TileMap extends React.Component {
 
 
     render() {
-        const { scale } = this.state;
-        const { className } = this.props
+        const { style } = this.props;
         return (
-            <div className={className}>
+            <div className="display-place" onMouseDown={this.handleUnselect} style={style}>
 
-                <div className="display-place" onMouseDown={this.handleUnselect}>
-
-                    <Canvas canvas={this.canvas} className="map" style={{
-                        // width: scale + "%",
-                        // height: scale + "%",
-                        // left: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                        // top: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                        // border: "1px solid #d3d3d3"
-                    }} />
-                </div>
+                <Canvas canvas={this.canvas} className="map" style={{
+                    // width: scale + "%",
+                    // height: scale + "%",
+                    // left: scale < 100 ? (100 - scale) / 2 + "%" : 0,
+                    // top: scale < 100 ? (100 - scale) / 2 + "%" : 0,
+                    // border: "1px solid #d3d3d3"
+                }} />
             </div>
 
         )
@@ -57,6 +53,7 @@ class TileMap extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+
     }
 };
 

@@ -21,6 +21,11 @@ class MapWindow extends React.Component {
 
     render() {
         const { size, position } = this.props.window
+        const { width, height } = size;
+        const style = {
+            maxWidth: width,
+            maxHeight: height - 70,
+        }
         return (
             <Rnd
                 className="workscreen-window"
@@ -47,7 +52,7 @@ class MapWindow extends React.Component {
                         <i className="fas fa-search-plus" style={{ fontSize: '24px' }} />,
                     ]}
                 />
-                <TileMap className="map-window-display" />
+                <TileMap className="map-window-display" style={style} />
             </Rnd>
 
         )

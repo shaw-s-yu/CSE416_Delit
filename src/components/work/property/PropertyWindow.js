@@ -10,12 +10,21 @@ import Titlebar from '../../tools/Titlebar'
 class PropertyWindow extends React.Component {
 
     state = {
+        resizing: false,
     }
 
     handleOnResize = (e, direction, ref, delta, position) => {
         this.props.handleToTop('property');
         const { width, height } = ref.style
-        this.setState({ rander: 'go' }, () => {
+        this.setState({ resizing: true }, () => {
+            this.props.handleOnResize("property", { width, height })
+        })
+    }
+
+    handleStopResize = (e, direction, ref, delta, position) => {
+        this.props.handleToTop('property');
+        const { width, height } = ref.style
+        this.setState({ resizing: false }, () => {
             this.props.handleOnResize("property", { width, height })
         })
     }
@@ -27,17 +36,22 @@ class PropertyWindow extends React.Component {
 
     render() {
         const { size, position } = this.props.window
-        const { layer, map, minimap, selected } = this.props
+        const { layer, map, selected } = this.props
+        const { width, height } = size;
+        const style = {
+            maxWidth: width,
+            maxHeight: height - 140,
+        }
+        const { resizing } = this.state;
         return (
 
             <Rnd
                 className="workscreen-window"
                 size={size}
                 default={position}
-                onMouseDown={() => {
-                    this.props.handleToTop('property')
-                }}
+                onMouseDown={() => this.props.handleToTop('property')}
                 onResize={this.handleOnResize}
+                onResizeStop={this.handleStopResize}
                 onClick={this.props.handleUnselect}
                 minWidth={202}
                 minHeight={391}
@@ -47,10 +61,11 @@ class PropertyWindow extends React.Component {
                     [
                         { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
                         { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
-                        { title: 'Show Mini Map', content: <MiniMap data={minimap} window='minimap' />, open: false },
+                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} />, open: false },
                     ]
                 }
-                    maxHeight='265px'
+                    maxHeight={style.maxHeight}
+                    resizing={resizing}
                 />
                 <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={this.props.handleStopPropagation} />
                 <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} onMouseDown={this.props.handleStopPropagation} />
