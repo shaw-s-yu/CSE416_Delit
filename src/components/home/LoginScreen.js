@@ -137,8 +137,8 @@ class LoginScreen extends React.Component {
                             justify="space-evenly"
                             alignItems="center"
                         >,
-                            <Button key="1" className="home-dialog-subBtn" onClick={this.handleModalOpen2} variant="primary" size="lg">Submit</Button>,
-                            <Button key="2" className="home-dialog-subBtn" onClick={this.handleModalClose1} variant="primary" size="lg">Cancel</Button>,
+                            <Button className="home-dialog-subBtn" onClick={this.handleModalOpen2} variant="primary" size="lg">Submit</Button>,
+                            <Button className="home-dialog-subBtn" onClick={this.handleModalClose1} variant="primary" size="lg">Cancel</Button>,
                         </Grid>
                     ]}
                     content={
@@ -174,8 +174,8 @@ class LoginScreen extends React.Component {
                     fullWidth={true}
                     open={this.state.modelActive2}
                     actions={[
-                        <Button key="1" className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Submit</Button>,
-                        <Button key="2" className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Close</Button>
+                        <Button  className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Submit</Button>,
+                        <Button  className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Close</Button>
                     ]}
                     content={
                         <section className="dialog_content">
