@@ -61,7 +61,7 @@ class PropertyWindow extends React.Component {
                     [
                         { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
                         { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: true },
-                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} />, open: false },
+                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} />, open: false },
                     ]
                 }
                     maxHeight={style.maxHeight}

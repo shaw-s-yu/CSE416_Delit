@@ -55,8 +55,8 @@ class TilesetWindow extends React.Component {
 
                 <Collapsible data={
                     [
-                        { title: 'Tileset 1', content: <TileMap style={style} />, open: false },
-                        { title: 'Tileset 2', content: <TileMap style={style} />, open: true },
+                        { title: 'Tileset 1', content: <TileMap style={style} width={width} height={height - 110} />, open: false },
+                        { title: 'Tileset 2', content: <TileMap style={style} width={width} height={height - 110} />, open: true },
                     ]
                 }
                     maxHeight={style.maxHeight}

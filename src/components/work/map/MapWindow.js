@@ -14,7 +14,7 @@ class MapWindow extends React.Component {
     handleOnResize = (e, direction, ref, delta, position) => {
         this.props.handleToTop('map');
         const { width, height } = ref.style
-        this.setState({ rander: 'go' }, () => {
+        this.setState({ width, height }, () => {
             this.props.handleOnResize("map", { width, height })
         })
     }
@@ -52,7 +52,7 @@ class MapWindow extends React.Component {
                         <i className="fas fa-search-plus" style={{ fontSize: '24px' }} />,
                     ]}
                 />
-                <TileMap className="map-window-display" style={style} />
+                <TileMap style={style} width={width} height={height - 70} />
             </Rnd>
 
         )

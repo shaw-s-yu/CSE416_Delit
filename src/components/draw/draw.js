@@ -6,7 +6,6 @@ import "./styles.css";
 
 export default function App() {
     const canvasInit = lc => {
-        console.log(lc);
     };
 
     return (

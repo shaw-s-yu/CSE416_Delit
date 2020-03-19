@@ -2,7 +2,7 @@ import React from 'react';
 import squirtle from '../../../img/squirtle.jpg'
 import TileGrid from './TileGrid'
 import { connect } from 'react-redux';
-import { selectTilesetHandler } from '../../../store/database/WorkScreenHandler';
+import * as handler from '../../../store/database/WorkScreenHandler';
 
 class Canvas extends React.Component {
 
@@ -25,17 +25,18 @@ class Canvas extends React.Component {
         let img = new Image();
         img.src = squirtle;
         this.tileGrid = new TileGrid(this.ctx, img, width, height);
-        const self = this
-        img.onload = function () {
-            self.tileGrid.buildModel();
-            const { numRow, numColumn } = self.tileGrid
-            self.setState({
+        img.onload = () => {
+            this.tileGrid.buildModel();
+            const { numRow, numColumn } = this.tileGrid
+            this.setState({
                 numRow: numRow,
                 numColumn: numColumn,
                 imgWidth: width * numColumn,
                 imgHeight: height * numRow,
             }, () => {
-                self.tileGrid.draw();
+                const { imgWidth, imgHeight } = this.state;
+                this.props.handleImgInit('squirtle', { imgWidth, imgHeight })
+                this.tileGrid.draw();
             })
         }
     }
@@ -51,22 +52,6 @@ class Canvas extends React.Component {
         let gridHeight = height / this.state.numRow
         let selected = this.getGridIndex(clickX, clickY, gridWidth, gridHeight)
         console.log(selected);
-        // const { x, y } = selected;
-        // // selected = {
-        // //     ...selected,
-        // //     left: left + width / numColumn * x,
-        // //     top: top + top / numRow * y,
-        // //     width: width / numColumn,
-        // //     height: height / numRow,
-        // // }
-        // selected = null
-        // this.props.handleSelect(selected);
-        // let { selecteds } = this.state;
-        // console.log(selecteds)
-        // this.tileGrid.clearSelected(selecteds)
-        // this.tileGrid.drawSelected(x, y)
-        // selecteds.push({ x: x, y: y })
-        // this.setState(selecteds)
     }
 
     getGridIndex = (x, y, w, h) => {
@@ -85,9 +70,7 @@ class Canvas extends React.Component {
     render = () => {
         const { imgWidth, imgHeight } = this.state;
         return (
-            // <div style={this.props.style} className={this.props.className}>
-            <canvas ref={this.canvas} className="canvas" onClick={this.handleSelect} width={this.state.imgWidth} height={this.state.imgHeight}></canvas>
-            // </div >
+            <canvas ref={this.canvas} onClick={this.handleSelect} width={imgWidth} height={imgHeight}></canvas>
         )
     }
 }
@@ -105,7 +88,8 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch) => ({
-    handleSelect: (selected) => dispatch(selectTilesetHandler(selected)),
+    handleSelect: (selected) => dispatch(handler.selectTilesetHandler(selected)),
+    handleImgInit: (name, img) => dispatch(handler.tilsetImgInitHandler(name, img)),
 })
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Button, TextInput } from 'react-materialize'
 import { connect } from 'react-redux';
 import Dialog from '../tools/Dialog'
-import {Grid, ListItem, ListItemAvatar, Avatar, ListItemText, Divider} from "@material-ui/core";
+import { Grid, ListItem, ListItemAvatar, Avatar, ListItemText, Divider } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
@@ -120,7 +120,7 @@ class ItemList extends React.Component {
                                             <Paper elevation={3} className="paper">
                                                 <ListItem alignItems="flex-start">
                                                     <ListItemAvatar>
-                                                        <Avatar alt={image.alt} src={image.src}/>
+                                                        <Avatar alt={image.alt} src={image.src} />
                                                     </ListItemAvatar>
                                                     <ListItemText
                                                         primary={image.alt}
@@ -184,20 +184,3 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);;
-
-
-
-{/*<div className="members">*/}
-{/*    <ul className="product-gallery-thumbs__list">*/}
-{/*        {images.map(function (image, index) {*/}
-{/*            return (*/}
-{/*                <div className="imageContainer" key={index}>*/}
-{/*                    <li key={image.src}>*/}
-{/*                        <img className="img" src={image.src} alt={image.alt} />*/}
-{/*                        <div className="imageDescription">{image.alt}</div>*/}
-{/*                    </li>*/}
-{/*                </div>*/}
-{/*            );*/}
-{/*        })}*/}
-{/*    </ul>*/}
-{/*</div>*/}

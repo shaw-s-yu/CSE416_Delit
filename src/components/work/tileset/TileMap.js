@@ -3,7 +3,6 @@ import Canvas from '../canvas/Canvas'
 import { connect } from 'react-redux';
 import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';
 
-
 class TileMap extends React.Component {
 
     state = {
@@ -33,17 +32,17 @@ class TileMap extends React.Component {
 
 
     render() {
-        const { style } = this.props;
-        return (
-            <div className="display-place" onMouseDown={this.handleUnselect} style={style}>
+        const { style, width, imgWidth, height, imgHeight } = this.props;
+        const totalStyle = {
+            ...style,
+            marginLeft: imgWidth >= width ? "auto" : (width - imgWidth) / 2,
+            marginTop: imgHeight >= height ? "auto" : (height - imgHeight) / 2,
+        }
 
-                <Canvas canvas={this.canvas} className="map" style={{
-                    // width: scale + "%",
-                    // height: scale + "%",
-                    // left: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                    // top: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                    // border: "1px solid #d3d3d3"
-                }} />
+        return (
+
+            <div className="display-place" onMouseDown={this.handleUnselect} style={totalStyle}>
+                <Canvas canvas={this.canvas} />
             </div>
 
         )
@@ -52,8 +51,11 @@ class TileMap extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const { squirtle } = state.tileset.imgs
+    if (!squirtle) return {}
+    const { imgWidth, imgHeight } = squirtle
     return {
-
+        imgWidth, imgHeight
     }
 };
 

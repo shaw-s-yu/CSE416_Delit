@@ -28,7 +28,9 @@
 
 .display-place{
     cursor: auto;
-    overflow: scroll;
+    overflow: auto;
+    display: inline-block;
+    /* position: absolute; */
 }
 
 .map{

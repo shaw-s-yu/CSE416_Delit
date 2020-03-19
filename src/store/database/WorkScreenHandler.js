@@ -1,5 +1,9 @@
 import * as actionCreators from '../actions/actionCreators.js'
 
+export const tilsetImgInitHandler = (name, value) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.TILESET_IMG_INIT, name: name, value: value });
+}
+
 export const unselectTilesetHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.TILESET_UNSELECT });
 }
