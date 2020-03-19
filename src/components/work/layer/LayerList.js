@@ -8,6 +8,7 @@ class LayerWindow extends React.Component {
 
     render() {
         const { layers } = this.props
+
         return (
             <div className="layer-list">
                 {layers && layers.map((layer, index) => {

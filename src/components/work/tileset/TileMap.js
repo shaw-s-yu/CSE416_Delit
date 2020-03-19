@@ -35,8 +35,8 @@ class TileMap extends React.Component {
         const { style, width, imgWidth, height, imgHeight } = this.props;
         const totalStyle = {
             ...style,
-            marginLeft: imgWidth >= width ? "auto" : (width - imgWidth) / 2,
-            marginTop: imgHeight >= height ? "auto" : (height - imgHeight) / 2,
+            marginLeft: imgWidth ? imgWidth >= width ? "auto" : (width - imgWidth) / 2 : "auto",
+            marginTop: imgHeight ? imgHeight >= height ? "auto" : (height - imgHeight) / 2 : "auto",
         }
 
         return (

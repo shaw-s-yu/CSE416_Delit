@@ -372,9 +372,8 @@ body{
 }
 
 .property-list-pagination{
-    width: 90%;
-    margin-left:5%;
     background-color: none;
+    display: inline-block;
 }
 
 .MuiPagination-root{
