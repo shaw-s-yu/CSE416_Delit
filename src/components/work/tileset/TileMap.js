@@ -44,8 +44,6 @@ class TileMap extends React.Component {
             <PerfectScrollbar className="display-place" style={totalStyle} >
                 <Canvas canvas={this.canvas} />
             </PerfectScrollbar>
-            // </div>
-
         )
     }
 

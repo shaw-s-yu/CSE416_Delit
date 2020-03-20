@@ -391,3 +391,7 @@ nav {
     font-weight: normal;
 
 }
+
+.scrollbar-container{
+    height: auto;
+}
