@@ -66,7 +66,6 @@ class WorkScreen extends React.Component {
                 <div>
                     {
                         this.getScreen()
-
                     }
                 </div>
             </div >

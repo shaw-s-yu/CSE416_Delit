@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
+import squirtle from '../../../img/squirtle.jpg'
 
 class TileMap extends React.Component {
 
@@ -42,7 +43,7 @@ class TileMap extends React.Component {
 
         return (
             <PerfectScrollbar className="display-place" style={totalStyle} >
-                <Canvas canvas={this.canvas} />
+                <Canvas canvas={this.canvas} squirtle={squirtle} />
             </PerfectScrollbar>
         )
     }

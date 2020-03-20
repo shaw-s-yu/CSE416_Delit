@@ -1,8 +1,8 @@
 import React from 'react';
-import squirtle from '../../../img/squirtle.jpg'
 import TileGrid from './TileGrid'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
+import SingleLayer from './SingleLayer'
 
 class Canvas extends React.Component {
 
@@ -15,13 +15,20 @@ class Canvas extends React.Component {
         selecteds: [],
         imgWidth: 0,
         imgHeight: 0,
+        click_layer: null,
     }
 
-    canvas = React.createRef()
+
 
     componentDidMount = () => {
+        this.drawImage();
+    }
+
+    drawImage = () => {
         const { width, height } = this.state;
-        this.ctx = this.canvas.current.getContext('2d');
+        const { canvas, squirtle } = this.props
+        if (!canvas) return
+        this.ctx = canvas.current.getContext('2d');
         let img = new Image();
         img.src = squirtle;
         this.tileGrid = new TileGrid(this.ctx, img, width, height);
@@ -37,21 +44,40 @@ class Canvas extends React.Component {
                 const { imgWidth, imgHeight } = this.state;
                 this.props.handleImgInit('squirtle', { imgWidth, imgHeight })
                 this.tileGrid.draw();
+                this.buildTopLayer();
             })
         }
+    }
+
+    buildTopLayer = () => {
+        const rect = this.props.canvas.current.getBoundingClientRect()
+        let { left, top, right, bottom } = rect;
+        const style = {
+            left: 0,
+            top: 0,
+            width: right - left,
+            height: bottom - top,
+            position: "absolute",
+        }
+        const { numRow, numColumn, width, height } = this.state;
+        const handleSelect = this.handleSelect
+        const clickLayerProps = { numColumn, numRow, width, height, handleSelect, style }
+        const click_layer = <SingleLayer {...clickLayerProps} />
+
+        this.setState({ click_layer })
     }
 
     handleSelect = (e) => {
 
         e.stopPropagation();
-        let rect = this.canvas.current.getBoundingClientRect()
+        let rect = this.props.canvas.current.getBoundingClientRect()
         let { left, top, width, height } = rect;
         let clickX = e.clientX - left
         let clickY = e.clientY - top
         let gridWidth = width / this.state.numColumn
         let gridHeight = height / this.state.numRow
         let selected = this.getGridIndex(clickX, clickY, gridWidth, gridHeight)
-        console.log(selected);
+        this.props.handleSelect(selected)
     }
 
     getGridIndex = (x, y, w, h) => {
@@ -68,9 +94,14 @@ class Canvas extends React.Component {
     }
 
     render = () => {
-        const { imgWidth, imgHeight } = this.state;
+        const { imgWidth, imgHeight, click_layer } = this.state;
+        let { style, canvas } = this.props;
+        style = style ? style : {};
         return (
-            <canvas ref={this.canvas} onClick={this.handleSelect} width={imgWidth} height={imgHeight}></canvas>
+            <div>
+                <canvas ref={canvas} className="single-layer" onClick={this.handleSelect} width={imgWidth} height={imgHeight} style={style}></canvas>
+                {click_layer}
+            </div>
         )
     }
 }
