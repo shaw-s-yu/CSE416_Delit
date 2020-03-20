@@ -30,7 +30,6 @@
     cursor: auto;
     overflow: auto;
     display: inline-block;
-    /* position: absolute; */
 }
 
 .map{
@@ -314,7 +313,7 @@ li.active{
 .layer-range{
     width: calc(100% - 140px);
     margin-left: 120px;
-    margin-top: -25px;
+    margin-top: -27px;
     height: 20px;
 }
 

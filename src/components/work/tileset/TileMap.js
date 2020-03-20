@@ -2,6 +2,8 @@ import React from 'react';
 import Canvas from '../canvas/Canvas'
 import { connect } from 'react-redux';
 import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import 'react-perfect-scrollbar/dist/css/styles.css'
 
 class TileMap extends React.Component {
 
@@ -30,7 +32,6 @@ class TileMap extends React.Component {
         e.stopPropagation();
     }
 
-
     render() {
         const { style, width, imgWidth, height, imgHeight } = this.props;
         const totalStyle = {
@@ -40,10 +41,10 @@ class TileMap extends React.Component {
         }
 
         return (
-
-            <div className="display-place" onMouseDown={this.handleUnselect} style={totalStyle}>
+            <PerfectScrollbar className="display-place" style={totalStyle} >
                 <Canvas canvas={this.canvas} />
-            </div>
+            </PerfectScrollbar>
+            // </div>
 
         )
     }
