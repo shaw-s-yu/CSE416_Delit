@@ -7,20 +7,28 @@ import Toolbar from '../../tools/Toolbar'
 import TileMap from '../tileset/TileMap'
 
 
+const rect = document.body.getBoundingClientRect();
+const { width, height } = rect
+
+
 class MapWindow extends React.Component {
 
-    state = {}
+    state = {
+        position: { x: width * 0.2, y: 0 },
+        size: { width: width * 0.6, height: height * 0.7 < 442.867 ? 442.867 : height * 0.7 },
+    }
 
     handleOnResize = (e, direction, ref, delta, position) => {
-        this.props.handleToTop('map');
-        const { width, height } = ref.style
-        this.setState({ width, height }, () => {
+        let { width, height } = ref.style
+        width = parseInt(width)
+        height = parseInt(height)
+        this.setState({ size: { width, height } }, () => {
             this.props.handleOnResize("map", { width, height })
         })
     }
 
     render() {
-        const { size, position } = this.props.window
+        const { size, position } = this.state
         const { width, height } = size;
         const style = {
             maxWidth: width,
@@ -29,10 +37,13 @@ class MapWindow extends React.Component {
         return (
             <Rnd
                 className="workscreen-window"
+                id="map"
                 size={size}
                 default={position}
                 onMouseDown={() => { this.props.handleToTop('map') }}
+                onResizeStart={() => this.props.handleToTop('map')}
                 onResize={this.handleOnResize}
+                onResizeStop={this.handleOnResize}
             >
                 <Titlebar title="Map Window" />
                 <Toolbar
@@ -52,7 +63,7 @@ class MapWindow extends React.Component {
                         <i className="fas fa-search-plus" style={{ fontSize: '24px' }} />,
                     ]}
                 />
-                <TileMap style={style} width={width} height={height - 70} />
+                <TileMap style={style} width={width} height={height - 70} window="map" />
             </Rnd>
 
         )
@@ -61,14 +72,13 @@ class MapWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { map } = state.workScreen
     return {
-        window: map,
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     handleOnResize: (name, value) => dispatch(handler.resizeWindowHandler(name, value)),
+    handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapWindow)

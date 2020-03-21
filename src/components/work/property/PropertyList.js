@@ -103,10 +103,8 @@ class PropertyList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { width } = state.workScreen.property.size
     const { selected } = state.property
     return {
-        width: width,
         selected: selected,
     }
 };

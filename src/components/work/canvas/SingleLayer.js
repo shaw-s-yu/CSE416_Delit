@@ -1,11 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux';
-
+import * as handler from '../../../store/database/WorkScreenHandler';
 
 class SingleLayer extends React.Component {
 
+
+    state = {
+        selected: null,
+    }
+
     getGrid = (col, row) => {
-        const { width, height, selected } = this.props
+
+        const { selected } = this.state
+        const { width, height } = this.props
         const border = selected ? selected.x === col && selected.y === row ? '2px solid black' : 'none' : 'none';
         const style = {
             left: width * col,
@@ -14,7 +21,7 @@ class SingleLayer extends React.Component {
             position: 'absolute',
             border: border,
         }
-        return <div style={style} key={'x:' + col + ",y:" + row}></div>
+        return <div style={style} key={'x:' + col + ",y:" + row} onClick={this.handleSelect.bind(this, col, row)}></div>
     }
 
 
@@ -29,11 +36,20 @@ class SingleLayer extends React.Component {
     }
 
 
+    handleSelect = (col, row) => {
+        this.setState({ selected: { x: col, y: row } })
+        this.props.handleSelect({ x: col, y: row })
+    }
+
+
     render() {
-        const { style, handleSelect } = this.props;
+        const { style } = this.props;
         const grids = this.getGrids();
         return (
-            <div style={style} onClick={handleSelect} onMouseDown={e => e.stopPropagation()}>
+            <div style={style} onMouseDown={e => {
+                e.stopPropagation()
+                this.props.handleToTop(this.props.window)
+            }}>
                 {grids && grids.map(grid => {
                     return grid
                 })}
@@ -52,4 +68,9 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(SingleLayer);;
+const mapDispatchToProps = (dispatch) => ({
+    handleToTop: (window) => dispatch(handler.handleToTop(window)),
+    handleSelect: (selected) => dispatch(handler.selectTilesetHandler(selected)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleLayer);;

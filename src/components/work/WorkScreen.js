@@ -16,14 +16,26 @@ const screen = {
 class WorkScreen extends React.Component {
 
     state = {
-        order: ['map', 'property', 'layer', 'tileset'],
         currentScreen: screen.WORK_SPACE,
     }
 
     handleToTop = (window) => {
-        let { order } = this.state;
-        order.push(order.splice(order.indexOf(window), 1)[0]);
-        this.setState({ order: order })
+        let target = document.getElementById(window)
+        if (target.style.zIndex === "4") {
+            return
+        }
+
+        let map = document.getElementById('map')
+        let property = document.getElementById('property')
+        let layer = document.getElementById('layer')
+        let tileset = document.getElementById('tileset')
+        map.style.zIndex -= 1
+        property.style.zIndex -= 1
+        layer.style.zIndex -= 1
+        tileset.style.zIndex -= 1
+
+        target.style.zIndex = 4
+
     }
 
     handleGoPaint = () => {
@@ -39,22 +51,28 @@ class WorkScreen extends React.Component {
     }
 
     getScreen = () => {
-        const { order, currentScreen } = this.state;
+        const { currentScreen } = this.state;
         if (currentScreen === screen.WORK_SPACE)
-            return order && order.map(window => {
-                if (window === "map")
-                    return <MapWindow key="map" handleToTop={this.handleToTop} />
-                else if (window === "property")
-                    return <PropertyWindow key="property" handleToTop={this.handleToTop} />
-                else if (window === 'layer')
-                    return <LayerWindow key="layer" handleToTop={this.handleToTop} />
-                else
-                    return <TilesetWindow key="tileset" handleToTop={this.handleToTop} handleGoPaint={this.handleGoPaint} />
-            })
+            return (
+                <>
+                    <MapWindow key="map" />
+                    <PropertyWindow key="property" />
+                    <LayerWindow key="layer" />
+                    <TilesetWindow key="tileset" handleGoPaint={this.handleGoPaint} />
+                </>
+            )
         else if (currentScreen === screen.PAINT_SCREEN)
             return <Paint />
         else
             return "error"
+    }
+
+
+    componentDidMount() {
+        document.getElementById('map').style.zIndex = 1;
+        document.getElementById('property').style.zIndex = 2;
+        document.getElementById('layer').style.zIndex = 3;
+        document.getElementById('tileset').style.zIndex = 4;
     }
 
     render = () => {

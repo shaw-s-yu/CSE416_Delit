@@ -11,8 +11,6 @@ class Canvas extends React.Component {
         height: 150,
         numRow: 0,
         numColumn: 0,
-        selected: null,
-        selecteds: [],
         imgWidth: 0,
         imgHeight: 0,
         click_layer: null,
@@ -60,37 +58,11 @@ class Canvas extends React.Component {
             position: "absolute",
         }
         const { numRow, numColumn, width, height } = this.state;
-        const handleSelect = this.handleSelect
-        const clickLayerProps = { numColumn, numRow, width, height, handleSelect, style }
+        const { window } = this.props
+        const clickLayerProps = { numColumn, numRow, width, height, style, window }
         const click_layer = <SingleLayer {...clickLayerProps} />
 
         this.setState({ click_layer })
-    }
-
-    handleSelect = (e) => {
-
-        e.stopPropagation();
-        let rect = this.props.canvas.current.getBoundingClientRect()
-        let { left, top, width, height } = rect;
-        let clickX = e.clientX - left
-        let clickY = e.clientY - top
-        let gridWidth = width / this.state.numColumn
-        let gridHeight = height / this.state.numRow
-        let selected = this.getGridIndex(clickX, clickY, gridWidth, gridHeight)
-        this.props.handleSelect(selected)
-    }
-
-    getGridIndex = (x, y, w, h) => {
-        const { numRow, numColumn } = this.state
-        for (let o = 0; o < numRow; o++)
-            for (let i = 0; i < numColumn; i++) {
-                if (x > i * w && x < (i + 1) * w && y > o * h && y < (o + 1) * h)
-                    return {
-                        x: i,
-                        y: o
-                    }
-            }
-
     }
 
     render = () => {
@@ -109,18 +81,16 @@ class Canvas extends React.Component {
 
 const mapStateToProps = (state) => {
     const { tileset } = state;
-    const { order } = state.workScreen
     let selected = tileset.selected ? tileset.selected : null;
     return {
         selected: selected,
-        order: order
     }
 };
 
 
 const mapDispatchToProps = (dispatch) => ({
-    handleSelect: (selected) => dispatch(handler.selectTilesetHandler(selected)),
     handleImgInit: (name, img) => dispatch(handler.tilsetImgInitHandler(name, img)),
+    handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 
 

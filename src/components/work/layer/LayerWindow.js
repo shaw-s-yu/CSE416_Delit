@@ -7,28 +7,29 @@ import * as handler from '../../../store/database/WorkScreenHandler';
 import Slider from '@material-ui/core/Slider';
 
 
+const rect = document.body.getBoundingClientRect();
+const { width, height } = rect
 
 class LayerWindow extends React.Component {
 
+    state = {
+        position: { x: width * 0.8, y: 0 },
+        size: { width: width * 0.2, height: height * 0.28 < 177.15 ? 177.15 : height * 0.28 },
+    }
 
     handleOnResize = (e, direction, ref, delta, position) => {
-        this.props.handleToTop('layer');
-        const { width, height } = ref.style
-        this.setState({ rander: 'go' }, () => {
-            this.props.handleOnResize("layer", { width, height })
-        })
+        let { width, height } = ref.style
+        width = parseInt(width)
+        height = parseInt(height)
+        this.setState({ size: { width, height } })
     }
 
     handleChange = (e) => {
 
     }
 
-    stopPropagation = e => {
-        e.stopPropagation()
-    }
-
     render() {
-        const { size, position } = this.props.window
+        const { size, position } = this.state
 
         return (
             <Rnd
@@ -37,15 +38,18 @@ class LayerWindow extends React.Component {
                 default={position}
                 onMouseDown={() => { this.props.handleToTop('layer') }}
                 onResize={this.handleOnResize}
+                onResizeStop={this.handleOnResize}
+                onResizeStart={() => this.props.handleToTop('layer')}
+                id='layer'
             >
                 <Titlebar title="Layer Window" />
                 <LayerList />
-                <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={this.stopPropagation} />
+                <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} />
                 <span className="opacity-text">OPACITY:</span>
                 <div className="layer-range">
                     <Slider
                         defaultValue={30}
-                        getAriaValueText={valuetext}
+                        getAriaValueText={value => value + "%"}
                         aria-labelledby="discrete-slider"
                         valueLabelDisplay="auto"
                         marks
@@ -62,20 +66,13 @@ class LayerWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { layer } = state.workScreen
     return {
-        window: layer,
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     handleOnResize: (name, value) => dispatch(handler.resizeWindowHandler(name, value)),
+    handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)
-
-
-
-function valuetext(value) {
-    return value + "%";
-}

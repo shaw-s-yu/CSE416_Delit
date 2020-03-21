@@ -1,7 +1,7 @@
 import React from 'react';
 import Canvas from '../canvas/Canvas'
 import { connect } from 'react-redux';
-import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';
+import * as handler from '../../../store/database/WorkScreenHandler';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import squirtle from '../../../img/squirtle.jpg'
@@ -13,6 +13,7 @@ class TileMap extends React.Component {
     }
 
     canvas = React.createRef();
+
 
     handleZoomIn = (e) => {
         e.stopPropagation()
@@ -28,23 +29,17 @@ class TileMap extends React.Component {
         this.setState({ scale: scale })
     }
 
-    handleUnselect = (e) => {
-        this.props.handleUnselect()
-        e.stopPropagation();
-    }
-
     render() {
-        const { style, width, imgWidth, height, imgHeight } = this.props;
+        const { style, width, imgWidth, height, imgHeight, window } = this.props;
         const totalStyle = {
             ...style,
             marginLeft: imgWidth ? imgWidth >= width ? "auto" : (width - imgWidth) / 2 : "auto",
             marginTop: imgHeight ? imgHeight >= height ? "auto" : (height - imgHeight) / 2 : "auto",
         }
-
         return (
             <PerfectScrollbar className="display-place" style={totalStyle} >
-                <Canvas canvas={this.canvas} squirtle={squirtle} />
-            </PerfectScrollbar>
+                <Canvas canvas={this.canvas} squirtle={squirtle} window={window} />
+            </ PerfectScrollbar>
         )
     }
 
@@ -60,7 +55,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleUnselect: () => dispatch(unselectTilesetHandler()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TileMap)

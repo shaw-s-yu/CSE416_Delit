@@ -13,7 +13,7 @@ class MiniMap extends React.Component {
     render() {
         const { width, height, topOffset } = this.props;
         return (
-            <TileMap style={this.props.style} width={width} height={height} topOffset={topOffset} />
+            <TileMap style={this.props.style} width={width} height={height} topOffset={topOffset} window="property" />
         )
     }
 }
