@@ -18,10 +18,11 @@ class LayerWindow extends React.Component {
 
 
                             </div>
-
-                            <div className="layer-item-btn-box" onMouseDown={e => e.stopPropagation()}>
+                            <div className="layer-item-btn-fixedbox">
                                 <i className="fas fa-eye better-btn layer-item-btn-eye" />
                                 <i className="fas fa-lock better-btn layer-item-btn" />
+                            </div>
+                            <div className="layer-item-btn-box" onMouseDown={e => e.stopPropagation()}>
                                 <i className="fas fa-edit better-btn layer-item-btn" />
                                 <i className="fas fa-trash-alt better-btn layer-item-btn" />
                                 <i className="fas fa-arrow-down better-btn layer-item-btn" />

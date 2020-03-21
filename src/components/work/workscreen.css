@@ -343,13 +343,23 @@ li.active{
     background-color: burlywood;
 }
 
-.layer-item-btn-box{
+
+.layer-item-btn-fixedbox{
     margin-top: -22px;
-    margin-left: calc(100% - 80px);
-    max-width: 75px;
+    margin-left: calc(100% - 52px);
+    max-width: 52px;
     height: 24px;
     padding:2px 6px 2px 6px;
-    position: absolute;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.layer-item-btn-box{
+    margin-top: -24px;
+    margin-left: calc(100% - 72px);
+    max-width: 32px;
+    height: 24px;
+    padding:2px 6px 2px 6px;
     overflow-x: hidden;
     overflow-y: auto;
     transition: ease-in-out 0.3s;
@@ -357,16 +367,14 @@ li.active{
 
 .layer-item-btn-box:hover{
     margin-left: calc(100% - 140px);
-    max-width: 150px;
+    max-width: 100px;
 }
 
 .layer-item-btn{
-    display: inline-block;
     float: right;
 }
 
 .layer-item-btn-eye{
-    display: inline-block;
     float: right;
     padding-left: 1px;
 }
