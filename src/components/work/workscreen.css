@@ -345,8 +345,8 @@ li.active{
 
 .layer-item-btn-box{
     margin-top: -22px;
-    margin-left: calc(100% - 40px);
-    max-width: 32px;
+    margin-left: calc(100% - 80px);
+    max-width: 75px;
     height: 24px;
     padding:2px 6px 2px 6px;
     position: absolute;
@@ -363,6 +363,12 @@ li.active{
 .layer-item-btn{
     display: inline-block;
     float: right;
+}
+
+.layer-item-btn-eye{
+    display: inline-block;
+    float: right;
+    padding-left: 1px;
 }
 
 body{
