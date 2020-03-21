@@ -16,10 +16,6 @@ export const moveWindowHandler = (name, value) => (dispatch, getState) => {
     dispatch({ type: actionCreators.WINDOW_MOVE, name: name, value: value });
 }
 
-export const resizeWindowHandler = (window, size) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.WINDOW_RESIZE, window, size });
-}
-
 export const selectPropertyHandler = (window, index) => (dispatch, getState) => {
     dispatch({ type: actionCreators.PROPERTY_SELECT, window: window, index: index });
 }

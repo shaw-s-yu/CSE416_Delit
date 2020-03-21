@@ -10,10 +10,12 @@ class MiniMap extends React.Component {
     };
 
 
+    tileMap = React.createRef()
+
     render() {
-        const { width, height, topOffset } = this.props;
+        const { width, height } = this.props;
         return (
-            <TileMap style={this.props.style} width={width} height={height} topOffset={topOffset} window="property" />
+            <TileMap style={this.props.style} width={width} height={height} window="property" childRef={ref => this.tileMap = ref} />
         )
     }
 }

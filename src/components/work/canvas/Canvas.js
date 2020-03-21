@@ -48,18 +48,9 @@ class Canvas extends React.Component {
     }
 
     buildTopLayer = () => {
-        const rect = this.props.canvas.current.getBoundingClientRect()
-        let { left, top, right, bottom } = rect;
-        const style = {
-            left: 0,
-            top: 0,
-            width: right - left,
-            height: bottom - top,
-            position: "absolute",
-        }
-        const { numRow, numColumn, width, height } = this.state;
         const { window } = this.props
-        const clickLayerProps = { numColumn, numRow, width, height, style, window }
+        const { numRow, numColumn, width, height } = this.state;
+        const clickLayerProps = { numColumn, numRow, width, height, window }
         const click_layer = <SingleLayer {...clickLayerProps} />
 
         this.setState({ click_layer })
@@ -67,13 +58,12 @@ class Canvas extends React.Component {
 
     render = () => {
         const { imgWidth, imgHeight, click_layer } = this.state;
-        let { style, canvas } = this.props;
-        style = style ? style : {};
+        let { canvas } = this.props;
         return (
-            <div>
-                <canvas ref={canvas} className="single-layer" onClick={this.handleSelect} width={imgWidth} height={imgHeight} style={style}></canvas>
+            <>
+                <canvas ref={canvas} className="single-layer" onClick={this.handleSelect} width={imgWidth} height={imgHeight}></canvas>
                 {click_layer}
-            </div>
+            </>
         )
     }
 }

@@ -71,7 +71,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleOnResize: (name, value) => dispatch(handler.resizeWindowHandler(name, value)),
     handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 

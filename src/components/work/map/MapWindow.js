@@ -16,15 +16,16 @@ class MapWindow extends React.Component {
     state = {
         position: { x: width * 0.2, y: 0 },
         size: { width: width * 0.6, height: height * 0.7 < 442.867 ? 442.867 : height * 0.7 },
+        zoom: "100%",
     }
+
+    tileMap = React.createRef()
 
     handleOnResize = (e, direction, ref, delta, position) => {
         let { width, height } = ref.style
         width = parseInt(width)
         height = parseInt(height)
-        this.setState({ size: { width, height } }, () => {
-            this.props.handleOnResize("map", { width, height })
-        })
+        this.setState({ size: { width, height } })
     }
 
     render() {
@@ -59,11 +60,11 @@ class MapWindow extends React.Component {
                         <i className="fas fa-fill" style={{ fontSize: '24px' }} />,
                     ]}
                     rightContent={[
-                        <i className="fas fa-search-minus" style={{ fontSize: '24px' }} />,
-                        <i className="fas fa-search-plus" style={{ fontSize: '24px' }} />,
+                        <i className="fas fa-search-minus" style={{ fontSize: '24px' }} onClick={e => this.tileMap.handleZoomOut(e)} />,
+                        <i className="fas fa-search-plus" style={{ fontSize: '24px' }} onClick={e => this.tileMap.handleZoomIn(e)} />,
                     ]}
                 />
-                <TileMap style={style} width={width} height={height - 70} window="map" />
+                <TileMap style={style} width={width} height={height - 70} window="map" childRef={ref => this.tileMap = ref} />
             </Rnd>
 
         )
@@ -77,7 +78,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleOnResize: (name, value) => dispatch(handler.resizeWindowHandler(name, value)),
     handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 

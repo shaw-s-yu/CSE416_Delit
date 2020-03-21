@@ -18,6 +18,7 @@ class TilesetWindow extends React.Component {
         size: { width: width * 0.2, height: height * 0.42 < 265.717 ? 265.717 : height * 0.42 },
     }
 
+    tileMap = React.createRef()
 
     handleSelect = () => {
         this.props.handleUnselect()
@@ -61,8 +62,8 @@ class TilesetWindow extends React.Component {
 
                 <Collapsible data={
                     [
-                        { title: 'Tileset 1', content: <TileMap style={style} width={width} height={height - 110} window="tileset" />, open: false },
-                        { title: 'Tileset 2', content: <TileMap style={style} width={width} height={height - 110} window="tileset" />, open: true },
+                        { title: 'Tileset 1', content: <TileMap style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: false },
+                        { title: 'Tileset 2', content: <TileMap style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: true },
                     ]
                 }
                     maxHeight={style.maxHeight}

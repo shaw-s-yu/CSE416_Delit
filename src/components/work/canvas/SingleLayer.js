@@ -21,7 +21,10 @@ class SingleLayer extends React.Component {
             position: 'absolute',
             border: border,
         }
-        return <div style={style} key={'x:' + col + ",y:" + row} onClick={this.handleSelect.bind(this, col, row)}></div>
+        return <div style={style} key={'x:' + col + ",y:" + row} onClick={this.handleSelect.bind(this, col, row)} onMouseDown={e => {
+            e.stopPropagation()
+            this.props.handleToTop(this.props.window)
+        }}></div>
     }
 
 
@@ -43,17 +46,13 @@ class SingleLayer extends React.Component {
 
 
     render() {
-        const { style } = this.props;
         const grids = this.getGrids();
         return (
-            <div style={style} onMouseDown={e => {
-                e.stopPropagation()
-                this.props.handleToTop(this.props.window)
-            }}>
+            <>
                 {grids && grids.map(grid => {
                     return grid
                 })}
-            </div>
+            </>
         )
     }
 

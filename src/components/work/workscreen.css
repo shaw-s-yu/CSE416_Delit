@@ -28,8 +28,10 @@
 
 .display-place{
     cursor: auto;
-    overflow: auto;
     display: inline-block;
+    position: relative;
+    /* transition: ease-in-out 0.3s; */
+    transform-origin: 0 0;
 }
 
 .map{
