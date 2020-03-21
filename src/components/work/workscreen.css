@@ -344,24 +344,23 @@ li.active{
 }
 
 .layer-item-btn-box{
-    margin-top: -20px;
-    margin-left: calc(100% - 60px);
-    width: 60px;
-    height: 20px;
-    display: absolute;
+    margin-top: -22px;
+    margin-left: calc(100% - 40px);
+    max-width: 32px;
+    height: 24px;
+    padding:2px 6px 2px 6px;
+    position: absolute;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: ease-in-out 0.3s;
 }
 
-.layer-item-up-btn{
-    display: inline-block;
-    float: right;
+.layer-item-btn-box:hover{
+    margin-left: calc(100% - 140px);
+    max-width: 150px;
 }
 
-.layer-item-down-btn{
-    display: inline-block;
-    float: right;
-}
-
-.layer-item-delete-btn{
+.layer-item-btn{
     display: inline-block;
     float: right;
 }

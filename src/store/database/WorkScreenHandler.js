@@ -50,7 +50,6 @@ export const handleToTop = (window, callback) => (dispatch, getState) => {
     if (target.style.zIndex === "4") {
         return
     }
-
     let map = document.getElementById('map')
     let property = document.getElementById('property')
     let layer = document.getElementById('layer')
@@ -61,4 +60,5 @@ export const handleToTop = (window, callback) => (dispatch, getState) => {
     tileset.style.zIndex -= tileset.style.zIndex === "1" ? 0 : 1
 
     target.style.zIndex = 4
+
 }

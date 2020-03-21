@@ -1,7 +1,6 @@
 import React from 'react';
 import Canvas from '../canvas/Canvas'
 import { connect } from 'react-redux';
-import * as handler from '../../../store/database/WorkScreenHandler';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import squirtle from '../../../img/squirtle.jpg'
