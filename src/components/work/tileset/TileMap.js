@@ -15,6 +15,8 @@ class TileMap extends React.Component {
 
     canvas = React.createRef();
     scrollbar = React.createRef();
+    scrollLeft = 0.5
+    scrollTop = 0.5
 
     handleZoomIn = (e) => {
         e.stopPropagation()
@@ -31,15 +33,25 @@ class TileMap extends React.Component {
     }
 
     handleCenterZoomIn = () => {
-        const { scrollLeftMax, scrollTopMax } = this.scrollbar._container;
-        this.scrollbar._container.scrollLeft = scrollLeftMax / 2
-        this.scrollbar._container.scrollTop = scrollTopMax / 2
+        const { scrollLeftMax, scrollTopMax } = this.scrollbar._container
+        this.scrollbar._container.scrollLeft = this.scrollLeft * scrollLeftMax
+        this.scrollbar._container.scrollTop = this.scrollTop * scrollTopMax
         this.scrollbar.updateScroll();
     }
 
     handleCenterZoomOut = () => {
         this.scrollbar._container.scrollLeft = 0
         this.scrollbar._container.scrollTop = 0
+        this.scrollLeft = 0.5
+        this.scrollTop = 0.5
+    }
+
+    handleOnScrollX = (container) => {
+        this.scrollLeft = container.scrollLeft / container.scrollLeftMax;
+    }
+
+    handleOnScrollY = (container) => {
+        this.scrollTop = container.scrollTop / container.scrollTopMax;
     }
 
     componentDidMount() {
@@ -49,7 +61,7 @@ class TileMap extends React.Component {
     componentDidUpdate() {
         if (this.state.scale > 1)
             this.handleCenterZoomIn();
-        else
+        else if (this.state.scale < 1)
             this.handleCenterZoomOut();
     }
 
@@ -64,7 +76,7 @@ class TileMap extends React.Component {
         }
         return (
 
-            <PerfectScrollbar style={style} ref={ref => this.scrollbar = ref} onScrollX={container => console.log(container.scrollLeft)}>
+            <PerfectScrollbar style={style} ref={ref => this.scrollbar = ref} onScrollX={this.handleOnScrollX} onScrollY={this.handleOnScrollY}>
                 <div className="display-place" style={totalStyle}>
                     <Canvas canvas={this.canvas} squirtle={squirtle} window={window} />
                 </div>
