@@ -7,6 +7,8 @@ import { Grid } from '@material-ui/core'
 import Dialog from '../tools/Dialog'
 import Typography from "@material-ui/core/Typography";
 import { Button } from "react-bootstrap";
+import GoogleLogin from 'react-google-login';
+
 class LoginScreen extends React.Component {
 
     state = {
@@ -75,6 +77,10 @@ class LoginScreen extends React.Component {
         return time === 0 ? false : true;
     }
 
+    responseGoogle = (response) => {
+        console.log(response);
+    }
+
 
     render() {
         const { email, password, vemail, vpass, vpass2, vcode, time } = this.state;
@@ -103,6 +109,13 @@ class LoginScreen extends React.Component {
 
                         <p className='login-link'><b onClick={this.goRegister}>New to Delit? sign up</b></p>
                         <p className='login-link'><b onClick={this.handleModalOpen1}>Forget your password?</b></p>
+                        <GoogleLogin
+                            clientId="114604120944-2rq7ioel4aid97nm7fqsp53fc5erees6.apps.googleusercontent.com"
+                            buttonText="Login"
+                            onSuccess={this.responseGoogle}
+                            onFailure={this.responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                        />
                     </Grid>
                     <Grid
                         container
@@ -174,8 +187,8 @@ class LoginScreen extends React.Component {
                     fullWidth={true}
                     open={this.state.modelActive2}
                     actions={[
-                        <Button  className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Submit</Button>,
-                        <Button  className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Close</Button>
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Submit</Button>,
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Close</Button>
                     ]}
                     content={
                         <section className="dialog_content">

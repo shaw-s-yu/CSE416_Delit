@@ -2,6 +2,7 @@ import React from 'react';
 import LoginScreen from './LoginScreen';
 import RegisterScreen from './RegisterScreen';
 import './home_page.css'
+import axios from 'axios'
 
 
 const screen = {
@@ -32,6 +33,12 @@ class HomeScreen extends React.Component {
             ...state,
             [target.id]: target.value,
         }));
+    }
+
+    componentDidMount() {
+        axios.get('/auth/a').then(res => {
+            console.log(res.data)
+        })
     }
 
 
