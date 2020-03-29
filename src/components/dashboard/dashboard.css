@@ -103,6 +103,7 @@
     width:40%;
     left:30%;
     position: absolute;
+    overflow: hidden;
 }
 
 .dashboard-itemlist{

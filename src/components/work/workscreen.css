@@ -352,8 +352,7 @@ li.active{
     max-width: 52px;
     height: 24px;
     padding:2px 6px 2px 6px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 .layer-item-btn-box{
@@ -362,8 +361,7 @@ li.active{
     max-width: 32px;
     height: 24px;
     padding:2px 6px 2px 6px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     transition: ease-in-out 0.3s;
 }
 
