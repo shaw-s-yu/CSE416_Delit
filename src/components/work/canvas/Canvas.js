@@ -61,7 +61,9 @@ class Canvas extends React.Component {
         let { canvas } = this.props;
         return (
             <>
-                <canvas ref={canvas} className="single-layer" onClick={this.handleSelect} width={imgWidth} height={imgHeight}></canvas>
+                <canvas ref={canvas} className="single-layer" onClick={this.handleSelect} width={imgWidth} height={imgHeight}>
+                    Your Browser Does Not Support Canvas
+                </canvas>
                 {click_layer}
             </>
         )

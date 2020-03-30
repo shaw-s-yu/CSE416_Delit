@@ -40,6 +40,7 @@ class SingleLayer extends React.Component {
 
 
     handleSelect = (col, row) => {
+        if (this.props.selectedTool !== null) return
         this.setState({ selected: { x: col, y: row } })
         this.props.handleSelect({ x: col, y: row })
     }
@@ -60,10 +61,12 @@ class SingleLayer extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const { tileset } = state;
+    const { tileset, map } = state;
     let selected = tileset.selected ? tileset.selected : null;
+    let selectedTool = map.selectedTool ? map.selectedTool : null;
     return {
         selected: selected,
+        selectedTool
     }
 };
 

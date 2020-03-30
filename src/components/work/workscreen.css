@@ -34,6 +34,14 @@
     transform-origin: 0 0;
 }
 
+.display-zoom-in{
+    cursor: zoom-in;
+}
+
+.display-zoom-out{
+    cursor: zoom-out;
+}
+
 .map{
     transition-duration: 1s;
     max-width: 500px;
@@ -266,7 +274,7 @@ li.active{
     cursor: pointer;
 }
 
-.toolbar-cell:hover, .toolbar-right-cell:hover{
+.toolbar-cell:hover, .toolbar-right-cell:hover, .map-tool-selected{
     background-color: lightskyblue;
     box-shadow: 0 0 2pt 2pt grey;
 }

@@ -40,6 +40,10 @@ export const scrollYHandler = (window, data) => (dispatch, getState) => {
     dispatch({ type: actionCreators.SCROLL_Y, window: window, data: data });
 }
 
+export const handleSelectTool = (tool) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.MAP_SELECT_TOOL, tool: tool });
+}
+
 
 export const handleToTop = (window, callback) => (dispatch, getState) => {
     let target = document.getElementById(window)

@@ -5,7 +5,6 @@ import * as handler from '../../../store/database/WorkScreenHandler';
 import PropertyList from './PropertyList'
 import MiniMap from './MiniMap'
 import { connect } from 'react-redux';
-import 'react-perfect-scrollbar/dist/css/styles.css';
 import Titlebar from '../../tools/Titlebar'
 
 
