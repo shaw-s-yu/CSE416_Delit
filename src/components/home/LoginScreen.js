@@ -109,6 +109,7 @@ class LoginScreen extends React.Component {
                         <p className='login-link'><b onClick={this.goRegister}>New to Delit? sign up</b></p>
                         <p className='login-link'><b onClick={this.handleModalOpen1}>Forget your password?</b></p>
                         <p className='login-link'><a href="https://real-delit.herokuapp.com/auth/google">Login By Google</a></p>
+                        <p className='login-link'><a href="https://real-delit.herokuapp.com/auth/facebook">Login By FaceBook</a></p>
                     </Grid>
                     <Grid
                         container
