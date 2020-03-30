@@ -7,7 +7,6 @@ import { Grid } from '@material-ui/core'
 import Dialog from '../tools/Dialog'
 import Typography from "@material-ui/core/Typography";
 import { Button } from "react-bootstrap";
-import GoogleLogin from 'react-google-login';
 
 class LoginScreen extends React.Component {
 
@@ -109,13 +108,7 @@ class LoginScreen extends React.Component {
 
                         <p className='login-link'><b onClick={this.goRegister}>New to Delit? sign up</b></p>
                         <p className='login-link'><b onClick={this.handleModalOpen1}>Forget your password?</b></p>
-                        <GoogleLogin
-                            clientId="114604120944-2rq7ioel4aid97nm7fqsp53fc5erees6.apps.googleusercontent.com"
-                            buttonText="Login"
-                            onSuccess={this.responseGoogle}
-                            onFailure={this.responseGoogle}
-                            cookiePolicy={'single_host_origin'}
-                        />
+                        <p className='login-link'><a href="https://real-delit.herokuapp.com/auth/google">Login By Google</a></p>
                     </Grid>
                     <Grid
                         container
