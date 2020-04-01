@@ -5,23 +5,33 @@ import * as handler from '../../../store/database/WorkScreenHandler';
 import PropertyList from './PropertyList'
 import MiniMap from './MiniMap'
 import { connect } from 'react-redux';
-import 'react-perfect-scrollbar/dist/css/styles.css';
 import Titlebar from '../../tools/Titlebar'
+
+
+const rect = document.body.getBoundingClientRect();
+const { width, height } = rect
+
+
 class PropertyWindow extends React.Component {
 
     state = {
-        columns: [
-            { title: 'Property', field: 'property' },
-            { title: 'Value', field: 'value' },
-        ]
+        resizing: false,
+        position: { x: 0, y: 0 },
+        size: { width: width * 0.2, height: height * 0.7 < 442.867 ? 442.867 : height * 0.7 },
     }
 
     handleOnResize = (e, direction, ref, delta, position) => {
-        this.props.handleToTop('property');
-        const { width, height } = ref.style
-        this.setState({ rander: 'go' }, () => {
-            this.props.handleOnResize("property", { width, height })
-        })
+        let { width, height } = ref.style
+        width = parseInt(width)
+        height = parseInt(height)
+        this.setState({ resizing: true, size: { width, height } })
+    }
+
+    handleStopResize = (e, direction, ref, delta, position) => {
+        let { width, height } = ref.style
+        width = parseInt(width)
+        height = parseInt(height)
+        this.setState({ resizing: false, size: { width, height } })
     }
 
     handleDelete = (e) => {
@@ -30,34 +40,42 @@ class PropertyWindow extends React.Component {
     }
 
     render() {
-        const { size, position } = this.props.window
-        const { layer, map, minimap, selected } = this.props
+        const { size, position } = this.state
+        const { layer, map, selected } = this.props
+        const { width, height } = size;
+        const style = {
+            maxWidth: width,
+            maxHeight: height - 140,
+        }
+        const { resizing } = this.state;
         return (
 
             <Rnd
                 className="workscreen-window"
                 size={size}
                 default={position}
-                onMouseDown={() => {
-                    this.props.handleToTop('property')
-                }}
+                onMouseDown={() => this.props.handleToTop('property')}
+                onResizeStart={() => this.props.handleToTop('property')}
                 onResize={this.handleOnResize}
+                onResizeStop={this.handleStopResize}
                 onClick={this.props.handleUnselect}
                 minWidth={202}
                 minHeight={391}
+                id='property'
             >
                 <Titlebar title="Property Window" />
                 <Collapsible data={
                     [
-                        { title: 'Layer Property', content: <PropertyList data={layer} window='layer' />, open: false },
-                        { title: 'Map Property', content: <PropertyList data={map} window='map' />, open: false },
-                        { title: 'Show Mini Map', content: <MiniMap data={minimap} window='minimap' />, open: true },
+                        { title: 'Layer Property', content: <PropertyList data={layer} window='layer' width={width} />, open: false },
+                        { title: 'Map Property', content: <PropertyList data={map} window='map' width={width} />, open: true },
+                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} />, open: false },
                     ]
                 }
-                    maxHeight='265px'
+                    maxHeight={style.maxHeight}
+                    resizing={resizing}
                 />
-                <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={this.props.handleStopPropagation} />
-                <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.props.handleSidebarOpen} onMouseDown={this.props.handleStopPropagation} />
+                <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={e => e.stopPropagation()} />
+                <i className={"fas fa-plus property-add-btn better-btn"} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()} />
 
 
             </Rnd>
@@ -69,21 +87,18 @@ class PropertyWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { property } = state.workScreen
     const { layer, map, selected } = state.property
     return {
-        window: property,
         layer,
         map,
         selected,
-        handleStopPropagation: e => e.stopPropagation(),
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleOnResize: (name, value) => dispatch(handler.resizeWindowHandler(name, value)),
     handleUnselect: () => dispatch(handler.unselectPropertyHandler()),
-    handleDelete: () => dispatch(handler.deletePropertyHandler())
+    handleDelete: () => dispatch(handler.deletePropertyHandler()),
+    handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyWindow)

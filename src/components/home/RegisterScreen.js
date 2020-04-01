@@ -130,7 +130,7 @@ class RegisterScreen extends React.Component {
                         </Grid>
                     }
                     open={this.state.modelActive1}
-                    fullWidth="true"
+                    fullWidth={true}
                     actions={[
                         <Grid
                             container
@@ -171,11 +171,11 @@ class RegisterScreen extends React.Component {
                             </Typography>
                         </Grid>
                     }
-                    fullWidth="true"
+                    fullWidth={true}
                     open={this.state.modelActive2}
                     actions={[
-                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Submit</Button>,
-                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Close</Button>
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Submit</Button>,
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Close</Button>
                     ]}
                     content={
                         <section className="dialog_content">

@@ -42,14 +42,15 @@ class PropertyList extends React.Component {
 
     render() {
         let { width } = this.props;
-        if (typeof width === 'number') width += 'px'
-        width = width.split('px')[0] / 2.3
         const style = {
-            maxWidth: width,
-            width: width,
+            maxWidth: width / 2 - 10,
+            width: width / 2 - 10,
             flexShrink: 0,
         }
 
+        const paginationStyle = {
+            marginLeft: width < 252 ? 0 : (width - 252) / 2
+        }
         const { data } = this.props
         return (
             <>
@@ -95,17 +96,15 @@ class PropertyList extends React.Component {
                     </tbody>
 
                 </Table>
-                <Pagination className="property-list-pagination center" size="small" color="secondary" />
+                <Pagination className="property-list-pagination" size="small" color="secondary" style={paginationStyle} />
             </>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    const { width } = state.workScreen.property.size
     const { selected } = state.property
     return {
-        width: width,
         selected: selected,
     }
 };

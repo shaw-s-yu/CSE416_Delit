@@ -1,54 +1,83 @@
 import React from 'react';
 import Canvas from '../canvas/Canvas'
 import { connect } from 'react-redux';
-import { unselectTilesetHandler } from '../../../store/database/WorkScreenHandler';
+import { Scrollbars } from 'react-custom-scrollbars'
+import squirtle from '../../../img/squirtle.jpg'
 
+const TOOLS = {
+    ZOOM_IN: "ZOOM_IN",
+    ZOOM_OUT: "ZOOM_OUT"
+}
 
 class TileMap extends React.Component {
 
-    state = {
-        scale: 50,
-    }
+    state = { scale: 1 }
+
 
     canvas = React.createRef();
+    scrollbar = React.createRef();
 
-    handleZoomIn = (e) => {
-        e.stopPropagation()
-        let { scale } = this.state;
-        scale = scale * 2;
-        this.setState({ scale: scale })
+    handleZoomEffect = (e) => {
+
+        const { selectedTool } = this.props;
+        if (selectedTool !== TOOLS.ZOOM_IN && selectedTool !== TOOLS.ZOOM_OUT) return
+        const { scale } = this.state
+        const factor = selectedTool === TOOLS.ZOOM_IN ? 1 / 0.8 : selectedTool === TOOLS.ZOOM_OUT ? 0.8 : 1
+        const nscale = scale * factor
+        this.setState({ scale: nscale })
+
+        let target = document.getElementById('display-place')
+        const rect = target.getBoundingClientRect()
+        const { clientX, clientY } = e
+        const { left, top } = rect
+        const dx = clientX - left
+        const dy = clientY - top
+        const ndy = dy * factor
+        const ndx = dx * factor
+        const ddy = ndy - dy
+        const ddx = ndx - dx
+        target.style.transform = "scale(" + nscale + ")"
+
+
+        const currX = this.refs.scrollbar.getScrollLeft();
+        const currY = this.refs.scrollbar.getScrollTop();
+
+        if (nscale >= 1) {
+            console.log(ddx, ddy)
+            console.log(this.refs.scrollbar)
+            this.refs.scrollbar.scrollLeft(ddx + currX)
+            this.refs.scrollbar.scrollTop(ddy + currY)
+        }
     }
 
-    handleZoomOut = (e) => {
-        e.stopPropagation()
-        let { scale } = this.state;
-        scale = scale / 2;
-        this.setState({ scale: scale })
+    getSelectedTools = () => {
+        const { selectedTool } = this.props
+        return selectedTool === TOOLS.ZOOM_IN ? "display-zoom-in" : selectedTool === TOOLS.ZOOM_OUT ? "display-zoom-out" : ""
     }
 
-    handleUnselect = (e) => {
-        this.props.handleUnselect()
-        e.stopPropagation();
+    componentDidMount() {
+        this.props.childRef(this)
     }
 
 
     render() {
+        const { style, width, imgWidth, height, imgHeight, window, selectedTool } = this.props;
         const { scale } = this.state;
-        const { className } = this.props
+        const totalStyle = {
+            ...style,
+            marginLeft: imgWidth ? imgWidth * scale >= width ? "auto" : (width - imgWidth * scale) / 2 : "auto",
+            marginTop: imgHeight ? imgHeight * scale >= height ? "auto" : (height - imgHeight * scale) / 2 : "auto",
+        }
         return (
-            <div className={className}>
 
-                <div className="display-place" onMouseDown={this.handleUnselect}>
-
-                    <Canvas canvas={this.canvas} className="map" style={{
-                        // width: scale + "%",
-                        // height: scale + "%",
-                        // left: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                        // top: scale < 100 ? (100 - scale) / 2 + "%" : 0,
-                        // border: "1px solid #d3d3d3"
-                    }} />
+            <Scrollbars style={{ ...style, width, height }} ref="scrollbar"
+                renderThumbHorizontal={props => <div {...props} className="thumb" />}
+                renderThumbVertical={props => <div {...props} className="thumb" />}>
+                <div id="display-place" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect}>
+                    <Canvas canvas={this.canvas} squirtle={squirtle} window={window} />
                 </div>
-            </div>
+
+            </ Scrollbars>
 
         )
     }
@@ -56,12 +85,15 @@ class TileMap extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const { squirtle } = state.tileset.imgs
+    if (!squirtle) return {}
+    const { imgWidth, imgHeight } = squirtle
     return {
+        imgWidth, imgHeight
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleUnselect: () => dispatch(unselectTilesetHandler()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TileMap)

@@ -7,6 +7,7 @@ import { Grid } from '@material-ui/core'
 import Dialog from '../tools/Dialog'
 import Typography from "@material-ui/core/Typography";
 import { Button } from "react-bootstrap";
+
 class LoginScreen extends React.Component {
 
     state = {
@@ -75,6 +76,10 @@ class LoginScreen extends React.Component {
         return time === 0 ? false : true;
     }
 
+    responseGoogle = (response) => {
+        console.log(response);
+    }
+
 
     render() {
         const { email, password, vemail, vpass, vpass2, vcode, time } = this.state;
@@ -103,6 +108,8 @@ class LoginScreen extends React.Component {
 
                         <p className='login-link'><b onClick={this.goRegister}>New to Delit? sign up</b></p>
                         <p className='login-link'><b onClick={this.handleModalOpen1}>Forget your password?</b></p>
+                        <p className='login-link'><a href="https://real-delit.herokuapp.com/auth/google">Login By Google</a></p>
+                        <p className='login-link'><a href="https://real-delit.herokuapp.com/auth/facebook">Login By FaceBook</a></p>
                     </Grid>
                     <Grid
                         container
@@ -137,8 +144,8 @@ class LoginScreen extends React.Component {
                             justify="space-evenly"
                             alignItems="center"
                         >,
-                            <Button key="1" className="home-dialog-subBtn" onClick={this.handleModalOpen2} variant="primary" size="lg">Submit</Button>,
-                            <Button key="2" className="home-dialog-subBtn" onClick={this.handleModalClose1} variant="primary" size="lg">Cancel</Button>,
+                            <Button className="home-dialog-subBtn" onClick={this.handleModalOpen2} variant="primary" size="lg">Submit</Button>,
+                            <Button className="home-dialog-subBtn" onClick={this.handleModalClose1} variant="primary" size="lg">Cancel</Button>,
                         </Grid>
                     ]}
                     content={
@@ -174,8 +181,8 @@ class LoginScreen extends React.Component {
                     fullWidth={true}
                     open={this.state.modelActive2}
                     actions={[
-                        <Button key="1" className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Submit</Button>,
-                        <Button key="2" className="home-dialog-subBtn" onClick={this.handleModalClose2} color="primary">Close</Button>
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Submit</Button>,
+                        <Button className="home-dialog-subBtn" onClick={this.handleModalClose2} variant="primary">Close</Button>
                     ]}
                     content={
                         <section className="dialog_content">

@@ -1,5 +1,9 @@
 import * as actionCreators from '../actions/actionCreators.js'
 
+export const tilsetImgInitHandler = (name, value) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.TILESET_IMG_INIT, name: name, value: value });
+}
+
 export const unselectTilesetHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.TILESET_UNSELECT });
 }
@@ -10,10 +14,6 @@ export const selectTilesetHandler = (selected) => (dispatch, getState) => {
 
 export const moveWindowHandler = (name, value) => (dispatch, getState) => {
     dispatch({ type: actionCreators.WINDOW_MOVE, name: name, value: value });
-}
-
-export const resizeWindowHandler = (name, value) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.WINDOW_RESIZE, name: name, value: value });
 }
 
 export const selectPropertyHandler = (window, index) => (dispatch, getState) => {
@@ -30,4 +30,35 @@ export const changePropertyHandler = (name, index, type, value) => (dispatch, ge
 
 export const deletePropertyHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.PROPERTY_DELETE });
+}
+
+export const scrollXHandler = (window, data) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.SCROLL_X, window: window, data: data });
+}
+
+export const scrollYHandler = (window, data) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.SCROLL_Y, window: window, data: data });
+}
+
+export const handleSelectTool = (tool) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.MAP_SELECT_TOOL, tool: tool });
+}
+
+
+export const handleToTop = (window, callback) => (dispatch, getState) => {
+    let target = document.getElementById(window)
+    if (target.style.zIndex === "4") {
+        return
+    }
+    let map = document.getElementById('map')
+    let property = document.getElementById('property')
+    let layer = document.getElementById('layer')
+    let tileset = document.getElementById('tileset')
+    map.style.zIndex -= map.style.zIndex === "1" ? 0 : 1
+    property.style.zIndex -= property.style.zIndex === "1" ? 0 : 1
+    layer.style.zIndex -= layer.style.zIndex === "1" ? 0 : 1
+    tileset.style.zIndex -= tileset.style.zIndex === "1" ? 0 : 1
+
+    target.style.zIndex = 4
+
 }

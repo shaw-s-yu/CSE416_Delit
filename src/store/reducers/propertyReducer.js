@@ -1,7 +1,6 @@
 import * as actionCreators from '../actions/actionCreators'
 import React from 'react';
 
-
 const propertyReducer = (state = initState, action) => {
     if (action.type === actionCreators.PROPERTY_SELECT) {
         return {

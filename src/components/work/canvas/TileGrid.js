@@ -32,6 +32,8 @@ class TileGrid {
         same apply to xy
     */
     buildModel = () => {
+        this.srcWidth = this.img.width
+        this.srcHeight = this.img.height
         this.numColumn = Math.floor(this.srcWidth / this.width)
         this.numRow = Math.floor(this.srcHeight / this.height)
         this.buildSource()
@@ -62,13 +64,27 @@ class TileGrid {
     }
 
     draw = () => {
-
-        this.srcWidth = this.img.width
-        this.srcHeight = this.img.height
-        this.buildModel();
         for (let i = 0; i < this.getSize(); i++) {
-            this.ctx.drawImage(this.img, this.sx[i], this.sy[i], this.sWidth[i], this.sHeight[i], this.dx[i] + 1, this.dy[i] + 1, this.dWidth[i] - 2, this.dHeight[i] - 2);
+            this.ctx.drawImage(this.img, this.sx[i], this.sy[i], this.sWidth[i], this.sHeight[i], this.sx[i] + 1, this.sy[i] + 1, this.sWidth[i] - 2, this.sHeight[i] - 2);
         }
+    }
+
+    drawSelected = (x, y) => {
+        const { mapWidth, mapHeight, numColumn, numRow } = this;
+        this.ctx.beginPath();
+        this.ctx.rect(mapWidth / numColumn * x, mapHeight / numRow * y, mapWidth / numColumn, mapHeight / numRow);
+        this.ctx.stroke();
+
+    }
+
+    clearSelected = selected => {
+        const { mapWidth, mapHeight, numColumn, numRow } = this;
+        this.ctx.beginPath();
+        for (let s in selected) {
+            this.ctx.rect(mapWidth / numColumn * s.x, mapHeight / numRow * s.y, mapWidth / numColumn, mapHeight / numRow);
+        }
+        this.ctx.stroke();
+
     }
 }
 

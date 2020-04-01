@@ -72,7 +72,7 @@
 }
 
 .collection {
-    border: none;    
+    border: none;
 }
 
 .dashboard-searchbutton{
@@ -103,6 +103,7 @@
     width:40%;
     left:30%;
     position: absolute;
+    overflow: hidden;
 }
 
 .dashboard-itemlist{
@@ -207,7 +208,7 @@
     width: 4.8vw;
     height: 4.8vw;
 }
-  
+
 
 .imageContainer {
     margin-top: 10px;
@@ -239,9 +240,7 @@ nav {
 }
 
 .dashboard-sidebar-selected {
-    background-color: royalblue !important; 
+    background-color: royalblue !important;
 }
 
-.input-field input[type=text]:focus + label {
-    color: #000;
 }

@@ -9,7 +9,7 @@ class Titlebar extends React.Component {
         let open = []
         for (let i = 0; i < data.length; i++)
             open.push(data[i].open)
-        this.setState({ open: open })
+        this.setState({ open })
     }
 
     handleClick = (index) => {
@@ -24,12 +24,17 @@ class Titlebar extends React.Component {
 
     render() {
 
-        const { data, maxHeight } = this.props;
+        const { data, maxHeight, resizing } = this.props;
         const { open } = this.state;
+
         return (
             <div className="collapsible-wrapper">
                 {
                     data && data.map((d, index) => {
+                        const style = {
+                            maxHeight: open[index] ? maxHeight : '0px',
+                            transition: resizing ? 'none' : 'ease-out 0.5s',
+                        }
                         return (
                             <div key={index} >
                                 <div
@@ -40,7 +45,7 @@ class Titlebar extends React.Component {
                                     {d.title}
                                     <Icon small className="collapsible-title-icon">{open[index] ? 'chevron_right' : 'keyboard_arrow_down'}</Icon>
                                 </div>
-                                <div className={"collapsible-content "} style={{ maxHeight: open[index] ? maxHeight : '0px' }}>
+                                <div className={"collapsible-content "} style={style}>
                                     {d.content}
                                 </div>
                             </div>
