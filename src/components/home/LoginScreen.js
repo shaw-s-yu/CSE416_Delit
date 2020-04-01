@@ -76,11 +76,6 @@ class LoginScreen extends React.Component {
         return time === 0 ? false : true;
     }
 
-    responseGoogle = (response) => {
-        console.log(response);
-    }
-
-
     render() {
         const { email, password, vemail, vpass, vpass2, vcode, time } = this.state;
         const { auth } = this.props;
