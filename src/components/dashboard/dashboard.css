@@ -241,3 +241,7 @@ nav {
 .dashboard-sidebar-selected {
     background-color: royalblue !important; 
 }
+
+.input-field input[type=text]:focus + label {
+    color: #000;
+}
