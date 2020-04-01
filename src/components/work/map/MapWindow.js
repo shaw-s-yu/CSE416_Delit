@@ -83,7 +83,7 @@ class MapWindow extends React.Component {
                         { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.STAMP, item: <i className={"fas fa-stamp"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.ERASER, item: <i className={"fas fa-eraser"} style={{ fontSize: '24px' }} /> },
-                        { name: TOOLS.FILL, item: <i className={"fas fa-fill"} style={{ fontSize: '24px' }} /> },
+                        { name: TOOLS.FILL, item: <i className={"fas fa-fill"} style={{ fontSize: '24px' }} onClick={() => this.props.handleTest()} /> },
                     ]}
                     rightContent={[
                         { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} onClick={this.handleZoomOut} /> },
@@ -105,7 +105,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handleToTop: (window) => dispatch(handler.handleToTop(window)),
-    handleSelectTool: (selectedTool) => dispatch(handler.handleSelectTool(selectedTool))
+    handleSelectTool: (selectedTool) => dispatch(handler.handleSelectTool(selectedTool)),
+    handleTest: () => dispatch({ type: "test", test: "hi" })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapWindow)

@@ -24,8 +24,6 @@ const tilesetReducer = (state = initState, action) => {
         }
     }
 
-
-
     return state;
 }
 

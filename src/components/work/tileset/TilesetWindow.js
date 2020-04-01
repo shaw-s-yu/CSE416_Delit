@@ -82,10 +82,8 @@ class TilesetWindow extends React.Component {
 
 }
 
-
 const mapStateToProps = (state) => {
     return {
-
     }
 };
 
