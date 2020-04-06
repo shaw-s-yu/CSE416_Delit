@@ -17,6 +17,11 @@ router.get('/google', passport.authenticate('google', {
     scope: ['profile']
 }));
 
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+    res.send('you reached the redirect URI');
+    res.render('google-redirect');
+});
+
 router.get('/facebook', passport.authenticate('facebook'));
 
 // callback route for google to redirect to
