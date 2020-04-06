@@ -72,7 +72,7 @@
 }
 
 .collection {
-    border: none;    
+    border: none;
 }
 
 .dashboard-searchbutton{
@@ -208,7 +208,7 @@
     width: 4.8vw;
     height: 4.8vw;
 }
-  
+
 
 .imageContainer {
     margin-top: 10px;
@@ -240,9 +240,7 @@ nav {
 }
 
 .dashboard-sidebar-selected {
-    background-color: royalblue !important; 
+    background-color: royalblue !important;
 }
 
-.paper:hover {
-    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
