@@ -62,3 +62,20 @@ export const handleToTop = (window, callback) => (dispatch, getState) => {
     target.style.zIndex = 4
 
 }
+
+
+export const layerSelectHandler = (id) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_SELECT, id });
+}
+
+export const layerUnselectHandler = () => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_UNSELECT });
+}
+
+export const layerRenameHandler = (id, name) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_RENAME, id, name });
+}
+
+export const layerDeleteHandler = (id) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_DELETE, id });
+}

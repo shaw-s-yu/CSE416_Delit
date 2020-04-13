@@ -338,7 +338,7 @@ li.active{
 }
 
 .layer-list-item {
-    height: 20px;
+    height: 24px;
     margin-top: 5px;
     background-color:white;
     box-shadow: 0 0 1px 1px black;
@@ -348,9 +348,23 @@ li.active{
     white-space: nowrap;
 }
 
+.layer-input {
+    margin-top: 2px;
+    height:20px
+}
+
+.layer-input:focus{
+    outline: 3px solid rosybrown;
+    transition:.15s ease-in-out
+}
+
 .layer-list-item:hover {
     box-shadow: 0 0 2px 2px black;
-    background-color: burlywood;
+    background-color: lightgray;
+}
+
+.layer-list-item-selected{
+    background-color: skyblue !important;
 }
 
 

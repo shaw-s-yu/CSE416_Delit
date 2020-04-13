@@ -30,6 +30,8 @@ class LayerWindow extends React.Component {
 
     render() {
         const { size, position } = this.state
+        const { width } = size
+        const maxWidth = width - 142;
 
         return (
             <Rnd
@@ -43,7 +45,7 @@ class LayerWindow extends React.Component {
                 id='layer'
             >
                 <Titlebar title="Layer Window" />
-                <LayerList />
+                <LayerList maxWidth={maxWidth} />
                 <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} />
                 <span className="opacity-text">OPACITY:</span>
                 <div className="layer-range">

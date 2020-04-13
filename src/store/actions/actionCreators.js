@@ -24,6 +24,12 @@ export const PROPERTY_SELECT = 'PROPERTY_SELECT';
 export const PROPERTY_UNSELECT = 'PROPERTY_UNSELECT';
 export const PROPERTY_CHANGE = 'PROPERTY_CHANGE';
 export const PROPERTY_DELETE = 'PROPERTY_DELETE';
+
+export const LAYER_SELECT = 'LAYER_SELECT';
+export const LAYER_UNSELECT = 'LAYER_UNSELECT';
+export const LAYER_RENAME = 'LAYER_RENAME';
+export const LAYER_DELETE = 'LAYER_DELETE';
+
 export const SCROLL_X = 'SCROLL_X';
 export const SCROLL_Y = 'SCROLL_Y';
 
