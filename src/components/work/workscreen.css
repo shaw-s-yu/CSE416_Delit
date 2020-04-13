@@ -350,7 +350,14 @@ li.active{
 
 .layer-input {
     margin-top: 2px;
-    height:20px
+    height:20px;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden !important;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    overflow: auto;
+    padding: 2px;
 }
 
 .layer-input:focus{
