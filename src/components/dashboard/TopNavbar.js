@@ -9,7 +9,7 @@ class TopNavbar extends React.Component {
 
 
     render() {
-        const { open } = this.props;
+        const { open, username, profileImg } = this.props;
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
@@ -19,7 +19,9 @@ class TopNavbar extends React.Component {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                         </Nav>
-                        <Navbar.Brand href="/">Log Out</Navbar.Brand>
+                        <Navbar.Brand><img src={profileImg} className="profile-img"></img></Navbar.Brand>
+                        <Navbar.Brand>{username}</Navbar.Brand>
+                        <Navbar.Brand href="http://localhost:5000/auth/logout">Log Out</Navbar.Brand>
                     </Navbar.Collapse>
                 </Navbar>
                 <SideNav open={open} handleSidebarOpen={this.props.handleSidebarOpen} />
