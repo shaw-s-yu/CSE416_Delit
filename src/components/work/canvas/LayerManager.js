@@ -1,10 +1,10 @@
 import React from 'react';
-import TileGrid from './TileGrid'
+import ImageLayer from './ImageLayer'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
-import SingleLayer from './SingleLayer'
+import TopClickableLayer from './TopClickableLayer'
 
-class Canvas extends React.Component {
+class LayerManager extends React.Component {
 
     state = {
         width: 150,
@@ -29,7 +29,7 @@ class Canvas extends React.Component {
         this.ctx = canvas.current.getContext('2d');
         let img = new Image();
         img.src = squirtle;
-        this.tileGrid = new TileGrid(this.ctx, img, width, height);
+        this.tileGrid = new ImageLayer(this.ctx, img, width, height);
         img.onload = () => {
             this.tileGrid.buildModel();
             const { numRow, numColumn } = this.tileGrid
@@ -51,7 +51,7 @@ class Canvas extends React.Component {
         const { window } = this.props
         const { numRow, numColumn, width, height } = this.state;
         const clickLayerProps = { numColumn, numRow, width, height, window }
-        const click_layer = <SingleLayer {...clickLayerProps} />
+        const click_layer = <TopClickableLayer {...clickLayerProps} />
 
         this.setState({ click_layer })
     }
@@ -86,4 +86,4 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Canvas);;
+export default connect(mapStateToProps, mapDispatchToProps)(LayerManager);;

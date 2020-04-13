@@ -1,6 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import TileMap from './TileMap'
+import ImageWrapper from '../canvas/ImageWrapper'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
@@ -62,8 +62,8 @@ class TilesetWindow extends React.Component {
 
                 <Collapsible data={
                     [
-                        { title: 'Tileset 1', content: <TileMap style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: false },
-                        { title: 'Tileset 2', content: <TileMap style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: true },
+                        { title: 'Tileset 1', content: <ImageWrapper style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: false },
+                        { title: 'Tileset 2', content: <ImageWrapper style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: true },
                     ]
                 }
                     maxHeight={style.maxHeight}

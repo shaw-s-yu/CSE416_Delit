@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
 
-class SingleLayer extends React.Component {
+class TopClickableLayer extends React.Component {
 
 
     state = {
@@ -75,4 +75,4 @@ const mapDispatchToProps = (dispatch) => ({
     handleSelect: (selected) => dispatch(handler.selectTilesetHandler(selected)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleLayer);;
+export default connect(mapStateToProps, mapDispatchToProps)(TopClickableLayer);;

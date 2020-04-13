@@ -1,5 +1,5 @@
 import React from 'react';
-import Canvas from '../canvas/Canvas'
+import LayerManager from './LayerManager'
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars'
 import squirtle from '../../../img/squirtle.jpg'
@@ -9,7 +9,7 @@ const TOOLS = {
     ZOOM_OUT: "ZOOM_OUT"
 }
 
-class TileMap extends React.Component {
+class ImageWrapper extends React.Component {
 
     state = { scale: 1 }
 
@@ -61,7 +61,7 @@ class TileMap extends React.Component {
 
 
     render() {
-        const { style, width, imgWidth, height, imgHeight, window, selectedTool } = this.props;
+        const { style, width, imgWidth, height, imgHeight, window } = this.props;
         const { scale } = this.state;
         const totalStyle = {
             ...style,
@@ -74,7 +74,7 @@ class TileMap extends React.Component {
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
                 <div id="display-place" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect}>
-                    <Canvas canvas={this.canvas} squirtle={squirtle} window={window} />
+                    <LayerManager canvas={this.canvas} squirtle={squirtle} window={window} />
                 </div>
 
             </ Scrollbars>
@@ -96,4 +96,4 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TileMap)
+export default connect(mapStateToProps, mapDispatchToProps)(ImageWrapper)

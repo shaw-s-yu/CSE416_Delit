@@ -1,5 +1,5 @@
 
-class TileGrid {
+class ImageLayer {
     constructor(ctx, img, width, height) {
         this.ctx = ctx;
         this.img = img;
@@ -88,4 +88,4 @@ class TileGrid {
     }
 }
 
-export default TileGrid;
+export default ImageLayer;

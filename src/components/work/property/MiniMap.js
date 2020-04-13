@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TileMap from '../tileset/TileMap'
+import ImageWrapper from '../canvas/ImageWrapper'
 
 class MiniMap extends React.Component {
 
@@ -15,7 +15,7 @@ class MiniMap extends React.Component {
     render() {
         const { width, height, style } = this.props;
         return (
-            <TileMap style={style} width={width} height={height} window="property" childRef={ref => this.tileMap = ref} />
+            <ImageWrapper style={style} width={width} height={height} window="property" childRef={ref => this.tileMap = ref} />
         )
     }
 }
