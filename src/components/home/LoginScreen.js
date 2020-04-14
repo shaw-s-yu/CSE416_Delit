@@ -97,12 +97,12 @@ class LoginScreen extends React.Component {
                     <Grid
 
                     >
-                        <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
+                        {/* <TextInput type="email" label="Enter Your Email" id='email' value={email} onChange={this.handleChange} />
                         <TextInput type="password" label="Enter Your Password" id='password' value={password} onChange={this.handleChange} />
                         {auth.authError ? <div className="red-text center"><p>{auth.authError}</p></div> : null}
 
                         <p className='login-link'><b onClick={this.goRegister}>New to Delit? sign up</b></p>
-                        <p className='login-link'><b onClick={this.handleModalOpen1}>Forget your password?</b></p>
+                        <p className='login-link'><b onClick={this.handleModalOpen1}>Forget your password?</b></p> */}
                         <p className='login-link'><a href="http://localhost:5000/auth/google">Login By Google</a></p>
                         <p className='login-link'><a href="http://localhost:5000/auth/facebook">Login By FaceBook</a></p>
                     </Grid>
