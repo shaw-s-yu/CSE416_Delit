@@ -6,7 +6,7 @@ import TilesetWindow from './tileset/TilesetWindow'
 import MapWindow from './map/MapWindow'
 import './workscreen.css'
 import { connect } from 'react-redux';
-import Paint from '../draw/Draw'
+import Paint from '../draw/draw'
 
 
 const screen = {
