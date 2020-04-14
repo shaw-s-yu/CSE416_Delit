@@ -12,13 +12,7 @@ import { FormControlLabel, } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
-        background: "#3dcfc1",
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    logo: {
-        flexGrow: 1,
+        background: "whitesmoke",
     },
 }));
 
@@ -53,17 +47,20 @@ function TopNavbar() {
     };
 
     return (
-        <div className={classes.root} >
+        <div >
             <AppBar position="static" className={classes.root}>
                 <Toolbar>
-                    <Typography variant="h3" className={classes.logo}>
-                        <a href="/dashboard" className=" nav-title">DELIT</a>
-                    </Typography>
-                    <Grid
+                    <Grid container spacing={6} alignItems="flex-end">
+                        <Grid item>
+                            <a href="/dashboard" className="logo">DELIT</a>
+                        </Grid>
+                        <Grid item>
+                            <Grid
                         container
                         direction="row"
-                        justify="space-evenly"
-                        alignItems="center"
+                        justify="flex-start"
+                        alignItems="flex-end"
+                        spacing={8}
                     >
                         <Grid item>
                             <Button aria-haspopup="true" onClick={handleClick}>
@@ -137,7 +134,8 @@ function TopNavbar() {
                             </Menu>
                         </Grid>
                     </Grid>
-
+                        </Grid>
+                    </Grid>
                     <Button color="inherit" href="/">
                         <Typography variant="h5" gutterBottom>
                             Logout

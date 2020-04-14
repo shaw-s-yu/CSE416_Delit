@@ -124,8 +124,8 @@
 }
 
 .property-window{
-    min-width: 202.35;
-    min-height: 442.867;
+    min-width: 202.35px;
+    min-height: 442.867px;
 }
 
 .property-table{
@@ -425,8 +425,11 @@ nav {
     background-color: unset !important;
 }
 
-.nav-title{
-    color:white !important;
+.logo{
+    color:turquoise !important;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2vw;
 }
 
 .nav-menu{
@@ -438,8 +441,19 @@ nav {
     height: auto;
 }
 
+.dashboard-top-navbar{
+    color: whitesmoke;
+    text-align: center;
+}
+
+.logo {
+    color:turquoise;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2vw;
+}
+
 .single-layer{
-    /* position: absolute; */
     left:0px;
     top:0px;
 }
