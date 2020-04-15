@@ -62,7 +62,7 @@ class MapWindow extends React.Component {
         }
         return (
             <Rnd
-                className="workscreen-window"
+                className="workscreen-window "
                 id="map"
                 size={size}
                 default={position}

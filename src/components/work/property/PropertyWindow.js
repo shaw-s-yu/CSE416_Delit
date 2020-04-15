@@ -41,7 +41,7 @@ class PropertyWindow extends React.Component {
 
     render() {
         const { size, position } = this.state
-        const { layer, map, selected } = this.props
+        const { layer, map, selected, open } = this.props
         const { width, height } = size;
         const style = {
             maxWidth: width,
@@ -51,7 +51,7 @@ class PropertyWindow extends React.Component {
         return (
 
             <Rnd
-                className="workscreen-window"
+                className={"workscreen-window " + (open ? '' : 'invisible')}
                 size={size}
                 default={position}
                 onMouseDown={() => this.props.handleToTop('property')}

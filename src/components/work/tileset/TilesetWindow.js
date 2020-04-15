@@ -42,6 +42,7 @@ class TilesetWindow extends React.Component {
 
     render() {
         const { resizing, size, position } = this.state;
+        const { open } = this.props
         const { width, height } = size;
         const style = {
             maxWidth: width,
@@ -49,7 +50,7 @@ class TilesetWindow extends React.Component {
         }
         return (
             <Rnd
-                className="workscreen-window"
+                className={"workscreen-window " + (open ? '' : 'invisible')}
                 default={position}
                 size={size}
                 onMouseDown={this.handleSelect}
