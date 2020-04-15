@@ -24,13 +24,12 @@
 .dropdown-item-box{
     background-color: white;
     position: absolute;
-    top:100%;
+    top: calc(100% + 2px);
     width: 100%;
     overflow: hidden;
     max-height: 0px;
     transition: ease-in-out 0.3s;
     z-index: 10;
-    
 }
 
 .better-dropdown-item{
@@ -47,4 +46,15 @@
 
 nav i{
     height: 10px !important;
+}
+
+.list-icon{
+    margin-top: 23px;
+}
+
+.item-card{
+    position: absolute;
+    height:180px;
+    width: 200px;
+    background-color: turquoise;
 }

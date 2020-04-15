@@ -1,11 +1,11 @@
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap'
 import SideNav from '../dashboard/SideNav'
-import { Icon } from 'react-materialize'
 import Dropdown from './Dropdown'
 import axios from 'axios'
 import { v1 } from 'uuid'
 import Checkbox from '@material-ui/core/Checkbox';
+import './tools.css'
 
 class TopNavbar extends React.Component {
 
@@ -31,7 +31,7 @@ class TopNavbar extends React.Component {
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
-                    {side ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><Icon>list</Icon></Navbar.Brand> : null}
+                    {side ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list list-icon"></i></Navbar.Brand> : null}
                     <Navbar.Brand href="/dashboard"> <div className="logo" >Delit</div></Navbar.Brand>
                     {!side ? <>
                         <Dropdown title="FILE" width={96} handleOpen={this.handleOpen}
