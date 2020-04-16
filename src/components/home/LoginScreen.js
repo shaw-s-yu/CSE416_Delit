@@ -111,9 +111,9 @@ class LoginScreen extends React.Component {
                         justify="center"
                         alignItems="center"
                     >
-                        <Button className="home-submitbtn" variant="primary" onClick={this.handleSubmit} type="submit" >
+                        {/* <Button className="home-submitbtn" variant="primary" onClick={this.handleSubmit} type="submit" >
                             Sign in
-                        </Button>
+                        </Button> */}
                     </Grid>
                 </Grid>
 
