@@ -203,11 +203,6 @@ const mapStateToProps = () => {
             lastModified: "123@123.com",
             id: "123213",
         },
-        {
-            name: "Project2",
-            lastModified: "cringe squirtle",
-            id: "sdfsd"
-        },
     ]
 
     return {

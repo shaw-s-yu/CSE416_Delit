@@ -21,6 +21,7 @@ class Dropdown extends React.Component {
         const { hovering } = this.state
         const style = {
             maxHeight: items.length * 32,
+            outline: '2px solid gray'
         }
         const wrapperStyle = {
             width,
