@@ -65,7 +65,7 @@ class ItemList extends React.Component {
         const { projects } = this.props;
         const numItem = projects.length
         const style = {
-            height: numItem > 3 ? '160%' : '80%'
+            height: numItem > 3 ? 600 : 300
         }
         return (
             <div className="dashboard-itemlist">
@@ -77,9 +77,9 @@ class ItemList extends React.Component {
                             const left1s = 'calc(25% - 135px)';
                             const left2s = 'calc(50% - 90px)';
                             const left3s = 'calc(75% - 45px)';
-                            const top1s1 = 'calc(50% - 100px)';
-                            const top1s2 = 'calc(33% - 133px)';
-                            const top2s2 = 'calc(66% - 66px)'
+                            const top1s1 = 50;
+                            const top1s2 = 200 / 3;
+                            const top2s2 = top1s2 * 2 + 200;
                             const cardStyle = {
                                 top: numItem > 3 ? row === 0 ? top1s2 : top2s2 : top1s1,
                                 left: col === 0 ? left1s : col === 1 ? left2s : left3s,
