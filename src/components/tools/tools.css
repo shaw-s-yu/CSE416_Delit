@@ -106,16 +106,16 @@ nav i{
 
 .card-info-btn-box{
     position: absolute;
-    top:0px;
-    left:122px;
+    margin-top:158px;
+    margin-left:122px;
     height:16px;
     width: 48px;
     transition: ease-in 0.2s;
 }
 
 .card-info-btn-box:hover{
-    top: -20px;
-    left:70px;
+    margin-top: 138px;
+    margin-left:70px;
     height:60px;
     width:152px;
     background-color: transparent;
