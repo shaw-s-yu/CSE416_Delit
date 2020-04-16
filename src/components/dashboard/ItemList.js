@@ -84,18 +84,18 @@ class ItemList extends React.Component {
                                 top: numItem > 3 ? row === 0 ? top1s2 : top2s2 : top1s1,
                                 left: col === 0 ? left1s : col === 1 ? left2s : left3s,
                             }
+                            const { name, lastModified, img } = project;
 
                             return (
                                 <>
                                     <Card
                                         className='item-card'
-                                        actions={[
-                                            <Button waves='orange' className="dashboard-itemcard-edit-btn" onClick={this.handleTeamOpen1}>Team</Button>,
-                                            <Button waves='orange' className="dashboard-itemcard-team-btn">Edit</Button>
-                                        ]}
-                                        modifiedBy={project.lastModified}
-                                        name={project.name}
+                                        modifiedBy={lastModified}
+                                        name={name}
                                         style={cardStyle}
+                                        img={img}
+                                        handleTeam={this.handleTeamOpen1}
+                                        onClick={this.handleGoEdit}
                                     />
                                 </>
                             );
@@ -182,26 +182,31 @@ const mapStateToProps = () => {
             name: "Project1",
             lastModified: "123@123.com",
             id: "123213",
+            img: "https://image.winudf.com/v2/image/Y29tLmROdWdnZXRzLnBva2Vtb25fc2NyZWVuXzFfMTUzMzE5NDQ3NF8wMTI/screen-1.jpg?fakeurl=1&type=.jpg"
         },
         {
             name: "Project2",
             lastModified: "cringe squirtle",
-            id: "sdfsd"
+            id: "sdfsd",
+            img: "https://i.ytimg.com/vi/SoNt-Osw_es/maxresdefault.jpg"
         },
         {
             name: "Project1",
             lastModified: "123@123.com",
             id: "123213",
+            img: "https://static.planetminecraft.com/files/resource_media/screenshot/1205/2012-02-06_011135_1377666.jpg"
         },
         {
             name: "Project2",
             lastModified: "cringe squirtle",
-            id: "sdfsd"
+            id: "1ffew",
+            img: "https://static.planetminecraft.com/files/resource_media/screenshot/1231/2012-08-02_132558_3109017.jpg",
         },
         {
-            name: "Project1",
+            name: "Project1ddddddddddddddd",
             lastModified: "123@123.com",
             id: "123213",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRefbyjs2LNO7_liF8vU9epErtpKsFJlllDk-Mbp1n5lYJF8QaWSw&s"
         },
     ]
 
