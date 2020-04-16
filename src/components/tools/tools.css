@@ -59,7 +59,7 @@ nav i{
     background-color: lightblue;
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
     cursor: pointer;
-    transition: ease-in 0.3s;
+    transition: ease-in 0.2s;
 }
 
 .item-card:hover{
