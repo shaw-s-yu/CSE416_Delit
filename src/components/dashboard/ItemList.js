@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card, Button, TextInput } from 'react-materialize'
+import { Button, TextInput } from 'react-materialize'
 import { connect } from 'react-redux';
 import Dialog from '../tools/Dialog'
 import { Grid, ListItem, ListItemAvatar, Avatar, ListItemText, Divider } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Card from '../tools/Card'
 
 const images = [
     {
@@ -61,31 +62,46 @@ class ItemList extends React.Component {
 
 
     render() {
-        const projects = this.props.projects;
+        const { projects } = this.props;
+        const numItem = projects.length
+        const style = {
+            height: numItem > 3 ? 600 : 300
+        }
         return (
             <div className="dashboard-itemlist">
-                {
-                    projects && projects.map(project => {
-                        return (
-                            <>
-                                <Card
-                                    className="dashboard-itemcard waves-red waves-effect"
-                                    textClassName="white-text"
-                                    title={project.name}
-                                    onClick={this.handleGoEdit}
-                                    key={project.id}
-                                >
-                                    Last Modified By: {project.lastModified}
+                <div className="dashboard-itemlist-wrapper" style={style}>
+                    {
+                        projects && projects.map((project, index) => {
+                            const col = index % 3;
+                            const row = Math.floor(index / 3);
+                            const left1s = 'calc(25% - 135px)';
+                            const left2s = 'calc(50% - 90px)';
+                            const left3s = 'calc(75% - 45px)';
+                            const top1s1 = 50;
+                            const top1s2 = 200 / 3;
+                            const top2s2 = top1s2 * 2 + 200;
+                            const cardStyle = {
+                                top: numItem > 3 ? row === 0 ? top1s2 : top2s2 : top1s1,
+                                left: col === 0 ? left1s : col === 1 ? left2s : left3s,
+                            }
+                            const { name, lastModified, img } = project;
 
-                                </Card>
-                                <div className="dashboard-itemcard-btn">
-                                    <Button waves='orange' className="dashboard-itemcard-edit-btn" onClick={this.handleTeamOpen1}>Team</Button>
-                                    <Button waves='orange' className="dashboard-itemcard-team-btn">Edit</Button>
-                                </div>
-                            </>
-                        );
-                    })
-                }
+                            return (
+                                <>
+                                    <Card
+                                        className='item-card'
+                                        modifiedBy={lastModified}
+                                        name={name}
+                                        style={cardStyle}
+                                        img={img}
+                                        handleTeam={this.handleTeamOpen1}
+                                        onClick={this.handleGoEdit}
+                                    />
+                                </>
+                            );
+                        })
+                    }
+                </div>
 
                 <Dialog
                     header={
@@ -166,12 +182,32 @@ const mapStateToProps = () => {
             name: "Project1",
             lastModified: "123@123.com",
             id: "123213",
+            img: "https://image.winudf.com/v2/image/Y29tLmROdWdnZXRzLnBva2Vtb25fc2NyZWVuXzFfMTUzMzE5NDQ3NF8wMTI/screen-1.jpg?fakeurl=1&type=.jpg"
         },
         {
             name: "Project2",
             lastModified: "cringe squirtle",
-            id: "sdfsd"
-        }
+            id: "sdfsd",
+            img: "https://i.ytimg.com/vi/SoNt-Osw_es/maxresdefault.jpg"
+        },
+        {
+            name: "Project1",
+            lastModified: "123@123.com",
+            id: "123213",
+            img: "https://static.planetminecraft.com/files/resource_media/screenshot/1205/2012-02-06_011135_1377666.jpg"
+        },
+        {
+            name: "Project2",
+            lastModified: "cringe squirtle",
+            id: "1ffew",
+            img: "https://static.planetminecraft.com/files/resource_media/screenshot/1231/2012-08-02_132558_3109017.jpg",
+        },
+        {
+            name: "Project1ddddddddddddddd",
+            lastModified: "123@123.com",
+            id: "123213",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRefbyjs2LNO7_liF8vU9epErtpKsFJlllDk-Mbp1n5lYJF8QaWSw&s"
+        },
     ]
 
     return {

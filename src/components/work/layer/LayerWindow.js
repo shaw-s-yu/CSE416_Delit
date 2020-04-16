@@ -30,12 +30,13 @@ class LayerWindow extends React.Component {
 
     render() {
         const { size, position } = this.state
+        const { open } = this.props
         const { width } = size
         const maxWidth = width - 142;
 
         return (
             <Rnd
-                className="workscreen-window"
+                className={"workscreen-window " + (open ? '' : 'invisible')}
                 size={size}
                 default={position}
                 onMouseDown={() => { this.props.handleToTop('layer') }}

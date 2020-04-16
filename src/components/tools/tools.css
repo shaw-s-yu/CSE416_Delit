@@ -1,0 +1,165 @@
+.dropdown-wrapper{
+    background-color: rgb(231, 229, 229);
+    height: 32px;
+    text-align: center;
+    margin-left: 32px;
+    transition: ease-in 0.3s;
+    cursor: pointer;
+    position: relative;
+    font-size: small;
+    color: black;
+    line-height: 34px;
+}
+
+.dropdown-wrapper:hover {
+    background-color: lightgray;
+    outline: 2px solid gray;
+}
+
+.dropdown-icon{
+    font-size: smaller;
+    margin-left: 10px;
+}
+
+.dropdown-item-box{
+    background-color: white;
+    position: absolute;
+    top: calc(100% + 2px);
+    width: 100%;
+    overflow: hidden;
+    max-height: 0px;
+    transition: ease-in-out 0.3s;
+    z-index: 10;
+}
+
+.better-dropdown-item{
+    height: 32px;
+    width: 100%;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 1rem;
+}
+
+.better-dropdown-item:hover{
+    background-color: lightgray;
+}
+
+nav i{
+    height: 10px !important;
+}
+
+.list-icon{
+    margin-top: 23px;
+}
+
+.item-card{
+    position: absolute;
+    height:200px;
+    width: 180px;
+    background-color: lightblue;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
+    cursor: pointer;
+    transition: ease-in 0.2s;
+}
+
+.item-card:hover{
+    background-color: lightskyblue;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.8), 0 2px 10px 0 rgba(0, 0, 0, 0.8);
+}
+
+.card-preview-img{
+    margin-left: 10px;
+    margin-top:10px;
+    width: 160px;
+    height: 140px;
+}
+
+.card-info-box{
+    background-color: transparent;
+    margin-top: 10px;
+    height: 40px;
+    width: 100%;
+    position: relative;
+}
+
+.card-info-name{
+    margin-left: 10px;
+    width: 100px;
+    overflow: hidden;
+    background-color: transparent;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: smaller;
+}
+
+.card-info-last-modify{
+    margin-left: 10px;
+    width: 160px;
+    overflow: hidden;
+    background-color: transparent;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: smaller;
+}
+
+.card-info-btn-box{
+    position: absolute;
+    top:0px;
+    left:122px;
+    height:16px;
+    width: 48px;
+    transition: ease-in 0.2s;
+}
+
+.card-info-btn-box:hover{
+    top: -20px;
+    left:70px;
+    height:60px;
+    width:152px;
+    background-color: transparent;
+}
+
+.card-info-btn-box:hover .card-info-btn-center{
+    margin-top:20px;
+    margin-left: 52px;
+}
+
+.card-info-btn-box:hover .card-info-btn-tl{
+    margin-top:0px;
+    margin-left: 0px;
+}
+
+.card-info-btn-box:hover .card-info-btn-tr{
+    margin-top:0px;
+    margin-left: 104px;
+}
+
+.card-info-btn-box:hover .card-info-btn-bl{
+    margin-top: 40px;
+    margin-left: 0px;
+}
+
+.card-info-btn-box:hover .card-info-btn-br{
+    margin-top: 40px;
+    margin-left: 104px;
+}
+
+.card-info-btn{
+    position:absolute;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: x-small;
+    background-color: turquoise;
+    transition: ease-in 0.2s;
+    cursor: pointer;
+    height:16px;
+    width: 48px;
+    box-shadow: 0px 0px 4px 1px rgba(116, 116, 116, 0.75);
+    text-align: center;
+}
+
+.card-info-btn:hover{
+    background-color: salmon;
+}

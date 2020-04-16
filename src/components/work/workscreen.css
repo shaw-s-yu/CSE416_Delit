@@ -265,7 +265,7 @@ li.active{
 }
 
 .toolbar-right-cell{
-    display: inline-block;
+    /* display: inline-block; */
     float: right;
     padding: 8px 8px;
     width: 40px;
@@ -466,4 +466,8 @@ nav {
 }
 .thumb:hover{
     background-color: rgb(119, 119, 119);
+}
+
+.invisible{
+    display: none;
 }

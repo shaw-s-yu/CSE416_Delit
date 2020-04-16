@@ -108,9 +108,17 @@
 
 .dashboard-itemlist{
     width:88%;
+    height: calc(100% - 124px);
     left:6%;
     top:56px;
     position: absolute;
+    overflow: auto;
+}
+
+.dashboard-itemlist-wrapper{
+    width: 100%;
+    background-color: transparent;
+    position: relative;
 }
 
 

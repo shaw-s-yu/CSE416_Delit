@@ -1,6 +1,6 @@
 import * as actionCreators from '../actions/actionCreators'
 import React from 'react';
-import {v1 as uuidv1} from 'uuid';
+import { v1 } from 'uuid';
 
 const layerReducer = (state = initState, action) => {
     if (action.type === actionCreators.LAYER_SELECT) {
@@ -45,9 +45,9 @@ const layerReducer = (state = initState, action) => {
 export default layerReducer;
 
 const layers = [
-    { name: "background layer", ref: React.createRef(), _id: uuidv1() },
-    { name: "block layer", ref: React.createRef(), _id: uuidv1() },
-    { name: "dummy layer", ref: React.createRef(), _id: uuidv1() },
+    { name: "background layer", ref: React.createRef(), _id: v1() },
+    { name: "block layer", ref: React.createRef(), _id: v1() },
+    { name: "dummy layer", ref: React.createRef(), _id: v1() },
 ]
 
 
