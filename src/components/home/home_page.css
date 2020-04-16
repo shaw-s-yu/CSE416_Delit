@@ -28,6 +28,7 @@
     border: 2px solid black;
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
     background-color: white;
+    padding-bottom: 36px;
 }
 
 .login-link{
@@ -72,4 +73,55 @@
 
 .home-dialog-subBtn:hover {
     background-color: salmon !important;
+}
+
+.login-btn-box{
+    background-color: white;
+    height: 36px;
+    width: 60%;
+    margin-top: 20px;
+    margin-left:20%;
+    position: relative;
+    outline: 2px solid black;
+    cursor: pointer;
+    box-shadow:  0px 0px 2px 1px rgba(0,0,0,0.75);
+    transition: ease-in-out 0.2s;
+}
+
+.login-btn-box:hover{
+    box-shadow: 0px 0px 4px 3px rgba(0,0,0,0.75)
+}
+
+.login-btn-img{
+    height:35px;
+    width: 35px;
+    display: inline-block;
+    background-color: white;
+}
+
+.login-btn-context{
+    height: 100%;
+    width: calc(100% - 36px);
+    display: inline-block;
+    position: absolute;
+    border-left: 1px solid gray;
+    text-align: center;
+    line-height: 38px;
+    color: white;
+}
+
+.login-btn-icon{
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    margin-top: 6px;
+    margin-left: 6px;
+}
+
+.fa-google-plus-square{
+    color: #db4a39;
+}
+
+.fa-facebook{
+    color: #3b5998;
 }
