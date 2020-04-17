@@ -13,7 +13,6 @@ router.get('/current_user', (req, res) => {
 // auth logout
 router.get('/logout', (req, res) => {
     // handle with passport
-    console.log('hi')
     req.logOut();
     res.redirect('http://localhost:3000')
 });

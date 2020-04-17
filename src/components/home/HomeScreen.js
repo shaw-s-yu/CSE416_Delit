@@ -8,7 +8,7 @@ class HomeScreen extends React.Component {
 
     componentDidMount() {
         axios.get('/auth/current_user').then(res => {
-            console.log(res.data)
+            console.dir(res.data)
         })
     }
 

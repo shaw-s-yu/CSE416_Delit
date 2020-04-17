@@ -17,7 +17,7 @@ class TopNavbar extends React.Component {
     componentDidMount() {
         axios.get('/auth/current_user').then(res => {
             console.log('backend profile:')
-            console.dir(res.data)
+            console.dir(res)
             this.setState({
                 username: res.data.username,
                 profileImg: res.data.picture

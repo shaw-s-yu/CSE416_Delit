@@ -52,7 +52,7 @@ passport.use(
     new FacebookStrategy({
         clientID: keys.facebook.clientID,
         clientSecret: keys.google.clientID,
-        callbackURL: 'https://real-delit.web.app/dashboard'
+        callbackURL: 'http://localhost:3000/dashboard'
     }, () => {
 
     })
