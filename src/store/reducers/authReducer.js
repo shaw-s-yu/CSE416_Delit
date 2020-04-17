@@ -1,39 +1,23 @@
 import * as actionCreators from '../actions/actionCreators'
 
-// REDUCERS ARE CALLED WHEN AN ACTION IS DISPATCHED,
-// THEIR JOB IS TO ADVANCE THE STATE. THEY WILL UPDATE
-// AND RETURN THE NEW, UPDATED STATE
-
-const initState = {};
+const initState = {
+    user: null,
+    errmsg: null
+}
 
 const authReducer = (state = initState, action) => {
-  switch (action.type) {
-    case actionCreators.LOGIN_ERROR:
-      return {
-        authError: action.value,
-      };
-    case actionCreators.LOGIN_SUCCESS:
-      return {
-        email: action.value,
-      };
-    case actionCreators.LOGOUT_SUCCESS:
-      return state;
-    case actionCreators.REGISTER_SUCCESS:
-      return {
-        email: action.value,
-      };
-    case actionCreators.REGISTER_ERROR:
-      return {
-        authError: action.value,
-      };
-    case actionCreators.CLEAR_ERROR:
-      return {
-        authError: null,
-      };
-
-    default:
-      return state;
-  }
-};
+    if (action.type === actionCreators.LOGIN_ERROR) {
+        return {
+            user: null,
+            errmsg: action.msg
+        }
+    } else if (action.type === actionCreators.LOGIN_SUCCESS) {
+        return {
+            user: action.user,
+            errmsg: null
+        }
+    }
+    return state;
+}
 
 export default authReducer;

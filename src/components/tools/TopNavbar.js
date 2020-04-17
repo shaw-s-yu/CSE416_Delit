@@ -2,32 +2,30 @@ import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap'
 import SideNav from '../dashboard/SideNav'
 import Dropdown from './Dropdown'
-import axios from 'axios'
 import { v1 } from 'uuid'
 import Checkbox from '@material-ui/core/Checkbox';
 import './tools.css'
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class TopNavbar extends React.Component {
 
     state = {
-        username: null,
-        profileImg: null,
+        loading: true,
     }
 
     componentDidMount() {
-        axios.get('/auth/current_user').then(res => {
-            console.log('backend profile:')
-            console.dir(res)
-            this.setState({
-                username: res.data.username,
-                profileImg: res.data.picture
-            })
-        })
+        if (this.props.authed)
+            this.setState({ loading: false })
     }
 
     render() {
-        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
-        const { username, profileImg } = this.state;
+        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen, auth } = this.props;
+
+        if (auth.user === null)
+            return <Redirect to="/login" />;
+
+        const { username, picture } = auth.user
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
@@ -77,7 +75,7 @@ class TopNavbar extends React.Component {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                         </Nav>
-                        <Navbar.Brand><img src={profileImg} className="profile-img" alt="delit-profile-logo"></img></Navbar.Brand>
+                        <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo"></img></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
                         <Navbar.Brand href="http://localhost:5000/auth/logout">Log Out</Navbar.Brand>
                     </Navbar.Collapse>
@@ -88,5 +86,15 @@ class TopNavbar extends React.Component {
     }
 
 }
+const mapStateToProps = (state) => {
+    const { auth } = state
+    return {
+        auth,
+        socket: state.backend.socket
+    }
+};
 
-export default TopNavbar;
+const mapDispatchToProps = (dispatch) => ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopNavbar)

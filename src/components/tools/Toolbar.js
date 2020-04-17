@@ -17,7 +17,6 @@ class Toolbar extends React.Component {
 
     getSelected = (name) => {
         const { selected } = this.props;
-        console.log(selected)
         return selected === name ? "map-tool-selected" : "";
     }
 

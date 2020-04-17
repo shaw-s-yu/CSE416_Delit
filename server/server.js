@@ -7,6 +7,11 @@ const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport')
 const cors = require("cors");
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+const session = require('express-session')
+
+app.set('io', io);
 
 app.use(
     cors({
@@ -19,6 +24,14 @@ app.use(
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
     keys: [keys.session.cookieKey]
+}))
+
+// saveUninitialized: true allows us to attach the socket id to the session
+// before we have athenticated the user
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false
 }))
 
 app.use(passport.initialize())
@@ -34,5 +47,4 @@ app.use('/profile', profileRoutes)
 //     res.send({ hi: 'hi' })
 // })
 
-
-app.listen(process.env.PORT || 5000)
+server.listen(process.env.PORT || 5000)

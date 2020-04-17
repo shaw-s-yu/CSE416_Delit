@@ -1,18 +1,17 @@
-// import io from 'socket.io-client'
+import config from '../../config'
+import io from 'socket.io-client'
+const API_URL = config.server
 
 
 const initState = {};
 
 const backendReducer = (state = initState, action) => {
-    // if (action.type === 'CREATE_SOCKET') {
-    //     // const socket = io('https://real-delit.herokuapp.com/');
-    //     // const socket = io('127.0.0.1:5000');
-
-
-    //     return {
-    //         socket
-    //     }
-    // }
+    if (action.type === 'CREATE_SOCKET') {
+        const socket = io(API_URL)
+        return {
+            socket
+        }
+    }
 
     return state;
 }
