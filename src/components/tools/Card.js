@@ -9,11 +9,10 @@ class Card extends React.Component {
         return (
             <div >
                 <div className={className} style={style} onClick={onClick}>
-                    <img src={img} className='card-preview-img' ></img>
+                    <img src={img} className='card-preview-img' alt='preview'></img>
                     <div className="card-info-box">
                         <span className="card-info-name">Name: {name}</span>
                         <span className="card-info-last-modify">Last modified By: {modifiedBy}</span>
-
                     </div>
                 </div>
                 <div className="card-info-btn-box" style={style}>

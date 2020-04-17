@@ -5,6 +5,7 @@ import tilesetReducer from './tilesetReducer'
 import propertyReducer from './propertyReducer'
 import mapReducer from './mapReducer'
 import layerReducer from './layerReducer'
+import toolbarReducer from './toolbarReducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   tileset: tilesetReducer,
   property: propertyReducer,
   map: mapReducer,
-  layer: layerReducer
+  layer: layerReducer,
+  toolbar: toolbarReducer,
 });
 
 export default rootReducer;

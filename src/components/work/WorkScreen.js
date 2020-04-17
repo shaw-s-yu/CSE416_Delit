@@ -6,18 +6,10 @@ import TilesetWindow from './tileset/TilesetWindow'
 import MapWindow from './map/MapWindow'
 import './workscreen.css'
 import { connect } from 'react-redux';
-import Paint from '../draw/Draw'
-import { TurnedIn } from 'material-ui-icons';
 
-
-const screen = {
-    WORK_SPACE: "WORK_SPACE",
-    PAINT_SCREEN: "PAINT_SCREEN",
-}
 class WorkScreen extends React.Component {
 
     state = {
-        currentScreen: screen.WORK_SPACE,
         propertyOpen: true,
         layerOpen: true,
         tilesetOpen: true,
@@ -42,33 +34,17 @@ class WorkScreen extends React.Component {
 
     }
 
-    handleGoPaint = () => {
-        this.setState({
-            currentScreen: screen.PAINT_SCREEN,
-        })
-    }
-
-    handleGoWork = () => {
-        this.setState({
-            currentScreen: screen.WORK_SPACE,
-        })
-    }
-
     getScreen = () => {
-        const { currentScreen, propertyOpen, layerOpen, tilesetOpen } = this.state;
-        if (currentScreen === screen.WORK_SPACE)
-            return (
-                <>
-                    <MapWindow key="map" />
-                    <PropertyWindow key="property" open={propertyOpen} />
-                    <LayerWindow key="layer" open={layerOpen} />
-                    <TilesetWindow key="tileset" handleGoPaint={this.handleGoPaint} open={tilesetOpen} />
-                </>
-            )
-        else if (currentScreen === screen.PAINT_SCREEN)
-            return <Paint />
-        else
-            return "error"
+        const { propertyOpen, layerOpen, tilesetOpen } = this.state;
+        const { history } = this.props
+        return (
+            <>
+                <MapWindow key="map" handleToTop={this.handleToTop} />
+                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} />
+                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} />
+                <TilesetWindow key="tileset" open={tilesetOpen} history={history} handleToTop={this.handleToTop} />
+            </>
+        )
     }
 
     handleWindowOpen = (e, window) => {
@@ -95,7 +71,7 @@ class WorkScreen extends React.Component {
 
         return (
             <div>
-                <TopNavbar side={false} handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} />
+                <TopNavbar side={false} view={true} handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} />
                 <div>
                     {
                         this.getScreen()
@@ -110,9 +86,10 @@ class WorkScreen extends React.Component {
 
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+    const { history } = ownProps
     return {
-
+        history
     }
 };
 

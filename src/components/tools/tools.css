@@ -163,3 +163,57 @@ nav i{
 .card-info-btn:hover{
     background-color: salmon;
 }
+
+
+.map-toolbar{
+    height: 40px;
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 32px;
+    overflow: hidden;
+    border-bottom: 1px solid black;
+    box-shadow: 0px 4px 7px 2px rgba(0,0,0,0.75);
+    background-color: white;
+}
+
+.toolbar-cell{
+    display: inline-block;
+    padding: 8px 8px;
+    width: 40px;
+    height: 40px;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.toolbar-right-cell{
+    /* display: inline-block; */
+    float: right;
+    padding: 8px 8px;
+    width: 40px;
+    height: 40px;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.toolbar-cell:hover, .toolbar-right-cell:hover, .map-tool-selected{
+    background-color: lightskyblue;
+    box-shadow: 0 0 2pt 2pt grey;
+}
+
+.toolbar-sec-cellbox{
+    display: inline;
+    margin-left: 2%;
+    border-left: 1px solid black;
+    padding-left: 2%;
+    position: relative;
+}
+
+.tool-bar-icon-img{
+    width: 24px;
+    height: 24px;
+}
+
+.toolbar-sec-cell{
+    position: absolute;
+}
+

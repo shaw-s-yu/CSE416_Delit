@@ -30,6 +30,9 @@ export const LAYER_UNSELECT = 'LAYER_UNSELECT';
 export const LAYER_RENAME = 'LAYER_RENAME';
 export const LAYER_DELETE = 'LAYER_DELETE';
 
+export const TOOLBAR_SELECT = 'TOOLBAR_SELECT';
+export const TOOLBAR_UNSELECT = 'TOOLBAR_UNSELECT';
+
 export const SCROLL_X = 'SCROLL_X';
 export const SCROLL_Y = 'SCROLL_Y';
 

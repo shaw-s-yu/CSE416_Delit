@@ -61,9 +61,9 @@ class TopClickableLayer extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const { tileset, map } = state;
+    const { tileset, toolbar } = state;
     let selected = tileset.selected ? tileset.selected : null;
-    let selectedTool = map.selectedTool ? map.selectedTool : null;
+    let selectedTool = toolbar.selected
     return {
         selected: selected,
         selectedTool

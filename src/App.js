@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import HomeScreen from './components/home/HomeScreen';
 import Dashboard from './components/dashboard/Dashboard';
 import WorkScreen from './components/work/WorkScreen';
+import DrawScreen from './components/draw/Draw'
 import { createSocketHandler } from './store/database/HomeScreenHandler'
 
 
@@ -23,6 +24,7 @@ class App extends Component {
             <Route exact path="/" component={HomeScreen} />
             <Route path='/dashboard' component={Dashboard} />
             <Route path='/project/:key' component={WorkScreen} />
+            <Route path='/tileset/:key' component={DrawScreen} />
             <Route path="/:any" component={HomeScreen} />
           </Switch>
         </div>

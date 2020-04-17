@@ -18,7 +18,7 @@ class ImageWrapper extends React.Component {
     scrollbar = React.createRef();
 
     handleZoomEffect = (e) => {
-
+        e.stopPropagation();
         const { selectedTool } = this.props;
         if (selectedTool !== TOOLS.ZOOM_IN && selectedTool !== TOOLS.ZOOM_OUT) return
         const { scale } = this.state
@@ -88,8 +88,12 @@ const mapStateToProps = (state) => {
     const { squirtle } = state.tileset.imgs
     if (!squirtle) return {}
     const { imgWidth, imgHeight } = squirtle
+
+    const { selected } = state.toolbar
+
     return {
-        imgWidth, imgHeight
+        imgWidth, imgHeight,
+        selectedTool: selected
     }
 };
 

@@ -26,7 +26,7 @@ class TopNavbar extends React.Component {
     }
 
     render() {
-        const { open, side, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
+        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
         const { username, profileImg } = this.state;
         return (
             <>
@@ -48,7 +48,7 @@ class TopNavbar extends React.Component {
                                 <div className="better-dropdown-item" key={v1()}>{"Copy   CTRL+C"}</div>,
                                 <div className="better-dropdown-item" key={v1()}>{"Paste  CTRL+V"}</div>,
                             ]} />
-                        <Dropdown title="VIEW" width={174} handleOpen={this.handleOpen}
+                        {view ? <Dropdown title="VIEW" width={174} handleOpen={this.handleOpen}
                             items={[
                                 <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'property')}>
                                     <Checkbox
@@ -71,7 +71,7 @@ class TopNavbar extends React.Component {
                                     />
                                 Show Tileset Window
                             </div>,
-                            ]} />
+                            ]} /> : null}
                     </> : null}
 
                     <Navbar.Collapse id="basic-navbar-nav">

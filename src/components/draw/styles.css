@@ -1,9 +1,0 @@
-@import "https://cdn.jsdelivr.net/npm/literallycanvas@0.5.2/lib/css/literallycanvas.css";
-
-
-.literally-canvas{
-  width: 80vw;
-  margin-left: 10vw;
-  margin-top: 30px;
-  box-shadow: 0 0 3pt 3pt grey;
-}

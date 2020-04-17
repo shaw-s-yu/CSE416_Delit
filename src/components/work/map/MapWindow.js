@@ -19,7 +19,8 @@ const TOOLS = {
     SAVE: "SAVE",
     STAMP: "STAMP",
     ERASER: "ERASER",
-    FILL: "FILL"
+    FILL: "FILL",
+    CROP: "CROP"
 }
 
 class MapWindow extends React.Component {
@@ -27,7 +28,6 @@ class MapWindow extends React.Component {
     state = {
         position: { x: width * 0.2, y: 0 },
         size: { width: width * 0.6, height: height * 0.7 < 442.867 ? 442.867 : height * 0.7 },
-        selectedTool: null,
     }
 
     tileMap = React.createRef()
@@ -39,26 +39,13 @@ class MapWindow extends React.Component {
         this.setState({ size: { width, height } })
     }
 
-    handleZoomIn = () => {
-        let { selectedTool } = this.state;
-        selectedTool = selectedTool === TOOLS.ZOOM_IN ? null : TOOLS.ZOOM_IN;
-        this.setState({ selectedTool })
-        this.props.handleSelectTool(selectedTool)
-    }
-
-    handleZoomOut = () => {
-        let { selectedTool } = this.state;
-        selectedTool = selectedTool === TOOLS.ZOOM_OUT ? null : TOOLS.ZOOM_OUT;
-        this.setState({ selectedTool })
-        this.props.handleSelectTool(selectedTool)
-    }
-
     render() {
         const { size, position, selectedTool } = this.state
         const { width, height } = size;
         const style = {
             maxWidth: width,
-            maxHeight: height - 70,
+            maxHeight: height - 90,
+            marginTop: '20px'
         }
         return (
             <Rnd
@@ -67,6 +54,7 @@ class MapWindow extends React.Component {
                 size={size}
                 default={position}
                 onMouseDown={() => { this.props.handleToTop('map') }}
+                onClick={this.props.handleUnselect}
                 onResizeStart={() => this.props.handleToTop('map')}
                 onResize={this.handleOnResize}
                 onResizeStop={this.handleOnResize}
@@ -81,16 +69,19 @@ class MapWindow extends React.Component {
                         { name: TOOLS.UPLOAD, item: <i className={"fas fa-upload"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
+                    ]}
+                    secondaryContent={[
                         { name: TOOLS.STAMP, item: <i className={"fas fa-stamp"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.ERASER, item: <i className={"fas fa-eraser"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.FILL, item: <i className={"fas fa-fill"} style={{ fontSize: '24px' }} onClick={() => this.props.handleTest()} /> },
+                        { name: TOOLS.CROP, item: <i className={"fas fa-vector-square"} style={{ fontSize: '24px' }} /> },
                     ]}
                     rightContent={[
-                        { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} onClick={this.handleZoomOut} /> },
-                        { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} onClick={this.handleZoomIn} /> },
+                        { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} /> },
+                        { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} /> },
                     ]}
                 />
-                <ImageWrapper style={style} width={width} height={height - 70} window="map" childRef={ref => this.tileMap = ref} selectedTool={selectedTool} />
+                <ImageWrapper style={style} width={width} height={height - 70} window="map" childRef={ref => this.tileMap = ref} />
             </Rnd>
 
         )
@@ -104,9 +95,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleToTop: (window) => dispatch(handler.handleToTop(window)),
-    handleSelectTool: (selectedTool) => dispatch(handler.handleSelectTool(selectedTool)),
-    handleTest: () => dispatch({ type: "test", test: "hi" })
+    handleTest: () => dispatch({ type: "test", test: "hi" }),
+    handleUnselect: () => dispatch(handler.toolbarUnselectHandler()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapWindow)

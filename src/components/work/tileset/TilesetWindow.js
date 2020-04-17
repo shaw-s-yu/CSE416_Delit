@@ -40,6 +40,10 @@ class TilesetWindow extends React.Component {
         this.setState({ resizing: false, size: { width, height } })
     }
 
+    handleGoPaint = () => {
+        this.props.history.push('/tileset/ffe')
+    }
+
     render() {
         const { resizing, size, position } = this.state;
         const { open } = this.props
@@ -71,7 +75,7 @@ class TilesetWindow extends React.Component {
                     resizing={resizing}
                 />
 
-                <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={e => e.stopPropagation()} onClick={this.props.handleGoPaint} />
+                <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={e => e.stopPropagation()} onClick={this.handleGoPaint} />
                 <i className="fas fa-search-plus tileset-zoomin-btn better-btn " onMouseDown={e => e.stopPropagation()} />
                 <i className="fas fa-search-minus tileset-zoomout-btn better-btn " onMouseDown={e => e.stopPropagation()} />
                 <i className="fas fa-trash-alt tileset-delete-btn better-btn " onMouseDown={e => e.stopPropagation()} />

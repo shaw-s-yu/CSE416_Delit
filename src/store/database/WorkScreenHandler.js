@@ -79,3 +79,11 @@ export const layerRenameHandler = (id, name) => (dispatch, getState) => {
 export const layerDeleteHandler = (id) => (dispatch, getState) => {
     dispatch({ type: actionCreators.LAYER_DELETE, id });
 }
+
+export const toolbarSelectHandler = (name) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.TOOLBAR_SELECT, name });
+}
+
+export const toolbarUnselectHandler = () => (dispatch, getState) => {
+    dispatch({ type: actionCreators.TOOLBAR_UNSELECT });
+}
