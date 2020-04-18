@@ -11,7 +11,7 @@ const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 const session = require('express-session')
 const bodyParser = require("body-parser");
-
+const path = require('path');
 const expressGraphql = require('express-graphql');
 
 app.use(bodyParser.json());
@@ -65,5 +65,9 @@ app.use('/graphql', expressGraphql({
 	graphiql: true
 }));
 
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  });
 
 server.listen(process.env.PORT || 5000)

@@ -20,11 +20,13 @@ import { ApolloProvider } from 'react-apollo';
 const store = createStore(rootReducer, applyMiddleware(thunk));
 const client = new ApolloClient({ uri: 'http://localhost:3000/graphql' });
 
+
 ReactDOM.render(<Provider store={store}>
                     <ApolloProvider client={client}>
                         <App />
                     </ApolloProvider>
                 </Provider>, document.getElementById('root'));
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
