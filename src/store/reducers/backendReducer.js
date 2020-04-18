@@ -8,6 +8,10 @@ const initState = {};
 const backendReducer = (state = initState, action) => {
     if (action.type === 'CREATE_SOCKET') {
         const socket = io(API_URL)
+        socket.on('test', (data) => {
+            console.log(data.id)
+            console.log(socket.id)
+        })
         return {
             socket
         }

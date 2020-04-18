@@ -96,6 +96,7 @@ class ItemList extends React.Component {
                                         img={img}
                                         handleTeam={this.handleTeamOpen1}
                                         onClick={this.handleGoEdit}
+                                        key={index}
                                     />
                                 </>
                             );

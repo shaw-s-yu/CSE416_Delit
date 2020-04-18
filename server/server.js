@@ -10,12 +10,25 @@ const cors = require("cors");
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 const session = require('express-session')
+const bodyParser = require("body-parser");
+
+
+app.use(bodyParser.json());
+app.unsubscribe(bodyParser.urlencoded({ extended: false }))
+
+io.on('connection', socket => {
+    console.log('socket connected', socket.id)
+
+    socket.on('dashboard', data => {
+        console.log('dashboard', data)
+    })
+})
 
 app.set('io', io);
 
 app.use(
     cors({
-        origin: "http://localhost:3000", // allow to server to accept request from different origin
+        origin: "*", // allow to server to accept request from different origin
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true // allow session cookie from browser to pass through
     })
@@ -43,8 +56,5 @@ mongoose.connect(keys.mongoDB.dbURI, () => {
 
 app.use('/auth', authRoutes)
 app.use('/profile', profileRoutes)
-// app.get('/hi', (req, res) => {
-//     res.send({ hi: 'hi' })
-// })
 
 server.listen(process.env.PORT || 5000)

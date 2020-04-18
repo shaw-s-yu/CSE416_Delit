@@ -9,7 +9,7 @@ const authReducer = (state = initState, action) => {
     if (action.type === actionCreators.LOGIN_ERROR) {
         return {
             user: null,
-            errmsg: action.msg
+            errmsg: action.errmsg
         }
     } else if (action.type === actionCreators.LOGIN_SUCCESS) {
         return {

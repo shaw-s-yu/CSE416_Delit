@@ -38,7 +38,7 @@ class HomeScreen extends React.Component {
     componentDidMount() {
         this.props.socket.on('google', data => {
             const { err, msg, auth } = data
-            if (err === false) {
+            if (err === false && this.popup) {
                 this.popup.close()
                 this.props.handleLoginSuccess(auth)
                 this.props.history.push('/dashboard/wefw')

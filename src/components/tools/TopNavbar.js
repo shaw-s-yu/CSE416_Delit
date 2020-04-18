@@ -4,26 +4,43 @@ import SideNav from '../dashboard/SideNav'
 import Dropdown from './Dropdown'
 import { v1 } from 'uuid'
 import Checkbox from '@material-ui/core/Checkbox';
+import * as handler from '../../store/database/HomeScreenHandler';
 import './tools.css'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import config from '../../config'
 
 class TopNavbar extends React.Component {
 
-    state = {
-        loading: true,
-    }
 
     componentDidMount() {
-        if (this.props.authed)
-            this.setState({ loading: false })
+        this.props.socket.on('connect', () => {
+            axios.get(`/auth/current_user?socketId=${this.props.socket.id}`)
+        })
+    }
+
+    componentWillMount() {
+        this.props.socket.on('google', data => {
+            console.log('google returned')
+            const { err, msg, auth } = data
+            if (err === false) {
+                this.props.handleLoginSuccess(auth)
+            }
+            else {
+                this.props.handleLoginError(msg)
+            }
+        })
     }
 
     render() {
         const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen, auth } = this.props;
+        console.log(auth)
+        if (auth.errmsg === 'no log in')
+            return <Redirect to='/' />
 
         if (auth.user === null)
-            return <Redirect to="/login" />;
+            return 'loading....';
 
         const { username, picture } = auth.user
         return (
@@ -77,7 +94,7 @@ class TopNavbar extends React.Component {
                         </Nav>
                         <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo"></img></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
-                        <Navbar.Brand href="http://localhost:5000/auth/logout">Log Out</Navbar.Brand>
+                        <Navbar.Brand href={`${config.server}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>
                 </Navbar>
                 {side ? <SideNav open={open} handleSidebarOpen={this.props.handleSidebarOpen} /> : null}
@@ -95,6 +112,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    handleLoginSuccess: (user) => dispatch(handler.loginSuccessHandler(user)),
+    handleLoginError: (errmsg) => dispatch(handler.loginErrorHandler(errmsg)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopNavbar)
