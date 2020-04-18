@@ -28,7 +28,7 @@ router.get('/current_user', (req, res) => {
 router.get('/logout', (req, res) => {
     // handle with passport
     req.logout();
-    res.redirect('http://localhost:3000')
+    res.redirect('/')
 });
 
 // auth with google+
