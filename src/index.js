@@ -13,9 +13,12 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import rootReducer from './store/reducers/rootReducer';
+
 import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
+const client = new ApolloClient({ uri: 'http://localhost:3000/graphql' });
 
 ReactDOM.render(<Provider store={store}>
                     <ApolloProvider client={client}>
