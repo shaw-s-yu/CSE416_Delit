@@ -12,6 +12,7 @@ const io = require('socket.io')(server)
 const session = require('express-session')
 const bodyParser = require("body-parser");
 
+const expressGraphql = require('express-graphql');
 
 app.use(bodyParser.json());
 app.unsubscribe(bodyParser.urlencoded({ extended: false }))
@@ -56,5 +57,13 @@ mongoose.connect(keys.mongoDB.dbURI, () => {
 
 app.use('/auth', authRoutes)
 app.use('/profile', profileRoutes)
+
+
+const schema = require('./schema/Schema');
+app.use('/graphql', expressGraphql({
+	schema,
+	graphiql: true
+}));
+
 
 server.listen(process.env.PORT || 5000)
