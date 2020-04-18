@@ -1,4 +1,5 @@
-const app = require('express')()
+const express = require('express')
+const app = express()
 const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
 const passportSetup = require('./config/passport-setup')
@@ -13,6 +14,8 @@ const session = require('express-session')
 const bodyParser = require("body-parser");
 const path = require('path');
 const expressGraphql = require('express-graphql');
+
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use(bodyParser.json());
 app.unsubscribe(bodyParser.urlencoded({ extended: false }))
