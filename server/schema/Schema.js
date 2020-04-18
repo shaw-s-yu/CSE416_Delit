@@ -40,7 +40,7 @@ var projectType = new GraphQLObjectType({
             _id: {
                 type: GraphQLString
             },
-            name: {
+            projectName: {
                 type: GraphQLString
             },
             creater: {
@@ -157,5 +157,6 @@ var mutation = new GraphQLObjectType({
 });
 
 module.exports = new GraphQLSchema({
-    query: queryObj,
+    query: queryType,
+    mutation: mutation
 });

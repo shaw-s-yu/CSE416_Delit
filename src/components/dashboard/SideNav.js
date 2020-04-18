@@ -1,5 +1,25 @@
 import React from 'react';
 import { Collection, CollectionItem } from 'react-materialize'
+
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
+
+const ADD_PROJECT = gql`
+    mutation AddProject(
+        $name: String!,
+        $creater: String!) {
+        addProject(
+            name: $name,
+            creater: $creater,
+            ) {
+            _id
+        }
+    }
+`;
+
+
+
+
 class SideNav extends React.Component {
 
   state = {
@@ -48,6 +68,11 @@ class SideNav extends React.Component {
 
   getClassName = (name) => {
     return this.state[name] ? "dashboard-sidebar-selected" : "";
+  }
+
+
+  createNewProject= () => {
+    
   }
 
 
