@@ -62,7 +62,7 @@ var queryType = new GraphQLObjectType({
             projects: {
                 type: new GraphQLList(projectType),
                 resolve: function () {
-                    const projects = LogoModel.find().exec()
+                    const projects = ProjectModel.find().exec()
                     if (!projects) {
                         throw new Error('Error')
                     }
@@ -74,6 +74,10 @@ var queryType = new GraphQLObjectType({
                 args: {
                     id: {
                         name: '_id',
+                        type: GraphQLString
+                    },
+                    creater: {
+                        name: 'username',
                         type: GraphQLString
                     }
                 },
