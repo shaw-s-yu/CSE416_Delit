@@ -12,7 +12,7 @@ class RegisterScreen extends React.Component {
     state = {
         err: null,
         username: '',
-        inputErr: false,
+        inputErr: true,
         inputErrMsg: '',
     }
 
@@ -50,7 +50,7 @@ class RegisterScreen extends React.Component {
 
     getError = () => {
         const { inputErr, inputErrMsg } = this.state;
-        if (inputErr === false && inputErrMsg === '')
+        if (inputErr === true && inputErrMsg === '')
             return ''
         if (inputErr === false && inputErrMsg === 'Good')
             return '👍 Username Available'
@@ -116,11 +116,11 @@ class RegisterScreen extends React.Component {
                                 onChange={this.handleChange} />
                         </Grid>
                         <Grid style={{ marginTop: 32 }}>
-                            <div className="login-btn-box" style={{ backgroundColor: '#db4a39' }} onClick={this.startAuth.bind(this, 'google')}>
+                            <div className="login-btn-box" style={{ backgroundColor: '#db4a39' }} onClick={inputErr ? null : this.startAuth.bind(this, 'google')}>
                                 <div className='login-btn-img'><i className="fab fa-google-plus-square login-btn-icon"></i></div>
                                 <div className='login-btn-context'>Sign Up With Google</div>
                             </div>
-                            <div className="login-btn-box" style={{ backgroundColor: '#3b5998' }} onClick={this.startAuth.bind(this, 'facebook')} >
+                            <div className="login-btn-box" style={{ backgroundColor: '#3b5998' }} onClick={inputErr ? null : this.startAuth.bind(this, 'facebook')} >
                                 <div className='login-btn-img'><i className="fab fa-facebook login-btn-icon"></i></div>
                                 <div className='login-btn-context'>Sign Up With Facebook</div>
                             </div>
