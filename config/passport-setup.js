@@ -5,13 +5,11 @@ const keys = require('./keys');
 const User = require('../models/mongo-user')
 
 passport.serializeUser((user, done) => {
-    done(null, user.id)
+    done(null, user)
 })
 
-passport.deserializeUser((id, done) => {
-    User.findById(id).then((user) => {
-        done(null, user)
-    })
+passport.deserializeUser((obj, done) => {
+    done(null, obj)
 })
 
 passport.use(
@@ -21,23 +19,24 @@ passport.use(
         clientSecret: keys.google.clientSecret,
         callbackURL: '/auth/google/redirect'
     }, (accessToken, refreshToken, profile, done) => {
-
         // check if user already exists in our db
-        User.findOne({ googleId: profile.id }).then((currentUser) => {
+        User.findOne({ id: profile.id, provider: 'google' }).then((currentUser) => {
+            const { displayName, id } = profile
+            const picture = profile.photos[0].value.replace(/_normal/, '')
             if (currentUser) {
-                currentUser.username = profile.displayName
-                currentUser.googleId = profile.id
-                currentUser.picture = profile._json.picture
+                currentUser.username = displayName
+                currentUser.id = id
+                currentUser.picture = picture
                 currentUser.save().then((e) => {
                     done(null, currentUser)
                 })
-
             }
             else {
                 new User({
-                    username: profile.displayName,
-                    googleId: profile.id,
-                    picture: profile._json.picture,
+                    username: displayName,
+                    id: id,
+                    picture: picture,
+                    provider: 'google'
                 }).save().then((newUser) => {
                     done(null, newUser)
                 })
@@ -50,9 +49,34 @@ passport.use(
 passport.use(
     new FacebookStrategy({
         clientID: keys.facebook.clientID,
-        clientSecret: keys.google.clientID,
-        callbackURL: 'http://localhost:3000/dashboard'
-    }, () => {
+        clientSecret: keys.facebook.clientSecret,
+        callbackURL: '/auth/facebook/redirect',
+        profileFields: ['id', 'email', 'name', 'picture.width(250)'],
+    }, (accessToken, refreshToken, profile, done) => {
+        // check if user already exists in our db
+        User.findOne({ id: profile.id, provider: 'facebook' }).then((currentUser) => {
+            const { familyName, givenName } = profile.name
+            const { id } = profile
+            const picture = profile.photos[0].value
+            if (currentUser) {
+                currentUser.username = `${givenName} ${familyName}`
+                currentUser.id = id
+                currentUser.picture = picture
+                currentUser.save().then((e) => {
+                    done(null, currentUser)
+                })
+            }
+            else {
+                new User({
+                    username: `${givenName} ${familyName}`,
+                    id: id,
+                    picture: picture,
+                    provider: 'facebook'
+                }).save().then((newUser) => {
+                    done(null, newUser)
+                })
 
+            }
+        })
     })
 );

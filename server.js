@@ -21,11 +21,11 @@ app.use(bodyParser.json());
 app.unsubscribe(bodyParser.urlencoded({ extended: false }))
 
 io.on('connection', socket => {
-    console.log('socket connected', socket.id)
+    // console.log('socket connected', socket.id)
 
-    socket.on('dashboard', data => {
-        console.log('dashboard', data)
-    })
+    // socket.on('dashboard', data => {
+    //     console.log('dashboard', data)
+    // })
 })
 
 app.set('io', io);
@@ -64,13 +64,13 @@ app.use('/profile', profileRoutes)
 
 const schema = require('./schema/Schema');
 app.use('/graphql', expressGraphql({
-	schema,
-	graphiql: true
+    schema,
+    graphiql: true
 }));
 
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
-  });
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 server.listen(process.env.PORT || 5000)

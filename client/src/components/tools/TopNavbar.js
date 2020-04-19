@@ -7,42 +7,38 @@ import Checkbox from '@material-ui/core/Checkbox';
 import * as handler from '../../store/database/HomeScreenHandler';
 import './tools.css'
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../config'
 
 class TopNavbar extends React.Component {
 
+    state = {
+        username: 'error',
+        picture: 'error'
+    }
+
 
     componentDidMount() {
-        this.props.socket.on('connect', () => {
-            axios.get(`/auth/current_user?socketId=${this.props.socket.id}`)
+        axios.get('/auth/current_user').then(res => {
+            const { username, picture } = res.data
+            if (!username || !picture)
+                this.props.history.push('/')
+            else {
+                this.setState({ username, picture })
+                this.props.handleLoginSuccess(res.data)
+            }
         })
     }
 
-    componentWillMount() {
-        this.props.socket.on('google', data => {
-            console.log('google returned')
-            const { err, msg, auth } = data
-            if (err === false) {
-                this.props.handleLoginSuccess(auth)
-            }
-            else {
-                this.props.handleLoginError(msg)
-            }
-        })
+    UNSAFE_componentWillMount() {
+        const { hash } = this.props.history.location
+        if (hash === "#_=_")
+            this.props.history.push('/dashboard')
     }
 
     render() {
-        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen, auth } = this.props;
-        console.log(auth)
-        if (auth.errmsg === 'no log in')
-            return <Redirect to='/' />
-
-        if (auth.user === null)
-            return 'loading....';
-
-        const { username, picture } = auth.user
+        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
+        const { username, picture } = this.state
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
@@ -104,11 +100,7 @@ class TopNavbar extends React.Component {
 
 }
 const mapStateToProps = (state) => {
-    const { auth } = state
-    return {
-        auth,
-        socket: state.backend.socket
-    }
+    return {}
 };
 
 const mapDispatchToProps = (dispatch) => ({

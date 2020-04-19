@@ -12,9 +12,11 @@ class Draw extends React.Component {
 
     render() {
 
+        const { history } = this.props
+
         return (
             <div onClick={this.props.handleUnselect}>
-                <TopNavbar side={false} view={false} />
+                <TopNavbar side={false} view={false} history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
                         className="map-toolbar"
@@ -46,9 +48,8 @@ class Draw extends React.Component {
         )
     }
 }
-const mapStateToProps = (state) => {
-    return {
-    }
+const mapStateToProps = (state, ownProps) => {
+    return {}
 };
 
 const mapDispatchToProps = (dispatch) => ({

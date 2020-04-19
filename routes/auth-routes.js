@@ -1,14 +1,9 @@
 const router = require('express').Router();
 const passport = require('passport');
+const keys = require('../config/keys');
 
 const googleAuth = passport.authenticate('google', { scope: ['profile'] })
-
-//router sets socketid
-router.use((req, res, next) => {
-    if (req.query.socketId !== undefined)
-        req.session.socketId = req.query.socketId
-    next()
-})
+const facebookAuth = passport.authenticate('facebook')
 
 // auth login
 router.get('/login', (req, res) => {
@@ -16,31 +11,28 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/current_user', (req, res) => {
-    const io = req.app.get('io')
-    const id = req.session.socketId;
-    if (req.user)
-        io.in(id).emit('google', { err: false, msg: null, auth: req.user })
-    else
-        io.in(id).emit('google', { err: true, msg: 'no log in', auth: null })
+    res.send(req.user)
 });
 
 // auth logout
 router.get('/logout', (req, res) => {
     // handle with passport
     req.logout();
-    res.redirect('/')
+    res.redirect(`${keys.url.client}`)
 });
 
 // auth with google+
 router.get('/google', googleAuth);
 
 router.get('/google/redirect', googleAuth, (req, res) => {
-    const io = req.app.get('io')
-    const id = req.session.socketId;
-    io.in(id).emit('google', { err: false, msg: null, auth: req.user })
-    res.end()
+    res.redirect(`${keys.url.client}/dashboard`)
 });
 
-router.get('/facebook', passport.authenticate('facebook'));
+router.get('/facebook', facebookAuth);
+
+router.get('/facebook/redirect', facebookAuth, (req, res) => {
+    // console.log(req.user)
+    res.redirect(`${keys.url.client}/dashboard`)
+});
 
 module.exports = router;

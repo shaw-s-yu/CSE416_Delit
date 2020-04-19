@@ -14,5 +14,10 @@ module.exports = {
     },
     session: {
         cookieKey: 'awesomeappdelitrevisedfromtiled'
+    },
+    url: {
+        client: 'http://localhost:3000',
+        server_local: 'http://localhost:5000',
+        server_deploy: 'https://delit.herokuapp.com'
     }
 };

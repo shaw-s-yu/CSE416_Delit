@@ -68,10 +68,10 @@ class WorkScreen extends React.Component {
     render = () => {
 
         const { propertyOpen, layerOpen, tilesetOpen } = this.state
-
+        const { history } = this.props
         return (
             <div>
-                <TopNavbar side={false} view={true} handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} />
+                <TopNavbar side={false} view={true} handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} history={history} />
                 <div>
                     {
                         this.getScreen()

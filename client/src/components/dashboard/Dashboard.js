@@ -4,6 +4,8 @@ import Searchbar from './Searchbar'
 import ItemList from './ItemList'
 import './dashboard.css'
 import Pagination from '../tools/Pagination'
+import { connect } from 'react-redux';
+
 
 class Dashboard extends React.Component {
     state = {
@@ -20,11 +22,12 @@ class Dashboard extends React.Component {
 
     render() {
         const { sidebarActive } = this.state;
+        const { history } = this.props
         const left = sidebarActive ? 19 : 0;
         const width = sidebarActive ? 81 : 100;
         return (
             <div>
-                <TopNavbar open={sidebarActive} handleSidebarOpen={this.handleSidebarOpen} side={true} />
+                <TopNavbar open={sidebarActive} handleSidebarOpen={this.handleSidebarOpen} side={true} history={history} />
                 <div className="dashboard-display" style={
                     {
                         marginLeft: left + "%",
@@ -43,4 +46,13 @@ class Dashboard extends React.Component {
 
 }
 
-export default Dashboard;
+const mapStateToProps = (state, ownProps) => {
+    const { history } = ownProps
+    return { history }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+
