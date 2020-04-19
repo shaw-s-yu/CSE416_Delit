@@ -58,6 +58,14 @@ class RegisterScreen extends React.Component {
             return '👎 ' + inputErrMsg
     }
 
+    getSignUpButtonStyle = (type) => {
+        const { inputErr } = this.state
+        if (type === 'google')
+            return inputErr ? 'disabled-btn' : 'google-enabled-btn'
+        else
+            return inputErr ? 'disabled-btn' : 'facebook-enabled-btn'
+    }
+
 
     componentDidMount() {
         this.props.socket.on('authBack', data => {
@@ -116,11 +124,11 @@ class RegisterScreen extends React.Component {
                                 onChange={this.handleChange} />
                         </Grid>
                         <Grid style={{ marginTop: 32 }}>
-                            <div className="login-btn-box" style={{ backgroundColor: '#db4a39' }} onClick={inputErr ? null : this.startAuth.bind(this, 'google')}>
+                            <div className={"login-btn-box " + this.getSignUpButtonStyle('google')} onClick={inputErr ? null : this.startAuth.bind(this, 'google')}>
                                 <div className='login-btn-img'><i className="fab fa-google-plus-square login-btn-icon"></i></div>
                                 <div className='login-btn-context'>Sign Up With Google</div>
                             </div>
-                            <div className="login-btn-box" style={{ backgroundColor: '#3b5998' }} onClick={inputErr ? null : this.startAuth.bind(this, 'facebook')} >
+                            <div className={"login-btn-box " + this.getSignUpButtonStyle('facebook')} onClick={inputErr ? null : this.startAuth.bind(this, 'facebook')} >
                                 <div className='login-btn-img'><i className="fab fa-facebook login-btn-icon"></i></div>
                                 <div className='login-btn-context'>Sign Up With Facebook</div>
                             </div>

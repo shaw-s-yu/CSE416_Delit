@@ -148,3 +148,21 @@
     text-align: center;
     margin-top: 16px;
 }
+
+.disabled-btn{
+    cursor: context-menu;
+    background-color: gray;
+}
+
+.disabled-btn:hover{
+    box-shadow:  0px 0px 2px 1px rgba(0,0,0,0.75);
+}
+
+
+.google-enabled-btn{
+    background-color: #db4a39;
+}
+
+.facebook-enabled-btn{
+    background-color:#3b5998;
+}

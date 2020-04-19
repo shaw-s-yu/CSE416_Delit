@@ -85,11 +85,11 @@ class LoginScreen extends React.Component {
                             <div className="loginHeader2">Account Login</div>
                         </Grid>
                         <Grid>
-                            <div className="login-btn-box" style={{ backgroundColor: '#db4a39' }} onClick={this.startAuth.bind(this, 'google')}>
+                            <div className="login-btn-box google-enabled-btn" onClick={this.startAuth.bind(this, 'google')}>
                                 <div className='login-btn-img'><i className="fab fa-google-plus-square login-btn-icon"></i></div>
                                 <div className='login-btn-context'>Sign In With Google</div>
                             </div>
-                            <div className="login-btn-box" style={{ backgroundColor: '#3b5998' }} onClick={this.startAuth.bind(this, 'facebook')}>
+                            <div className="login-btn-box facebook-enabled-btn" onClick={this.startAuth.bind(this, 'facebook')}>
                                 <div className='login-btn-img'><i className="fab fa-facebook login-btn-icon"></i></div>
                                 <div className='login-btn-context'>Sign In With Facebook</div>
                             </div>
