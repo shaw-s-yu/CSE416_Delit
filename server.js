@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const authRoutes = require('./routes/auth-routes');
-const profileRoutes = require('./routes/profile-routes');
 const passportSetup = require('./config/passport-setup')
 const mongoose = require('mongoose')
 const keys = require('./config/keys');
@@ -14,6 +13,7 @@ const session = require('express-session')
 const bodyParser = require("body-parser");
 const path = require('path');
 const expressGraphql = require('express-graphql');
+const User = require('./models/mongo-user')
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -21,11 +21,17 @@ app.use(bodyParser.json());
 app.unsubscribe(bodyParser.urlencoded({ extended: false }))
 
 io.on('connection', socket => {
-    // console.log('socket connected', socket.id)
-
-    // socket.on('dashboard', data => {
-    //     console.log('dashboard', data)
-    // })
+    socket.on('username_register', data => {
+        if (data.length < 6)
+            socket.emit('username_register_back', { err: true, msg: 'At Least 6 Letters' })
+        else
+            User.findOne({ username: data }).then(user => {
+                if (user)
+                    socket.emit('username_register_back', { err: true, msg: 'Username Already Existed' })
+                else
+                    socket.emit('username_register_back', { err: false, msg: 'Good' })
+            })
+    })
 })
 
 app.set('io', io);
@@ -59,8 +65,6 @@ mongoose.connect(keys.mongoDB.dbURI, () => {
 });
 
 app.use('/auth', authRoutes)
-app.use('/profile', profileRoutes)
-
 
 const schema = require('./schema/Schema');
 app.use('/graphql', expressGraphql({

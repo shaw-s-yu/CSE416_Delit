@@ -19,7 +19,8 @@ class TopNavbar extends React.Component {
 
 
     componentDidMount() {
-        axios.get('/auth/current_user').then(res => {
+        axios.get('/auth/current').then(res => {
+            console.log(res.data)
             const { username, picture } = res.data
             if (!username || !picture)
                 this.props.history.push('/')
@@ -37,7 +38,7 @@ class TopNavbar extends React.Component {
     }
 
     render() {
-        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
+        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen, auth } = this.props;
         const { username, picture } = this.state
         return (
             <>

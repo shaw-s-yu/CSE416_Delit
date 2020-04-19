@@ -125,3 +125,26 @@
 .fa-facebook{
     color: #3b5998;
 }
+
+.login-register-switch-text{
+    margin-top: 24px;
+    font-size: large;
+    transition: ease-in 0.2s;
+}
+
+.login-register-switch-text:hover{
+    color: red;
+    text-decoration: underline;
+}
+
+.username-entry-input{
+    width: 80%;
+    left: 10%;
+    top: 24px;
+}
+
+.login-err{
+    color:red;
+    text-align: center;
+    margin-top: 16px;
+}

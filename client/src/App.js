@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import HomeScreen from './components/home/HomeScreen';
+import LoginScreen from './components/home/LoginScreen';
+import RegisterScreen from './components/home/RegisterScreen';
 import Dashboard from './components/dashboard/Dashboard';
 import WorkScreen from './components/work/WorkScreen';
 import DrawScreen from './components/draw/Draw'
@@ -21,11 +22,12 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <Route exact path="/" component={HomeScreen} />
+            <Route exact path="/" component={LoginScreen} />
+            <Route path="/register" component={RegisterScreen} />
             <Route path='/dashboard' component={Dashboard} />
             <Route path='/project/:key' component={WorkScreen} />
             <Route path='/tileset/:key' component={DrawScreen} />
-            <Route path="/:any" component={HomeScreen} />
+            <Route path="/:any" component={LoginScreen} />
           </Switch>
         </div>
 

@@ -1,38 +1,31 @@
 const router = require('express').Router();
-const passport = require('passport');
 const keys = require('../config/keys');
+const authController = require('./auth-routes-controller')
 
-const googleAuth = passport.authenticate('google', { scope: ['profile'] })
-const facebookAuth = passport.authenticate('facebook')
+const {
+    sessionSaver,
+    googleAuth,
+    facebookAuth,
+    currentCallback,
+    initCallback,
+    logoutCallback,
+    authCallback,
+} = authController
 
-// auth login
-router.get('/login', (req, res) => {
-    res.render('login', { user: req.user });
-});
+router.use(sessionSaver)
 
-router.get('/current_user', (req, res) => {
-    res.send(req.user)
-});
+router.get('/current', currentCallback);
 
-// auth logout
-router.get('/logout', (req, res) => {
-    // handle with passport
-    req.logout();
-    res.redirect(`${keys.url.client}`)
-});
+router.get('/init', initCallback);
 
-// auth with google+
+router.get('/logout', logoutCallback);
+
 router.get('/google', googleAuth);
 
-router.get('/google/redirect', googleAuth, (req, res) => {
-    res.redirect(`${keys.url.client}/dashboard`)
-});
+router.get('/google/redirect', googleAuth, authCallback);
 
 router.get('/facebook', facebookAuth);
 
-router.get('/facebook/redirect', facebookAuth, (req, res) => {
-    // console.log(req.user)
-    res.redirect(`${keys.url.client}/dashboard`)
-});
+router.get('/facebook/redirect', facebookAuth, authCallback);
 
 module.exports = router;
