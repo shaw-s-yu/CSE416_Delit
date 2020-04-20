@@ -20,7 +20,6 @@ class TopNavbar extends React.Component {
 
     componentDidMount() {
         axios.get('/auth/current').then(res => {
-            console.log(res.data)
             const { username, picture } = res.data
             if (!username || !picture)
                 this.props.history.push('/')
