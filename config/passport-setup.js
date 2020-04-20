@@ -16,7 +16,7 @@ passport.use(
         // options for google strategy
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret,
-        callbackURL: '/auth/google/redirect'
+        callbackURL: `${keys.url.server}/auth/google/redirect`
     }, (accessToken, refreshToken, profile, done) => {
         const { id } = profile
         const picture = profile.photos[0].value.replace(/_normal/, '')
@@ -29,7 +29,7 @@ passport.use(
     new FacebookStrategy({
         clientID: keys.facebook.clientID,
         clientSecret: keys.facebook.clientSecret,
-        callbackURL: '/auth/facebook/redirect',
+        callbackURL: `${keys.url.server}/auth/facebook/redirect`,
         profileFields: ['id', 'picture.width(250)'],
     }, (accessToken, refreshToken, profile, done) => {
         const { id } = profile

@@ -16,8 +16,7 @@ module.exports = {
         cookieKey: 'awesomeappdelitrevisedfromtiled'
     },
     url: {
-        client: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000',
-        server_local: 'http://localhost:5000',
-        server_deploy: 'https://delit.herokuapp.com'
+        client: process.env.NODE_ENV === 'production' ? 'https://delit.herokuapp.com' : 'http://localhost:3000',
+        server: process.env.NODE_ENV === 'production' ? 'https://delit.herokuapp.com' : 'http://localhost:5000',
     }
 };
