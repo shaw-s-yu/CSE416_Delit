@@ -1,0 +1,51 @@
+.test-wrapper{
+    background-color: salmon;
+    width: 100%;
+    margin-top: 8px;
+    height: calc(100% - 80px);
+    position: absolute;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+}
+
+.test-title{
+    font-size: x-large;
+    text-align: center;
+}
+
+.test-btn-box{
+    width: 30%;
+    margin-left: 35%;
+    position: relative;
+}
+
+.test-btn{
+    width: 50%;
+}
+
+.test-display{
+    height:calc(100% - 66px);
+    background-color: seashell;
+}
+
+.test-display-left{
+    width: 50%;
+    height: 100%;
+    display: inline-block;
+    border: 2px solid black;
+    overflow-y: scroll;
+}
+
+.test-display-right{
+    width: 50%;
+    height: 100%;
+    display: inline-block;
+    border: 2px solid black;
+    overflow-y: scroll;
+}
+
+.test-context{
+    margin-left: 24px;
+    border:1px solid black;
+}

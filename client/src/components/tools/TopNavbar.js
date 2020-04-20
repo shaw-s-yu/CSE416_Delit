@@ -87,7 +87,9 @@ class TopNavbar extends React.Component {
 
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
+
                         </Nav>
+                        <Navbar.Brand><a href='/test'>Test</a></Navbar.Brand>
                         <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo"></img></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>

@@ -7,6 +7,7 @@ import RegisterScreen from './components/home/RegisterScreen';
 import Dashboard from './components/dashboard/Dashboard';
 import WorkScreen from './components/work/WorkScreen';
 import DrawScreen from './components/draw/Draw'
+import TestScreen from './components/test/Test'
 import { createSocketHandler } from './store/database/HomeScreenHandler'
 
 
@@ -27,6 +28,7 @@ class App extends Component {
             <Route path='/dashboard' component={Dashboard} />
             <Route path='/project/:key' component={WorkScreen} />
             <Route path='/tileset/:key' component={DrawScreen} />
+            <Route path='/test' component={TestScreen} />
             <Route path="/:any" component={LoginScreen} />
           </Switch>
         </div>

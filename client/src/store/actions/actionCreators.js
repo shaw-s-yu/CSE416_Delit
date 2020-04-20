@@ -36,3 +36,9 @@ export const TOOLBAR_UNSELECT = 'TOOLBAR_UNSELECT';
 export const SCROLL_X = 'SCROLL_X';
 export const SCROLL_Y = 'SCROLL_Y';
 
+
+export const TEST_PROJECT_ADD = 'TEST_PROJECT_ADD';
+export const TEST_MAP_ADD = 'TEST_MAP_ADD';
+export const TEST_TILESET_ADD = 'TEST_TILESET_ADD';
+export const TEST_CLEAR = 'TEST_CLEAR';
+
