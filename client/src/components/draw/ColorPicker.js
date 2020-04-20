@@ -56,7 +56,7 @@ class ColorPicker extends Component {
             },
         });
         return (
-            <div className="right" style={{ marginTop: "-10%" }}>
+            <div className="color-btn">
                 <div style={styles.swatch} onClick={this.handleClick}>
                     <div style={styles.color} />
                 </div>

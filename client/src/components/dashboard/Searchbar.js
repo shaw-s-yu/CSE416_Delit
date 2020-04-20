@@ -1,21 +1,20 @@
 import React from 'react';
-import { TextInput, Button } from 'react-materialize'
+import TextField from '@material-ui/core/TextField';
 
 
 class Searchbar extends React.Component {
 
     render() {
-        const left = this.props.open ? 23 : 5;
-        const width = this.props.open ? 64 : 83;
         return (
             <div>
-                <div className="dashboard-search" style={
-                    {
-                        marginLeft: left + "%",
-                        width: width + "%",
-                    }}>
-                    <TextInput label="Enter search" />
-                    <Button type="submit" waves='orange' className="dashboard-searchbutton">Search</Button>
+                <div className="dashboard-search">
+                    <TextField
+                        id="outlined-basic"
+                        className="dashboard-input"
+                        label="Enter Project Name to Search"
+                        variant="outlined"
+                        size="small"
+                        onChange={this.handleChange} />
                 </div>
             </div>
 

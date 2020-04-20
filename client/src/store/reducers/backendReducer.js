@@ -1,6 +1,5 @@
-import config from '../../config'
+import { API_URL } from '../../config'
 import io from 'socket.io-client'
-const API_URL = config.server
 
 
 const initState = {};

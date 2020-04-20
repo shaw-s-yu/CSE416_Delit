@@ -1,9 +1,10 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const authRoutes = require('./routes/auth-routes');
 const passportSetup = require('./config/passport-setup')
 const mongoose = require('mongoose')
-const keys = require('./config/keys');
+const keys = require('./config');
 const cookieSession = require('cookie-session');
 const passport = require('passport')
 const cors = require("cors");

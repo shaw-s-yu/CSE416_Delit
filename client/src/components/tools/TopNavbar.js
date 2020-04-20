@@ -8,7 +8,7 @@ import * as handler from '../../store/database/HomeScreenHandler';
 import './tools.css'
 import { connect } from 'react-redux';
 import axios from 'axios';
-import config from '../../config'
+import { API_URL } from '../../config'
 
 class TopNavbar extends React.Component {
 
@@ -38,12 +38,12 @@ class TopNavbar extends React.Component {
     }
 
     render() {
-        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen, auth } = this.props;
+        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
         const { username, picture } = this.state
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
-                    {side ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list list-icon"></i></Navbar.Brand> : null}
+                    {side ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list"></i></Navbar.Brand> : null}
                     <Navbar.Brand href="/dashboard"> <div className="logo" >Delit</div></Navbar.Brand>
                     {!side ? <>
                         <Dropdown title="FILE" width={96} handleOpen={this.handleOpen}
@@ -60,7 +60,7 @@ class TopNavbar extends React.Component {
                                 <div className="better-dropdown-item" key={v1()}>{"Copy   CTRL+C"}</div>,
                                 <div className="better-dropdown-item" key={v1()}>{"Paste  CTRL+V"}</div>,
                             ]} />
-                        {view ? <Dropdown title="VIEW" width={174} handleOpen={this.handleOpen}
+                        {view ? <Dropdown title="VIEW" width={196} handleOpen={this.handleOpen}
                             items={[
                                 <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'property')}>
                                     <Checkbox
@@ -91,7 +91,7 @@ class TopNavbar extends React.Component {
                         </Nav>
                         <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo"></img></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
-                        <Navbar.Brand href={`${config.server}/auth/logout`} >Log Out</Navbar.Brand>
+                        <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>
                 </Navbar>
                 {side ? <SideNav open={open} handleSidebarOpen={this.props.handleSidebarOpen} /> : null}

@@ -34,12 +34,13 @@ class Dashboard extends React.Component {
                         width: width + "%",
                     }
                 }>
+                    <Searchbar open={sidebarActive} />
                     <ItemList history={this.props.history} />
                     <Pagination className="dashboard-pagination center" size="large" color="secondary" />
                 </div>
-                <Searchbar open={sidebarActive} />
 
-            </div>
+
+            </div >
 
         )
     }

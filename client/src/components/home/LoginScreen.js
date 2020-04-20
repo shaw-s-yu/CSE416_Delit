@@ -2,7 +2,7 @@ import React from 'react';
 import './home_page.css'
 import { Grid } from '@material-ui/core'
 import { connect } from 'react-redux';
-import config from '../../config'
+import { API_URL } from '../../config'
 import axios from 'axios'
 import * as handler from '../../store/database/HomeScreenHandler';
 
@@ -16,7 +16,7 @@ class LoginScreen extends React.Component {
         const width = 900, height = 600
         const left = (window.innerWidth / 2) - (width / 2)
         const top = (window.innerHeight / 2) - (height / 2)
-        const url = `${config.server}/auth/${type}`
+        const url = `${API_URL}/auth/${type}`
 
         return window.open(url, '',
             `toolbar=no, location=no, directories=no, status=no, menubar=no, 

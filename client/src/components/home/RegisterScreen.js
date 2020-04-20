@@ -2,7 +2,7 @@ import React from 'react';
 import './home_page.css'
 import { Grid } from '@material-ui/core'
 import { connect } from 'react-redux';
-import config from '../../config'
+import { API_URL } from '../../config'
 import axios from 'axios'
 import * as handler from '../../store/database/HomeScreenHandler';
 import TextField from '@material-ui/core/TextField';
@@ -26,7 +26,7 @@ class RegisterScreen extends React.Component {
         const left = (window.innerWidth / 2) - (width / 2)
         const top = (window.innerHeight / 2) - (height / 2)
         const { username } = this.state
-        const url = `${config.server}/auth/${type}?username=${username}`
+        const url = `${API_URL}/auth/${type}?username=${username}`
 
         return window.open(url, '',
             `toolbar=no, location=no, directories=no, status=no, menubar=no, 

@@ -71,3 +71,8 @@
 .display-zoom-out{
     cursor: zoom-out;
 }
+
+.color-btn{
+    float: right;
+    margin-top: -12%;
+}

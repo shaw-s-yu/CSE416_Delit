@@ -241,10 +241,9 @@ li.active{
 }
 
 .collapsible-title-icon{
-    margin-top: -5px;
-    position: absolute;
-    left: 0%;
-    cursor: pointer;
+    float: left;
+    margin-left: 10px;
+    margin-top: 3px;
 }
 
 .map-window-display{

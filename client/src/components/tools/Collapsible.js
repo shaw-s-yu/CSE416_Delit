@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from 'react-materialize/lib/Icon';
 
 class Titlebar extends React.Component {
 
@@ -42,8 +41,8 @@ class Titlebar extends React.Component {
                                     onClick={() => this.handleClick(index)}
                                     onMouseDown={e => e.stopPropagation()}
                                 >
+                                    <i className={open[index] ? 'collapsible-title-icon fas fa-chevron-right' : 'collapsible-title-icon fas fa-chevron-down'}></i>
                                     {d.title}
-                                    <Icon small className="collapsible-title-icon">{open[index] ? 'chevron_right' : 'keyboard_arrow_down'}</Icon>
                                 </div>
                                 <div className={"collapsible-content "} style={style}>
                                     {d.content}

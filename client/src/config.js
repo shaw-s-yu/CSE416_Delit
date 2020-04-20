@@ -1,5 +1,3 @@
-module.exports = {
-    client: 'http://localhost:3000',
-    server: 'http://localhost:5000',
-    // server: 'https://delit.herokuapp.com'
-}
+export const API_URL = process.env.NODE_ENV === 'production'
+    ? 'https://delit.herokuapp.com'
+    : 'http://localhost:5000'

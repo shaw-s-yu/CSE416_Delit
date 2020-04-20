@@ -1,5 +1,4 @@
 import React from 'react';
-import { Collection, CollectionItem } from 'react-materialize'
 
 class SideNav extends React.Component {
 
@@ -63,16 +62,16 @@ class SideNav extends React.Component {
     return (
 
       <div className='dashboard-sidebar' style={{ width: width + "%", whiteSpace: "nowrap" }}>
-        <Collection>
+        <div className='sidebar-wrapper'>
 
-          <CollectionItem><div className='item-text'>Create New Project</div></CollectionItem>
+          <div className={'sidebar-item '}><div className='item-text'>Create New Project</div></div>
 
-          <CollectionItem className={this.getClassName("all")} onClick={this.handleAllProjectsSelected}><div className='item-text'>All Projects</div></CollectionItem>
-          <CollectionItem className={this.getClassName("create")} onClick={this.handleProjectCreatedByMeSelected}><div className='item-text'>Project Created By Me</div></CollectionItem>
-          <CollectionItem className={this.getClassName("share")} onClick={this.handleProjectSharedWithMeSelected}><div className='item-text'>Project Shared With Me</div></CollectionItem>
-          <CollectionItem className={this.getClassName("tileset")} onClick={this.handleManageMyTilesetsSelected}><div className='item-text'>Manage My Tilesets</div></CollectionItem>
+          <div className={'sidebar-item ' + this.getClassName("all")} onClick={this.handleAllProjectsSelected}><div className='item-text'>All Projects</div></div>
+          <div className={'sidebar-item ' + this.getClassName("create")} onClick={this.handleProjectCreatedByMeSelected}><div className='item-text'>Project Created By Me</div></div>
+          <div className={'sidebar-item ' + this.getClassName("share")} onClick={this.handleProjectSharedWithMeSelected}><div className='item-text'>Project Shared With Me</div></div>
+          <div className={'sidebar-item ' + this.getClassName("tileset")} onClick={this.handleManageMyTilesetsSelected}><div className='item-text'>Manage My Tilesets</div></div>
 
-        </Collection>
+        </div>
 
       </div>
 

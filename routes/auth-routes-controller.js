@@ -1,5 +1,5 @@
 const passport = require('passport');
-const keys = require('../config/keys');
+const keys = require('../config');
 const User = require('../models/mongo-user')
 
 exports.sessionSaver = (req, res, next) => {
@@ -15,9 +15,12 @@ exports.facebookAuth = passport.authenticate('facebook')
 
 exports.currentCallback = (req, res) => {
     const { user } = req
-    User.findOne({ id: user.id, provider: user.provider }).then(currentUser => {
-        res.send(currentUser)
-    })
+    if (!user)
+        res.redirect(keys.url.client)
+    else
+        User.findOne({ id: user.id, provider: user.provider }).then(currentUser => {
+            res.send(currentUser)
+        })
 }
 
 exports.initCallback = (req, res) => {

@@ -38,7 +38,7 @@ class Toolbar extends React.Component {
                         secondaryContent && secondaryContent.map((c, i) => {
                             const style = { left: i * 40 }
                             return (
-                                <div className={"toolbar-cell toolbar-sec-cell " + this.getSelected(c.name)} key={i} onMouseDown={this.stopPropagation} style={style} onClick={this.handleSelect.bind(this, c.name)}>
+                                <div className={"toolbar-cell" + this.getSelected(c.name)} key={i} onMouseDown={this.stopPropagation} style={style} onClick={this.handleSelect.bind(this, c.name)}>
                                     {c.item}
                                 </div>
                             )
