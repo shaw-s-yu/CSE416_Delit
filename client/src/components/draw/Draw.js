@@ -28,7 +28,7 @@ class Draw extends React.Component {
                             { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
                         ]}
                         secondaryContent={[
-                            { name: TOOLS.STAMP, item: <i className={"fas fa-pencil-alt"} style={{ fontSize: '24px' }} /> },
+                            { name: TOOLS.PENCIL, item: <i className={"fas fa-pencil-alt"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.LINE, item: <i className="fas fa-slash" style={{ fontSize: '24px' }}></i> },
                             { name: TOOLS.SQUARE, item: <i className={"far fa-square"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.CIRCLE, item: <i className={"far fa-circle"} style={{ fontSize: '24px' }} /> },

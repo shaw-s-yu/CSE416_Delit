@@ -5,6 +5,7 @@ module.exports = {
     DOWNLOAD: "DOWNLOAD",
     SAVE: "SAVE",
 
+    PENCIL: "PENCIL",
     STAMP: "STAMP",
     ERASER: "ERASER",
     FILL: "FILL",

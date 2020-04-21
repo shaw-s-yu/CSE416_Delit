@@ -2,6 +2,7 @@ import React from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
+import CanvasController from './CanvasController'
 
 const squirtle = 'https://static.planetminecraft.com/files/resource_media/screenshot/1205/2012-02-06_011135_1377666.jpg'
 
@@ -14,6 +15,8 @@ class DisplayPlace extends React.Component {
         width: 0,
         height: 0,
         mouseDown: false,
+        offsetLeft: 0,
+        offsetTop: 0
     }
     scrollbar = React.createRef();
 
@@ -60,8 +63,14 @@ class DisplayPlace extends React.Component {
         const { selectedTool } = this.props
         if (!selectedTool) return
 
+        console.log(this.state.offsetLeft, e.clientX)
+
+        const { offsetLeft, offsetTop } = this.state
+        this.painter.initDraw(selectedTool, '#0000FF', offsetLeft, offsetTop)
         const { clientX, clientY } = e
-        console.log('hi', clientX, clientY)
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+        this.painter.startDraw(x, y)
+
         this.setState({ mouseDown: true })
     }
 
@@ -70,19 +79,32 @@ class DisplayPlace extends React.Component {
         if (!mouseDown) return
 
         const { clientX, clientY } = e
-        console.log(clientX, clientY)
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+        this.painter.onDraw(x, y)
     }
 
     handleToolEnd = (e) => {
         const { selectedTool } = this.props
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT || !selectedTool) return
+        e.stopPropagation()
 
         const { clientX, clientY } = e
-        e.stopPropagation()
-        console.log('bye', clientX, clientY)
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+        this.painter.endDraw(x, y)
         this.setState({ mouseDown: false })
     }
 
+    handleFixPosition = (clientX, clientY) => {
+        const windowScrollX = window.scrollX
+        const windowScrollY = window.scrollY
+        let x = windowScrollX + clientX
+        let y = windowScrollY + clientY
+        const canvasX = this.refs.canvas.getBoundingClientRect().left
+        const canvasY = this.refs.canvas.getBoundingClientRect().top
+        x -= canvasX
+        y -= canvasY
+        return { x, y }
+    }
 
 
     componentDidMount() {
@@ -93,19 +115,22 @@ class DisplayPlace extends React.Component {
         img.onload = () => {
             canvas.width = img.width;
             canvas.height = img.height;
-            const { width, height } = this.refs.painter.getBoundingClientRect()
+            const { width, height } = this.refs.painterBox.getBoundingClientRect()
             this.setState({
                 imgWidth: img.width,
                 imgHeight: img.height,
-                width, height
+                width, height,
             }, () => {
                 this.ctx = canvas.getContext('2d')
                 this.ctx.drawImage(img, 0, 0)
+                this.painter = new CanvasController(this.ctx)
             })
         }
         window.onresize = () => {
-            const { width, height } = this.refs.painter.getBoundingClientRect()
-            this.setState({ width, height })
+            const { width, height } = this.refs.painterBox.getBoundingClientRect()
+            this.setState({
+                width, height,
+            })
         }
     }
 
@@ -124,7 +149,7 @@ class DisplayPlace extends React.Component {
         }
 
         return (
-            <div className="painter-display" ref='painter'>
+            <div className="painter-display" ref='painterBox'>
                 <Scrollbars ref="scrollbar"
                     style={scrollStyle}
                     renderThumbHorizontal={props => <div {...props} className="thumb" />}
