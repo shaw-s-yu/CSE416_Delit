@@ -6,7 +6,7 @@ import PropertyBar from './PropertyBar'
 import DisplayPlace from "./DisplayPlace";
 import * as handler from '../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
-
+import TOOLS from '../tools/ToolbarTools'
 
 class Draw extends React.Component {
 
@@ -34,7 +34,7 @@ class Draw extends React.Component {
                             { name: TOOLS.CIRCLE, item: <i className={"far fa-circle"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.ERASER, item: <i className={"fas fa-eraser"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.FILL, item: <i className={"fas fa-fill"} style={{ fontSize: '24px' }} /> },
-                            { name: TOOLS.SELECT, item: <i className={"fas fa-crop-alt"} style={{ fontSize: '24px' }} /> },
+                            { name: TOOLS.CROP, item: <i className={"fas fa-crop-alt"} style={{ fontSize: '24px' }} /> },
                         ]}
                         rightContent={[
                             { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} onClick={this.handleZoomOut} /> },
@@ -57,22 +57,3 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Draw);;
-
-
-
-const TOOLS = {
-    ZOOM_IN: "ZOOM_IN",
-    ZOOM_OUT: "ZOOM_OUT",
-    UNDO: "UNDO",
-    REDO: "REDO",
-    UPLOAD: "UPLOAD",
-    DOWNLOAD: "DOWNLOAD",
-    SAVE: "SAVE",
-    STAMP: "STAMP",
-    ERASER: "ERASER",
-    FILL: "FILL",
-    SELECT: "SELECT",
-    LINE: 'LINE',
-    SQUARE: 'SQUARE',
-    CIRCLE: 'CIRCLE',
-}

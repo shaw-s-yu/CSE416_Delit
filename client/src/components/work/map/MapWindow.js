@@ -5,23 +5,10 @@ import Titlebar from '../../tools/Titlebar'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import Toolbar from '../../tools/Toolbar'
 import ImageWrapper from '../canvas/ImageWrapper'
-
+import TOOLS from '../../tools/ToolbarTools'
 
 const rect = document.body.getBoundingClientRect();
 const { width, height } = rect
-const TOOLS = {
-    ZOOM_IN: "ZOOM_IN",
-    ZOOM_OUT: "ZOOM_OUT",
-    UNDO: "UNDO",
-    REDO: "REDO",
-    UPLOAD: "UPLOAD",
-    DOWNLOAD: "DOWNLOAD",
-    SAVE: "SAVE",
-    STAMP: "STAMP",
-    ERASER: "ERASER",
-    FILL: "FILL",
-    CROP: "CROP"
-}
 
 class MapWindow extends React.Component {
 

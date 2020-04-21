@@ -61,7 +61,7 @@ class LayerManager extends React.Component {
         let { canvas } = this.props;
         return (
             <>
-                <canvas ref={canvas} className="single-layer" onClick={this.handleSelect} width={imgWidth} height={imgHeight}>
+                <canvas ref={canvas} className="single-layer" width={imgWidth} height={imgHeight}>
                     Your Browser Does Not Support Canvas
                 </canvas>
                 {click_layer}

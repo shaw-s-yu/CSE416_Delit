@@ -1,14 +1,25 @@
 import React from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { connect } from 'react-redux';
+import TOOLS from '../tools/ToolbarTools'
+
+const squirtle = 'https://static.planetminecraft.com/files/resource_media/screenshot/1205/2012-02-06_011135_1377666.jpg'
 
 class DisplayPlace extends React.Component {
 
-    state = { scale: 1 }
+    state = {
+        scale: 1,
+        imgWidth: 0,
+        imgHeight: 0,
+        width: 0,
+        height: 0,
+        mouseDown: false,
+    }
     scrollbar = React.createRef();
 
     handleZoomEffect = (e) => {
 
+        e.stopPropagation()
         const { selectedTool } = this.props;
         if (selectedTool !== TOOLS.ZOOM_IN && selectedTool !== TOOLS.ZOOM_OUT) return
         const { scale } = this.state
@@ -45,22 +56,75 @@ class DisplayPlace extends React.Component {
         return selectedTool === TOOLS.ZOOM_IN ? "display-zoom-in" : selectedTool === TOOLS.ZOOM_OUT ? "display-zoom-out" : ""
     }
 
+    handleToolStart = (e) => {
+        const { selectedTool } = this.props
+        if (!selectedTool) return
+
+        const { clientX, clientY } = e
+        console.log('hi', clientX, clientY)
+        this.setState({ mouseDown: true })
+    }
+
+    handleToolMove = (e) => {
+        const { mouseDown } = this.state
+        if (!mouseDown) return
+
+        const { clientX, clientY } = e
+        console.log(clientX, clientY)
+    }
+
+    handleToolEnd = (e) => {
+        const { selectedTool } = this.props
+        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT || !selectedTool) return
+
+        const { clientX, clientY } = e
+        e.stopPropagation()
+        console.log('bye', clientX, clientY)
+        this.setState({ mouseDown: false })
+    }
+
+
+
+    componentDidMount() {
+        const { canvas } = this.refs;
+        if (!canvas) return
+        let img = new Image();
+        img.src = squirtle;
+        img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const { width, height } = this.refs.painter.getBoundingClientRect()
+            this.setState({
+                imgWidth: img.width,
+                imgHeight: img.height,
+                width, height
+            }, () => {
+                this.ctx = canvas.getContext('2d')
+                this.ctx.drawImage(img, 0, 0)
+            })
+        }
+        window.onresize = () => {
+            const { width, height } = this.refs.painter.getBoundingClientRect()
+            this.setState({ width, height })
+        }
+    }
 
     render() {
-        const { scale } = this.state;
+        const { scale, imgWidth, imgHeight, width, height } = this.state;
         const scrollStyle = {
             width: '100%',
             height: '100%',
-            backgroundColor: 'white'
+            backgroundColor: 'lightgray',
+            paddingBottom: 6,
         }
 
         const displayStyle = {
-            left: scale < 1 ? 50 - scale * 50 + '%' : 0,
-            top: scale < 1 ? 50 - scale * 50 + "%" : 0,
+            left: imgWidth ? imgWidth * scale >= width ? 6 : (width - imgWidth * scale) / 2 + 6 : 6,
+            top: imgHeight ? imgHeight * scale >= height ? 6 : (height - imgHeight * scale) / 2 + 6 : 6
         }
 
         return (
-            <div className="painter-display">
+            <div className="painter-display" ref='painter'>
                 <Scrollbars ref="scrollbar"
                     style={scrollStyle}
                     renderThumbHorizontal={props => <div {...props} className="thumb" />}
@@ -68,7 +132,11 @@ class DisplayPlace extends React.Component {
                 >
 
                     <div className={"display " + this.getSelectedTools()} id='display' onClick={this.handleZoomEffect} style={displayStyle}>
-                        <canvas className="display-background">
+                        <canvas className="display-background" ref='canvas' width={imgWidth} height={imgHeight}
+                            onMouseDown={this.handleToolStart}
+                            onMouseMove={this.handleToolMove}
+                            onClick={this.handleToolEnd}
+                        >
                             Your Browser Does Not Support Canvas
                         </canvas>
                     </div>
@@ -89,9 +157,3 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DisplayPlace)
-
-
-const TOOLS = {
-    ZOOM_IN: "ZOOM_IN",
-    ZOOM_OUT: "ZOOM_OUT"
-}
