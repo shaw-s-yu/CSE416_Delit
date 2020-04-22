@@ -8,6 +8,7 @@ class CanvasController {
         this.fillStyle = ''
         this.width = width
         this.height = height
+        this.drawing = false
     }
 
     initDraw = (tool, fillStyle) => {
@@ -16,55 +17,53 @@ class CanvasController {
     }
 
     startDraw = (x, y) => {
-        if (this.tool === TOOLS.PENCIL)
-            this.pencilStartDraw(x, y)
-        if (this.tool === TOOLS.LINE)
-            this.lineStartDraw(x, y)
+        this.drawing = true
+        this[this.tool].startDraw(x, y)
     }
 
     onDraw = (x, y) => {
-        if (this.tool === TOOLS.PENCIL)
-            this.pencilOnDraw(x, y)
-        if (this.tool === TOOLS.LINE)
-            this.lineOnDraw(x, y)
+        if (!this.drawing) return
+        this[this.tool].onDraw(x, y)
     }
 
     endDraw = (x, y) => {
-        if (this.tool === TOOLS.PENCIL)
-            this.pencilOnDraw(x, y)
-        if (this.tool === TOOLS.LINE)
-            this.lineEndDraw(x, y)
-
-        this.tool = null
+        if (!this.drawing) return
+        this[this.tool].endDraw(x, y)
+        this.drawing = false
     }
 
-    pencilStartDraw = (x, y) => {
-        this.ctx.beginPath()
-        this.ctx.moveTo(x, y)
+    PENCIL = {
+        startDraw: (x, y) => {
+            this.ctx.beginPath()
+            this.ctx.moveTo(x, y)
+        },
+
+        onDraw: (x, y) => {
+            this.ctx.lineTo(x, y)
+            this.ctx.stroke()
+        },
+
+        endDraw: (x, y) => {
+            this.onDraw(x, y)
+        },
     }
 
-    pencilOnDraw = (x, y) => {
-        this.ctx.lineTo(x, y)
-        this.ctx.stroke()
-    }
-
-    lineStartDraw = (x, y) => {
-        this.startX = x
-        this.startY = y
-        this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
-    }
-
-    lineOnDraw = (x, y) => {
-
-        this.ctx.putImageData(this.startData, 0, 0);
-        this.ctx.beginPath()
-        this.ctx.moveTo(this.startX, this.startY)
-        this.ctx.lineTo(x, y)
-        this.ctx.stroke()
-    }
-
-    lineEndDraw = (x, y) => {
-        this.lineOnDraw(x, y)
+    LINE = {
+        startDraw: (x, y) => {
+            this.startX = x
+            this.startY = y
+            this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
+        },
+        onDraw: (x, y) => {
+            this.ctx.putImageData(this.startData, 0, 0);
+            this.ctx.beginPath()
+            this.ctx.moveTo(this.startX, this.startY)
+            this.ctx.lineTo(x, y)
+            this.ctx.stroke()
+        },
+        endDraw: (x, y) => {
+            this.onDraw(x, y)
+        },
     }
 }
 
