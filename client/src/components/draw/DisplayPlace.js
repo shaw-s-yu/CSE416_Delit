@@ -3,8 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
-
-const squirtle = 'https://static.planetminecraft.com/files/resource_media/screenshot/1205/2012-02-06_011135_1377666.jpg'
+import squirtle from '../../img/squirtle.jpg'
 
 class DisplayPlace extends React.Component {
 
@@ -63,10 +62,7 @@ class DisplayPlace extends React.Component {
         const { selectedTool } = this.props
         if (!selectedTool) return
 
-        console.log(this.state.offsetLeft, e.clientX)
-
-        const { offsetLeft, offsetTop } = this.state
-        this.painter.initDraw(selectedTool, '#0000FF', offsetLeft, offsetTop)
+        this.painter.initDraw(selectedTool, '#0000FF')
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         this.painter.startDraw(x, y)
@@ -112,6 +108,7 @@ class DisplayPlace extends React.Component {
         if (!canvas) return
         let img = new Image();
         img.src = squirtle;
+
         img.onload = () => {
             canvas.width = img.width;
             canvas.height = img.height;
@@ -123,7 +120,7 @@ class DisplayPlace extends React.Component {
             }, () => {
                 this.ctx = canvas.getContext('2d')
                 this.ctx.drawImage(img, 0, 0)
-                this.painter = new CanvasController(this.ctx)
+                this.painter = new CanvasController(this.ctx, img.width, img.height)
             })
         }
         window.onresize = () => {
