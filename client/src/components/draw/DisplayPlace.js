@@ -98,6 +98,8 @@ class DisplayPlace extends React.Component {
         const { x, y } = this.handleFixPosition(clientX, clientY)
         this.painter.endDraw(x, y)
         this.setState({ mouseDown: false })
+        const data = this.refs.canvas.toDataURL('image/jpeg', 0.6)
+        this.props.socket.emit('draw', { data: data })
     }
 
     handleFixPosition = (clientX, clientY) => {
@@ -116,32 +118,41 @@ class DisplayPlace extends React.Component {
     }
 
 
+    drawImage = () => {
+        const { width, height } = this.refs.painterBox.getBoundingClientRect()
+        this.setState({
+            imgWidth: this.img.width,
+            imgHeight: this.img.height,
+            width, height,
+        }, () => {
+            this.ctx = this.refs.canvas.getContext('2d')
+            this.ctx.drawImage(this.img, 0, 0)
+            this.painter = new CanvasController(this.ctx, this.img.width, this.img.height)
+        })
+    }
+
+
     componentDidMount() {
         const { canvas } = this.refs;
         if (!canvas) return
-        let img = new Image();
-        img.src = squirtle;
+        this.img = new Image();
+        this.img.src = squirtle;
 
-        img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const { width, height } = this.refs.painterBox.getBoundingClientRect()
-            this.setState({
-                imgWidth: img.width,
-                imgHeight: img.height,
-                width, height,
-            }, () => {
-                this.ctx = canvas.getContext('2d')
-                this.ctx.drawImage(img, 0, 0)
-                this.painter = new CanvasController(this.ctx, img.width, img.height)
-            })
-        }
+        this.img.onload = this.drawImage
+
         window.onresize = () => {
             const { width, height } = this.refs.painterBox.getBoundingClientRect()
             this.setState({
                 width, height,
             })
         }
+        this.props.socket.on('drawBack', data => {
+            // console.log('back', data)
+            // this.ctx.drawImage(data.data, 0, 0)
+            this.img = new Image()
+            this.img.src = data.data;
+            this.img.onload = this.drawImage
+        })
     }
 
     render() {
@@ -186,7 +197,10 @@ class DisplayPlace extends React.Component {
 
 const mapStateToProps = (state) => {
     const { selected } = state.toolbar
-    return { selectedTool: selected }
+    return {
+        selectedTool: selected,
+        socket: state.backend.socket
+    }
 };
 
 const mapDispatchToProps = (dispatch) => ({

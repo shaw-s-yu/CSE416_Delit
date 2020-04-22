@@ -33,6 +33,10 @@ io.on('connection', socket => {
                     socket.emit('username_register_back', { err: false, msg: 'Good' })
             })
     })
+
+    socket.on('draw', data => {
+        io.emit('drawBack', data)
+    })
 })
 
 app.set('io', io);
