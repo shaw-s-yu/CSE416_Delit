@@ -55,7 +55,19 @@ class DisplayPlace extends React.Component {
 
     getSelectedTools = () => {
         const { selectedTool } = this.props
-        return selectedTool === TOOLS.ZOOM_IN ? "display-zoom-in" : selectedTool === TOOLS.ZOOM_OUT ? "display-zoom-out" : ""
+        if (selectedTool === TOOLS.ZOOM_IN)
+            return 'display-zoom-in'
+        if (selectedTool === TOOLS.ZOOM_OUT)
+            return 'display-zoom-out'
+        if (selectedTool === TOOLS.PENCIL)
+            return 'display-pencil'
+        if (selectedTool === TOOLS.ERASER)
+            return 'display-eraser'
+        if (selectedTool === TOOLS.FILL)
+            return 'display-fill'
+        if (selectedTool)
+            return 'display-cross-cursor'
+        return ''
     }
 
     handleToolStart = (e) => {
@@ -157,6 +169,7 @@ class DisplayPlace extends React.Component {
                         <canvas className="display-background" ref='canvas' width={imgWidth} height={imgHeight}
                             onMouseDown={this.handleToolStart}
                             onMouseMove={this.handleToolMove}
+                            onMouseOut={this.handleToolEnd}
                             onClick={this.handleToolEnd}
                         >
                             Your Browser Does Not Support Canvas

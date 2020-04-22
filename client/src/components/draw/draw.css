@@ -73,3 +73,19 @@
     float: right;
     margin-top: -12%;
 }
+
+.display-pencil{
+    cursor: url(./img/pencil\ \(4\).cur), auto;
+}
+
+.display-eraser{
+    cursor: url(./img/eraser\ \(2\).cur), auto;
+}
+
+.display-fill{
+    cursor: url(./img/fill.png), auto;
+}
+
+.display-cross-cursor{
+    cursor: crosshair;
+}
