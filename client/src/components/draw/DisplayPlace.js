@@ -46,8 +46,6 @@ class DisplayPlace extends React.Component {
         const currY = this.refs.scrollbar.getScrollTop();
 
         if (nscale >= 1) {
-            console.log(ddx, ddy)
-            console.log(this.refs.scrollbar)
             this.refs.scrollbar.scrollLeft(ddx + currX)
             this.refs.scrollbar.scrollTop(ddy + currY)
         }
@@ -111,6 +109,9 @@ class DisplayPlace extends React.Component {
         const canvasY = this.refs.canvas.getBoundingClientRect().top
         x -= canvasX
         y -= canvasY
+        const { scale } = this.state
+        x /= scale
+        y /= scale
         return { x, y }
     }
 
