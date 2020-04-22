@@ -25,10 +25,10 @@ class WorkScreen extends React.Component {
         let property = document.getElementById('property')
         let layer = document.getElementById('layer')
         let tileset = document.getElementById('tileset')
-        map.style.zIndex -= 1
-        property.style.zIndex -= 1
-        layer.style.zIndex -= 1
-        tileset.style.zIndex -= 1
+        map.style.zIndex -= (map.style.zIndex <= 1 ? 0 : 1)
+        property.style.zIndex -= (property.style.zIndex <= 1 ? 0 : 1)
+        layer.style.zIndex -= (layer.style.zIndex <= 1 ? 0 : 1)
+        tileset.style.zIndex -= (tileset.style.zIndex <= 1 ? 0 : 1)
 
         target.style.zIndex = 4
 
