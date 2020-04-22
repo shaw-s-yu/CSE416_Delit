@@ -1,6 +1,3 @@
-import TOOLS from '../tools/ToolbarTools'
-
-
 class CanvasController {
     constructor(ctx, width, height) {
         this.ctx = ctx
@@ -55,6 +52,7 @@ class CanvasController {
             this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
         },
         onDraw: (x, y) => {
+            if (!this.startX || !this.startY) return
             this.ctx.putImageData(this.startData, 0, 0);
             this.ctx.beginPath()
             this.ctx.moveTo(this.startX, this.startY)
@@ -63,7 +61,53 @@ class CanvasController {
         },
         endDraw: (x, y) => {
             this.onDraw(x, y)
+            this.startX = null
+            this.startY = null
         },
+    }
+
+    SQUARE = {
+        startDraw: (x, y) => {
+            this.startX = x
+            this.startY = y
+            this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
+        },
+        onDraw: (x, y) => {
+            if (!this.startX || !this.startY) return
+            this.ctx.putImageData(this.startData, 0, 0);
+            this.ctx.beginPath();
+            this.ctx.rect(this.startX, this.startY, x - this.startX, y - this.startY);
+            this.ctx.stroke();
+        },
+        endDraw: (x, y) => {
+            this.onDraw(x, y)
+            this.startX = null
+            this.startY = null
+        }
+    }
+
+    CIRCLE = {
+        startDraw: (x, y) => {
+            this.startX = x
+            this.startY = y
+            this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
+        },
+        onDraw: (x, y) => {
+            if (!this.startX || !this.startY) return
+            this.ctx.putImageData(this.startData, 0, 0);
+            const centerX = (x + this.startX) / 2
+            const centerY = (y + this.startY) / 2
+            const radiusX = Math.abs(x - this.startX) / 2
+            const radiusY = Math.abs(y - this.startY) / 2
+            this.ctx.beginPath();
+            this.ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI)
+            this.ctx.stroke();
+        },
+        endDraw: (x, y) => {
+            this.onDraw(x, y)
+            this.startX = null
+            this.startY = null
+        }
     }
 }
 
