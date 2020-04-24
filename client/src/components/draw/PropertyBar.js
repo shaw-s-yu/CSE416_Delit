@@ -32,6 +32,11 @@ class PropertyBar extends React.Component {
                     <ColorPicker color={fillColor} onChange={fillColorOnChange} />
                 </div>
                 <div className='property-box'>
+                    <div className="property-title">Flip</div>
+                    <div className="property-flip-btn">Horizontally</div>
+                    <div className="property-flip-btn">Vertically</div>
+                </div>
+                <div className='property-box'>
                     <div className="property-center">Clear</div>
                 </div>
             </div>

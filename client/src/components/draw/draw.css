@@ -48,6 +48,26 @@
     background-color: salmon;
 }
 
+
+.property-flip-btn{
+    border:1px solid black;
+    height: 16px;
+    width: 72px;
+    margin-top: -8px;
+    margin-left: calc(33.3% - 48px);
+    font-size:small;
+    text-align: center;
+    background-color: turquoise;
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+    display: inline-block;
+    font-size: xx-small;
+}
+.property-flip-btn:hover{
+    background-color: salmon;
+}
+
+
 .painter-display{
     position: relative;
     height:calc(100% - 50px) ;
