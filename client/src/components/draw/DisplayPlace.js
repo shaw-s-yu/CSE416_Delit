@@ -94,14 +94,16 @@ class DisplayPlace extends React.Component {
     handleToolEnd = (e) => {
         const { selectedTool } = this.props
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT || !selectedTool) return
+        if (this.state.mouseDown === false) return
+
+
         e.stopPropagation()
 
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         this.painter.endDraw(x, y)
+
         this.setState({ mouseDown: false })
-        const data = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.props.socket.emit('draw', data)
     }
 
     handleFixPosition = (clientX, clientY) => {
@@ -158,9 +160,20 @@ class DisplayPlace extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-        this.props.socket.on('drawBack', data => {
+        this.props.socket.on('drawBack', res => {
             const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-            this.props.transactions.addTransaction(new drawTransaction(old_img, data, this.drawImage, this.props.socket, true))
+            const { transactions } = this.props
+            const { data, type } = res
+
+            if (type === 'new') {
+                transactions.addTransaction(new drawTransaction(old_img, data, this.drawImage))
+            }
+            else if (type === 'redo') {
+                transactions.doTransaction()
+            } else if (type === 'undo') {
+                transactions.undoTransaction()
+            }
+
         })
     }
 

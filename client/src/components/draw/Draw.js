@@ -35,10 +35,12 @@ class Draw extends React.Component {
     }
 
     doTransaction = () => {
+        this.props.socket.emit('draw', { data: null, type: 'redo' })
         this.transactions.doTransaction()
     }
 
     undoTransaction = () => {
+        this.props.socket.emit('draw', { data: null, type: 'undo' })
         this.transactions.undoTransaction()
     }
 
@@ -94,7 +96,11 @@ class Draw extends React.Component {
     }
 }
 const mapStateToProps = (state, ownProps) => {
-    return {}
+    const { selected } = state.toolbar
+    return {
+        selectedTool: selected,
+        socket: state.backend.socket
+    }
 };
 
 const mapDispatchToProps = (dispatch) => ({
