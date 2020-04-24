@@ -1,12 +1,19 @@
+import drawTransaction from "./drawTransaction"
+
 class CanvasController {
-    constructor(ctx, width, height) {
-        this.ctx = ctx
+    constructor(view) {
         this.tool = null
         this.fillStyle = ''
+        this.drawing = false
+        this.view = view
+        this.ctx = view.ctx
+    }
+
+    setDimension = (width, height) => {
         this.width = width
         this.height = height
-        this.drawing = false
     }
+
 
     initDraw = (tool, lineWidth, fillStyle, strokeStyle) => {
         this.tool = tool
@@ -14,9 +21,11 @@ class CanvasController {
         this.ctx.fillStyle = `rgba(${fillStyle.r}, ${fillStyle.g}, ${fillStyle.b}, ${fillStyle.a})`
         this.ctx.strokeStyle = `rgba(${strokeStyle.r}, ${strokeStyle.g}, ${strokeStyle.b}, ${strokeStyle.a})`
     }
+
     startDraw = (x, y) => {
         if (this[this.tool] === undefined) return
         this.drawing = true
+        this.oldImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
         this[this.tool].startDraw(x, y)
     }
 
@@ -31,6 +40,8 @@ class CanvasController {
         if (!this.drawing) return
         this[this.tool].endDraw(x, y)
         this.drawing = false
+        this.newImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
+        this.view.props.transactions.addTransaction(new drawTransaction(this.oldImg, this.newImg, this.view.drawImage, this.view.props.socket, false))
     }
 
     PENCIL = {

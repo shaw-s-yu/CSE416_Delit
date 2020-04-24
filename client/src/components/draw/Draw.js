@@ -7,14 +7,18 @@ import DisplayPlace from "./DisplayPlace";
 import * as handler from '../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
+import Transactions from './JSTPS'
+
 
 class Draw extends React.Component {
 
     state = {
         sliderValue: 1,
         borderColor: { r: 0, g: 0, b: 0, a: 1 },
-        fillColor: { r: 255, g: 255, b: 255, a: 0.5 }
+        fillColor: { r: 255, g: 255, b: 255, a: 0.5 },
     }
+
+    transactions = new Transactions()
 
     sliderOnChange = (e, newValue) => {
         this.setState({
@@ -30,6 +34,14 @@ class Draw extends React.Component {
         this.setState({ fillColor: color.rgb })
     }
 
+    doTransaction = () => {
+        this.transactions.doTransaction()
+    }
+
+    undoTransaction = () => {
+        this.transactions.undoTransaction()
+    }
+
     render() {
 
         const { history } = this.props
@@ -42,8 +54,8 @@ class Draw extends React.Component {
                     <Toolbar
                         className="map-toolbar"
                         content={[
-                            { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} /> },
-                            { name: TOOLS.REDO, item: <i className={"fas fa-redo"} style={{ fontSize: '24px' }} /> },
+                            { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
+                            { name: TOOLS.REDO, item: <i className={"fas fa-redo"} style={{ fontSize: '24px' }} onClick={this.doTransaction} /> },
                             { name: TOOLS.UPLOAD, item: <i className={"fas fa-upload"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
@@ -62,14 +74,20 @@ class Draw extends React.Component {
                             { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} onClick={this.handleZoomIn} /> },
                         ]}
                     />
-                    <PropertyBar sliderValue={sliderValue}
+                    <PropertyBar
+                        sliderValue={sliderValue}
                         sliderOnChange={this.sliderOnChange}
                         borderColor={borderColor}
                         borderColorOnChange={this.borderColorOnChange}
                         fillColor={fillColor}
                         fillColorOnChange={this.fillColorOnChange}
                     />
-                    <DisplayPlace borderThic={sliderValue} fillColor={fillColor} borderColor={borderColor} />
+                    <DisplayPlace
+                        borderThic={sliderValue}
+                        fillColor={fillColor}
+                        borderColor={borderColor}
+                        transactions={this.transactions}
+                    />
                 </div>
             </div>
         )

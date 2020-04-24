@@ -35,7 +35,7 @@ io.on('connection', socket => {
     })
 
     socket.on('draw', data => {
-        io.emit('drawBack', data)
+        socket.broadcast.emit('drawBack', data)
     })
 })
 

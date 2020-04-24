@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
 import squirtle from '../../img/squirtle.jpg'
+import drawTransaction from "./drawTransaction"
 
 class DisplayPlace extends React.Component {
 
@@ -17,7 +18,9 @@ class DisplayPlace extends React.Component {
         offsetLeft: 0,
         offsetTop: 0
     }
+
     scrollbar = React.createRef();
+
 
     handleZoomEffect = (e) => {
 
@@ -71,7 +74,6 @@ class DisplayPlace extends React.Component {
     handleToolStart = (e) => {
         const { selectedTool, borderThic, fillColor, borderColor } = this.props
         if (!selectedTool) return
-
         this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
@@ -99,7 +101,7 @@ class DisplayPlace extends React.Component {
         this.painter.endDraw(x, y)
         this.setState({ mouseDown: false })
         const data = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.props.socket.emit('draw', { data: data })
+        this.props.socket.emit('draw', data)
     }
 
     handleFixPosition = (clientX, clientY) => {
@@ -118,27 +120,34 @@ class DisplayPlace extends React.Component {
     }
 
 
-    drawImage = () => {
-        const { width, height } = this.refs.painterBox.getBoundingClientRect()
-        this.setState({
-            imgWidth: this.img.width,
-            imgHeight: this.img.height,
-            width, height,
-        }, () => {
-            this.ctx = this.refs.canvas.getContext('2d')
-            this.ctx.drawImage(this.img, 0, 0)
-            this.painter = new CanvasController(this.ctx, this.img.width, this.img.height)
-        })
+    drawImage = (src) => {
+        let img = new Image()
+        img.src = src
+        img.onload = () => {
+            const { width, height } = this.refs.painterBox.getBoundingClientRect()
+            this.setState({
+                imgWidth: img.width,
+                imgHeight: img.height,
+                width, height,
+            }, () => {
+                this.ctx.drawImage(img, 0, 0)
+                this.painter.setDimension(img.width, img.height)
+            })
+        }
     }
+
+
 
 
     componentDidMount() {
         const { canvas } = this.refs;
-        if (!canvas) return
-        this.img = new Image();
-        this.img.src = squirtle;
 
-        this.img.onload = this.drawImage
+        if (!canvas) return
+
+        this.ctx = this.refs.canvas.getContext('2d')
+        this.painter = new CanvasController(this)
+
+        this.drawImage(squirtle)
 
         window.onresize = () => {
             const { width, height } = this.refs.painterBox.getBoundingClientRect()
@@ -146,13 +155,12 @@ class DisplayPlace extends React.Component {
                 width, height,
             })
         }
+    }
 
+    UNSAFE_componentWillMount() {
         this.props.socket.on('drawBack', data => {
-            // console.log('back', data)
-            // this.ctx.drawImage(data.data, 0, 0)
-            this.img = new Image()
-            this.img.src = data.data;
-            this.img.onload = this.drawImage
+            const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
+            this.props.transactions.addTransaction(new drawTransaction(old_img, data, this.drawImage, this.props.socket, true))
         })
     }
 
