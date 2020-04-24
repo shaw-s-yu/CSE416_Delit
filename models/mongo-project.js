@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
     id: String,
-    projectName: String,
-    creater: String,
+    name: String,
+    creator: String,
     lastUpdate: { type: Date, default: Date.now },
 });
 

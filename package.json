@@ -22,6 +22,7 @@
     "express-session": "^1.17.1",
     "graphql": "^15.0.0",
     "graphql-date": "^1.0.3",
+    "lodash": "^4.17.15",
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.7",
     "nodemon": "^2.0.2",

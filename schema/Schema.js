@@ -1,37 +1,50 @@
-var GraphQLSchema = require('graphql').GraphQLSchema;
-var GraphQLObjectType = require('graphql').GraphQLObjectType;
-var GraphQLList = require('graphql').GraphQLList;
-var GraphQLObjectType = require('graphql').GraphQLObjectType;
-var GraphQLNonNull = require('graphql').GraphQLNonNull;
-var GraphQLID = require('graphql').GraphQLID;
-var GraphQLString = require('graphql').GraphQLString;
-var GraphQLInt = require('graphql').GraphQLInt;
 var GraphQLDate = require('graphql-date');
 var ProjectModel = require('../models/mongo-project');
 
-// const {
-//     GraphQLSchema,
-//     GraphQLObjectType,
-//     GraphQLString,
-// } = require('graphql');
+const _ = require('lodash');
+const {
+    GraphQLList,
+    GraphQLNonNull,
+    GraphQLSchema,
+    GraphQLObjectType,
+    GraphQLString,
+} = require('graphql');
+//dummy data
+const colors = [
+    {
+        name: "red",
+        value: "#f00"
+    },
+    {
+        name: "green",
+        value: "#0f0"
+    },
+    {
+        name: "blue",
+        value: "#00f"
+    },
+];
 
+const colorType = new GraphQLObjectType({
+    name: 'color',
+    fields: () => ({
+        name:{type:GraphQLString},
+        value:{type:GraphQLString},
+    })
+});
 
-const queryObj = new GraphQLObjectType({
-    name: 'myFirstQuery',
-    description: 'a hello world demo',
+const RootQuery = new GraphQLObjectType({
+    name: 'RootQuery',
     fields: {
-        project: {
-            name: 'a hello world query',
-            description: 'a hello world demo',
-            type: GraphQLString,
-            resolve(parentValue, args, request) {
-                return 'hello world !';
+        color:{
+            type:colorType,
+            args:{name:{type:GraphQLNonNull}},
+            resolve(parent, args){
+                return _.find(colors, {name: args.name});
             }
         }
     }
 });
-
-
 
 var projectType = new GraphQLObjectType({
     name: 'project',
@@ -40,10 +53,10 @@ var projectType = new GraphQLObjectType({
             _id: {
                 type: GraphQLString
             },
-            projectName: {
+            name: {
                 type: GraphQLString
             },
-            creater: {
+            creator: {
                 type: GraphQLString
             },
             lastUpdate: {
@@ -76,7 +89,7 @@ var queryType = new GraphQLObjectType({
                         name: '_id',
                         type: GraphQLString
                     },
-                    creater: {
+                    creator: {
                         name: 'username',
                         type: GraphQLString
                     }
@@ -107,7 +120,7 @@ var mutation = new GraphQLObjectType({
                     name: {
                         type: new GraphQLNonNull(GraphQLString)
                     },
-                    creater: {
+                    creator: {
                         type: new GraphQLNonNull(GraphQLString)
                     }
                 },
@@ -132,7 +145,7 @@ var mutation = new GraphQLObjectType({
                     },
                 },
                 resolve(root, params) {
-                    return projectModel.findByIdAndUpdate(params.id, { name: params.text, creater: params.creater, lastUpdate: new Date() }, function (err) {
+                    return projectModel.findByIdAndUpdate(params.id, { name: params.text, creator: params.creator, lastUpdate: new Date() }, function (err) {
                         if (err) return next(err);
                     });
                 }
