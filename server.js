@@ -15,6 +15,8 @@ const bodyParser = require("body-parser");
 const path = require('path');
 const expressGraphql = require('express-graphql');
 const User = require('./models/mongo-user')
+const SocketController = require('./socket/socket-controller')
+const { Socket } = SocketController
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -22,21 +24,8 @@ app.use(bodyParser.json());
 app.unsubscribe(bodyParser.urlencoded({ extended: false }))
 
 io.on('connection', socket => {
-    socket.on('username_register', data => {
-        if (data.length < 6)
-            socket.emit('username_register_back', { err: true, msg: 'At Least 6 Letters' })
-        else
-            User.findOne({ username: data }).then(user => {
-                if (user)
-                    socket.emit('username_register_back', { err: true, msg: 'Username Already Existed' })
-                else
-                    socket.emit('username_register_back', { err: false, msg: 'Good' })
-            })
-    })
-
-    socket.on('draw', data => {
-        socket.broadcast.emit('drawBack', data)
-    })
+    let socketController = new Socket(socket)
+    socketController.on()
 })
 
 app.set('io', io);
