@@ -9,42 +9,6 @@ const {
     GraphQLObjectType,
     GraphQLString,
 } = require('graphql');
-//dummy data
-const colors = [
-    {
-        name: "red",
-        value: "#f00"
-    },
-    {
-        name: "green",
-        value: "#0f0"
-    },
-    {
-        name: "blue",
-        value: "#00f"
-    },
-];
-
-const colorType = new GraphQLObjectType({
-    name: 'color',
-    fields: () => ({
-        name:{type:GraphQLString},
-        value:{type:GraphQLString},
-    })
-});
-
-const RootQuery = new GraphQLObjectType({
-    name: 'RootQuery',
-    fields: {
-        color:{
-            type:colorType,
-            args:{name:{type:GraphQLNonNull}},
-            resolve(parent, args){
-                return _.find(colors, {name: args.name});
-            }
-        }
-    }
-});
 
 var projectType = new GraphQLObjectType({
     name: 'project',
