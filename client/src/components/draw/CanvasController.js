@@ -15,16 +15,19 @@ class CanvasController {
         this.ctx.strokeStyle = `rgba(${strokeStyle.r}, ${strokeStyle.g}, ${strokeStyle.b}, ${strokeStyle.a})`
     }
     startDraw = (x, y) => {
+        if (this[this.tool] === undefined) return
         this.drawing = true
         this[this.tool].startDraw(x, y)
     }
 
     onDraw = (x, y) => {
+        if (this[this.tool] === undefined) return
         if (!this.drawing) return
         this[this.tool].onDraw(x, y)
     }
 
     endDraw = (x, y) => {
+        if (this[this.tool] === undefined) return
         if (!this.drawing) return
         this[this.tool].endDraw(x, y)
         this.drawing = false
@@ -39,6 +42,7 @@ class CanvasController {
         onDraw: (x, y) => {
             this.ctx.lineTo(x, y)
             this.ctx.lineWidth = this.lineWidth
+            this.ctx.lineCap = 'round'
             this.ctx.stroke()
         },
 
@@ -59,6 +63,7 @@ class CanvasController {
             this.ctx.beginPath()
             this.ctx.moveTo(this.startX, this.startY)
             this.ctx.lineTo(x, y)
+            this.ctx.lineCap = 'round'
             this.ctx.stroke()
         },
         endDraw: (x, y) => {
