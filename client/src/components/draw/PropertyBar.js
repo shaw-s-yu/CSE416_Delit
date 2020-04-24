@@ -5,30 +5,31 @@ import ColorPicker from './ColorPicker'
 class PropertyBar extends React.Component {
 
     render() {
+        const { sliderValue, sliderOnChange, borderColor, borderColorOnChange, fillColor, fillColorOnChange } = this.props
         return (
             <div className="propertybar-wrapper">
                 <div className='property-box'>
-                    <div className="property-title">Size:</div>
+                    <div className="property-title">Border Thickness:</div>
                     <div className='ranger'>
                         <Slider
-                            defaultValue={30}
-                            getAriaValueText={value => value + "%"}
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             marks
-                            min={0}
-                            max={100}
+                            value={sliderValue}
+                            onChange={sliderOnChange}
+                            min={1}
+                            max={20}
                             onMouseDown={e => e.stopPropagation()}
                         />
                     </div>
                 </div>
                 <div className='property-box'>
                     <div className="property-title">Border Color:</div>
-                    <ColorPicker />
+                    <ColorPicker color={borderColor} onChange={borderColorOnChange} />
                 </div>
                 <div className='property-box'>
                     <div className="property-title">Fill Color:</div>
-                    <ColorPicker />
+                    <ColorPicker color={fillColor} onChange={fillColorOnChange} />
                 </div>
                 <div className='property-box'>
                     <div className="property-center">Clear</div>

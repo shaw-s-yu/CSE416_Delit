@@ -10,9 +10,30 @@ import TOOLS from '../tools/ToolbarTools'
 
 class Draw extends React.Component {
 
+    state = {
+        sliderValue: 1,
+        borderColor: { r: 0, g: 0, b: 0, a: 1 },
+        fillColor: { r: 255, g: 255, b: 255, a: 0.5 }
+    }
+
+    sliderOnChange = (e, newValue) => {
+        this.setState({
+            sliderValue: newValue
+        })
+    }
+
+    borderColorOnChange = (color) => {
+        this.setState({ borderColor: color.rgb })
+    }
+
+    fillColorOnChange = (color) => {
+        this.setState({ fillColor: color.rgb })
+    }
+
     render() {
 
         const { history } = this.props
+        const { sliderValue, borderColor, fillColor } = this.state
 
         return (
             <div onClick={this.props.handleUnselect}>
@@ -41,8 +62,14 @@ class Draw extends React.Component {
                             { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} onClick={this.handleZoomIn} /> },
                         ]}
                     />
-                    <PropertyBar />
-                    <DisplayPlace />
+                    <PropertyBar sliderValue={sliderValue}
+                        sliderOnChange={this.sliderOnChange}
+                        borderColor={borderColor}
+                        borderColorOnChange={this.borderColorOnChange}
+                        fillColor={fillColor}
+                        fillColorOnChange={this.fillColorOnChange}
+                    />
+                    <DisplayPlace borderThic={sliderValue} fillColor={fillColor} borderColor={borderColor} />
                 </div>
             </div>
         )

@@ -69,10 +69,10 @@ class DisplayPlace extends React.Component {
     }
 
     handleToolStart = (e) => {
-        const { selectedTool } = this.props
+        const { selectedTool, borderThic, fillColor, borderColor } = this.props
         if (!selectedTool) return
 
-        this.painter.initDraw(selectedTool, '#0000FF')
+        this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         this.painter.startDraw(x, y)
@@ -98,7 +98,7 @@ class DisplayPlace extends React.Component {
         const { x, y } = this.handleFixPosition(clientX, clientY)
         this.painter.endDraw(x, y)
         this.setState({ mouseDown: false })
-        const data = this.refs.canvas.toDataURL('image/jpeg', 0.6)
+        const data = this.refs.canvas.toDataURL('image/jpeg', 1)
         this.props.socket.emit('draw', { data: data })
     }
 
@@ -146,6 +146,7 @@ class DisplayPlace extends React.Component {
                 width, height,
             })
         }
+
         this.props.socket.on('drawBack', data => {
             // console.log('back', data)
             // this.ctx.drawImage(data.data, 0, 0)

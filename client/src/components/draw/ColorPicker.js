@@ -25,13 +25,15 @@ class ColorPicker extends Component {
 
     render() {
 
+        const { color, onChange } = this.props
+
         const styles = reactCSS({
             'default': {
                 color: {
                     width: '36px',
                     height: '14px',
                     borderRadius: '100%',
-                    background: '#c17de8',
+                    background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
                 },
                 swatch: {
                     padding: '5px',
@@ -55,6 +57,7 @@ class ColorPicker extends Component {
                 },
             },
         });
+
         return (
             <div className="color-btn">
                 <div style={styles.swatch} onClick={this.handleClick}>
@@ -63,8 +66,8 @@ class ColorPicker extends Component {
                 {this.state.displayColorPicker ? <div style={styles.popover}>
                     <div style={styles.cover} onClick={this.handleClose} />
                     <SketchPicker
-                        color={this.state.color}
-                        onChange={this.handleChange}
+                        color={color}
+                        onChange={onChange}
                         className="left"
                     />
                 </div> : null}
@@ -74,3 +77,4 @@ class ColorPicker extends Component {
 }
 
 export default ColorPicker;
+

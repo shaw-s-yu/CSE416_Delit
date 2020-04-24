@@ -8,11 +8,12 @@ class CanvasController {
         this.drawing = false
     }
 
-    initDraw = (tool, fillStyle) => {
+    initDraw = (tool, lineWidth, fillStyle, strokeStyle) => {
         this.tool = tool
-        this.fillStyle = fillStyle
+        this.ctx.lineWidth = lineWidth
+        this.ctx.fillStyle = `rgba(${fillStyle.r}, ${fillStyle.g}, ${fillStyle.b}, ${fillStyle.a})`
+        this.ctx.strokeStyle = `rgba(${strokeStyle.r}, ${strokeStyle.g}, ${strokeStyle.b}, ${strokeStyle.a})`
     }
-
     startDraw = (x, y) => {
         this.drawing = true
         this[this.tool].startDraw(x, y)
@@ -37,6 +38,7 @@ class CanvasController {
 
         onDraw: (x, y) => {
             this.ctx.lineTo(x, y)
+            this.ctx.lineWidth = this.lineWidth
             this.ctx.stroke()
         },
 
@@ -77,6 +79,7 @@ class CanvasController {
             this.ctx.putImageData(this.startData, 0, 0);
             this.ctx.beginPath();
             this.ctx.rect(this.startX, this.startY, x - this.startX, y - this.startY);
+            this.ctx.fill()
             this.ctx.stroke();
         },
         endDraw: (x, y) => {
@@ -101,6 +104,7 @@ class CanvasController {
             const radiusY = Math.abs(y - this.startY) / 2
             this.ctx.beginPath();
             this.ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI)
+            this.ctx.fill()
             this.ctx.stroke();
         },
         endDraw: (x, y) => {
@@ -110,6 +114,4 @@ class CanvasController {
         }
     }
 }
-
-
 export default CanvasController
