@@ -1,8 +1,9 @@
 const GraphQLDate = require('graphql-date');
 const ProjectModel = require('../models/mongo-project');
 const UserModel = require('../models/mongo-user')
+const UserType = require('./UserSchema')
+const ProjectType = require('./ProjectSchema')
 
-const _ = require('lodash');
 const {
     GraphQLList,
     GraphQLNonNull,
@@ -11,62 +12,13 @@ const {
     GraphQLString,
 } = require('graphql');
 
-const projectType = new GraphQLObjectType({
-    name: 'project',
-    fields: () => {
-        return {
-            _id: {
-                type: GraphQLString
-            },
-            name: {
-                type: GraphQLString
-            },
-            creator: {
-                type: GraphQLString,
-            },
-            lastUpdate: {
-                type: GraphQLDate
-            },
-            creatorInfo: {
-                type: userType,
-                resolve: (parent, args) => {
-                    const user = UserModel.findById(parent.creator).exec()
-                    if (!user) throw new Error('Error')
-                    return user
-                }
-            }
-        }
-    }
-});
-
-const userType = new GraphQLObjectType({
-    name: 'user',
-    fields: () => {
-        return {
-            _id: { type: GraphQLString },
-            id: { type: GraphQLString },
-            username: { type: GraphQLString },
-            picture: { type: GraphQLString },
-            provider: { type: GraphQLString },
-            projectsOwned: {
-                type: new GraphQLList(projectType),
-                resolve: (parent, args) => {
-                    const projects = ProjectModel.find({ creator: parent._id }).exec()
-                    if (!projects) throw new Error('Error')
-                    return projects
-                }
-            }
-        }
-    }
-})
-
 
 const queryType = new GraphQLObjectType({
     name: 'Query',
     fields: () => {
         return {
             projects: {
-                type: new GraphQLList(projectType),
+                type: new GraphQLList(ProjectType),
                 resolve: () => {
                     const projects = ProjectModel.find().exec()
                     if (!projects) {
@@ -76,7 +28,7 @@ const queryType = new GraphQLObjectType({
                 }
             },
             project: {
-                type: projectType,
+                type: ProjectType,
                 args: {
                     id: {
                         name: '_id',
@@ -92,7 +44,7 @@ const queryType = new GraphQLObjectType({
                 }
             },
             user: {
-                type: userType,
+                type: UserType,
                 args: { id: { name: '_id', type: GraphQLString } },
                 resolve: (parent, args) => {
                     const user = UserModel.findById(args.id).exec()
@@ -113,7 +65,7 @@ const mutation = new GraphQLObjectType({
     fields: () => {
         return {
             addProject: {
-                type: projectType,
+                type: ProjectType,
                 args: {
                     name: {
                         type: new GraphQLNonNull(GraphQLString)
@@ -132,7 +84,7 @@ const mutation = new GraphQLObjectType({
                 }
             },
             updateProject: {
-                type: projectType,
+                type: ProjectType,
                 args: {
                     id: {
                         name: 'id',
@@ -149,7 +101,7 @@ const mutation = new GraphQLObjectType({
                 }
             },
             removeProject: {
-                type: projectType,
+                type: ProjectType,
                 args: {
                     id: {
                         type: new GraphQLNonNull(GraphQLString)

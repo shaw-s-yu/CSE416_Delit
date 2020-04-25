@@ -5,6 +5,7 @@ import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
 import squirtle from '../../img/squirtle.jpg'
 import drawTransaction from "./drawTransaction"
+import CropBox from './CropBox'
 
 class DisplayPlace extends React.Component {
 
@@ -16,10 +17,35 @@ class DisplayPlace extends React.Component {
         height: 0,
         mouseDown: false,
         offsetLeft: 0,
-        offsetTop: 0
+        offsetTop: 0,
+        cropData: null,
+        cropping: false,
     }
 
     scrollbar = React.createRef();
+    cropBox = React.createRef();
+
+    cropResize = (ref, position) => {
+        const { width, height } = ref.style
+        const { x, y } = position
+        const newData = this.painter.CROP.reCrop({
+            left: x, top: y,
+            width: parseInt(width),
+            height: parseInt(height)
+        })
+
+        const cropData = {
+            left: x, top: y,
+            width: parseInt(width),
+            height: parseInt(height),
+            imgData: newData
+        }
+        this.setState({ cropData })
+    }
+
+    cropDrag = (e, d) => {
+        this.setState({ x: d.x, y: d.y })
+    }
 
 
     handleZoomEffect = (e) => {
@@ -77,14 +103,19 @@ class DisplayPlace extends React.Component {
         this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
+
         this.painter.startDraw(x, y)
 
-        this.setState({ mouseDown: true })
+        this.setState({
+            mouseDown: true,
+            cropData: this.state.cropping ? null : this.state.cropData
+        })
     }
 
     handleToolMove = (e) => {
         const { mouseDown } = this.state
         if (!mouseDown) return
+
 
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
@@ -93,9 +124,11 @@ class DisplayPlace extends React.Component {
 
     handleToolEnd = (e) => {
         const { selectedTool } = this.props
-        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT || !selectedTool) return
+        if (!selectedTool) return
+        if (selectedTool === TOOLS.CROP) e.stopPropagation()
         if (this.state.mouseDown === false) return
-
+        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT)
+            this.handleZoomEffect(e)
 
         e.stopPropagation()
 
@@ -103,7 +136,31 @@ class DisplayPlace extends React.Component {
         const { x, y } = this.handleFixPosition(clientX, clientY)
         this.painter.endDraw(x, y)
 
-        this.setState({ mouseDown: false })
+        let cropData = (selectedTool === TOOLS.CROP ? this.painter.CROP.getCroppedData() : null);
+
+        this.setState({
+            mouseDown: false,
+            cropData: cropData,
+            cropping: true
+        })
+    }
+
+    handleCropFlip = () => {
+        if (this.state.cropping === false)
+            return
+
+        const { imgData, left, top, width, height } = this.cropBox.getCropData()
+        console.log('flipping', imgData, left, top)
+        this.ctx.putImageData(imgData, left, top)
+        this.handleEndCrop()
+    }
+
+    handleEndCrop = () => {
+        this.painter.CROP.endCrop()
+        this.setState({
+            cropData: null,
+            cropping: false
+        })
     }
 
     handleFixPosition = (clientX, clientY) => {
@@ -122,7 +179,7 @@ class DisplayPlace extends React.Component {
     }
 
 
-    drawImage = (src) => {
+    drawImage = (src, callback) => {
         let img = new Image()
         img.src = src
         img.onload = () => {
@@ -134,14 +191,38 @@ class DisplayPlace extends React.Component {
             }, () => {
                 this.ctx.drawImage(img, 0, 0)
                 this.painter.setDimension(img.width, img.height)
+                if (callback) callback()
             })
         }
+    }
+
+    handleHorizontalFlip = () => {
+        const imgSrc = this.refs.canvas.toDataURL('image/jpeg', 1)
+        this.ctx.scale(-1, 1)
+        this.ctx.translate(-this.state.imgWidth, 0);
+        this.drawImage(imgSrc, () => {
+            this.ctx.scale(-1, 1)
+            this.ctx.translate(-this.state.imgWidth, 0);
+        })
+
+    }
+
+    handleVerticalFlip = () => {
+        const imgSrc = this.refs.canvas.toDataURL('image/jpeg', 1)
+        this.ctx.scale(1, -1)
+        this.ctx.translate(0, -this.state.imgHeight);
+        this.drawImage(imgSrc, () => {
+            this.ctx.scale(1, -1)
+            this.ctx.translate(0, -this.state.imgHeight);
+        })
     }
 
 
 
 
     componentDidMount() {
+
+        this.props.childRef(this)
         const { canvas } = this.refs;
 
         if (!canvas) return
@@ -178,7 +259,8 @@ class DisplayPlace extends React.Component {
     }
 
     render() {
-        const { scale, imgWidth, imgHeight, width, height } = this.state;
+        const { scale, imgWidth, imgHeight, width, height, cropData } = this.state;
+        const { selectedTool } = this.props
         const scrollStyle = {
             width: '100%',
             height: '100%',
@@ -191,6 +273,13 @@ class DisplayPlace extends React.Component {
             top: imgHeight ? imgHeight * scale >= height ? 6 : (height - imgHeight * scale) / 2 + 6 : 6
         }
 
+        const cropStyle = {
+            x: cropData === null ? 'auto' : cropData.left,
+            y: cropData === null ? 'auto' : cropData.top,
+            width: cropData === null ? 'auto' : cropData.width,
+            height: cropData === null ? 'auto' : cropData.height
+        }
+
         return (
             <div className="painter-display" ref='painterBox'>
                 <Scrollbars ref="scrollbar"
@@ -199,15 +288,27 @@ class DisplayPlace extends React.Component {
                     renderThumbVertical={props => <div {...props} className="thumb" />}
                 >
 
-                    <div className={"display " + this.getSelectedTools()} id='display' onClick={this.handleZoomEffect} style={displayStyle}>
-                        <canvas className="display-background" ref='canvas' width={imgWidth} height={imgHeight}
-                            onMouseDown={this.handleToolStart}
-                            onMouseMove={this.handleToolMove}
-                            onMouseOut={this.handleToolEnd}
-                            onClick={this.handleToolEnd}
-                        >
+                    <div className={"display " + this.getSelectedTools()} id='display'
+                        onMouseDown={this.handleToolStart}
+                        onMouseMove={this.handleToolMove}
+                        onMouseOut={this.handleToolEnd}
+                        onClick={this.handleToolEnd}
+                        style={displayStyle}>
+                        <canvas ref='canvas' width={imgWidth} height={imgHeight}>
                             Your Browser Does Not Support Canvas
                         </canvas>
+
+                        {
+                            (selectedTool === TOOLS.CROP && cropData) ?
+                                <CropBox className='cropped-area'
+                                    style={cropStyle}
+                                    cropResize={this.cropResize}
+                                    cropData={cropData}
+                                    childRef={ref => this.cropBox = ref}
+                                    parentRef={this}
+                                />
+                                : null
+                        }
                     </div>
 
                 </ Scrollbars>

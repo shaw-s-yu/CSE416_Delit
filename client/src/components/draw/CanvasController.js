@@ -131,5 +131,64 @@ class CanvasController {
             this.startY = null
         }
     }
+
+    CROP = {
+        startDraw: (x, y) => {
+            this.ctx.lineWidth = 1
+            this.ctx.fillStyle = `rgba(0,0,0,0)`
+            this.ctx.strokeStyle = `rgba({0,0,0,1}})`
+            this.ctx.setLineDash([6]);
+
+            this.startX = x
+            this.startY = y
+            this.CROP.endCrop();
+            this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
+        },
+        onDraw: (x, y) => {
+            if (!this.startX || !this.startY) return
+            this.ctx.putImageData(this.startData, 0, 0);
+            this.ctx.beginPath();
+            this.ctx.setLineDash([6]);
+            this.ctx.strokeRect(this.startX, this.startY, x - this.startX, y - this.startY);
+            this.ctx.fill()
+            this.ctx.stroke();
+        },
+        endDraw: (x, y) => {
+
+            if (!this.startX || !this.startY) return
+
+            this.ctx.putImageData(this.startData, 0, 0)
+
+            this.left = this.startX < x ? this.startX : x
+            this.top = this.startY < y ? this.startY : y
+            this.cropWidth = Math.abs(this.startX - x)
+            this.cropHeight = Math.abs(this.startY - y)
+            this.croppedArea = this.ctx.getImageData(this.left, this.top, this.cropWidth, this.cropHeight)
+            this.startX = null
+            this.startY = null
+        },
+        getCroppedData: () => {
+            return {
+                imgData: this.croppedArea,
+                left: this.left,
+                top: this.top,
+                width: this.cropWidth,
+                height: this.cropHeight,
+            }
+        },
+        endCrop: () => {
+            this.croppedArea = null
+            this.cropWidth = null
+            this.cropHeight = null
+            this.left = null
+            this.top = null
+        },
+
+        reCrop: (data) => {
+            const { left, top, width, height } = data
+            return this.ctx.getImageData(left, top, width, height)
+
+        }
+    }
 }
 export default CanvasController

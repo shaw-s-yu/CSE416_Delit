@@ -110,3 +110,9 @@
 .display-cross-cursor{
     cursor: crosshair;
 }
+
+.cropped-area{
+    position: absolute;
+    background-color: transparent;
+    outline: 2px dashed black;
+}

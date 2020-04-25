@@ -19,6 +19,7 @@ class Draw extends React.Component {
     }
 
     transactions = new Transactions()
+    display = React.createRef()
 
     sliderOnChange = (e, newValue) => {
         this.setState({
@@ -44,13 +45,38 @@ class Draw extends React.Component {
         this.transactions.undoTransaction()
     }
 
+    handleUnselect = () => {
+        this.display.handleEndCrop()
+        this.props.handleUnselect()
+    }
+
+    handleHorizontalFlip = (e) => {
+        e.stopPropagation()
+        if (!this.display.state.cropping) {
+            this.display.handleHorizontalFlip()
+        } else {
+            this.display.cropBox.handleHorizontalFlip()
+        }
+        this.props.handleUnselect()
+    }
+
+    handleVerticalFlip = (e) => {
+        e.stopPropagation()
+        if (!this.display.state.cropping) {
+            this.display.handleVerticalFlip()
+        } else {
+            this.display.cropBox.handleVerticalFlip()
+        }
+        this.props.handleUnselect()
+    }
+
     render() {
 
         const { history } = this.props
         const { sliderValue, borderColor, fillColor } = this.state
 
         return (
-            <div onClick={this.props.handleUnselect}>
+            <div onClick={this.handleUnselect}>
                 <TopNavbar side={false} view={false} history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
@@ -83,8 +109,11 @@ class Draw extends React.Component {
                         borderColorOnChange={this.borderColorOnChange}
                         fillColor={fillColor}
                         fillColorOnChange={this.fillColorOnChange}
+                        handleHorizontalFlip={this.handleHorizontalFlip}
+                        handleVerticalFlip={this.handleVerticalFlip}
                     />
                     <DisplayPlace
+                        childRef={ref => this.display = ref}
                         borderThic={sliderValue}
                         fillColor={fillColor}
                         borderColor={borderColor}
