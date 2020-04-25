@@ -15,6 +15,7 @@ const bodyParser = require("body-parser");
 const path = require('path');
 const expressGraphql = require('express-graphql');
 const User = require('./models/mongo-user')
+const schema = require('./schema/Schema');
 const SocketController = require('./socket/socket-controller')
 const { Socket } = SocketController
 
@@ -60,7 +61,7 @@ mongoose.connect(keys.mongoDB.dbURI, () => {
 
 app.use('/auth', authRoutes)
 
-const schema = require('./schema/Schema');
+
 app.use('/graphql', expressGraphql({
     schema,
     graphiql: true

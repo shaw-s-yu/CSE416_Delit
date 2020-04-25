@@ -1,5 +1,6 @@
-var GraphQLDate = require('graphql-date');
-var ProjectModel = require('../models/mongo-project');
+const GraphQLDate = require('graphql-date');
+const ProjectModel = require('../models/mongo-project');
+const UserModel = require('../models/mongo-user')
 
 const _ = require('lodash');
 const {
@@ -10,9 +11,9 @@ const {
     GraphQLString,
 } = require('graphql');
 
-var projectType = new GraphQLObjectType({
+const projectType = new GraphQLObjectType({
     name: 'project',
-    fields: function () {
+    fields: () => {
         return {
             _id: {
                 type: GraphQLString
@@ -21,24 +22,52 @@ var projectType = new GraphQLObjectType({
                 type: GraphQLString
             },
             creator: {
-                type: GraphQLString
+                type: GraphQLString,
             },
             lastUpdate: {
                 type: GraphQLDate
+            },
+            creatorInfo: {
+                type: userType,
+                resolve: (parent, args) => {
+                    const user = UserModel.findById(parent.creator).exec()
+                    if (!user) throw new Error('Error')
+                    return user
+                }
             }
         }
     }
 });
 
+const userType = new GraphQLObjectType({
+    name: 'user',
+    fields: () => {
+        return {
+            _id: { type: GraphQLString },
+            id: { type: GraphQLString },
+            username: { type: GraphQLString },
+            picture: { type: GraphQLString },
+            provider: { type: GraphQLString },
+            projectsOwned: {
+                type: new GraphQLList(projectType),
+                resolve: (parent, args) => {
+                    const projects = ProjectModel.find({ creator: parent._id }).exec()
+                    if (!projects) throw new Error('Error')
+                    return projects
+                }
+            }
+        }
+    }
+})
 
 
-var queryType = new GraphQLObjectType({
+const queryType = new GraphQLObjectType({
     name: 'Query',
-    fields: function () {
+    fields: () => {
         return {
             projects: {
                 type: new GraphQLList(projectType),
-                resolve: function () {
+                resolve: () => {
                     const projects = ProjectModel.find().exec()
                     if (!projects) {
                         throw new Error('Error')
@@ -53,17 +82,22 @@ var queryType = new GraphQLObjectType({
                         name: '_id',
                         type: GraphQLString
                     },
-                    creator: {
-                        name: 'username',
-                        type: GraphQLString
-                    }
                 },
-                resolve: function (root, params) {
-                    const projectDetails = projectModel.findById(params.id).exec()
-                    if (!projectDetails) {
+                resolve: (root, params) => {
+                    const project = ProjectModel.findById(params.id).exec()
+                    if (!project) {
                         throw new Error('Error')
                     }
-                    return projectDetails
+                    return project
+                }
+            },
+            user: {
+                type: userType,
+                args: { id: { name: '_id', type: GraphQLString } },
+                resolve: (parent, args) => {
+                    const user = UserModel.findById(args.id).exec()
+                    if (!user) throw new Error('Error')
+                    return user
                 }
             }
         }
@@ -74,9 +108,9 @@ var queryType = new GraphQLObjectType({
 
 
 
-var mutation = new GraphQLObjectType({
+const mutation = new GraphQLObjectType({
     name: 'Mutation',
-    fields: function () {
+    fields: () => {
         return {
             addProject: {
                 type: projectType,
@@ -88,7 +122,7 @@ var mutation = new GraphQLObjectType({
                         type: new GraphQLNonNull(GraphQLString)
                     }
                 },
-                resolve: function (root, params) {
+                resolve: (root, params) => {
                     const projectModel = new ProjectModel(params);
                     const newProject = projectModel.save();
                     if (!newProject) {
@@ -108,7 +142,7 @@ var mutation = new GraphQLObjectType({
                         type: new GraphQLNonNull(GraphQLString)
                     },
                 },
-                resolve(root, params) {
+                resolve: (root, params) => {
                     return projectModel.findByIdAndUpdate(params.id, { name: params.text, creator: params.creator, lastUpdate: new Date() }, function (err) {
                         if (err) return next(err);
                     });
@@ -121,7 +155,7 @@ var mutation = new GraphQLObjectType({
                         type: new GraphQLNonNull(GraphQLString)
                     }
                 },
-                resolve(root, params) {
+                resolve: (root, params) => {
                     const remProject = projectModel.findByIdAndRemove(params.id).exec();
                     if (!remProject) {
                         throw new Error('Error')
