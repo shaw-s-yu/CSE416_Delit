@@ -1,6 +1,5 @@
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap'
-import Sidebar from '../dashboard/Sidebar'
 import Dropdown from './Dropdown'
 import { v1 } from 'uuid'
 import Checkbox from '@material-ui/core/Checkbox';
@@ -36,7 +35,7 @@ class TopNavbar extends React.Component {
     }
 
     render() {
-        const { showSidebar, showTopNavBt, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
+        const { showTopNavBt, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
         const { username, picture } = this.state;
         return (
             <>
@@ -94,7 +93,6 @@ class TopNavbar extends React.Component {
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>
                 </Navbar>
-                <Sidebar showSidebar={showSidebar} handleSidebarOpen={this.props.handleSidebarOpen} />
             </>
         )
     }

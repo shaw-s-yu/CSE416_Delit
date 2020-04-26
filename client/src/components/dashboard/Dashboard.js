@@ -5,6 +5,7 @@ import ItemList from './ItemList'
 import './dashboard.css'
 import Pagination from '../tools/Pagination'
 import { connect } from 'react-redux';
+import Sidebar from "./Sidebar";
 
 
 class Dashboard extends React.Component {
@@ -25,7 +26,8 @@ class Dashboard extends React.Component {
         const width = showSidebar ? 81 : 100;
         return (
             <div>
-                <TopNavbar showSidebar={showSidebar} handleSidebarOpen={this.handleSidebarOpen} showTopNavBt={true} history={history} />
+                <TopNavbar handleSidebarOpen={this.handleSidebarOpen} showTopNavBt={true} history={history} />
+                { showSidebar ? <Sidebar showSidebar={showSidebar} /> : null}
                 <div className="dashboard-display" style={
                     {
                         marginLeft: left + "%",
