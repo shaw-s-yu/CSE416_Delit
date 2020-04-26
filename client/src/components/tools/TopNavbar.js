@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap'
-import SideNav from '../dashboard/SideNav'
+import Sidebar from '../dashboard/Sidebar'
 import Dropdown from './Dropdown'
 import { v1 } from 'uuid'
 import Checkbox from '@material-ui/core/Checkbox';
@@ -95,7 +95,7 @@ class TopNavbar extends React.Component {
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>
                 </Navbar>
-                {side ? <SideNav open={open} handleSidebarOpen={this.props.handleSidebarOpen} /> : null}
+                {side ? <Sidebar open={open} handleSidebarOpen={this.props.handleSidebarOpen} /> : null}
             </>
         )
     }

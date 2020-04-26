@@ -1,6 +1,6 @@
 import React from 'react';
 
-class SideNav extends React.Component {
+class Sidebar extends React.Component {
 
   state = {
     all: true,
@@ -80,4 +80,4 @@ class SideNav extends React.Component {
 
 }
 
-export default SideNav;
+export default Sidebar;
