@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import Transactions from './JSTPS'
 import ReactFileReader from 'react-file-reader';
-import drawTransaction from './DrawTransaction'
+import DrawTransaction from './DrawTransaction'
 
 class Draw extends React.Component {
 
@@ -80,7 +80,7 @@ class Draw extends React.Component {
 
         this.display.drawImage(file.base64)
         this.props.socket.emit('draw', { data: file.base64, type: 'new' })
-        this.transactions.addTransaction(new drawTransaction(oldImg, file.base64, this.display.drawImage))
+        this.transactions.addTransaction(new DrawTransaction(oldImg, file.base64, this.display.drawImage))
 
     }
 

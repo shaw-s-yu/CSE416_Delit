@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
 import squirtle from '../../img/squirtle.jpg'
-import drawTransaction from "./DrawTransaction"
+import DrawTransaction from "./DrawTransaction"
 import CropBox from './CropBox'
 
 class DisplayPlace extends React.Component {
@@ -265,7 +265,7 @@ class DisplayPlace extends React.Component {
             const { data, type } = res
 
             if (type === 'new') {
-                transactions.addTransaction(new drawTransaction(old_img, data, this.drawImage))
+                transactions.addTransaction(new DrawTransaction(old_img, data, this.drawImage))
             }
             else if (type === 'redo') {
                 transactions.doTransaction()
