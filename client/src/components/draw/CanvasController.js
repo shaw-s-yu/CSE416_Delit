@@ -23,7 +23,9 @@ class CanvasController {
     }
 
     startDraw = (x, y) => {
+
         if (this[this.tool] === undefined) return
+
         this.drawing = true
         this.oldImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
         this[this.tool].startDraw(x, y)
@@ -71,7 +73,7 @@ class CanvasController {
             this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
         },
         onDraw: (x, y) => {
-            if (!this.startX || !this.startY) return
+            if (this.startX === null || this.startY === null) return
             this.ctx.putImageData(this.startData, 0, 0);
             this.ctx.beginPath()
             this.ctx.moveTo(this.startX, this.startY)
@@ -93,7 +95,8 @@ class CanvasController {
             this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
         },
         onDraw: (x, y) => {
-            if (!this.startX || !this.startY) return
+            if (this.startX === null || this.startY === null) return
+
             this.ctx.putImageData(this.startData, 0, 0);
             this.ctx.beginPath();
             this.ctx.rect(this.startX, this.startY, x - this.startX, y - this.startY);
@@ -114,7 +117,7 @@ class CanvasController {
             this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
         },
         onDraw: (x, y) => {
-            if (!this.startX || !this.startY) return
+            if (this.startX === null || this.startY === null) return
             this.ctx.putImageData(this.startData, 0, 0);
             const centerX = (x + this.startX) / 2
             const centerY = (y + this.startY) / 2
@@ -144,7 +147,7 @@ class CanvasController {
             this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
         },
         onDraw: (x, y) => {
-            if (!this.startX || !this.startY) return
+            if (this.startX === null || this.startY === null) return
             this.ctx.putImageData(this.startData, 0, 0);
             this.ctx.beginPath();
             this.ctx.save()
@@ -154,7 +157,7 @@ class CanvasController {
         },
         endDraw: (x, y) => {
 
-            if (!this.startX || !this.startY) return
+            if (this.startX === null || this.startY === null) return
 
 
             this.ctx.putImageData(this.startData, 0, 0)
@@ -201,7 +204,7 @@ class CanvasController {
         clearCropArea: () => {
 
             this.ctx.putImageData(this.startData, 0, 0)
-            this.ctx.fillStyle = 'rgba(255,255,255,1)'
+            this.ctx.fillStyle = 'rgba(211,211,211,1)'
             this.ctx.strokeStyle = 'rgba(0,0,0,0)'
             this.ctx.save()
             this.ctx.lineWidth = 0

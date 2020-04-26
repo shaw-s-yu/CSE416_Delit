@@ -70,6 +70,10 @@ class Draw extends React.Component {
         this.props.handleUnselect()
     }
 
+    handleClear = () => {
+        this.display.handleClear()
+    }
+
     render() {
 
         const { history } = this.props
@@ -111,6 +115,7 @@ class Draw extends React.Component {
                         fillColorOnChange={this.fillColorOnChange}
                         handleHorizontalFlip={this.handleHorizontalFlip}
                         handleVerticalFlip={this.handleVerticalFlip}
+                        handleClear={this.handleClear}
                     />
                     <DisplayPlace
                         childRef={ref => this.display = ref}

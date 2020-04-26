@@ -80,6 +80,7 @@
     background-color: transparent;
     position: absolute;
     transform-origin: 0 0;
+    outline: 2px solid black;
 }
 
 .display-zoom-in{

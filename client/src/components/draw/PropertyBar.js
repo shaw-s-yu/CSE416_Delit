@@ -37,7 +37,7 @@ class PropertyBar extends React.Component {
                     <div className="property-flip-btn" onClick={this.props.handleVerticalFlip}>Vertically</div>
                 </div>
                 <div className='property-box'>
-                    <div className="property-center">Clear</div>
+                    <div className="property-center" onClick={this.props.handleClear}>Clear</div>
                 </div>
             </div>
         )

@@ -184,6 +184,14 @@ class DisplayPlace extends React.Component {
         return { x, y }
     }
 
+    handleClear = () => {
+        const color = { r: 211, g: 211, b: 211, a: 1 }
+        this.painter.initDraw('SQUARE', 1, color, color)
+        this.painter.startDraw(0, 0)
+        this.painter.onDraw(this.state.imgWidth, this.state.imgHeight)
+        this.painter.endDraw(this.state.imgWidth, this.state.imgHeight)
+    }
+
 
     drawImage = (src, callback) => {
         let img = new Image()
