@@ -77,7 +77,7 @@
 }
 
 .display{
-    background-color: lightblue;
+    background-color: transparent;
     position: absolute;
     transform-origin: 0 0;
 }

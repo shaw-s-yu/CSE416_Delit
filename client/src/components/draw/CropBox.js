@@ -6,7 +6,16 @@ class CropBox extends React.Component {
 
 
     onResize = (e, dir, ref, delta, position) => {
-        this.props.cropResize(ref, position)
+        this.props.parentRef.cropResize(ref, position)
+    }
+
+    onDragStart = (e, d) => {
+        e.stopPropagation()
+    }
+
+    onDragStop = (e, d) => {
+        e.stopPropagation()
+        this.props.parentRef.cropDragEnd(d)
     }
 
 
@@ -71,7 +80,8 @@ class CropBox extends React.Component {
                 size={{ width, height }}
                 position={{ x, y }}
                 onResize={this.onResize}
-                disableDragging
+                onDragStart={this.onDragStart}
+                onDragStop={this.onDragStop}
             >
                 <canvas ref='canvas' width={width} height={height}>
                     Your Browser Does Not Support Canvas

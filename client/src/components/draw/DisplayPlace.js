@@ -43,8 +43,15 @@ class DisplayPlace extends React.Component {
         this.setState({ cropData })
     }
 
-    cropDrag = (e, d) => {
-        this.setState({ x: d.x, y: d.y })
+    cropDragEnd = (d) => {
+
+        this.setState({
+            cropData: {
+                ...this.state.cropData,
+                left: d.x,
+                top: d.y
+            }
+        })
     }
 
 
@@ -149,8 +156,7 @@ class DisplayPlace extends React.Component {
         if (this.state.cropping === false)
             return
 
-        const { imgData, left, top, width, height } = this.cropBox.getCropData()
-        console.log('flipping', imgData, left, top)
+        const { imgData, left, top } = this.cropBox.getCropData()
         this.ctx.putImageData(imgData, left, top)
         this.handleEndCrop()
     }
@@ -302,7 +308,6 @@ class DisplayPlace extends React.Component {
                             (selectedTool === TOOLS.CROP && cropData) ?
                                 <CropBox className='cropped-area'
                                     style={cropStyle}
-                                    cropResize={this.cropResize}
                                     cropData={cropData}
                                     childRef={ref => this.cropBox = ref}
                                     parentRef={this}
