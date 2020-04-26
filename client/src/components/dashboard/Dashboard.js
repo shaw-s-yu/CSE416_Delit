@@ -9,51 +9,46 @@ import { connect } from 'react-redux';
 
 class Dashboard extends React.Component {
     state = {
-        sidebarActive: true,
-    }
+        showSidebar: true,
+    };
 
     handleSidebarOpen = () => {
-        let { sidebarActive } = this.state;
-        sidebarActive = !sidebarActive;
-        console.log(sidebarActive)
-        this.setState({ sidebarActive: sidebarActive });
-    }
-
+        let { showSidebar } = this.state;
+        showSidebar = !showSidebar;
+        this.setState({ showSidebar : showSidebar});
+    };
 
     render() {
-        const { sidebarActive } = this.state;
-        const { history } = this.props
-        const left = sidebarActive ? 19 : 0;
-        const width = sidebarActive ? 81 : 100;
+        const { showSidebar } = this.state;
+        const { history } = this.props;
+        const left = showSidebar ? 19 : 0;
+        const width = showSidebar ? 81 : 100;
         return (
             <div>
-                <TopNavbar open={sidebarActive} handleSidebarOpen={this.handleSidebarOpen} side={true} history={history} />
+                <TopNavbar showSidebar={showSidebar} handleSidebarOpen={this.handleSidebarOpen} showTopNavBt={true} history={history} />
                 <div className="dashboard-display" style={
                     {
                         marginLeft: left + "%",
                         width: width + "%",
                     }
                 }>
-                    <Searchbar open={sidebarActive} />
+                    <Searchbar/>
                     <ItemList history={this.props.history} />
                     <Pagination className="dashboard-pagination center" size="large" color="secondary" />
                 </div>
-
-
             </div >
-
         )
     }
 
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const { history } = ownProps
-    return { history }
+    const { history } = ownProps;
+    return { history };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 

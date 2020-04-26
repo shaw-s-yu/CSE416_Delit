@@ -57,8 +57,8 @@ class Sidebar extends React.Component {
 
 
   render() {
-    const { open } = this.props;
-    const width = open ? 17 : 0;
+    const { showSidebar} = this.props;
+    const width = showSidebar ? 17 : 0;
     return (
 
       <div className='dashboard-sidebar' style={{ width: width + "%", whiteSpace: "nowrap" }}>
