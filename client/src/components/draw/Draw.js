@@ -8,7 +8,8 @@ import * as handler from '../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import Transactions from './JSTPS'
-
+import ReactFileReader from 'react-file-reader';
+import drawTransaction from './DrawTransaction'
 
 class Draw extends React.Component {
 
@@ -74,6 +75,20 @@ class Draw extends React.Component {
         this.display.handleClear()
     }
 
+    handleImport = (file) => {
+        const oldImg = this.display.getImageData()
+
+        this.display.drawImage(file.base64)
+        this.props.socket.emit('draw', { data: file.base64, type: 'new' })
+        this.transactions.addTransaction(new drawTransaction(oldImg, file.base64, this.display.drawImage))
+
+    }
+
+    handleExport = () => {
+        const imgData = this.display.getImageData()
+        require("downloadjs")(imgData, "tileset@DELIT.jpeg", "image/jpeg");
+    }
+
     render() {
 
         const { history } = this.props
@@ -88,8 +103,13 @@ class Draw extends React.Component {
                         content={[
                             { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
                             { name: TOOLS.REDO, item: <i className={"fas fa-redo"} style={{ fontSize: '24px' }} onClick={this.doTransaction} /> },
-                            { name: TOOLS.UPLOAD, item: <i className={"fas fa-upload"} style={{ fontSize: '24px' }} /> },
-                            { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} /> },
+                            {
+                                name: TOOLS.UPLOAD, item:
+                                    <ReactFileReader ref='fileUploader' handleFiles={this.handleImport} base64={true}>
+                                        <i className={"fas fa-upload"} style={{ fontSize: '24px' }} />
+                                    </ReactFileReader>
+                            },
+                            { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} onClick={this.handleExport} /> },
                             { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
                         ]}
                         secondaryContent={[

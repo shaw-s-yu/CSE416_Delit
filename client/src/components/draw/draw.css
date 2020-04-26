@@ -117,3 +117,7 @@
     background-color: transparent;
     outline: 2px dashed black;
 }
+
+.file-uploader{
+    display: none;
+}

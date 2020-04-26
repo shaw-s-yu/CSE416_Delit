@@ -1,4 +1,4 @@
-import drawTransaction from "./drawTransaction"
+import drawTransaction from "./DrawTransaction"
 
 class CanvasController {
     constructor(view) {

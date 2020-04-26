@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
 import squirtle from '../../img/squirtle.jpg'
-import drawTransaction from "./drawTransaction"
+import drawTransaction from "./DrawTransaction"
 import CropBox from './CropBox'
 
 class DisplayPlace extends React.Component {
@@ -208,6 +208,10 @@ class DisplayPlace extends React.Component {
                 if (callback) callback()
             })
         }
+    }
+
+    getImageData = () => {
+        return this.refs.canvas.toDataURL('image/jpeg', 1)
     }
 
     handleHorizontalFlip = () => {
