@@ -35,14 +35,14 @@ class TopNavbar extends React.Component {
     }
 
     render() {
-        const { showTopNavBt, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
+        const { site, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
         const { username, picture } = this.state;
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
-                    {showTopNavBt ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list"/></Navbar.Brand> : null}
+                    {site === 'dashboard' ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list" /></Navbar.Brand> : null}
                     <Navbar.Brand href="/dashboard"> <div className="logo" >Delit</div></Navbar.Brand>
-                    {!showTopNavBt ? <>
+                    {site === 'workspace' || site === 'tileset' ? <>
                         <Dropdown title="FILE" width={96} handleOpen={this.handleOpen}
                             items={[
                                 <div className="better-dropdown-item" key={v1()}>Import</div>,
@@ -57,7 +57,7 @@ class TopNavbar extends React.Component {
                                 <div className="better-dropdown-item" key={v1()}>{"Copy   CTRL+C"}</div>,
                                 <div className="better-dropdown-item" key={v1()}>{"Paste  CTRL+V"}</div>,
                             ]} />
-                        {view ? <Dropdown title="VIEW" width={196} handleOpen={this.handleOpen}
+                        {site === 'workspace' ? <Dropdown title="VIEW" width={196} handleOpen={this.handleOpen}
                             items={[
                                 <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'property')}>
                                     <Checkbox
@@ -88,7 +88,7 @@ class TopNavbar extends React.Component {
 
                         </Nav>
                         <Navbar.Brand><a href='/test'>Test</a></Navbar.Brand>
-                        <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo"/></Navbar.Brand>
+                        <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo" /></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>

@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
         const width = showSidebar ? 81 : 100;
         return (
             <div>
-                <TopNavbar handleSidebarOpen={this.handleSidebarOpen} showTopNavBt={true} history={history} />
+                <TopNavbar handleSidebarOpen={this.handleSidebarOpen} site='dashboard' history={history} />
                 <Sidebar
                     showSidebar={showSidebar}
                     handleOpen={this.handleDialogsOpen}

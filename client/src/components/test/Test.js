@@ -71,7 +71,7 @@ class TestScreen extends React.Component {
                                     <Mutation mutation={MutationList.CLEAR_PROJECTS} onCompleted={() => window.location.reload()}>
                                         {(clearProjects, clearProjectsRes) => (
                                             <>
-                                                <TopNavbar side={false} view={false} history={history} />
+                                                <TopNavbar sidte='test' history={history} />
                                                 <div className="test-wrapper">
                                                     <div className="test-title">Controll of mongoDB</div>
                                                     <div className="test-btn-box">

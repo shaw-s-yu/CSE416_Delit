@@ -101,7 +101,7 @@ class Draw extends React.Component {
 
         return (
             <div onClick={this.handleUnselect}>
-                <TopNavbar showSidebar={false} showTopNavBt={false} view={false} history={history} />
+                <TopNavbar site='tileset' history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
                         selectCallback={this.handleCropPaste}
