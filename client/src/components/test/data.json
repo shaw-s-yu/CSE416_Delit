@@ -13,24 +13,12 @@
     ],
     "projects": [
         {
-            "_id": "1",
             "name": "Project1",
-            "owner": {
-                "_id": "5e53f06e905f950017b5c953",
-                "email": "123@123.com"
-            },
-            "editor": [
-                {
-                    "_id": "5e549434097acb0017c6fc1a",
-                    "email": "jie.dai@stonybrook.edu"
-                }
+            "owner": "5e9fa3908dead93aa46f6a6d",
+            "editors": [
+                "5ea0e25872182f00242b848a"
             ],
-            "lastModifiedBy": [
-                {
-                    "_id": "5e549434097acb0017c6fc1a",
-                    "email": "jie.dai@stonybrook.edu"
-                }
-            ],
+            "lastModifiedBy": "5ea0e25872182f00242b848a",
             "mapId": "1",
             "tiledSetsID": [
                 "1",
@@ -39,28 +27,17 @@
             ]
         },
         {
-            "_id": "2",
             "name": "Project2",
-            "owner": {
-                "_id": "5e549434097acb0017c6fc1a",
-                "email": "jie.dai@stonybrook.edu"
-            },
-            "editor": [
-                {
-                    "_id": "5e53f06e905f950017b5c953",
-                    "email": "123@123.com"
-                }
+            "owner": "5e9fa3908dead93aa46f6a6d",
+            "editors": [
+                "5ea0e25872182f00242b848a"
             ],
-            "lastModifiedBy": [
-                {
-                    "_id": "5e549434097acb0017c6fc1a",
-                    "email": "jie.dai@stonybrook.edu"
-                }
-            ],
-            "mapId": "2",
+            "lastModifiedBy": "5ea0e25872182f00242b848a",
+            "mapId": "1",
             "tiledSetsID": [
-                "4",
-                "5"
+                "1",
+                "2",
+                "3"
             ]
         }
     ],
@@ -131,7 +108,7 @@
                 "infinite": false,
                 "layers": [
                     {
-                        "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        "data": [],
                         "height": 100,
                         "id": 1,
                         "name": "backgroundLayer",

@@ -148,7 +148,7 @@ class DisplayPlace extends React.Component {
         this.setState({
             mouseDown: false,
             cropData: cropData,
-            cropping: true
+            cropping: selectedTool === TOOLS.CROP ? true : false
         })
     }
 
