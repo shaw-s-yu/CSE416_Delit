@@ -11,6 +11,11 @@ class Toolbar extends React.Component {
 
     handleSelect = (name, e) => {
         e.stopPropagation();
+
+        if (this.props.selectCallback) {
+            this.props.selectCallback()
+        }
+
         this.props.handleUnselect();
         this.props.handleSelect(name);
     }

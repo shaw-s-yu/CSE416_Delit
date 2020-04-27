@@ -25,6 +25,15 @@ class DisplayPlace extends React.Component {
     scrollbar = React.createRef();
     cropBox = React.createRef();
 
+    cropResizeStart = () => {
+        const { left, top } = this.state.cropData
+        const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
+        this.ctx.putImageData(this.state.cropData.imgData, left, top)
+        const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
+        this.props.socket.emit('draw', { data: newImg, type: 'new' })
+        this.props.transactions.addTransaction(new DrawTransaction(oldImg, newImg, this.drawImage))
+    }
+
     cropResize = (ref, position) => {
         const { width, height } = ref.style
         const { x, y } = position
@@ -43,8 +52,12 @@ class DisplayPlace extends React.Component {
         this.setState({ cropData })
     }
 
-    cropDragEnd = (d) => {
+    cropDragStart = () => {
+        const { left, top, width, height } = this.state.cropData
+        this.painter.CROP.clearCropArea(left, top, width, height)
+    }
 
+    cropDragEnd = (d) => {
         this.setState({
             cropData: {
                 ...this.state.cropData,
@@ -111,11 +124,18 @@ class DisplayPlace extends React.Component {
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
 
+        // if (this.state.cropping)
+        //     this.ctx.putImageData(this.state.cropData.imgData, this.state.cropData.left, this.state.cropData.top)
+
+        // console.log(this.state.cropping, this.state.cropData)
+
         this.painter.startDraw(x, y)
+
 
         this.setState({
             mouseDown: true,
-            cropData: this.state.cropping ? null : this.state.cropData
+            cropData: this.state.cropping ? null : this.state.cropData,
+            cropping: selectedTool === TOOLS.CROP ? true : false
         })
     }
 
@@ -153,16 +173,29 @@ class DisplayPlace extends React.Component {
     }
 
     handleCropFlip = () => {
+        console.log(this.state.cropping)
         if (this.state.cropping === false)
             return
 
+        const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
         const { imgData, left, top } = this.cropBox.getCropData()
         this.ctx.putImageData(imgData, left, top)
-        this.handleEndCrop()
+        this.painter.CROP.endCrop()
+        this.setState({
+            cropData: null,
+            cropping: false
+        })
+        const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
+
+        this.props.socket.emit('draw', { data: newImg, type: 'new' })
+        this.props.transactions.addTransaction(new DrawTransaction(oldImg, newImg, this.drawImage))
+
     }
 
     handleEndCrop = () => {
         this.painter.CROP.endCrop()
+        if (this.state.cropData !== null)
+            this.ctx.putImageData(this.state.cropData.imgData, this.state.cropData.left, this.state.cropData.top)
         this.setState({
             cropData: null,
             cropping: false
@@ -222,7 +255,6 @@ class DisplayPlace extends React.Component {
             this.ctx.scale(-1, 1)
             this.ctx.translate(-this.state.imgWidth, 0);
         })
-
     }
 
     handleVerticalFlip = () => {

@@ -149,8 +149,8 @@ class CanvasController {
         onDraw: (x, y) => {
             if (this.startX === null || this.startY === null) return
             this.ctx.putImageData(this.startData, 0, 0);
-            this.ctx.beginPath();
             this.ctx.save()
+            this.ctx.beginPath();
             this.ctx.setLineDash([6]);
             this.ctx.strokeRect(this.startX, this.startY, x - this.startX, y - this.startY);
             this.ctx.restore()
@@ -173,8 +173,6 @@ class CanvasController {
                 return
             }
 
-            this.CROP.clearCropArea()
-
             this.startX = null
             this.startY = null
         },
@@ -196,20 +194,27 @@ class CanvasController {
         },
 
         reCrop: (data) => {
+
             const { left, top, width, height } = data
-            return this.ctx.getImageData(left, top, width, height)
+            const toReturn = this.ctx.getImageData(left, top, width, height)
+            // this.left = left;
+            // this.top = top;
+            // this.cropWidth = width;
+            // this.cropHeight = height;
+            // this.CROP.clearCropArea();
+
+            return toReturn
 
         },
 
-        clearCropArea: () => {
+        clearCropArea: (left, top, width, height) => {
 
-            this.ctx.putImageData(this.startData, 0, 0)
+            this.ctx.save()
             this.ctx.fillStyle = 'rgba(211,211,211,1)'
             this.ctx.strokeStyle = 'rgba(0,0,0,0)'
-            this.ctx.save()
             this.ctx.lineWidth = 0
             this.ctx.beginPath();
-            this.ctx.rect(this.left, this.top, this.cropWidth, this.cropHeight);
+            this.ctx.rect(left, top, width, height);
             this.ctx.fill()
             this.ctx.stroke();
             this.ctx.restore()

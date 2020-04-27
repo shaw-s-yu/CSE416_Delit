@@ -47,9 +47,14 @@ class Draw extends React.Component {
     };
 
     handleUnselect = () => {
-        this.display.handleEndCrop();
+        this.handleCropPaste()
         this.props.handleUnselect();
     };
+
+    handleCropPaste = () => {
+        if (this.props.selectedTool === TOOLS.CROP)
+            this.display.handleEndCrop();
+    }
 
     handleHorizontalFlip = (e) => {
         e.stopPropagation();
@@ -99,6 +104,7 @@ class Draw extends React.Component {
                 <TopNavbar showSidebar={false} showTopNavBt={false} view={false} history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
+                        selectCallback={this.handleCropPaste}
                         className="map-toolbar"
                         content={[
                             { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
@@ -114,7 +120,7 @@ class Draw extends React.Component {
                         ]}
                         secondaryContent={[
                             { name: TOOLS.PENCIL, item: <i className={"fas fa-pencil-alt"} style={{ fontSize: '24px' }} /> },
-                            { name: TOOLS.LINE, item: <i className="fas fa-slash" style={{ fontSize: '24px' }}/> },
+                            { name: TOOLS.LINE, item: <i className="fas fa-slash" style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.SQUARE, item: <i className={"far fa-square"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.CIRCLE, item: <i className={"far fa-circle"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.ERASER, item: <i className={"fas fa-eraser"} style={{ fontSize: '24px' }} /> },

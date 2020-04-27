@@ -3,24 +3,50 @@ import React from 'react';
 
 class CropBox extends React.Component {
 
+    state = {
+        resized: false,
+        operationCounts: 0
+    }
 
+
+
+    onResizeStart = () => {
+        this.props.parentRef.cropResizeStart()
+    }
 
     onResize = (e, dir, ref, delta, position) => {
+        this.setState({ resized: true })
         this.props.parentRef.cropResize(ref, position)
+    }
+
+    onResizeStop = (e, dir, ref, delta, position) => {
+        const operationCounts = this.state.operationCounts + 1
+        this.setState({ operationCounts })
     }
 
     onDragStart = (e, d) => {
         e.stopPropagation()
+        console.log(this.state.operationCounts)
+        if (this.state.resized || this.state.operationCounts === 0)
+            this.props.parentRef.cropDragStart()
+        this.setState({ resized: false })
     }
 
     onDragStop = (e, d) => {
         e.stopPropagation()
         this.props.parentRef.cropDragEnd(d)
+        const operationCounts = this.state.operationCounts + 1
+        this.setState({ operationCounts })
     }
 
 
     renderCanvas = () => {
-        this.ctx.putImageData(this.props.cropData.imgData, 0, 0)
+        try {
+            this.ctx.putImageData(this.props.cropData.imgData, 0, 0)
+        }
+        catch{
+            return
+        }
     }
 
     drawImage = (src, callback) => {
@@ -79,9 +105,12 @@ class CropBox extends React.Component {
                 className={className}
                 size={{ width, height }}
                 position={{ x, y }}
+                onResizeStart={this.onResizeStart}
                 onResize={this.onResize}
+                onResizeStop={this.onResizeStop}
                 onDragStart={this.onDragStart}
                 onDragStop={this.onDragStop}
+
             >
                 <canvas ref='canvas' width={width} height={height}>
                     Your Browser Does Not Support Canvas
