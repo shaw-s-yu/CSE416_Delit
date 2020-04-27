@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import Transactions from './JSTPS'
 import ReactFileReader from 'react-file-reader';
-import drawTransaction from './DrawTransaction'
+import DrawTransaction from './DrawTransaction'
 
 class Draw extends React.Component {
 
@@ -17,86 +17,86 @@ class Draw extends React.Component {
         sliderValue: 1,
         borderColor: { r: 0, g: 0, b: 0, a: 1 },
         fillColor: { r: 255, g: 255, b: 255, a: 0.5 },
-    }
+    };
 
-    transactions = new Transactions()
-    display = React.createRef()
+    transactions = new Transactions();
+    display = React.createRef();
 
     sliderOnChange = (e, newValue) => {
         this.setState({
             sliderValue: newValue
-        })
-    }
+        });
+    };
 
     borderColorOnChange = (color) => {
-        this.setState({ borderColor: color.rgb })
-    }
+        this.setState({ borderColor: color.rgb });
+    };
 
     fillColorOnChange = (color) => {
-        this.setState({ fillColor: color.rgb })
-    }
+        this.setState({ fillColor: color.rgb });
+    };
 
     doTransaction = () => {
-        this.props.socket.emit('draw', { data: null, type: 'redo' })
-        this.transactions.doTransaction()
-    }
+        this.props.socket.emit('draw', { data: null, type: 'redo' });
+        this.transactions.doTransaction();
+    };
 
     undoTransaction = () => {
-        this.props.socket.emit('draw', { data: null, type: 'undo' })
-        this.transactions.undoTransaction()
-    }
+        this.props.socket.emit('draw', { data: null, type: 'undo' });
+        this.transactions.undoTransaction();
+    };
 
     handleUnselect = () => {
-        this.display.handleEndCrop()
-        this.props.handleUnselect()
-    }
+        this.display.handleEndCrop();
+        this.props.handleUnselect();
+    };
 
     handleHorizontalFlip = (e) => {
-        e.stopPropagation()
+        e.stopPropagation();
         if (!this.display.state.cropping) {
-            this.display.handleHorizontalFlip()
+            this.display.handleHorizontalFlip();
         } else {
-            this.display.cropBox.handleHorizontalFlip()
+            this.display.cropBox.handleHorizontalFlip();
         }
-        this.props.handleUnselect()
-    }
+        this.props.handleUnselect();
+    };
 
     handleVerticalFlip = (e) => {
-        e.stopPropagation()
+        e.stopPropagation();
         if (!this.display.state.cropping) {
-            this.display.handleVerticalFlip()
+            this.display.handleVerticalFlip();
         } else {
-            this.display.cropBox.handleVerticalFlip()
+            this.display.cropBox.handleVerticalFlip();
         }
-        this.props.handleUnselect()
-    }
+        this.props.handleUnselect();
+    };
 
     handleClear = () => {
-        this.display.handleClear()
-    }
+        this.display.handleClear();
+    };
 
     handleImport = (file) => {
-        const oldImg = this.display.getImageData()
+        const oldImg = this.display.getImageData();
 
-        this.display.drawImage(file.base64)
-        this.props.socket.emit('draw', { data: file.base64, type: 'new' })
-        this.transactions.addTransaction(new drawTransaction(oldImg, file.base64, this.display.drawImage))
+        this.display.drawImage(file.base64);
+        this.props.socket.emit('draw', { data: file.base64, type: 'new' });
+        this.transactions.addTransaction(new DrawTransaction(oldImg, file.base64, this.display.drawImage));
 
-    }
+    };
 
     handleExport = () => {
-        const imgData = this.display.getImageData()
+        const imgData = this.display.getImageData();
         require("downloadjs")(imgData, "tileset@DELIT.jpeg", "image/jpeg");
-    }
+    };
 
     render() {
 
-        const { history } = this.props
-        const { sliderValue, borderColor, fillColor } = this.state
+        const { history } = this.props;
+        const { sliderValue, borderColor, fillColor } = this.state;
 
         return (
             <div onClick={this.handleUnselect}>
-                <TopNavbar side={false} view={false} history={history} />
+                <TopNavbar showSidebar={false} showTopNavBt={false} view={false} history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
                         className="map-toolbar"
@@ -114,15 +114,15 @@ class Draw extends React.Component {
                         ]}
                         secondaryContent={[
                             { name: TOOLS.PENCIL, item: <i className={"fas fa-pencil-alt"} style={{ fontSize: '24px' }} /> },
-                            { name: TOOLS.LINE, item: <i className="fas fa-slash" style={{ fontSize: '24px' }}></i> },
+                            { name: TOOLS.LINE, item: <i className="fas fa-slash" style={{ fontSize: '24px' }}/> },
                             { name: TOOLS.SQUARE, item: <i className={"far fa-square"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.CIRCLE, item: <i className={"far fa-circle"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.ERASER, item: <i className={"fas fa-eraser"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.CROP, item: <i className={"fas fa-crop-alt"} style={{ fontSize: '24px' }} /> },
                         ]}
                         rightContent={[
-                            { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} onClick={this.handleZoomOut} /> },
-                            { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} onClick={this.handleZoomIn} /> },
+                            { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} /> },
+                            { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} /> },
                         ]}
                     />
                     <PropertyBar
@@ -149,7 +149,7 @@ class Draw extends React.Component {
     }
 }
 const mapStateToProps = (state, ownProps) => {
-    const { selected } = state.toolbar
+    const { selected } = state.toolbar;
     return {
         selectedTool: selected,
         socket: state.backend.socket
@@ -158,6 +158,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handleUnselect: () => dispatch(handler.toolbarUnselectHandler()),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Draw);;
+export default connect(mapStateToProps, mapDispatchToProps)(Draw);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap'
-import SideNav from '../dashboard/SideNav'
 import Dropdown from './Dropdown'
 import { v1 } from 'uuid'
 import Checkbox from '@material-ui/core/Checkbox';
@@ -15,36 +14,35 @@ class TopNavbar extends React.Component {
     state = {
         username: 'error',
         picture: 'error'
-    }
-
+    };
 
     componentDidMount() {
         axios.get('/auth/current').then(res => {
-            const { username, picture } = res.data
+            const { username, picture } = res.data;
             if (!username || !picture)
-                this.props.history.push('/')
+                this.props.history.push('/');
             else {
-                this.setState({ username, picture })
-                this.props.handleLoginSuccess(res.data)
+                this.setState({ username, picture });
+                this.props.handleLoginSuccess(res.data);
             }
         })
     }
 
     UNSAFE_componentWillMount() {
-        const { hash } = this.props.history.location
+        const { hash } = this.props.history.location;
         if (hash === "#_=_")
             this.props.history.push('/dashboard')
     }
 
     render() {
-        const { open, side, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
-        const { username, picture } = this.state
+        const { showTopNavBt, view, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
+        const { username, picture } = this.state;
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
-                    {side ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list"></i></Navbar.Brand> : null}
+                    {showTopNavBt ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list"/></Navbar.Brand> : null}
                     <Navbar.Brand href="/dashboard"> <div className="logo" >Delit</div></Navbar.Brand>
-                    {!side ? <>
+                    {!showTopNavBt ? <>
                         <Dropdown title="FILE" width={96} handleOpen={this.handleOpen}
                             items={[
                                 <div className="better-dropdown-item" key={v1()}>Import</div>,
@@ -90,12 +88,11 @@ class TopNavbar extends React.Component {
 
                         </Nav>
                         <Navbar.Brand><a href='/test'>Test</a></Navbar.Brand>
-                        <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo"></img></Navbar.Brand>
+                        <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo"/></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>
                 </Navbar>
-                {side ? <SideNav open={open} handleSidebarOpen={this.props.handleSidebarOpen} /> : null}
             </>
         )
     }
@@ -108,6 +105,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     handleLoginSuccess: (user) => dispatch(handler.loginSuccessHandler(user)),
     handleLoginError: (errmsg) => dispatch(handler.loginErrorHandler(errmsg)),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopNavbar)
