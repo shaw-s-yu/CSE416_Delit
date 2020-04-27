@@ -1,7 +1,7 @@
 import React from 'react';
 import Dialog from "../tools/Dialog";
-import {Button, TextInput} from "react-materialize";
-
+import { TextField } from "@material-ui/core";
+import { Button } from "react-bootstrap";
 class Sidebar extends React.Component {
 
   state = {
@@ -81,15 +81,23 @@ class Sidebar extends React.Component {
           <Dialog
               header="Add Project"
               open={this.state.addProjectDialog}
+              maxWidth="md"
               actions={[
-                  <Button waves="orange" >Add Project</Button>,
-                  <Button waves="orange" onClick={this.handleAddProjectDialogClose}>Cancel</Button>
+                  <Button variant="primary" size="sm">Add Project</Button>,
+                  <Button variant="primary" size="sm" onClick={this.handleAddProjectDialogClose}>Cancel</Button>
               ]}
               content={
-                  <section className="dialog_content" id="textBoxes">
-                      <TextInput label="Enter The New Project Name" class="input_textbox" />
-                  </section>
-              } />
+                  <div className="dialog_content">
+                      <TextField
+                          id="outlined-basic"
+                          className="dashboard-input"
+                          label="Enter New Project Name"
+                          variant="outlined"
+                          size="small"
+                      />
+                  </div>
+              }
+          />
       </div>
 
     )

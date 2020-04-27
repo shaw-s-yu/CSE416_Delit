@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 class BetterDialog extends React.Component {
 
     render() {
+        console.log("Dialog: ", this.props);
 
         return (
             <Dialog
@@ -15,14 +16,13 @@ class BetterDialog extends React.Component {
                 aria-describedby="alert-dialog-description"
                 maxWidth={this.props.maxWidth}
                 fullWidth={this.props.fullWidth}
+                style={this.props.style}
             >
                 <DialogTitle id="alert-dialog-title">
                     {this.props.header}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {this.props.content}
-                    </DialogContentText>
+                    {this.props.content}
                 </DialogContent>
                 <DialogActions>
                     {this.props.actions}
