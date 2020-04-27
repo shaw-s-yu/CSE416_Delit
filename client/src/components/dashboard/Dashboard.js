@@ -38,11 +38,11 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <TopNavbar handleSidebarOpen={this.handleSidebarOpen} showTopNavBt={true} history={history} />
-                {showSidebar ? <Sidebar
+                <Sidebar
                     showSidebar={showSidebar}
                     handleOpen={this.handleDialogsOpen}
                     handleClose={this.handleDialogsClose}
-                /> : null}
+                />
                 <div className="dashboard-display" style={
                     {
                         marginLeft: left + "%",
