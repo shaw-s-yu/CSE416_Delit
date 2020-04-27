@@ -5,7 +5,7 @@ class Card extends React.Component {
 
     render() {
 
-        const { className, style, name, modifiedBy, img, handleTeam, onClick } = this.props
+        const { className, style, name, modifiedBy, img, handleOpen, onClick } = this.props
         return (
             <div >
                 <div className={className} style={style} onClick={onClick}>
@@ -18,7 +18,7 @@ class Card extends React.Component {
                 <div className="card-info-btn-box" style={style}>
                     <div className="card-info-btn-tl card-info-btn">Rename</div>
                     <div className="card-info-btn-tr card-info-btn">Dupliate</div>
-                    <div className="card-info-btn-bl card-info-btn" onClick={handleTeam}>Team</div>
+                    <div className="card-info-btn-bl card-info-btn" onClick={handleOpen.bind(this, 'team')}>Team</div>
                     <div className="card-info-btn-br card-info-btn">Delete</div>
                     <div className="card-info-btn-center card-info-btn">EDIT</div>
                 </div>

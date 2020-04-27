@@ -1,22 +1,9 @@
 import React from 'react';
-import { Button, TextInput } from 'react-materialize'
+import { TextInput } from 'react-materialize'
 import { connect } from 'react-redux';
-import Dialog from '../tools/Dialog'
-import { Grid, ListItem, ListItemAvatar, Avatar, ListItemText, Divider } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import Card from '../tools/Card'
 
-const images = [
-    {
-        src: 'https://cn.portal-pokemon.com/play/resources/pokedex/img/pm/5794f0251b1180998d72d1f8568239620ff5279c.png',
-        alt: 'This is Shen'
-    },
-    {
-        src: 'https://p.ssl.qhimg.com/t01b357e9d64b111e8a.png',
-        alt: 'This is DJ'
-    }
-];
+
 
 class ItemList extends React.Component {
 
@@ -24,24 +11,6 @@ class ItemList extends React.Component {
         modelActive1: false,
         modelActive2: false,
 
-    };
-
-    handleTeamOpen1 = (e) => {
-        e.stopPropagation();
-        this.setState({ modelActive1: true });
-    };
-
-    handleTeamOpen2 = () => {
-        this.setState({ modelActive2: true });
-    };
-
-    handleTeamClose1 = () => {
-        this.setState({ modelActive1: false });
-    };
-
-    handleTeamClose2 = () => {
-        this.setState({ modelActive2: false });
-        this.setState({ modelActive1: true });
     };
 
     handleGoEdit = () => {
@@ -93,7 +62,7 @@ class ItemList extends React.Component {
                                     name={name}
                                     style={cardStyle}
                                     img={img}
-                                    handleTeam={this.handleTeamOpen1}
+                                    handleOpen={this.props.handleOpen}
                                     onClick={this.handleGoEdit}
                                     key={index}
                                 />
@@ -102,71 +71,9 @@ class ItemList extends React.Component {
                     }
                 </div>
 
-                <Dialog
-                    header={
-                        <Grid
-                            container
-                            direction="row"
-                            justify="center"
-                            alignItems="center"
-                        >
-                            <Typography variant="h4" gutterBottom align="justify">
-                                Project1
-                            </Typography>
-                        </Grid>
-                    }
-                    open={this.state.modelActive1}
-                    fullWidth={true}
-                    maxWidth="xs"
-                    actions={[
-                        <Button key='1' waves="orange" onClick={this.handleTeamOpen2}>invite</Button>,
-                        <Button key='2' waves="orange" onClick={this.handleTeamClose1}>Close</Button>
-                    ]}
-                    content={
-                        <Grid
-                            container
-                            direction="column"
-                            spacing={3}
-                        >
-                            {
-                                images.map(function (image, index) {
-                                    return (
-                                        <Grid item key={index}>
-                                            <Paper elevation={3} className="paper">
-                                                <ListItem alignItems="flex-start">
-                                                    <ListItemAvatar>
-                                                        <Avatar alt={image.alt} src={image.src} />
-                                                    </ListItemAvatar>
-                                                    <ListItemText
-                                                        primary={image.alt}
-                                                    />
-                                                </ListItem>
-                                                <Divider variant="inset" />
-                                            </Paper>
-                                        </Grid>
-                                    );
-                                })
-                            }
-                        </Grid>
 
 
-                    } />
 
-                <Dialog
-                    header="Add Teammate"
-                    open={this.state.modelActive2}
-                    actions={[
-                        <Button key='1' waves="orange" onclik={this.addTextBox}>Add More?</Button>,
-                        <Button key='2' waves="orange" onclik={this.removeTextBox}>Remove?</Button>,
-                        <Button key='3' waves="orange" onClick={this.handleTeamClose2}>Close</Button>
-                    ]}
-                    var totalTextbox='1'
-                    content={
-                        <section className="dialog_content" id="textBoxes">
-                            <p><strong>Please enter the Email to add your teammate</strong></p>
-                            <TextInput label="Enter The Email" class="input_textbox" />
-                        </section>
-                    } />
             </div>
 
         )

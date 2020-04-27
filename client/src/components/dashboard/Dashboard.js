@@ -6,17 +6,28 @@ import './dashboard.css'
 import Pagination from '../tools/Pagination'
 import { connect } from 'react-redux';
 import Sidebar from "./Sidebar";
-
+import Dialogs from './Dialogs'
 
 class Dashboard extends React.Component {
     state = {
         showSidebar: true,
+        project: false,
+        team: false,
+        invite: false,
     };
+
+    handleDialogsOpen = (type) => {
+        this.setState({ [type]: true })
+    }
+
+    handleDialogsClose = (type) => {
+        this.setState({ [type]: false })
+    }
 
     handleSidebarOpen = () => {
         let { showSidebar } = this.state;
         showSidebar = !showSidebar;
-        this.setState({ showSidebar : showSidebar});
+        this.setState({ showSidebar: showSidebar });
     };
 
     render() {
@@ -27,17 +38,30 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <TopNavbar handleSidebarOpen={this.handleSidebarOpen} showTopNavBt={true} history={history} />
-                { showSidebar ? <Sidebar showSidebar={showSidebar} /> : null}
+                {showSidebar ? <Sidebar
+                    showSidebar={showSidebar}
+                    handleOpen={this.handleDialogsOpen}
+                    handleClose={this.handleDialogsClose}
+                /> : null}
                 <div className="dashboard-display" style={
                     {
                         marginLeft: left + "%",
                         width: width + "%",
                     }
                 }>
-                    <Searchbar/>
-                    <ItemList history={this.props.history} />
+                    <Searchbar />
+                    <ItemList
+                        history={this.props.history}
+                        handleOpen={this.handleDialogsOpen}
+                        handleClose={this.handleDialogsClose}
+                    />
                     <Pagination className="dashboard-pagination center" size="large" color="secondary" />
                 </div>
+                <Dialogs
+                    {...this.state}
+                    handleOpen={this.handleDialogsOpen}
+                    handleClose={this.handleDialogsClose}
+                />
             </div >
         )
     }
