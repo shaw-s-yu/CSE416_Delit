@@ -87,18 +87,16 @@ class ItemList extends React.Component {
                             const { name, lastModified, img } = project;
 
                             return (
-                                <>
-                                    <Card
-                                        className='item-card'
-                                        modifiedBy={lastModified}
-                                        name={name}
-                                        style={cardStyle}
-                                        img={img}
-                                        handleTeam={this.handleTeamOpen1}
-                                        onClick={this.handleGoEdit}
-                                        key={index}
-                                    />
-                                </>
+                                <Card
+                                    className='item-card'
+                                    modifiedBy={lastModified}
+                                    name={name}
+                                    style={cardStyle}
+                                    img={img}
+                                    handleTeam={this.handleTeamOpen1}
+                                    onClick={this.handleGoEdit}
+                                    key={index}
+                                />
                             );
                         })
                     }
@@ -121,8 +119,8 @@ class ItemList extends React.Component {
                     fullWidth={true}
                     maxWidth="xs"
                     actions={[
-                        <Button waves="orange" onClick={this.handleTeamOpen2}>invite</Button>,
-                        <Button waves="orange" onClick={this.handleTeamClose1}>Close</Button>
+                        <Button key='1' waves="orange" onClick={this.handleTeamOpen2}>invite</Button>,
+                        <Button key='2' waves="orange" onClick={this.handleTeamClose1}>Close</Button>
                     ]}
                     content={
                         <Grid
@@ -131,9 +129,9 @@ class ItemList extends React.Component {
                             spacing={3}
                         >
                             {
-                                images.map(function (image) {
+                                images.map(function (image, index) {
                                     return (
-                                        <Grid item>
+                                        <Grid item key={index}>
                                             <Paper elevation={3} className="paper">
                                                 <ListItem alignItems="flex-start">
                                                     <ListItemAvatar>
@@ -158,9 +156,9 @@ class ItemList extends React.Component {
                     header="Add Teammate"
                     open={this.state.modelActive2}
                     actions={[
-                        <Button waves="orange" onclik={this.addTextBox}>Add More?</Button>,
-                        <Button waves="orange" onclik={this.removeTextBox}>Remove?</Button>,
-                        <Button waves="orange" onClick={this.handleTeamClose2}>Close</Button>
+                        <Button key='1' waves="orange" onclik={this.addTextBox}>Add More?</Button>,
+                        <Button key='2' waves="orange" onclik={this.removeTextBox}>Remove?</Button>,
+                        <Button key='3' waves="orange" onClick={this.handleTeamClose2}>Close</Button>
                     ]}
                     var totalTextbox='1'
                     content={

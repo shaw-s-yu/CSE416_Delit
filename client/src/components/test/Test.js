@@ -129,7 +129,8 @@ class TestScreen extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     const { projects, maps, tilesets } = state.project
     return {
-        projects, maps, tilesets
+        projects, maps, tilesets,
+        socket: state.backend.socket
     }
 };
 

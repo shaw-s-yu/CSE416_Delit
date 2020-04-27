@@ -54,11 +54,11 @@ class Sidebar extends React.Component {
   }
 
   handleAddProjectDialogOpen = () => {
-      this.setState({ addProjectDialog: true });
+    this.setState({ addProjectDialog: true });
   }
 
   handleAddProjectDialogClose = () => {
-      this.setState({ addProjectDialog: false });
+    this.setState({ addProjectDialog: false });
   }
 
   createNewProject = () => {
@@ -67,8 +67,9 @@ class Sidebar extends React.Component {
 
 
   render() {
-    const { showSidebar} = this.props;
+    const { showSidebar } = this.props;
     const width = showSidebar ? 17 : 0;
+
     return (
       <div className='dashboard-sidebar' style={{ width: width + "%", whiteSpace: "nowrap" }}>
         <div className='sidebar-wrapper'>
@@ -78,26 +79,39 @@ class Sidebar extends React.Component {
           <div className={'sidebar-item ' + this.getClassName("share")} onClick={this.handleProjectSharedWithMeSelected}><div className='item-text'>Project Shared With Me</div></div>
           <div className={'sidebar-item ' + this.getClassName("tileset")} onClick={this.handleManageMyTilesetsSelected}><div className='item-text'>Manage My Tilesets</div></div>
         </div>
-          <Dialog
-              header="Add Project"
-              open={this.state.addProjectDialog}
-              maxWidth="md"
-              actions={[
-                  <Button variant="primary" size="sm">Add Project</Button>,
-                  <Button variant="primary" size="sm" onClick={this.handleAddProjectDialogClose}>Cancel</Button>
-              ]}
-              content={
-                  <div className="dialog_content">
-                      <TextField
-                          id="outlined-basic"
-                          className="dashboard-input"
-                          label="Enter New Project Name"
-                          variant="outlined"
-                          size="small"
-                      />
-                  </div>
-              }
-          />
+        <Dialog
+          header="Add Project"
+          open={this.state.addProjectDialog}
+          maxWidth="xs"
+          fullWidth={true}
+          actions={[
+            <Button variant="primary" size="sm" key='1'>Add Project</Button>,
+            <Button variant="primary" size="sm" key='2' onClick={this.handleAddProjectDialogClose}>Cancel</Button>
+          ]}
+          content={[
+            <TextField
+              id="outlined-basic"
+              className="dashboard-add-project"
+              label="Enter New Project Name"
+              variant="outlined"
+              size="small"
+            />,
+            <TextField
+              id="outlined-basic"
+              className="dashboard-add-project"
+              label="Enter New Project tile width"
+              variant="outlined"
+              size="small"
+            />,
+            <TextField
+              id="outlined-basic"
+              className="dashboard-add-project"
+              label="Enter New Project tile height"
+              variant="outlined"
+              size="small"
+            />]
+          }
+        />
       </div>
 
     )

@@ -194,8 +194,13 @@ class DisplayPlace extends React.Component {
 
     handleEndCrop = () => {
         this.painter.CROP.endCrop()
-        if (this.state.cropData !== null)
+        if (this.state.cropData !== null) {
+            const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
             this.ctx.putImageData(this.state.cropData.imgData, this.state.cropData.left, this.state.cropData.top)
+            const new_img = this.refs.canvas.toDataURL('image/jpeg', 1)
+            this.props.socket.emit('draw', { data: new_img, type: 'new' })
+            this.props.transactions.addTransaction(new DrawTransaction(old_img, new_img, this.drawImage))
+        }
         this.setState({
             cropData: null,
             cropping: false
