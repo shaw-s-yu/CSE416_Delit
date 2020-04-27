@@ -15,14 +15,18 @@ import rootReducer from './store/reducers/rootReducer';
 
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import { API_URL } from './config'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
-const client = new ApolloClient({ uri: 'http://localhost:3000/graphql' });
+const client = new ApolloClient({ uri: `${API_URL}/graphql` });
 
 
-ReactDOM.render(<Provider store={store}>
-                    <ApolloProvider client={client}>
-                        <App />
-                    </ApolloProvider>
-                </Provider>, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <ApolloProvider client={client}>
+            <App />
+        </ApolloProvider>
+    </Provider>,
+    document.getElementById('root')
+);
 

@@ -1,6 +1,5 @@
-const { GraphQLObjectType, GraphQLString } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
 const UserModel = require('../models/mongo-user')
-const GraphQLDate = require('graphql-date');
 
 
 module.exports = new GraphQLObjectType({
@@ -13,13 +12,13 @@ module.exports = new GraphQLObjectType({
             name: {
                 type: GraphQLString
             },
-            creator: {
+            owner: {
                 type: GraphQLString,
             },
-            lastUpdate: {
-                type: GraphQLDate
+            editors: {
+                type: new GraphQLList(GraphQLString)
             },
-            creatorInfo: {
+            ownerInfo: {
                 type: UserType,
                 resolve: (parent, args) => {
                     const user = UserModel.findById(parent.creator).exec()

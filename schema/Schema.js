@@ -70,8 +70,11 @@ const mutation = new GraphQLObjectType({
                     name: {
                         type: new GraphQLNonNull(GraphQLString)
                     },
-                    creator: {
+                    owner: {
                         type: new GraphQLNonNull(GraphQLString)
+                    },
+                    editors: {
+                        type: new GraphQLList(GraphQLString)
                     }
                 },
                 resolve: (root, params) => {
@@ -95,7 +98,7 @@ const mutation = new GraphQLObjectType({
                     },
                 },
                 resolve: (root, params) => {
-                    return projectModel.findByIdAndUpdate(params.id, { name: params.text, creator: params.creator, lastUpdate: new Date() }, function (err) {
+                    return ProjectModel.findByIdAndUpdate(params.id, { name: params.text, creator: params.creator, lastUpdate: new Date() }, function (err) {
                         if (err) return next(err);
                     });
                 }
@@ -108,11 +111,19 @@ const mutation = new GraphQLObjectType({
                     }
                 },
                 resolve: (root, params) => {
-                    const remProject = projectModel.findByIdAndRemove(params.id).exec();
+                    const remProject = ProjectModel.findByIdAndRemove(params.id).exec();
                     if (!remProject) {
                         throw new Error('Error')
                     }
                     return remProject;
+                }
+            },
+            clearProjects: {
+                type: GraphQLString,
+                resolve: (parent, params) => {
+                    const res = ProjectModel.deleteMany({}).exec()
+                    if (res) return 'success'
+                    else return 'fail'
                 }
             }
         }
