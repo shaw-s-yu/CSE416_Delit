@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLID } = require('graphql');
 const UserModel = require('../../models/mongo-user')
 
 
