@@ -1,9 +1,25 @@
 import React from 'react';
 import { TextInput } from 'react-materialize'
 import { connect } from 'react-redux';
-import Card from '../tools/Card'
+import Card from '../tools/Card';
 
+import { gql } from 'apollo-boost';
+import { graphql } from "react-apollo";
 
+const getProjectsQuery = gql`
+    {
+        projects {
+            id
+            name
+            img
+            editors
+            ownerId
+            ownerInfo {
+                username
+            }
+        }
+    }
+`
 
 class ItemList extends React.Component {
 
@@ -29,15 +45,19 @@ class ItemList extends React.Component {
 
     };
 
-
-    render() {
-        const { projects } = this.props;
-        const numItem = projects.length
-        const style = {
-            height: numItem > 3 ? 600 : 300
-        }
-        return (
-            <div className="dashboard-itemlist">
+    displayprojects() {
+        var data = this.props.data;
+        if(data.loading) {
+            return (
+                <div>Loading projects......</div>
+            )
+        }else {
+            const { projects } = this.props.data;
+            const numItem = projects.length
+            const style = {
+                height: numItem > 3 ? 600 : 300
+            }
+            return (
                 <div className="dashboard-itemlist-wrapper" style={style}>
                     {
                         projects && projects.map((project, index) => {
@@ -70,12 +90,16 @@ class ItemList extends React.Component {
                         })
                     }
                 </div>
+            )
+        }
+    }
 
-
-
-
+    render() {
+        console.log(this.props)
+        return (
+            <div className="dashboard-itemlist">
+                {this.displayprojects()}
             </div>
-
         )
     }
 
@@ -125,4 +149,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemList);;
+// export default connect(mapStateToProps, mapDispatchToProps)(ItemList);;
+export default graphql(getProjectsQuery)(ItemList);
