@@ -1,5 +1,4 @@
 import graphql from 'graphql-tag'
-import { gql } from 'apollo-boost';
 export default {
     GET_PROJECTS: graphql`
     {
@@ -7,25 +6,11 @@ export default {
             _id
             name
             editors
-            ownerId
-            ownerInfo
-        }
-    }
-    `
-}
-
-const getProjectsQuery = gql`
-    {
-        projects {
-            id
-            name
-            img
-            editors
-            ownerInfo {
+            owner
+            ownerInfo{  
                 username
             }
         }
     }
-`
-
-export { getProjectsQuery };
+    `
+}

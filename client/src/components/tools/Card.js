@@ -5,14 +5,15 @@ class Card extends React.Component {
 
     render() {
 
-        const { className, style, name, modifiedBy, img, handleOpen, onClick } = this.props
+        const { className, style, name, owner, img, handleOpen, onClick } = this.props
+        const image = img ? img : dummyImg
         return (
             <div >
                 <div className={className} style={style} onClick={onClick}>
-                    <img src={img} className='card-preview-img' alt='preview'></img>
+                    <img src={image} className='card-preview-img' alt='preview'></img>
                     <div className="card-info-box">
                         <span className="card-info-name">Name: {name}</span>
-                        <span className="card-info-last-modify">Last modified By: {modifiedBy}</span>
+                        <span className="card-info-last-modify">Owner: {owner}</span>
                     </div>
                 </div>
                 <div className="card-info-btn-box" style={style}>
@@ -28,3 +29,5 @@ class Card extends React.Component {
 }
 
 export default Card;
+
+const dummyImg = "https://image.winudf.com/v2/image/Y29tLmROdWdnZXRzLnBva2Vtb25fc2NyZWVuXzFfMTUzMzE5NDQ3NF8wMTI/screen-1.jpg?fakeurl=1&type=.jpg"

@@ -6,7 +6,7 @@ module.exports = new GraphQLObjectType({
     name: 'project',
     fields: () => {
         return {
-            id: {
+            _id: {
                 type: GraphQLID
             },
             name: {
@@ -15,7 +15,7 @@ module.exports = new GraphQLObjectType({
             img: {
                 type: GraphQLString
             },
-            ownerId: {
+            owner: {
                 type: GraphQLID,
             },
             editors: {
@@ -24,7 +24,7 @@ module.exports = new GraphQLObjectType({
             ownerInfo: {
                 type: UserType,
                 resolve: (parent, args) => {
-                    const user = UserModel.findById(parent.ownerId);
+                    const user = UserModel.findById(parent.owner);
                     if (!user) throw new Error('Error');
                     return user
                 }

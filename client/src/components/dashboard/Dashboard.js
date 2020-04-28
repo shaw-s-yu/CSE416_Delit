@@ -14,7 +14,12 @@ class Dashboard extends React.Component {
         project: false,
         team: false,
         invite: false,
+        selected: 'all',
     };
+
+    handleSelectSide = (type) => {
+        this.setState({ selected: type })
+    }
 
     handleDialogsOpen = (type) => {
         this.setState({ [type]: true })
@@ -30,8 +35,10 @@ class Dashboard extends React.Component {
         this.setState({ showSidebar: showSidebar });
     };
 
+
+
     render() {
-        const { showSidebar } = this.state;
+        const { showSidebar, selected } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -42,6 +49,8 @@ class Dashboard extends React.Component {
                     showSidebar={showSidebar}
                     handleOpen={this.handleDialogsOpen}
                     handleClose={this.handleDialogsClose}
+                    handleSelect={this.handleSelectSide}
+                    selected={selected}
                 />
                 <div className="dashboard-display" style={
                     {
@@ -54,6 +63,7 @@ class Dashboard extends React.Component {
                         history={this.props.history}
                         handleOpen={this.handleDialogsOpen}
                         handleClose={this.handleDialogsClose}
+                        selected={selected}
                     />
                     <Pagination className="dashboard-pagination center" size="large" color="secondary" />
                 </div>
