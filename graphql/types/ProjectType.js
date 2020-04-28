@@ -6,14 +6,17 @@ module.exports = new GraphQLObjectType({
     name: 'project',
     fields: () => {
         return {
-            _id: {
-                type: GraphQLString
+            id: {
+                type: GraphQLID
             },
             name: {
                 type: GraphQLString
             },
-            owner: {
-                type: GraphQLString,
+            img: {
+                type: GraphQLString
+            },
+            ownerId: {
+                type: GraphQLID,
             },
             editors: {
                 type: new GraphQLList(GraphQLString)
@@ -21,11 +24,12 @@ module.exports = new GraphQLObjectType({
             ownerInfo: {
                 type: UserType,
                 resolve: (parent, args) => {
-                    const user = UserModel.findById(parent.creator).exec()
-                    if (!user) throw new Error('Error')
+                    const user = UserModel.findById(parent.ownerId);
+                    if (!user) throw new Error('Error');
                     return user
                 }
-            }
+            },
+
         }
     }
 });

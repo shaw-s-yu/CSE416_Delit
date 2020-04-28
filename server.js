@@ -69,7 +69,7 @@ app.use('/graphql', expressGraphql({
 
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+    res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
 
 server.listen(process.env.PORT || 5000)

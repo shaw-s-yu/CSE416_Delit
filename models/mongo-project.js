@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
     name: String,
-    owner: String,
+    ownerId: String,
+    img: String,
     editors: [String],
     mapId: String,
     tilesetId: [String]
