@@ -3,6 +3,7 @@ const clearProjectsMutation = require('../mutations/clearProjectsMutation')
 const updateProjectMutation = require('../mutations/updateProjectMutation')
 const removeProjectMutation = require('../mutations/removeProjectMutation')
 const addTilesetMutation = require('../mutations/addTilesetMutation')
+const emptyQuery = require('../queries/emptyQuery')
 const projectQuery = require('../queries/projectsQuery')
 const projectsQuery = require('../queries/projectQuery')
 const userQuery = require('../queries/userQuery')
@@ -17,6 +18,7 @@ const queryType = new GraphQLObjectType({
     name: 'Query',
     fields: () => {
         return {
+            empty: emptyQuery,
             projects: projectQuery,
             project: projectsQuery,
             user: userQuery,

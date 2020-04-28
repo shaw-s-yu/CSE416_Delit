@@ -21,13 +21,14 @@ class ItemList extends React.Component {
         const { selected } = this.props;
 
 
-        const query = selected === 'all' ? QueryList.GET_PROJECTS : null;
+        const query = selected === 'all' ? QueryList.GET_PROJECTS : QueryList.EMPTY_QUERY;
 
         return (
             <Query query={query}>
                 {({ loading, error, data }) => {
                     if (loading) return 'loading'
                     if (error) return 'error'
+                    if (query === QueryList.EMPTY_QUERY) return 'Wrong Sidebar Selection or needs to be developped'
                     if (data) console.log(data.projects)
 
                     const { projects } = data
