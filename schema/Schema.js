@@ -19,70 +19,42 @@ const queryType = new GraphQLObjectType({
         return {
             projects: {
                 type: new GraphQLList(ProjectType),
-                resolve(parent, args){
-                    const projects = ProjectModel.find({});
+                resolve: () => {
+                    const projects = ProjectModel.find().exec()
                     if (!projects) {
-                        throw new Error('Projects Error')
+                        throw new Error('Error')
                     }
-                    return projects;
+                    return projects
                 }
             },
             project: {
-                type: new GraphQLList(ProjectType),
-                args:{id:{type: GraphQLID}},
-                resolve(parent, args){
-                    return ProjectModel.findById(args.id)
+                type: ProjectType,
+                args: {
+                    id: {
+                        name: '_id',
+                        type: GraphQLID
+                    },
+                },
+                resolve: (root, params) => {
+                    const project = ProjectModel.findById(params.id).exec()
+                    if (!project) {
+                        throw new Error('Error')
+                    }
+                    return project
                 }
             },
+            user: {
+                type: UserType,
+                args: { id: { name: '_id', type: GraphQLID } },
+                resolve: (parent, args) => {
+                    const user = UserModel.findById(args.id).exec()
+                    if (!user) throw new Error('Error')
+                    return user
+                }
+            }
         }
     }
 });
-// const queryType = new GraphQLObjectType({
-//     name: 'Query',
-//     fields: () => {
-//         return {
-//             projects: {
-//                 type: new GraphQLList(ProjectType),
-//                 resolve: () => {
-//                     const projects = ProjectModel.find().exec()
-//                     if (!projects) {
-//                         throw new Error('Error')
-//                     }
-//                     return projects
-//                 }
-//             },
-//             project: {
-//                 type: ProjectType,
-//                 args: {
-//                     id: {
-//                         name: '_id',
-//                         type: GraphQLString
-//                     },
-//                 },
-//                 resolve: (root, params) => {
-//                     const project = ProjectModel.findById(params.id).exec()
-//                     if (!project) {
-//                         throw new Error('Error')
-//                     }
-//                     return project
-//                 }
-//             },
-//             user: {
-//                 type: UserType,
-//                 args: { id: { name: '_id', type: GraphQLString } },
-//                 resolve: (parent, args) => {
-//                     const user = UserModel.findById(args.id).exec()
-//                     if (!user) throw new Error('Error')
-//                     return user
-//                 }
-//             }
-//         }
-//     }
-// });
-
-
-
-
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
