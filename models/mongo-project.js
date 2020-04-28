@@ -6,7 +6,7 @@ var ProjectSchema = new Schema({
     owner: String,
     editors: [String],
     mapId: String,
-    tileset: [String]
+    tilesetId: [String]
     // lastUpdate: { type: Date, default: Date.now },
 });
 

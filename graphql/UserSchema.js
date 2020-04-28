@@ -24,4 +24,4 @@ module.exports = new GraphQLObjectType({
     }
 });
 
-const ProjectType = require('./ProjectSchema')
+const ProjectType = require('./schemas/ProjectSchema')

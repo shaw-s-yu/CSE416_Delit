@@ -1,4 +1,6 @@
 const User = require('../models/mongo-user')
+const TilesetModel = require('../models/mongo-tileset')
+
 
 exports.Socket = function (socket) {
     this.socket = socket
@@ -23,5 +25,8 @@ exports.Socket = function (socket) {
 
     this.drawController = data => {
         socket.broadcast.emit('drawBack', data)
+        let newimg = new TilesetModel();
+        newimg.image = data.data;
+        newimg.save();
     }
 }

@@ -1,0 +1,48 @@
+const addProjectMutation = require('../mutations/addProjectMutation')
+const clearProjectsMutation = require('../mutations/clearProjectsMutation')
+const updateProjectMutation = require('../mutations/updateProjectMutation')
+const removeProjectMutation = require('../mutations/removeProjectMutation')
+const addTilesetMutation = require('../mutations/addTilesetMutation')
+const projectQuery = require('../queries/projectsQuery')
+const projectsQuery = require('../queries/projectQuery')
+const userQuery = require('../queries/userQuery')
+const tilesetQuery = require('../queries/tilesetQuery')
+const {
+    GraphQLSchema,
+    GraphQLObjectType,
+} = require('graphql');
+
+
+const queryType = new GraphQLObjectType({
+    name: 'Query',
+    fields: () => {
+        return {
+            projects: projectQuery,
+            project: projectsQuery,
+            user: userQuery,
+            tileset: tilesetQuery
+        }
+    }
+});
+
+
+
+
+
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: () => {
+        return {
+            addProject: addProjectMutation,
+            updateProject: updateProjectMutation,
+            removeProject: removeProjectMutation,
+            clearProjects: clearProjectsMutation,
+            addTileset: addTilesetMutation,
+        }
+    }
+});
+
+module.exports = new GraphQLSchema({
+    query: queryType,
+    mutation: mutation
+});

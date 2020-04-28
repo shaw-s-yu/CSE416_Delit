@@ -15,7 +15,7 @@ const bodyParser = require("body-parser");
 const path = require('path');
 const expressGraphql = require('express-graphql');
 const User = require('./models/mongo-user')
-const schema = require('./schema/Schema');
+const schema = require('./graphql/schema/Schema');
 const SocketController = require('./socket/socket-controller')
 const { Socket } = SocketController
 

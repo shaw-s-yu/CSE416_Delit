@@ -1,5 +1,5 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
-const UserModel = require('../models/mongo-user')
+const UserModel = require('../../models/mongo-user')
 
 
 module.exports = new GraphQLObjectType({
@@ -30,4 +30,4 @@ module.exports = new GraphQLObjectType({
     }
 });
 
-const UserType = require('./UserSchema')
+const UserType = require('./UserType')
