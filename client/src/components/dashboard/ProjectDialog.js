@@ -20,8 +20,17 @@ class ProjectDialog extends React.Component {
             tileHeight: "",
             mapWidth: "",
             mapHeight: "",
+            disableBt: true,
         }
     }
+    handleOnNameChange = (e) => {
+        const value = e.target.value;
+        if (value === "") {
+            this.setState( {projectName: value, disableBt : true});
+        }else {
+            this.setState( {projectName: value, disableBt : false});
+        }
+    };
 
     render() {
         const { project, handleClose } = this.props;
@@ -56,7 +65,7 @@ class ProjectDialog extends React.Component {
                                     size="small"
                                     key={v1()}
                                     value={this.state.projectName}
-                                    onChange={(e) => this.setState({projectName: e.target.value})}
+                                    onChange={(e) => this.handleOnNameChange(e)}
                                 />
                                 <TextField
                                     className="form-control"
@@ -104,7 +113,7 @@ class ProjectDialog extends React.Component {
                                 />
                             </DialogContent>
                             <DialogActions>
-                                <Button variant="primary" size="sm" onClick={handleClose.bind(this, 'project')} key='1' type="submit" >Add</Button>
+                                <Button variant="primary" size="sm" onClick={handleClose.bind(this, 'project')} key='1' type="submit" disabled={ this.state.disableBt }>Add</Button>
                                 <Button variant="primary" size="sm" key='2' onClick={handleClose.bind(this, 'project')}>Cancel</Button>
                             </DialogActions>
                         </form>
