@@ -10,7 +10,6 @@ import CropBox from './CropBox'
 class DisplayPlace extends React.Component {
 
     state = {
-        scale: 1,
         imgWidth: 0,
         imgHeight: 0,
         width: 0,
@@ -22,13 +21,17 @@ class DisplayPlace extends React.Component {
         cropping: false,
     }
 
-    scrollbar = React.createRef();
     cropBox = React.createRef();
 
     cropResizeStart = () => {
         const { left, top } = this.state.cropData
         const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.ctx.putImageData(this.state.cropData.imgData, left, top)
+        try {
+            this.ctx.putImageData(this.state.cropData.imgData, left, top)
+        } catch{
+            return
+        }
+
         const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
         this.props.socket.emit('draw', { data: newImg, type: 'new' })
         this.props.transactions.addTransaction(new DrawTransaction(oldImg, newImg, this.drawImage))
@@ -67,39 +70,6 @@ class DisplayPlace extends React.Component {
         })
     }
 
-
-    handleZoomEffect = (e) => {
-
-        e.stopPropagation()
-        const { selectedTool } = this.props;
-        if (selectedTool !== TOOLS.ZOOM_IN && selectedTool !== TOOLS.ZOOM_OUT) return
-        const { scale } = this.state
-        const factor = selectedTool === TOOLS.ZOOM_IN ? 1 / 0.8 : selectedTool === TOOLS.ZOOM_OUT ? 0.8 : 1
-        const nscale = scale * factor
-        this.setState({ scale: nscale })
-
-        let target = document.getElementById('display')
-        const rect = target.getBoundingClientRect()
-        const { clientX, clientY } = e
-        const { left, top } = rect
-        const dx = clientX - left
-        const dy = clientY - top
-        const ndy = dy * factor
-        const ndx = dx * factor
-        const ddy = ndy - dy
-        const ddx = ndx - dx
-        target.style.transform = "scale(" + nscale + ")"
-
-
-        const currX = this.refs.scrollbar.getScrollLeft();
-        const currY = this.refs.scrollbar.getScrollTop();
-
-        if (nscale >= 1) {
-            this.refs.scrollbar.scrollLeft(ddx + currX)
-            this.refs.scrollbar.scrollTop(ddy + currY)
-        }
-    }
-
     getSelectedTools = () => {
         const { selectedTool } = this.props
         if (selectedTool === TOOLS.ZOOM_IN)
@@ -123,12 +93,9 @@ class DisplayPlace extends React.Component {
         this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
-
-        // if (this.state.cropping)
-        //     this.ctx.putImageData(this.state.cropData.imgData, this.state.cropData.left, this.state.cropData.top)
-
+        if (this.state.cropping)
+            this.handleEndCrop()
         // console.log(this.state.cropping, this.state.cropData)
-
         this.painter.startDraw(x, y)
 
 
@@ -155,7 +122,7 @@ class DisplayPlace extends React.Component {
         if (selectedTool === TOOLS.CROP) e.stopPropagation()
         if (this.state.mouseDown === false) return
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT)
-            this.handleZoomEffect(e)
+            this.props.handleZoomEffect(e)
 
         e.stopPropagation()
 
@@ -194,9 +161,16 @@ class DisplayPlace extends React.Component {
 
     handleEndCrop = () => {
         this.painter.CROP.endCrop()
+        const { cropData } = this.state
+        const { left, top } = cropData
         if (this.state.cropData !== null) {
             const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-            this.ctx.putImageData(this.state.cropData.imgData, this.state.cropData.left, this.state.cropData.top)
+            try {
+                this.ctx.putImageData(this.state.cropData.imgData, left, top)
+            }
+            catch{
+                return
+            }
             const new_img = this.refs.canvas.toDataURL('image/jpeg', 1)
             this.props.socket.emit('draw', { data: new_img, type: 'new' })
             this.props.transactions.addTransaction(new DrawTransaction(old_img, new_img, this.drawImage))
@@ -216,7 +190,7 @@ class DisplayPlace extends React.Component {
         const canvasY = this.refs.canvas.getBoundingClientRect().top
         x -= canvasX
         y -= canvasY
-        const { scale } = this.state
+        const { scale } = this.props
         x /= scale
         y /= scale
         return { x, y }
@@ -314,8 +288,8 @@ class DisplayPlace extends React.Component {
     }
 
     render() {
-        const { scale, imgWidth, imgHeight, width, height, cropData } = this.state;
-        const { selectedTool } = this.props
+        const { imgWidth, imgHeight, width, height, cropData } = this.state;
+        const { selectedTool, scale } = this.props
         const scrollStyle = {
             width: '100%',
             height: '100%',
@@ -325,7 +299,7 @@ class DisplayPlace extends React.Component {
 
         const displayStyle = {
             left: imgWidth ? imgWidth * scale >= width ? 6 : (width - imgWidth * scale) / 2 + 6 : 6,
-            top: imgHeight ? imgHeight * scale >= height ? 6 : (height - imgHeight * scale) / 2 + 6 : 6
+            top: imgHeight ? imgHeight * scale >= height ? 6 : (height - imgHeight * scale) / 2 + 6 : 6,
         }
 
         const cropStyle = {
@@ -349,7 +323,7 @@ class DisplayPlace extends React.Component {
                         onMouseOut={this.handleToolEnd}
                         onClick={this.handleToolEnd}
                         style={displayStyle}>
-                        <canvas ref='canvas' width={imgWidth} height={imgHeight}>
+                        <canvas ref='canvas' width={imgWidth} height={imgHeight} className='draw-canvas'>
                             Your Browser Does Not Support Canvas
                         </canvas>
 

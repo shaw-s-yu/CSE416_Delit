@@ -228,3 +228,8 @@ nav i{
 .thumb:hover{
     background-color: rgb(119, 119, 119);
 }
+
+.toolbar-cell-disable{
+    background-color: gray !important;
+    cursor: auto;
+}
