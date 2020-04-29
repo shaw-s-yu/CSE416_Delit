@@ -1,5 +1,4 @@
-import gql from 'graphql-tag'
-
+import gql from "graphql-tag";
 
 export default {
     ADD_PROJECT: gql`
