@@ -5,7 +5,7 @@ export default {
     mutation addProject(
             $name: String!,
             $owner: String!,
-            $editors: [String]!,
+            $editors: [String],
         ){
             addProject(
             name: $name,
