@@ -98,35 +98,34 @@ class Dashboard extends React.Component {
                     handleSelect={this.handleSelectSide}
                     selected={selected}
                 />
-                <Query query={query} variables={{ userId: user._id }}>
-                    {({ loading, error, data }) => {
-                        if (loading) return 'loading'
-                        if (error) return 'error'
-                        if (query === QueryList.EMPTY_QUERY)
+
+                <div className="dashboard-display" style={displayStyle}>
+                    <Query query={query} variables={{ userId: user._id }}>
+                        {({ loading, error, data }) => {
+                            if (loading) return 'loading'
+                            if (error) return 'error'
+                            if (query === QueryList.EMPTY_QUERY)
+                                return 'Wrong Sidebar Selection or needs to be developped'
+                            if (!data) return 'error'
+
+                            const projects = this.getProjects(data)
                             return (
-                                <div className="dashboard-display" style={displayStyle}>
-                                    'Wrong Sidebar Selection or needs to be developped
-                                </div>
+                                <>
+                                    <Searchbar />
+                                    <ItemList
+                                        history={this.props.history}
+                                        handleOpen={this.handleDialogsOpen}
+                                        handleClose={this.handleDialogsClose}
+                                        selected={selected}
+                                        projects={projects}
+                                    />
+                                    <Pagination className="dashboard-pagination center" size="large" color="secondary" />
+                                </>
                             )
-                        if (!data) return 'error'
+                        }}
+                    </Query>
+                </div>
 
-                        const projects = this.getProjects(data)
-                        return (
-                            <div className="dashboard-display" style={displayStyle}>
-                                <Searchbar />
-                                <ItemList
-                                    history={this.props.history}
-                                    handleOpen={this.handleDialogsOpen}
-                                    handleClose={this.handleDialogsClose}
-                                    selected={selected}
-                                    projects={projects}
-                                />
-                                <Pagination className="dashboard-pagination center" size="large" color="secondary" />
-
-                            </div>
-                        )
-                    }}
-                </Query>
                 <ProjectDialog project={this.state.project} handleClose={this.handleDialogsClose} />
                 <Dialogs
                     {...this.state}
