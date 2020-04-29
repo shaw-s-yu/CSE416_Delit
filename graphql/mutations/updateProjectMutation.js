@@ -18,7 +18,7 @@ module.exports = {
         },
     },
     resolve: (root, params) => {
-        return ProjectModel.findByIdAndUpdate(params.id, { name: params.text, creator: params.creator, lastUpdate: new Date() }, function (err) {
+        return ProjectModel.findByIdAndUpdate(params.id, { name: params.name }, function (err) {
             if (err) return next(err);
         });
     }
