@@ -197,11 +197,6 @@ class CanvasController {
 
             const { left, top, width, height } = data
             const toReturn = this.ctx.getImageData(left, top, width, height)
-            // this.left = left;
-            // this.top = top;
-            // this.cropWidth = width;
-            // this.cropHeight = height;
-            // this.CROP.clearCropArea();
 
             return toReturn
 
