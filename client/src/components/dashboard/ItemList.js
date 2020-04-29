@@ -16,22 +16,43 @@ class ItemList extends React.Component {
         this.props.history.push('/project/fwef')
     };
 
+    getQuery = () => {
+        const { selected } = this.props
+        if (selected === 'all')
+            return QueryList.GET_MY_RELATED_PROJECTS
+        if (selected === 'create')
+            return QueryList.GET_MY_OWNED_PROJECTS
+        if (selected === 'share')
+            return QueryList.GET_MY_SHARED_PROJECTS
+
+        return QueryList.EMPTY_QUERY
+    }
+
+    getProjects = (data) => {
+        const { selected } = this.props
+        if (selected === 'all')
+            return data.user.projectsRelated
+        if (selected === 'create')
+            return data.user.projectsOwned
+        if (selected === 'share')
+            return data.user.projectsShared
+        return null
+    }
 
     render() {
-        const { selected } = this.props;
-
-
-        const query = selected === 'all' ? QueryList.GET_PROJECTS : QueryList.EMPTY_QUERY;
+        const { user } = this.props;
+        if (user === null) return 'loading'
+        const query = this.getQuery();
 
         return (
-            <Query query={query}>
+            <Query query={query} variables={{ userId: user._id }}>
                 {({ loading, error, data }) => {
                     if (loading) return 'loading'
                     if (error) return 'error'
                     if (query === QueryList.EMPTY_QUERY) return 'Wrong Sidebar Selection or needs to be developped'
-                    if (data) console.log(data.projects)
+                    if (!data) return 'error'
 
-                    const { projects } = data
+                    const projects = this.getProjects(data)
                     const numItem = projects.length
                     const style = {
                         height: numItem > 3 ? 600 : 300
@@ -81,10 +102,10 @@ class ItemList extends React.Component {
 
 }
 
-const mapStateToProps = () => {
-
+const mapStateToProps = (state) => {
+    const { user } = state.auth
     return {
-
+        user
     }
 };
 

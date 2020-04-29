@@ -43,7 +43,6 @@ class LoginScreen extends React.Component {
         console.log('running on:', API_URL)
         this.props.socket.on('authBack', data => {
             const { err, msg, auth } = data
-            console.log(data)
             if (err === false && this.popup) {
                 this.popup.close()
                 this.props.handleLoginSuccess(auth)
