@@ -7,6 +7,7 @@ import Pagination from '../tools/Pagination'
 import { connect } from 'react-redux';
 import Sidebar from "./Sidebar";
 import Dialogs from './Dialogs'
+import ProjectDialog from "./ProjectDialog";
 
 class Dashboard extends React.Component {
     state = {
@@ -67,6 +68,7 @@ class Dashboard extends React.Component {
                     />
                     <Pagination className="dashboard-pagination center" size="large" color="secondary" />
                 </div>
+                <ProjectDialog project={this.state.project} handleClose={this.handleDialogsClose}/>
                 <Dialogs
                     {...this.state}
                     handleOpen={this.handleDialogsOpen}
