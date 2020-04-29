@@ -13,7 +13,7 @@
     ],
     "projects": [
         {
-            "name": "Project1",
+            "name": "Down to the Sea",
             "owner": "5e9fa3908dead93aa46f6a6d",
             "editors": [
                 "5ea0e25872182f00242b848a"
@@ -27,10 +27,10 @@
             ]
         },
         {
-            "name": "Project2",
-            "owner": "5e9fa3908dead93aa46f6a6d",
+            "name": "The long Destiny",
+            "owner": "5ea0e25872182f00242b848a",
             "editors": [
-                "5ea0e25872182f00242b848a"
+                "5e9fa3908dead93aa46f6a6d"
             ],
             "lastModifiedBy": "5ea0e25872182f00242b848a",
             "mapId": "1",
