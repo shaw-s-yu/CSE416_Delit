@@ -25,8 +25,8 @@ exports.Socket = function (socket) {
 
     this.drawController = data => {
         socket.broadcast.emit('drawBack', data)
-        let newimg = new TilesetModel();
-        newimg.image = data.data;
-        newimg.save();
+        // let newimg = new TilesetModel();
+        // newimg.image = data.data;
+        // newimg.save();
     }
 }

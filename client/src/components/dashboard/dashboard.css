@@ -82,10 +82,8 @@
 
 .dashboard-pagination{
     bottom:10px;
-    width:40%;
-    left:30%;
-    position: absolute;
     overflow: hidden;
+    position: absolute;
 }
 
 .dashboard-itemlist{

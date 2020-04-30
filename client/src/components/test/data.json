@@ -387,24 +387,21 @@
     ],
     "tilesets": [
         {
-            "_id": "1",
-            "tiledSetsImage": "",
+            "imageId": "",
             "tileWidth": "123",
             "tileHeight": "123",
             "width": 10,
             "height": 10
         },
         {
-            "_id": "2",
-            "tiledSetsImage": "",
+            "imageId": "",
             "tileWidth": "123",
             "tileHeight": "123",
             "width": 10,
             "height": 10
         },
         {
-            "_id": "3",
-            "tiledSetsImage": "",
+            "imageId": "",
             "tileWidth": "123",
             "tileHeight": "123",
             "width": 10,

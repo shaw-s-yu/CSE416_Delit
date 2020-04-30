@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
         team: false,
         invite: false,
         selected: 'all',
+        page: 1,
     };
 
     handleSelectSide = (type) => {
@@ -55,12 +56,25 @@ class Dashboard extends React.Component {
     getProjects = (data) => {
         const { selected } = this.state
         if (selected === 'all')
-            return data.user.projectsRelated
+            return {
+                projects: data.user.projectsRelated,
+                amount: data.user.projectsRelatedAmount
+            }
         if (selected === 'create')
-            return data.user.projectsOwned
+            return {
+                projects: data.user.projectsOwned,
+                amount: data.user.projectsOwnedAmount
+            }
         if (selected === 'share')
-            return data.user.projectsShared
+            return {
+                projects: data.user.projectsShared,
+                amount: data.user.projectsSharedAmount
+            }
         return null
+    }
+
+    handlePagination = (e, value) => {
+        this.setState({ page: value })
     }
 
 
@@ -76,7 +90,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user } = this.state;
+        const { showSidebar, selected, user, page } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -86,6 +100,8 @@ class Dashboard extends React.Component {
             marginLeft: left + "%",
             width: width + "%",
         }
+
+        const pageSkip = (page - 1) * 6
 
         return (
 
@@ -100,7 +116,7 @@ class Dashboard extends React.Component {
                 />
 
                 <div className="dashboard-display" style={displayStyle}>
-                    <Query query={query} variables={{ userId: user._id }}>
+                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip }}>
                         {({ loading, error, data }) => {
                             if (loading) return 'loading'
                             if (error) return 'error'
@@ -108,7 +124,8 @@ class Dashboard extends React.Component {
                                 return 'Wrong Sidebar Selection or needs to be developped'
                             if (!data) return 'error'
 
-                            const projects = this.getProjects(data)
+                            const { projects, amount } = this.getProjects(data)
+                            const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1
                             return (
                                 <>
                                     <Searchbar />
@@ -119,7 +136,14 @@ class Dashboard extends React.Component {
                                         selected={selected}
                                         projects={projects}
                                     />
-                                    <Pagination className="dashboard-pagination center" size="large" color="secondary" />
+                                    <Pagination
+                                        className="dashboard-pagination center"
+                                        size="large"
+                                        color="secondary"
+                                        count={pageAmount}
+                                        handlePagination={this.handlePagination}
+                                        defaultPage={page}
+                                    />
                                 </>
                             )
                         }}

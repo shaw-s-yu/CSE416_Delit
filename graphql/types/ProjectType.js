@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLList} = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
 const UserModel = require('../../models/mongo-user')
 
 
@@ -12,7 +12,7 @@ module.exports = new GraphQLObjectType({
             name: {
                 type: GraphQLString
             },
-            img: {
+            imageId: {
                 type: GraphQLString
             },
             owner: {

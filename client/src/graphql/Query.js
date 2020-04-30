@@ -19,46 +19,52 @@ export default {
     GET_MY_OWNED_PROJECTS: graphql`
     query user(
         $userId: String!
+        $pageSkip: Int!
     ){
         user(
             id:$userId
         ){
-            projectsOwned{
+            projectsOwned(skip: $pageSkip){
                 name
                 ownerInfo{
                     username
                 }
             }
+            projectsOwnedAmount
         }
     }`,
     GET_MY_RELATED_PROJECTS: graphql`
     query user(
         $userId: String!
+        $pageSkip: Int!
     ){
         user(
             id:$userId
         ){
-            projectsRelated{
+            projectsRelated(skip: $pageSkip){
                 name
                 ownerInfo{
                     username
                 }
             }
+            projectsRelatedAmount
         }
     }`,
     GET_MY_SHARED_PROJECTS: graphql`
     query user(
         $userId: String!
+        $pageSkip: Int!
     ){
         user(
             id:$userId
         ){
-            projectsShared{
+            projectsShared(skip: $pageSkip){
                 name
                 ownerInfo{
                     username
                 }
             }
+            projectsSharedAmount
         }
     }`,
 
