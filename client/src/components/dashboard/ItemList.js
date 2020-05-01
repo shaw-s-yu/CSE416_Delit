@@ -20,7 +20,7 @@ class ItemList extends React.Component {
 
 
     render() {
-        const { projects, query, userId ,pageSkip } = this.props;
+        const { projects, query, userId, pageSkip } = this.props;
         const numItem = projects.length;
         const style = {
             height: numItem > 3 ? 600 : 300
@@ -43,7 +43,7 @@ class ItemList extends React.Component {
                                 top: numItem > 3 ? row === 0 ? top1s2 : top2s2 : top1s1,
                                 left: col === 0 ? left1s : col === 1 ? left2s : left3s,
                             }
-                            const { name, ownerInfo, img, _id } = project;
+                            const { _id } = project;
 
                             return (
                                 <Mutation mutation={mutation} key={_id}>
@@ -64,16 +64,13 @@ class ItemList extends React.Component {
                                                 }}>
                                                 <Card
                                                     className='item-card'
-                                                    owner={ownerInfo.username}
-                                                    name={name}
+                                                    project={project}
                                                     style={cardStyle}
-                                                    img={img}
                                                     handleOpen={this.props.handleOpen}
                                                     onClick={this.handleGoEdit}
                                                     key={_id}
                                                 />
                                             </form>
-                                            {loading && <p>Loading...</p>}
                                             {error && <p>Error :( Please try again</p>}
                                         </div>
                                     )}

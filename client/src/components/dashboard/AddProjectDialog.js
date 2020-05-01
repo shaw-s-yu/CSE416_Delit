@@ -5,13 +5,13 @@ import {v1} from "uuid";
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
 import MutationList from '../../graphql/Mutation';
-import QueryList from '../../graphql/Query';
 
-class ProjectDialog extends React.Component {
+class AddProjectDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,26 +33,32 @@ class ProjectDialog extends React.Component {
     };
 
     render() {
-        const { project, handleClose } = this.props;
+        const { open, handleClose, query, userId, pageSkip } = this.props;
         const mutation = MutationList.ADD_PROJECT;
-        const getProjectsQuery = QueryList.GET_PROJECTS;
         return (
             <Mutation mutation={mutation}>
                 {(addProject, {loading, error }) => (
-                    <Dialog open={project} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    <Dialog open={open} onClose={handleClose}>
+                        <DialogTitle id="CreateProject-dialog-title">Create Project</DialogTitle>
                         <form onSubmit={e => {
                             e.preventDefault();
                             addProject({
                                 variables: {
                                     name: this.state.projectName, owner: this.props.auth.user._id
                                 },
-                                refetchQueries: [{query: getProjectsQuery}]
+                                refetchQueries: [{
+                                    query: query,
+                                    variables:{
+                                        userId: userId,
+                                        pageSkip:pageSkip}
+                                }]
                             });
-                            this.setState(  { projectName : "",
-                                                    tileWidth : "",
-                                                    tileHeight : "",
-                                                    mapWidth : "",
-                                                    mapHeight : "",
+                            this.setState(  {
+                                projectName : "",
+                                tileWidth : "",
+                                tileHeight : "",
+                                mapWidth : "",
+                                mapHeight : "",
                             });
                         }}>
                             <DialogContent>
@@ -132,4 +138,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(ProjectDialog);
+export default connect(mapStateToProps)(AddProjectDialog);
