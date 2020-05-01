@@ -16,9 +16,9 @@ export default {
     `,
     REMOVE_PROJECT: gql`
     mutation removeProject(
-            $_id: String!
+            $id: String!
         ){
-            removeProject(name: $name){
+            removeProject(id: $id){
                 name
                 owner
                 editors
@@ -30,10 +30,10 @@ export default {
     `,
     UPDATE_PROJECT: gql`
     mutation updateProject(
-            $_id: String!,
+            $id: String!,
             $name: String!,
         ){
-            updateProject(name: $name, owner: $owner, editors: $editors){
+            updateProject(id: $id, name: $name){
                 name
                 owner
                 editors

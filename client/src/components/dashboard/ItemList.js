@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../tools/Card'
-
-
+import { Mutation } from 'react-apollo';
+import MutationList from '../../graphql/Mutation';
+import QueryList from "../../graphql/Query";
+import '../tools/tools.css'
 class ItemList extends React.Component {
 
     state = {
@@ -18,14 +20,13 @@ class ItemList extends React.Component {
 
 
     render() {
-        const { projects } = this.props;
-        const numItem = projects.length
+        const { projects, query, userId, pageSkip } = this.props;
+        const numItem = projects.length;
         const style = {
             height: numItem > 3 ? 600 : 300
-        }
-
+        };
+        const mutation = MutationList.REMOVE_PROJECT;
         return (
-
             <div className="dashboard-itemlist">
                 <div className="dashboard-itemlist-wrapper" style={style}>
                     {
@@ -42,19 +43,38 @@ class ItemList extends React.Component {
                                 top: numItem > 3 ? row === 0 ? top1s2 : top2s2 : top1s1,
                                 left: col === 0 ? left1s : col === 1 ? left2s : left3s,
                             }
-                            const { name, ownerInfo, img } = project;
+                            const { _id } = project;
 
                             return (
-                                <Card
-                                    className='item-card'
-                                    owner={ownerInfo.username}
-                                    name={name}
-                                    style={cardStyle}
-                                    img={img}
-                                    handleOpen={this.props.handleOpen}
-                                    onClick={this.handleGoEdit}
-                                    key={index}
-                                />
+                                <Mutation mutation={mutation} key={_id}>
+                                    {(removeProject, { loading, error }) => (
+                                        <div>
+                                            <form
+                                                onSubmit={e => {
+                                                    e.preventDefault();
+                                                    removeProject({
+                                                        variables: { id: _id },
+                                                        refetchQueries: [{
+                                                            query: query,
+                                                            variables:{
+                                                                userId: userId,
+                                                                pageSkip:pageSkip}
+                                                        }]
+                                                    });
+                                                }}>
+                                                <Card
+                                                    className='item-card'
+                                                    project={project}
+                                                    style={cardStyle}
+                                                    handleOpen={this.props.handleOpen}
+                                                    onClick={this.handleGoEdit}
+                                                    key={_id}
+                                                />
+                                            </form>
+                                            {error && <p>Error :( Please try again</p>}
+                                        </div>
+                                    )}
+                                </Mutation>
                             );
                         })
                     }
@@ -66,7 +86,7 @@ class ItemList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { user } = state.auth
+    const { user } = state.auth;
     return {
         user
     }
@@ -76,4 +96,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemList);;
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

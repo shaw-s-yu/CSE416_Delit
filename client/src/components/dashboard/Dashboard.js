@@ -7,11 +7,12 @@ import Pagination from '../tools/Pagination'
 import { connect } from 'react-redux';
 import Sidebar from "./Sidebar";
 import Dialogs from './Dialogs'
-import ProjectDialog from "./ProjectDialog";
+import AddProjectDialog from "./AddProjectDialog";
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios'
 import * as handler from '../../store/database/HomeScreenHandler';
+import UpdateProjectDialog from "./UpdateProjectDialog";
 
 class Dashboard extends React.Component {
     state = {
@@ -21,7 +22,8 @@ class Dashboard extends React.Component {
         invite: false,
         selected: 'all',
         page: 1,
-        search: ''
+        search: '',
+        rename: false,
     };
 
     handleSearchChange = (e) => {
@@ -30,15 +32,15 @@ class Dashboard extends React.Component {
 
     handleSelectSide = (type) => {
         this.setState({ selected: type })
-    }
+    };
 
     handleDialogsOpen = (type) => {
-        this.setState({ [type]: true })
-    }
+        this.setState({ [type]: true });
+    };
 
     handleDialogsClose = (type) => {
         this.setState({ [type]: false })
-    }
+    };
 
     handleSidebarOpen = () => {
         let { showSidebar } = this.state;
@@ -47,40 +49,40 @@ class Dashboard extends React.Component {
     };
 
     getQuery = () => {
-        const { selected } = this.state
+        const { selected } = this.state;
         if (selected === 'all')
-            return QueryList.GET_MY_RELATED_PROJECTS
+            return QueryList.GET_MY_RELATED_PROJECTS;
         if (selected === 'create')
-            return QueryList.GET_MY_OWNED_PROJECTS
+            return QueryList.GET_MY_OWNED_PROJECTS;
         if (selected === 'share')
-            return QueryList.GET_MY_SHARED_PROJECTS
+            return QueryList.GET_MY_SHARED_PROJECTS;
 
         return QueryList.EMPTY_QUERY
-    }
+    };
 
     getProjects = (data) => {
-        const { selected } = this.state
+        const { selected } = this.state;
         if (selected === 'all')
             return {
                 projects: data.user.projectsRelated,
                 amount: data.user.projectsRelatedAmount
-            }
+            };
         if (selected === 'create')
             return {
                 projects: data.user.projectsOwned,
                 amount: data.user.projectsOwnedAmount
-            }
+            };
         if (selected === 'share')
             return {
                 projects: data.user.projectsShared,
                 amount: data.user.projectsSharedAmount
-            }
+            };
         return null
-    }
+    };
 
     handlePagination = (e, value) => {
         this.setState({ page: value })
-    }
+    };
 
 
     componentDidMount() {
@@ -99,14 +101,14 @@ class Dashboard extends React.Component {
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
-        if (!user) return 'loading'
+        if (!user) return 'loading';
         const query = this.getQuery();
         const displayStyle = {
             marginLeft: left + "%",
             width: width + "%",
-        }
+        };
 
-        const pageSkip = (page - 1) * 6
+        const pageSkip = (page - 1) * 6;
 
         return (
 
@@ -124,14 +126,14 @@ class Dashboard extends React.Component {
                     <Searchbar value={search} onChange={this.handleSearchChange} />
                     <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search }}>
                         {({ loading, error, data }) => {
-                            if (loading) return 'loading'
-                            if (error) return 'error'
+                            if (loading) return 'loading';
+                            if (error) return 'error';
                             if (query === QueryList.EMPTY_QUERY)
-                                return 'Wrong Sidebar Selection or needs to be developped'
-                            if (!data) return 'error'
+                                return 'Wrong Sidebar Selection or needs to be developped';
+                            if (!data) return 'error';
 
-                            const { projects, amount } = this.getProjects(data)
-                            const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1
+                            const { projects, amount } = this.getProjects(data);
+                            const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                             return (
                                 <>
                                     <ItemList
@@ -140,6 +142,10 @@ class Dashboard extends React.Component {
                                         handleClose={this.handleDialogsClose}
                                         selected={selected}
                                         projects={projects}
+                                        query={query}
+                                        userId={user._id}
+                                        pageSkip={pageSkip}
+
                                     />
                                     <Pagination
                                         className="dashboard-pagination center"
@@ -154,8 +160,20 @@ class Dashboard extends React.Component {
                         }}
                     </Query>
                 </div>
-
-                <ProjectDialog project={this.state.project} handleClose={this.handleDialogsClose} />
+                <AddProjectDialog
+                    open={this.state.project}
+                    handleClose={this.handleDialogsClose}
+                    query={query}
+                    userId={user._id}
+                    pageSkip={pageSkip}
+                />
+                <UpdateProjectDialog
+                    open={this.state.rename}
+                    handleClose={this.handleDialogsClose}
+                    query={query}
+                    userId={user._id}
+                    pageSkip={pageSkip}
+                />
                 <Dialogs
                     {...this.state}
                     handleOpen={this.handleDialogsOpen}
@@ -170,7 +188,7 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     const { history } = ownProps;
-    const { user } = state.auth
+    const { user } = state.auth;
     return { history, user };
 };
 
