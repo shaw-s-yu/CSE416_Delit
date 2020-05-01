@@ -20,51 +20,63 @@ export default {
     query user(
         $userId: String!
         $pageSkip: Int!
+        $search: String!
     ){
         user(
             id:$userId
         ){
-            projectsOwned(skip: $pageSkip){
+            projectsOwned(
+                projectName: $search
+                skip: $pageSkip
+                ){
                 name
                 ownerInfo{
                     username
                 }
             }
-            projectsOwnedAmount
+            projectsOwnedAmount(projectName: $search)
         }
     }`,
     GET_MY_RELATED_PROJECTS: graphql`
     query user(
         $userId: String!
         $pageSkip: Int!
+        $search: String!
     ){
         user(
             id:$userId
         ){
-            projectsRelated(skip: $pageSkip){
+            projectsRelated(
+                projectName: $search
+                skip: $pageSkip
+                ){
                 name
                 ownerInfo{
                     username
                 }
             }
-            projectsRelatedAmount
+            projectsRelatedAmount(projectName: $search)
         }
     }`,
     GET_MY_SHARED_PROJECTS: graphql`
     query user(
         $userId: String!
         $pageSkip: Int!
+        $search: String!
     ){
         user(
             id:$userId
         ){
-            projectsShared(skip: $pageSkip){
+            projectsShared(
+                projectName: $search
+                skip: $pageSkip
+                ){
                 name
                 ownerInfo{
                     username
                 }
             }
-            projectsSharedAmount
+            projectsSharedAmount(projectName: $search)
         }
     }`,
 

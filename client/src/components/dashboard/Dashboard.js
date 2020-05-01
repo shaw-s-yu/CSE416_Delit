@@ -21,7 +21,12 @@ class Dashboard extends React.Component {
         invite: false,
         selected: 'all',
         page: 1,
+        search: ''
     };
+
+    handleSearchChange = (e) => {
+        this.setState({ search: e.target.value })
+    }
 
     handleSelectSide = (type) => {
         this.setState({ selected: type })
@@ -90,7 +95,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page } = this.state;
+        const { showSidebar, selected, user, page, search } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -116,7 +121,8 @@ class Dashboard extends React.Component {
                 />
 
                 <div className="dashboard-display" style={displayStyle}>
-                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip }}>
+                    <Searchbar value={search} onChange={this.handleSearchChange} />
+                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search }}>
                         {({ loading, error, data }) => {
                             if (loading) return 'loading'
                             if (error) return 'error'
@@ -128,7 +134,6 @@ class Dashboard extends React.Component {
                             const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1
                             return (
                                 <>
-                                    <Searchbar />
                                     <ItemList
                                         history={this.props.history}
                                         handleOpen={this.handleDialogsOpen}
