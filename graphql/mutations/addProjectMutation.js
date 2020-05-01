@@ -18,6 +18,9 @@ module.exports = {
         },
         editors: {
             type: new GraphQLList(GraphQLString)
+        },
+        imageId: {
+            type: new GraphQLNonNull(GraphQLString)
         }
     },
     resolve: (root, params) => {

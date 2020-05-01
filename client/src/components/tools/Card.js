@@ -2,24 +2,56 @@ import React from 'react'
 import './tools.css'
 import { connect } from 'react-redux';
 import * as handler from "../../store/database/DashboardHandler";
+import axios from 'axios'
 
 class Card extends React.Component {
+
+    state = {
+        imageData: ''
+    }
 
     handleOnClick = (type, id) => {
         const { handleOpen } = this.props;
         handleOpen.bind(this, type);
         this.props.passProjectId(id);
     }
-    render() {
 
+    arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    };
+
+    componentDidMount() {
+        const { imageId } = this.props.project
+        if (imageId !== '')
+            axios.get(`/data/image?imageId=${this.props.project.imageId}`).then(res => {
+                const { err, msg, data } = res
+                if (err)
+                    console.log(msg)
+                else {
+                    const base64Flag = 'data:image/jpeg;base64,';
+                    const imageStr = this.arrayBufferToBase64(data.data.data)
+                    this.setState({ imageData: base64Flag + imageStr })
+                }
+            })
+
+    }
+
+    render() {
+        const { imageData } = this.state
         const { className, style, handleOpen, onClick, project, handleDelete, res } = this.props;
-        const { name, ownerInfo, img } = project;
+        const { name, ownerInfo } = project;
         const owner = ownerInfo.username;
-        const image = img ? img : dummyImg;
+
         return (
             <div >
                 <div className={className} style={style} onClick={onClick}>
-                    <img src={image} className='card-preview-img' alt='preview' />
+                    <img src={imageData} className='card-preview-img' alt='Loading' />
                     <div className="card-info-box">
                         <span className="card-info-name">Name: {name}</span>
                         <span className="card-info-last-modify">Owner: {owner}</span>
@@ -39,9 +71,16 @@ class Card extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        socket: state.backend.socket
+    }
+};
+
 const mapDispatchToProps = (dispatch) => ({
     passProjectId: (id) => dispatch(handler.passProjectIdHandler(id))
 });
-export default connect(null, mapDispatchToProps)(Card);
 
-const dummyImg = "https://image.winudf.com/v2/image/Y29tLmROdWdnZXRzLnBva2Vtb25fc2NyZWVuXzFfMTUzMzE5NDQ3NF8wMTI/screen-1.jpg?fakeurl=1&type=.jpg";
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

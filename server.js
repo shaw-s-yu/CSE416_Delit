@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const authRoutes = require('./routes/auth-routes');
+const dataRoutes = require('./routes/data-routes')
 const passportSetup = require('./config/passport-setup')
 const mongoose = require('mongoose')
 const keys = require('./config');
@@ -55,12 +56,16 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-mongoose.connect(keys.mongoDB.dbURI, { useFindAndModify: false }, () => {
+mongoose.connect(keys.mongoDB.dbURI, {
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, () => {
     console.log('connected to mongodb');
 });
 
 app.use('/auth', authRoutes)
-
+app.use('/data', dataRoutes)
 
 app.use('/graphql', expressGraphql({
     schema,

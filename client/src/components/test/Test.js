@@ -33,7 +33,8 @@ class TestScreen extends React.Component {
                 variables: {
                     name: p.name,
                     owner: p.owner,
-                    editors: p.editors
+                    editors: p.editors,
+                    imageId: p.imageId
                 }
             })
         })

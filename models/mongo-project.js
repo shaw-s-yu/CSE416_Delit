@@ -7,7 +7,8 @@ var ProjectSchema = new Schema({
     img: String,
     editors: [String],
     mapId: String,
-    tilesetId: [String]
+    tilesetId: [String],
+    imageId: String
     // lastUpdate: { type: Date, default: Date.now },
 });
 

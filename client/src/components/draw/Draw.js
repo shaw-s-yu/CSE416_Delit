@@ -10,6 +10,8 @@ import TOOLS from '../tools/ToolbarTools'
 import Transactions from './JSTPS'
 import ReactFileReader from 'react-file-reader';
 import DrawTransaction from './DrawTransaction'
+import { Button } from "react-bootstrap";
+import Dialog from '../tools/Dialog'
 
 class Draw extends React.Component {
 
@@ -18,10 +20,20 @@ class Draw extends React.Component {
         borderColor: { r: 0, g: 0, b: 0, a: 1 },
         fillColor: { r: 255, g: 255, b: 255, a: 0.5 },
         scale: 1,
+        saveDialogOpen: false
     };
 
     transactions = new Transactions();
     display = React.createRef();
+
+
+    handleSaveDialogOpen = () => {
+        this.setState({ saveDialogOpen: true })
+    }
+
+    handleSaveDialogClose = () => {
+        this.setState({ saveDialogOpen: false })
+    }
 
 
     handleZoomEffect = (e) => {
@@ -128,6 +140,12 @@ class Draw extends React.Component {
         require("downloadjs")(imgData, "tileset@DELIT.jpeg", "image/jpeg");
     };
 
+    handleSave = () => {
+        const imgData = this.display.getImageData();
+        this.props.socket.emit('draw-save', imgData);
+        this.handleSaveDialogClose()
+    }
+
     getDisable = () => {
         return this.state.scale !== 1 ? true : false
     }
@@ -135,7 +153,7 @@ class Draw extends React.Component {
     render() {
 
         const { history } = this.props;
-        const { sliderValue, borderColor, fillColor, scale } = this.state;
+        const { sliderValue, borderColor, fillColor, scale, saveDialogOpen } = this.state;
 
         return (
             <div onClick={this.handleUnselect}>
@@ -154,7 +172,7 @@ class Draw extends React.Component {
                                     </ReactFileReader>
                             },
                             { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} onClick={this.handleExport} /> },
-                            { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
+                            { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} onClick={this.handleSaveDialogOpen} /> },
                         ]}
                         secondaryContent={[
                             { name: TOOLS.PENCIL, item: <i className={"fas fa-pencil-alt"} style={{ fontSize: '24px' }} /> },
@@ -190,6 +208,19 @@ class Draw extends React.Component {
                         scale={scale}
                     />
                 </div>
+                <Dialog
+                    header="Save Image"
+                    open={saveDialogOpen}
+                    actions={[
+                        <Button key='1' onClick={this.handleSave}>Yes</Button>,
+                        <Button key='2' onClick={this.handleSaveDialogClose}>Cancel</Button>
+                    ]}
+                    var totalTextbox='1'
+                    content={[
+                        <h3>Are You Sure to Save In Delit Database?</h3>,
+                        <h3>Old Version will be overwriten</h3>
+                    ]} />
+
             </div>
         )
     }

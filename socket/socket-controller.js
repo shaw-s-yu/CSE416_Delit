@@ -1,5 +1,5 @@
 const User = require('../models/mongo-user')
-const TilesetModel = require('../models/mongo-tileset')
+const ImageModel = require('../models/mongo-image')
 
 
 exports.Socket = function (socket) {
@@ -9,6 +9,7 @@ exports.Socket = function (socket) {
     this.on = () => {
         this.socket.on('username_register', this.usernameController)
         this.socket.on('draw', this.drawController)
+        this.socket.on('draw-save', this.drawSaveController)
     }
 
     this.usernameController = data => {
@@ -25,8 +26,11 @@ exports.Socket = function (socket) {
 
     this.drawController = data => {
         socket.broadcast.emit('drawBack', data)
-        // let newimg = new TilesetModel();
-        // newimg.image = data.data;
-        // newimg.save();
+    }
+
+    this.drawSaveController = data => {
+        let newimg = new ImageModel();
+        newimg.data = new Buffer(data.split(",")[1], "base64");
+        newimg.save();
     }
 }

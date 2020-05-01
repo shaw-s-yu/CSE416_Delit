@@ -6,8 +6,14 @@ export default {
             $name: String!,
             $owner: String!,
             $editors: [String],
+            $imageId: String!
         ){
-            addProject(name: $name,owner: $owner,editors: $editors){
+            addProject(
+                name: $name,
+                owner: $owner,
+                editors: $editors
+                imageId: $imageId
+                ){
                 name
                 owner
                 editors

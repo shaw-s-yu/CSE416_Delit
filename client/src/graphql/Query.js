@@ -31,6 +31,7 @@ export default {
                 ){
                 name
                 _id
+                imageId
                 ownerInfo{
                     username
                 }
@@ -53,6 +54,7 @@ export default {
                 ){
                 name
                 _id
+                imageId
                 ownerInfo{
                     username
                 }
@@ -75,6 +77,7 @@ export default {
                 ){
                 name
                 _id
+                imageId
                 ownerInfo{
                     username
                 }
