@@ -161,19 +161,6 @@ class Dashboard extends React.Component {
                         }}
                     </Query>
                 </div>
-
-                {/* <UpdateProjectDialog
-                    open={this.state.rename}
-                    handleClose={this.handleDialogsClose}
-                    query={query}
-                    userId={user._id}
-                    pageSkip={pageSkip}
-                />
-                <Dialogs
-                    {...this.state}
-                    handleOpen={this.handleDialogsOpen}
-                    handleClose={this.handleDialogsClose}
-                /> */}
             </div >
 
         )
