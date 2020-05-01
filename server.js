@@ -55,7 +55,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-mongoose.connect(keys.mongoDB.dbURI, () => {
+mongoose.connect(keys.mongoDB.dbURI, { useFindAndModify: false }, () => {
     console.log('connected to mongodb');
 });
 

@@ -124,7 +124,7 @@ class Dashboard extends React.Component {
 
                 <div className="dashboard-display" style={displayStyle}>
                     <Searchbar value={search} onChange={this.handleSearchChange} />
-                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search }}>
+                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search }} fetchPolicy={'network-only'}>
                         {({ loading, error, data }) => {
                             if (loading) return 'loading';
                             if (error) return 'error';
@@ -134,6 +134,10 @@ class Dashboard extends React.Component {
 
                             const { projects, amount } = this.getProjects(data);
                             const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
+                            const refetch = {
+                                query: query,
+                                variables: { userId: user._id, pageSkip: pageSkip, search: search }
+                            }
                             return (
                                 <>
                                     <ItemList
@@ -142,10 +146,7 @@ class Dashboard extends React.Component {
                                         handleClose={this.handleDialogsClose}
                                         selected={selected}
                                         projects={projects}
-                                        query={query}
-                                        userId={user._id}
-                                        pageSkip={pageSkip}
-
+                                        refetch={refetch}
                                     />
                                     <Pagination
                                         className="dashboard-pagination center"

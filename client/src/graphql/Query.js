@@ -30,6 +30,7 @@ export default {
                 skip: $pageSkip
                 ){
                 name
+                _id
                 ownerInfo{
                     username
                 }
@@ -51,6 +52,7 @@ export default {
                 skip: $pageSkip
                 ){
                 name
+                _id
                 ownerInfo{
                     username
                 }
@@ -72,6 +74,7 @@ export default {
                 skip: $pageSkip
                 ){
                 name
+                _id
                 ownerInfo{
                     username
                 }

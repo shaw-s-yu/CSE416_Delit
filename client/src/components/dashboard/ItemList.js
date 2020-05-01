@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Card from '../tools/Card'
 import { Mutation } from 'react-apollo';
 import MutationList from '../../graphql/Mutation';
-import QueryList from "../../graphql/Query";
 import '../tools/tools.css'
 class ItemList extends React.Component {
 
@@ -17,15 +16,20 @@ class ItemList extends React.Component {
         this.props.history.push('/project/fwef')
     };
 
-
+    handleDelete = (callback, _id) => {
+        callback({
+            variables: {
+                id: _id
+            }
+        })
+    }
 
     render() {
-        const { projects, query, userId, pageSkip } = this.props;
+        const { projects, refetch } = this.props;
         const numItem = projects.length;
         const style = {
             height: numItem > 3 ? 600 : 300
         };
-        const mutation = MutationList.REMOVE_PROJECT;
         return (
             <div className="dashboard-itemlist">
                 <div className="dashboard-itemlist-wrapper" style={style}>
@@ -44,35 +48,19 @@ class ItemList extends React.Component {
                                 left: col === 0 ? left1s : col === 1 ? left2s : left3s,
                             }
                             const { _id } = project;
-
                             return (
-                                <Mutation mutation={mutation} key={_id}>
-                                    {(removeProject, { loading, error }) => (
-                                        <div>
-                                            <form
-                                                onSubmit={e => {
-                                                    e.preventDefault();
-                                                    removeProject({
-                                                        variables: { id: _id },
-                                                        refetchQueries: [{
-                                                            query: query,
-                                                            variables:{
-                                                                userId: userId,
-                                                                pageSkip:pageSkip}
-                                                        }]
-                                                    });
-                                                }}>
-                                                <Card
-                                                    className='item-card'
-                                                    project={project}
-                                                    style={cardStyle}
-                                                    handleOpen={this.props.handleOpen}
-                                                    onClick={this.handleGoEdit}
-                                                    key={_id}
-                                                />
-                                            </form>
-                                            {error && <p>Error :( Please try again</p>}
-                                        </div>
+                                <Mutation mutation={MutationList.REMOVE_PROJECT} key={_id} refetchQueries={[refetch]}>
+                                    {(removeProject, res) => (
+                                        <Card
+                                            res={res}
+                                            className='item-card'
+                                            project={project}
+                                            style={cardStyle}
+                                            handleOpen={this.props.handleOpen}
+                                            handleDelete={this.handleDelete.bind(this, removeProject, _id)}
+                                            onClick={this.handleGoEdit}
+                                            key={_id}
+                                        />
                                     )}
                                 </Mutation>
                             );

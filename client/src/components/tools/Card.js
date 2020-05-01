@@ -6,33 +6,33 @@ import * as handler from "../../store/database/DashboardHandler";
 class Card extends React.Component {
 
     handleOnClick = (type, id) => {
-        // console.log("lD: ", id);
         const { handleOpen } = this.props;
         handleOpen.bind(this, type);
         this.props.passProjectId(id);
     }
     render() {
 
-        const { className, style, handleOpen, onClick, project } = this.props;
-        const { name, ownerInfo, img, _id} = project;
+        const { className, style, handleOpen, onClick, project, handleDelete, res } = this.props;
+        const { name, ownerInfo, img } = project;
         const owner = ownerInfo.username;
-        // console.log("this: ", this);
-
         const image = img ? img : dummyImg;
         return (
             <div >
                 <div className={className} style={style} onClick={onClick}>
-                    <img src={image} className='card-preview-img' alt='preview'/>
+                    <img src={image} className='card-preview-img' alt='preview' />
                     <div className="card-info-box">
                         <span className="card-info-name">Name: {name}</span>
                         <span className="card-info-last-modify">Owner: {owner}</span>
                     </div>
                 </div>
+                {
+                    res.loading ? 'loading' : res.error ? res.error.message : null
+                }
                 <div className="card-info-btn-box" style={style}>
-                    <div className="card-info-btn-tl card-info-btn"onClick={handleOpen.bind(this, 'rename')}>Rename</div>
+                    <div className="card-info-btn-tl card-info-btn" onClick={handleOpen.bind(this, 'rename')}>Rename</div>
                     <div className="card-info-btn-tr card-info-btn">Dupliate</div>
                     <div className="card-info-btn-bl card-info-btn" onClick={handleOpen.bind(this, 'team')}>Team</div>
-                    <button type="submit" className="card-info-btn-br card-info-btn">Delete</button>
+                    <div className="card-info-btn-br card-info-btn" onClick={handleDelete}>Delete</div>
                     <div className="card-info-btn-center card-info-btn" >edit</div>
                 </div>
             </div>
