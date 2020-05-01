@@ -3,6 +3,7 @@ import LayerManager from './LayerManager'
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars'
 import squirtle from '../../../img/squirtle.jpg'
+import '../workscreen.css'
 
 const TOOLS = {
     ZOOM_IN: "ZOOM_IN",
@@ -73,11 +74,13 @@ class ImageWrapper extends React.Component {
             <Scrollbars style={{ ...style, width, height }} ref="scrollbar"
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
-                <div id="display-place" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect}>
-                    <LayerManager canvas={this.canvas} squirtle={squirtle} window={window} />
-                </div>
 
-            </ Scrollbars>
+                <div className="bg-content">
+                    <div id="display-place" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect}>
+                        <LayerManager canvas={this.canvas} squirtle={squirtle} window={window} />
+                    </div>
+                </div>
+            </Scrollbars>
 
         )
     }

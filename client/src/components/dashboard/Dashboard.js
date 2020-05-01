@@ -161,7 +161,7 @@ class Dashboard extends React.Component {
                         }}
                     </Query>
                 </div>
-            </div >
+            </div>
 
         )
     }

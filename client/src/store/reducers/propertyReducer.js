@@ -40,9 +40,9 @@ const propertyReducer = (state = initState, action) => {
 export default propertyReducer;
 
 const map = [
-    { name: 'name1', value: 'value1', nref: React.createRef(), vref: React.createRef() },
-    { name: 'name2', value: 'value2', nref: React.createRef(), vref: React.createRef() },
-    { name: 'name3', value: 'value3', nref: React.createRef(), vref: React.createRef() },
+    { name: 'Width boxes', value: '1000', nref: React.createRef(), vref: React.createRef() },
+    { name: 'Height boxes', value: '1000', nref: React.createRef(), vref: React.createRef() },
+    { name: 'Box size', value: '50', nref: React.createRef(), vref: React.createRef() },
 ]
 
 const layer = [
