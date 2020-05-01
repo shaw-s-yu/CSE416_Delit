@@ -13,55 +13,89 @@
     ],
     "projects": [
         {
-            "_id": "1",
-            "name": "Project1",
-            "owner": {
-                "_id": "5e53f06e905f950017b5c953",
-                "email": "123@123.com"
-            },
-            "editor": [
-                {
-                    "_id": "5e549434097acb0017c6fc1a",
-                    "email": "jie.dai@stonybrook.edu"
-                }
+            "name": "Down to the Sea",
+            "owner": "5e9fa3908dead93aa46f6a6d",
+            "editors": [
+                "5ea0e25872182f00242b848a",
+                "5ea262a9e4a7b520c829163b",
+                "5ea33ec1a8a9b4504485aa28"
             ],
-            "lastModifiedBy": [
-                {
-                    "_id": "5e549434097acb0017c6fc1a",
-                    "email": "jie.dai@stonybrook.edu"
-                }
-            ],
+            "lastModifiedBy": "5ea0e25872182f00242b848a",
             "mapId": "1",
-            "tiledSetsID": [
+            "tiledSetId": [
                 "1",
                 "2",
                 "3"
-            ]
+            ],
+            "imageId": "5eabe075e9da110b6896405a"
         },
         {
-            "_id": "2",
-            "name": "Project2",
-            "owner": {
-                "_id": "5e549434097acb0017c6fc1a",
-                "email": "jie.dai@stonybrook.edu"
-            },
-            "editor": [
-                {
-                    "_id": "5e53f06e905f950017b5c953",
-                    "email": "123@123.com"
-                }
+            "name": "The long Destiny",
+            "owner": "5ea0e25872182f00242b848a",
+            "editors": [
+                "5e9fa3908dead93aa46f6a6d",
+                "5ea262a9e4a7b520c829163b",
+                "5ea33ec1a8a9b4504485aa28"
             ],
-            "lastModifiedBy": [
-                {
-                    "_id": "5e549434097acb0017c6fc1a",
-                    "email": "jie.dai@stonybrook.edu"
-                }
+            "lastModifiedBy": "5ea0e25872182f00242b848a",
+            "mapId": "1",
+            "tiledSetId": [
+                "1",
+                "2",
+                "3"
             ],
-            "mapId": "2",
-            "tiledSetsID": [
-                "4",
-                "5"
-            ]
+            "imageId": "5eabde4998bf8c7fc8ef0307"
+        },
+        {
+            "name": "Shot in the Hate",
+            "owner": "5ea262a9e4a7b520c829163b",
+            "editors": [
+                "5e9fa3908dead93aa46f6a6d",
+                "5ea0e25872182f00242b848a",
+                "5ea33ec1a8a9b4504485aa28"
+            ],
+            "lastModifiedBy": "5ea0e25872182f00242b848a",
+            "mapId": "1",
+            "tiledSetId": [
+                "1",
+                "2",
+                "3"
+            ],
+            "imageId": "5eabde7398bf8c7fc8ef0308"
+        },
+        {
+            "name": "Pain in Brain",
+            "owner": "5ea33ec1a8a9b4504485aa28",
+            "editors": [
+                "5e9fa3908dead93aa46f6a6d",
+                "5ea0e25872182f00242b848a",
+                "5ea262a9e4a7b520c829163b"
+            ],
+            "lastModifiedBy": "5ea0e25872182f00242b848a",
+            "mapId": "1",
+            "tiledSetId": [
+                "1",
+                "2",
+                "3"
+            ],
+            "imageId": "5eabe0b7e9da110b6896405b"
+        },
+        {
+            "name": "New Horse Shoe",
+            "owner": "5ea0e25872182f00242b848a",
+            "editors": [
+                "5e9fa3908dead93aa46f6a6d",
+                "5ea262a9e4a7b520c829163b",
+                "5ea33ec1a8a9b4504485aa28"
+            ],
+            "lastModifiedBy": "5ea0e25872182f00242b848a",
+            "mapId": "1",
+            "tiledSetId": [
+                "1",
+                "2",
+                "3"
+            ],
+            "imageId": "5eabdf04f064a7553cb9dd41"
         }
     ],
     "maps": [
@@ -87,7 +121,7 @@
                     {
                         "data": [],
                         "height": 100,
-                        "id": 3,
+                        "id": 2,
                         "name": "blockedLayer",
                         "opacity": 1,
                         "type": "tilelayer",
@@ -131,7 +165,7 @@
                 "infinite": false,
                 "layers": [
                     {
-                        "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        "data": [],
                         "height": 100,
                         "id": 1,
                         "name": "backgroundLayer",
@@ -358,24 +392,21 @@
     ],
     "tilesets": [
         {
-            "_id": "1",
-            "tiledSetsImage": "",
+            "imageId": "",
             "tileWidth": "123",
             "tileHeight": "123",
             "width": 10,
             "height": 10
         },
         {
-            "_id": "2",
-            "tiledSetsImage": "",
+            "imageId": "",
             "tileWidth": "123",
             "tileHeight": "123",
             "width": 10,
             "height": 10
         },
         {
-            "_id": "3",
-            "tiledSetsImage": "",
+            "imageId": "",
             "tileWidth": "123",
             "tileHeight": "123",
             "width": 10,

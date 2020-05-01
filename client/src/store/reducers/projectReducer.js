@@ -4,6 +4,7 @@ const initState = {
     projects: [],
     maps: [],
     tilesets: [],
+    projectId: null,
 };
 
 const projectReducer = (state = initState, action) => {
@@ -43,6 +44,11 @@ const projectReducer = (state = initState, action) => {
     } else if (action.type === actionCreators.TEST_CLEAR) {
         return {
             ...initState
+        }
+    }else if (action.type === actionCreators.PASS_PROJECT_ID) {
+        return {
+            ...state,
+            projectId: action.id,
         }
     }
     return state;

@@ -82,10 +82,8 @@
 
 .dashboard-pagination{
     bottom:10px;
-    width:40%;
-    left:30%;
-    position: absolute;
     overflow: hidden;
+    position: absolute;
 }
 
 .dashboard-itemlist{
@@ -236,4 +234,58 @@ nav {
 .profile-img{
     width: 40px;
     height: 40px;
+}
+
+.dashboard-add-project{
+    width: 90%;
+    left: 5%;
+}
+
+.dashboard-loading{
+    margin-left:calc(50% - 20px);
+    margin-top:15%
+}
+
+.MuiDialogContent-root{
+    overflow-y: hidden !important;
+}
+
+.add-project-dialog-input{
+    width: 100%;
+}
+
+.project-name-input{
+    width: 100%;
+}
+
+.project-property-input{
+    width: 50%;
+    display: inline-block;
+}
+
+.br{
+    height: 24px;
+}
+.member-picture{
+    width: 36px;
+    height:36px;
+    display: inline-block;
+    margin-left: 16px
+}
+
+.teamlist-wrapper{
+    overflow: auto;
+    height: 100%;
+    max-height: 160px;
+}
+
+.member-box{
+    margin-top: 24px;
+    border-bottom: 1px solid black;
+    padding-bottom: 4px;
+}
+
+.member-name{
+    margin-left: 24px;
+    display: inline-block;
 }

@@ -1,4 +1,4 @@
-import drawTransaction from "./drawTransaction"
+import drawTransaction from "./DrawTransaction"
 
 class CanvasController {
     constructor(view) {
@@ -23,7 +23,9 @@ class CanvasController {
     }
 
     startDraw = (x, y) => {
+
         if (this[this.tool] === undefined) return
+
         this.drawing = true
         this.oldImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
         this[this.tool].startDraw(x, y)
@@ -40,8 +42,10 @@ class CanvasController {
         if (!this.drawing) return
         this[this.tool].endDraw(x, y)
         this.drawing = false
+
         this.newImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
-        this.view.props.transactions.addTransaction(new drawTransaction(this.oldImg, this.newImg, this.view.drawImage, this.view.props.socket, false))
+        this.view.props.socket.emit('draw', { data: this.newImg, type: 'new' })
+        this.view.props.transactions.addTransaction(new drawTransaction(this.oldImg, this.newImg, this.view.drawImage))
     }
 
     PENCIL = {
@@ -69,7 +73,7 @@ class CanvasController {
             this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
         },
         onDraw: (x, y) => {
-            if (!this.startX || !this.startY) return
+            if (this.startX === null || this.startY === null) return
             this.ctx.putImageData(this.startData, 0, 0);
             this.ctx.beginPath()
             this.ctx.moveTo(this.startX, this.startY)
@@ -91,7 +95,8 @@ class CanvasController {
             this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
         },
         onDraw: (x, y) => {
-            if (!this.startX || !this.startY) return
+            if (this.startX === null || this.startY === null) return
+
             this.ctx.putImageData(this.startData, 0, 0);
             this.ctx.beginPath();
             this.ctx.rect(this.startX, this.startY, x - this.startX, y - this.startY);
@@ -112,7 +117,7 @@ class CanvasController {
             this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
         },
         onDraw: (x, y) => {
-            if (!this.startX || !this.startY) return
+            if (this.startX === null || this.startY === null) return
             this.ctx.putImageData(this.startData, 0, 0);
             const centerX = (x + this.startX) / 2
             const centerY = (y + this.startY) / 2
@@ -128,6 +133,110 @@ class CanvasController {
             this.startX = null
             this.startY = null
         }
+    }
+
+    CROP = {
+        startDraw: (x, y) => {
+            this.ctx.lineWidth = 1
+            this.ctx.fillStyle = `rgba(0,0,0,0)`
+            this.ctx.strokeStyle = `rgba({0,0,0,1}})`
+
+            this.startX = x
+            this.startY = y
+            this.CROP.endCrop();
+            this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
+        },
+        onDraw: (x, y) => {
+            if (this.startX === null || this.startY === null) return
+            this.ctx.putImageData(this.startData, 0, 0);
+            this.ctx.save()
+            this.ctx.beginPath();
+            this.ctx.setLineDash([6]);
+            this.ctx.strokeRect(this.startX, this.startY, x - this.startX, y - this.startY);
+            this.ctx.restore()
+        },
+        endDraw: (x, y) => {
+
+            if (this.startX === null || this.startY === null) return
+
+
+            this.ctx.putImageData(this.startData, 0, 0)
+
+            this.left = this.startX < x ? this.startX : x
+            this.top = this.startY < y ? this.startY : y
+            this.cropWidth = Math.abs(this.startX - x)
+            this.cropHeight = Math.abs(this.startY - y)
+
+            try {
+                this.croppedArea = this.ctx.getImageData(this.left, this.top, this.cropWidth, this.cropHeight)
+            } catch{
+                return
+            }
+
+            this.startX = null
+            this.startY = null
+        },
+        getCroppedData: () => {
+            return {
+                imgData: this.croppedArea,
+                left: this.left,
+                top: this.top,
+                width: this.cropWidth,
+                height: this.cropHeight,
+            }
+        },
+        endCrop: () => {
+            this.croppedArea = null
+            this.cropWidth = null
+            this.cropHeight = null
+            this.left = null
+            this.top = null
+        },
+
+        reCrop: (data) => {
+
+            const { left, top, width, height } = data
+            const toReturn = this.ctx.getImageData(left, top, width, height)
+
+            return toReturn
+
+        },
+
+        clearCropArea: (left, top, width, height) => {
+
+            this.ctx.save()
+            this.ctx.fillStyle = 'rgba(211,211,211,1)'
+            this.ctx.strokeStyle = 'rgba(0,0,0,0)'
+            this.ctx.lineWidth = 0
+            this.ctx.beginPath();
+            this.ctx.rect(left, top, width, height);
+            this.ctx.fill()
+            this.ctx.stroke();
+            this.ctx.restore()
+        }
+
+
+    }
+
+    ERASER = {
+        startDraw: (x, y) => {
+            this.ctx.save()
+            this.ctx.strokeStyle = 'rgba(211,211,211,1)'
+            this.ctx.beginPath()
+        },
+
+        onDraw: (x, y) => {
+            const left = x - (this.ctx.lineWidth / 2)
+            const top = y - (this.ctx.lineWidth / 2)
+            this.ctx.rect(left, top, this.ctx.lineWidth, this.ctx.lineWidth);
+            this.ctx.fill()
+            this.ctx.stroke();
+        },
+
+        endDraw: (x, y) => {
+            this.onDraw(x, y)
+            this.ctx.restore()
+        },
     }
 }
 export default CanvasController

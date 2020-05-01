@@ -2,30 +2,34 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 class BetterDialog extends React.Component {
 
     render() {
 
+        const { open, maxWidth, fullWidth, style, header, content, actions } = this.props
+
         return (
             <Dialog
-                open={this.props.open}
+                open={open}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                maxWidth={this.props.maxWidth}
-                fullWidth={this.props.fullWidth}
+                maxWidth={maxWidth}
+                fullWidth={fullWidth}
+                style={style}
             >
                 <DialogTitle id="alert-dialog-title">
-                    {this.props.header}
+                    {header}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {this.props.content}
-                    </DialogContentText>
+                    {content}
                 </DialogContent>
                 <DialogActions>
-                    {this.props.actions}
+                    {
+                        actions && actions.map(action => {
+                            return action
+                        })
+                    }
                 </DialogActions>
             </Dialog>
 

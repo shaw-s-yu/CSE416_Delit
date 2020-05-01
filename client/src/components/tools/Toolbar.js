@@ -9,15 +9,25 @@ class Toolbar extends React.Component {
         e.stopPropagation();
     }
 
-    handleSelect = (name, e) => {
+    handleSelect = (item, e) => {
         e.stopPropagation();
+
+        if (item.disable === true) return
+
+        if (this.props.selectCallback) {
+            this.props.selectCallback()
+        }
+
         this.props.handleUnselect();
-        this.props.handleSelect(name);
+        this.props.handleSelect(item.name);
     }
 
-    getSelected = (name) => {
+    getSelected = (item) => {
+
+        if (item.disable === true)
+            return 'toolbar-cell-disable'
         const { selected } = this.props;
-        return selected === name ? "map-tool-selected" : "";
+        return selected === item.name ? "map-tool-selected" : "";
     }
 
     render() {
@@ -38,7 +48,7 @@ class Toolbar extends React.Component {
                         secondaryContent && secondaryContent.map((c, i) => {
                             const style = { left: i * 40 }
                             return (
-                                <div className={"toolbar-cell " + this.getSelected(c.name)} key={i} onMouseDown={this.stopPropagation} style={style} onClick={this.handleSelect.bind(this, c.name)}>
+                                <div className={"toolbar-cell " + this.getSelected(c)} key={i} onMouseDown={this.stopPropagation} style={style} onClick={this.handleSelect.bind(this, c)}>
                                     {c.item}
                                 </div>
                             )
@@ -48,7 +58,7 @@ class Toolbar extends React.Component {
                 {
                     rightContent && rightContent.map((c, i) => {
                         return (
-                            <div className={"toolbar-right-cell " + this.getSelected(c.name)} key={i} onMouseDown={this.stopPropagation} onClick={this.handleSelect.bind(this, c.name)}>
+                            <div className={"toolbar-right-cell " + this.getSelected(c.name)} key={i} onMouseDown={this.stopPropagation} onClick={this.handleSelect.bind(this, c)}>
                                 {c.item}
                             </div>
                         )

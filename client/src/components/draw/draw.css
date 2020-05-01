@@ -77,7 +77,7 @@
 }
 
 .display{
-    background-color: lightblue;
+    background-color: transparent;
     position: absolute;
     transform-origin: 0 0;
 }
@@ -109,4 +109,18 @@
 
 .display-cross-cursor{
     cursor: crosshair;
+}
+
+.cropped-area{
+    position: absolute;
+    background-color: transparent;
+    outline: 2px dashed black;
+}
+
+.file-uploader{
+    display: none;
+}
+
+.draw-canvas{
+    outline: 2px solid black;
 }

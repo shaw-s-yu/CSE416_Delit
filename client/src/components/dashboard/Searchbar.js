@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 class Searchbar extends React.Component {
 
     render() {
+        const { onChange, value } = this.props
         return (
             <div>
                 <div className="dashboard-search">
@@ -14,7 +15,8 @@ class Searchbar extends React.Component {
                         label="Enter Project Name to Search"
                         variant="outlined"
                         size="small"
-                        onChange={this.handleChange} />
+                        value={value}
+                        onChange={onChange} />
                 </div>
             </div>
 

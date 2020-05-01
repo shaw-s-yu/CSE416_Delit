@@ -80,7 +80,7 @@ nav i{
 
 .card-info-name{
     margin-left: 10px;
-    width: 100px;
+    width: 160px;
     overflow: hidden;
     background-color: transparent;
     white-space: nowrap;
@@ -91,7 +91,7 @@ nav i{
 
 .card-info-last-modify{
     margin-left: 10px;
-    width: 160px;
+    width: 100px;
     overflow: hidden;
     background-color: transparent;
     white-space: nowrap;
@@ -102,7 +102,7 @@ nav i{
 
 .card-info-btn-box{
     position: absolute;
-    margin-top:158px;
+    margin-top:180px;
     margin-left:122px;
     height:16px;
     width: 48px;
@@ -110,7 +110,7 @@ nav i{
 }
 
 .card-info-btn-box:hover{
-    margin-top: 138px;
+    margin-top: 161px;
     margin-left:70px;
     height:60px;
     width:152px;
@@ -227,4 +227,14 @@ nav i{
 }
 .thumb:hover{
     background-color: rgb(119, 119, 119);
+}
+
+.toolbar-cell-disable{
+    background-color: gray !important;
+    cursor: auto;
+}
+
+.image-loading{
+    margin-left: calc(50% - 20px);
+    margin-top: calc(50% - 20px)
 }

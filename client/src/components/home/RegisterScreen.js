@@ -74,7 +74,7 @@ class RegisterScreen extends React.Component {
             if (err === false && this.popup) {
                 this.popup.close()
                 this.props.handleLoginSuccess(auth)
-                this.props.history.push('/dashboard/wefw')
+                this.props.history.push('/dashboard')
             }
             else {
                 this.popup.close()

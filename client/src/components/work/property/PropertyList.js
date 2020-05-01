@@ -48,9 +48,6 @@ class PropertyList extends React.Component {
             flexShrink: 0,
         }
 
-        const paginationStyle = {
-            marginLeft: width < 252 ? 0 : (width - 252) / 2
-        }
         const { data } = this.props
         return (
             <>
@@ -96,7 +93,7 @@ class PropertyList extends React.Component {
                     </tbody>
 
                 </Table>
-                <Pagination className="property-list-pagination" size="small" color="secondary" style={paginationStyle} />
+                <Pagination className="property-list-pagination" size="small" color="secondary" />
             </>
         )
     }

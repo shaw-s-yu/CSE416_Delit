@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const authRoutes = require('./routes/auth-routes');
+const dataRoutes = require('./routes/data-routes')
 const passportSetup = require('./config/passport-setup')
 const mongoose = require('mongoose')
 const keys = require('./config');
@@ -15,6 +16,9 @@ const bodyParser = require("body-parser");
 const path = require('path');
 const expressGraphql = require('express-graphql');
 const User = require('./models/mongo-user')
+const schema = require('./graphql/schema/Schema');
+const SocketController = require('./socket/socket-controller')
+const { Socket } = SocketController
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -22,21 +26,8 @@ app.use(bodyParser.json());
 app.unsubscribe(bodyParser.urlencoded({ extended: false }))
 
 io.on('connection', socket => {
-    socket.on('username_register', data => {
-        if (data.length < 6)
-            socket.emit('username_register_back', { err: true, msg: 'At Least 6 Letters' })
-        else
-            User.findOne({ username: data }).then(user => {
-                if (user)
-                    socket.emit('username_register_back', { err: true, msg: 'Username Already Existed' })
-                else
-                    socket.emit('username_register_back', { err: false, msg: 'Good' })
-            })
-    })
-
-    socket.on('draw', data => {
-        socket.broadcast.emit('drawBack', data)
-    })
+    let socketController = new Socket(socket)
+    socketController.on()
 })
 
 app.set('io', io);
@@ -65,13 +56,17 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-mongoose.connect(keys.mongoDB.dbURI, () => {
+mongoose.connect(keys.mongoDB.dbURI, {
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, () => {
     console.log('connected to mongodb');
 });
 
 app.use('/auth', authRoutes)
+app.use('/data', dataRoutes)
 
-const schema = require('./schema/Schema');
 app.use('/graphql', expressGraphql({
     schema,
     graphiql: true
@@ -79,7 +74,7 @@ app.use('/graphql', expressGraphql({
 
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+    res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
 
 server.listen(process.env.PORT || 5000)
