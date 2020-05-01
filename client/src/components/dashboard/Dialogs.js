@@ -5,11 +5,12 @@ import { Grid, ListItem, ListItemAvatar, Avatar, ListItemText, Divider } from "@
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { TextInput } from 'react-materialize'
+import RenameDialog from './RenameDialog'
 
 class Dialogs extends React.Component {
 
     render() {
-        const { team, invite, handleOpen, handleClose } = this.props;
+        const { team, invite, handleOpen, handleClose, rename } = this.props;
         return (
             <>
                 <Dialog
@@ -76,6 +77,11 @@ class Dialogs extends React.Component {
                             <TextInput label="Enter The Email" className="input_textbox" />
                         </section>
                     } />
+
+                <RenameDialog
+                    {...this.props}
+                    open={rename}
+                />
             </>
         )
     }

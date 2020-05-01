@@ -14,7 +14,13 @@ class ItemList extends React.Component {
         delete: false,
         team: false,
         invite: false,
+        project: null,
+        refetch: null,
     };
+
+    handleSetProject = (project, refetch) => {
+        this.setState({ project, refetch })
+    }
 
     handleDialogsOpen = (type) => {
         this.setState({ [type]: true });
@@ -72,6 +78,8 @@ class ItemList extends React.Component {
                                             handleDelete={this.handleDelete.bind(this, removeProject, _id)}
                                             onClick={this.handleGoEdit}
                                             key={_id}
+                                            handleSetProject={this.handleSetProject}
+                                            refetch={refetch}
                                         />
                                     )}
                                 </Mutation>

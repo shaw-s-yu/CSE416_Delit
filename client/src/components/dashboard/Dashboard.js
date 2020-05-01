@@ -6,13 +6,11 @@ import './dashboard.css'
 import Pagination from '../tools/Pagination'
 import { connect } from 'react-redux';
 import Sidebar from "./Sidebar";
-import Dialogs from './Dialogs'
 import AddProjectDialog from "./AddProjectDialog";
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios'
 import * as handler from '../../store/database/HomeScreenHandler';
-import UpdateProjectDialog from "./UpdateProjectDialog";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 

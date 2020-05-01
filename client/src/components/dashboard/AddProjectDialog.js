@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button } from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
-import { v1 } from "uuid";
 import Dialog from '../tools/Dialog'
 
 import { connect } from 'react-redux';
@@ -23,6 +22,7 @@ class AddProjectDialog extends React.Component {
     handleOnChange = (e) => {
         let { name, value } = e.target
         value = name === 'projectName' ? value : parseInt(value) ? parseInt(value) : 0
+        // eslint-disable-next-line
         this.state[name] = value
         const { projectName, tileWidth, tileHeight, mapWidth, mapHeight } = this.state
         let disableBt

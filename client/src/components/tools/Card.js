@@ -17,6 +17,11 @@ class Card extends React.Component {
         this.props.passProjectId(id);
     }
 
+    handleOpen = (name, project, refetch) => {
+        this.props.handleSetProject(project, refetch)
+        this.props.handleOpen(name)
+    }
+
     arrayBufferToBase64(buffer) {
         var binary = '';
         var bytes = new Uint8Array(buffer);
@@ -45,7 +50,7 @@ class Card extends React.Component {
 
     render() {
         const { imageData } = this.state
-        const { className, style, handleOpen, onClick, project, handleDelete, res } = this.props;
+        const { className, style, onClick, project, handleDelete, res, refetch } = this.props;
         const { name, ownerInfo } = project;
         const owner = ownerInfo.username;
 
@@ -66,9 +71,9 @@ class Card extends React.Component {
                     res.loading ? 'loading' : res.error ? res.error.message : null
                 }
                 <div className="card-info-btn-box" style={style}>
-                    <div className="card-info-btn-tl card-info-btn" onClick={handleOpen.bind(this, 'rename')}>Rename</div>
+                    <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', project, refetch)}>Rename</div>
                     <div className="card-info-btn-tr card-info-btn">Dupliate</div>
-                    <div className="card-info-btn-bl card-info-btn" onClick={handleOpen.bind(this, 'team')}>Team</div>
+                    <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', project, refetch)}>Team</div>
                     <div className="card-info-btn-br card-info-btn" onClick={handleDelete}>Delete</div>
                     <div className="card-info-btn-center card-info-btn" >edit</div>
                 </div>
