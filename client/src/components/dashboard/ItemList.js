@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../tools/Card'
-import { Mutation } from 'react-apollo';
-import MutationList from '../../graphql/Mutation';
+
 import '../tools/tools.css'
 import Dialogs from './Dialogs'
 
@@ -14,8 +13,10 @@ class ItemList extends React.Component {
         delete: false,
         team: false,
         invite: false,
+        remove: false,
         project: null,
         refetch: null,
+
     };
 
     handleSetProject = (project, refetch) => {
@@ -43,7 +44,7 @@ class ItemList extends React.Component {
     }
 
     render() {
-        const { projects, refetch } = this.props;
+        const { projects, refetch, user } = this.props;
         const numItem = projects.length;
         const style = {
             height: numItem > 3 ? 600 : 300
@@ -67,22 +68,18 @@ class ItemList extends React.Component {
                             }
                             const { _id } = project;
                             return (
-                                <Mutation mutation={MutationList.REMOVE_PROJECT} key={_id} refetchQueries={[refetch]}>
-                                    {(removeProject, res) => (
-                                        <Card
-                                            res={res}
-                                            className='item-card'
-                                            project={project}
-                                            style={cardStyle}
-                                            handleOpen={this.handleDialogsOpen}
-                                            handleDelete={this.handleDelete.bind(this, removeProject, _id)}
-                                            onClick={this.handleGoEdit}
-                                            key={_id}
-                                            handleSetProject={this.handleSetProject}
-                                            refetch={refetch}
-                                        />
-                                    )}
-                                </Mutation>
+
+                                <Card
+                                    className='item-card'
+                                    project={project}
+                                    style={cardStyle}
+                                    handleOpen={this.handleDialogsOpen}
+                                    onClick={this.handleGoEdit}
+                                    key={_id}
+                                    handleSetProject={this.handleSetProject}
+                                    refetch={refetch}
+                                />
+
                             );
                         })
                     }
@@ -91,6 +88,7 @@ class ItemList extends React.Component {
                     {...this.state}
                     handleOpen={this.handleDialogsOpen}
                     handleClose={this.handleDialogsClose}
+                    user={user}
                 />
             </div>
         )

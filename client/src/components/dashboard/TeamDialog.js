@@ -27,7 +27,7 @@ class TeamDialog extends React.Component {
                             const { username, picture } = member
                             return (
                                 <div className="member-box" key={v1()}>
-                                    <img src={picture} className="member-picture" alt='member picture'></img>
+                                    <img src={picture} className="member-picture" alt='member'></img>
                                     <div className="member-name">{username}</div>
                                 </div>
                             )

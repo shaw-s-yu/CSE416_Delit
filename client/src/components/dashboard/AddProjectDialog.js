@@ -34,7 +34,15 @@ class AddProjectDialog extends React.Component {
     };
 
     handleAddProject = (callback) => {
-        callback()
+        const { userId } = this.props
+        const { projectName } = this.state
+        callback({
+            variables: {
+                name: projectName,
+                owner: userId,
+                imageId: '5eacb076d0ed064dec138c41'
+            }
+        })
         this.props.handleClose()
     }
 

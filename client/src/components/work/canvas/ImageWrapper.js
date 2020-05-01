@@ -75,10 +75,8 @@ class ImageWrapper extends React.Component {
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
-                <div className="bg-content">
-                    <div id="display-place" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect}>
-                        <LayerManager canvas={this.canvas} squirtle={squirtle} window={window} />
-                    </div>
+                <div id="display-place" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect}>
+                    <LayerManager canvas={this.canvas} squirtle={squirtle} window={window} />
                 </div>
             </Scrollbars>
 

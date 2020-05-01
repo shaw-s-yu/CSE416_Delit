@@ -155,6 +155,7 @@ class Dashboard extends React.Component {
                                         open={project}
                                         handleClose={this.handleDialogClose}
                                         refetch={refetch}
+                                        userId={user._id}
                                     />
                                 </>
                             )
