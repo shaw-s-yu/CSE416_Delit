@@ -35,6 +35,10 @@ export default {
                 ownerInfo{
                     username
                 }
+                teamInfo{
+                    username
+                    picture
+                }
             }
             projectsOwnedAmount(projectName: $search)
         }
@@ -58,6 +62,10 @@ export default {
                 ownerInfo{
                     username
                 }
+                teamInfo{
+                    username
+                    picture
+                }
             }
             projectsRelatedAmount(projectName: $search)
         }
@@ -80,6 +88,10 @@ export default {
                 imageId
                 ownerInfo{
                     username
+                }
+                teamInfo{
+                    username
+                    picture
                 }
             }
             projectsSharedAmount(projectName: $search)

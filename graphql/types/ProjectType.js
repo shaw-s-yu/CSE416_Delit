@@ -29,6 +29,21 @@ module.exports = new GraphQLObjectType({
                     return user
                 }
             },
+            teamInfo: {
+                type: new GraphQLList(UserType),
+                resolve: (parent, args) => {
+                    let users = []
+                    let user = UserModel.findById(parent.owner);
+                    if (!user) throw new Error('Error')
+                    else users.push(user)
+                    parent.editors.forEach(e => {
+                        let user = UserModel.findById(e)
+                        if (!user) throw new Error('Error')
+                        else users.push(user)
+                    })
+                    return users
+                }
+            }
 
         }
     }
