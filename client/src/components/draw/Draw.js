@@ -18,7 +18,7 @@ class Draw extends React.Component {
     state = {
         sliderValue: 1,
         borderColor: { r: 0, g: 0, b: 0, a: 1 },
-        fillColor: { r: 255, g: 255, b: 255, a: 0.5 },
+        fillColor: { r: 255, g: 255, b: 255, a: 1 },
         scale: 1,
         saveDialogOpen: false
     };

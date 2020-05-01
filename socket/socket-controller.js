@@ -30,7 +30,7 @@ exports.Socket = function (socket) {
 
     this.drawSaveController = data => {
         let newimg = new ImageModel();
-        newimg.data = new Buffer(data.split(",")[1], "base64");
+        newimg.data = new Buffer.from(data.split(",")[1], "base64");
         newimg.save();
     }
 }
