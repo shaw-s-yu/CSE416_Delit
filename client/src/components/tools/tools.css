@@ -233,3 +233,8 @@ nav i{
     background-color: gray !important;
     cursor: auto;
 }
+
+.image-loading{
+    margin-left: calc(50% - 20px);
+    margin-top: calc(50% - 20px)
+}

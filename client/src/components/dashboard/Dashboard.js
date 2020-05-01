@@ -13,6 +13,8 @@ import { Query } from 'react-apollo'
 import axios from 'axios'
 import * as handler from '../../store/database/HomeScreenHandler';
 import UpdateProjectDialog from "./UpdateProjectDialog";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 class Dashboard extends React.Component {
     state = {
@@ -126,7 +128,8 @@ class Dashboard extends React.Component {
                     <Searchbar value={search} onChange={this.handleSearchChange} />
                     <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search }} fetchPolicy={'network-only'}>
                         {({ loading, error, data }) => {
-                            if (loading) return 'loading';
+                            if (loading)
+                                return <CircularProgress className="dashboard-loading" />;
                             if (error) return 'error';
                             if (query === QueryList.EMPTY_QUERY)
                                 return 'Wrong Sidebar Selection or needs to be developped';

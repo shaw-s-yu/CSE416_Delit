@@ -240,3 +240,8 @@ nav {
     width: 90%;
     left: 5%;
 }
+
+.dashboard-loading{
+    margin-left:calc(50% - 20px);
+    margin-top:15%
+}
