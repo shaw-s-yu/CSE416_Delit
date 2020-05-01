@@ -107,6 +107,9 @@ var mutation = new GraphQLObjectType({
                     name: {
                         type: new GraphQLNonNull(GraphQLString)
                     },
+                    creator: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    }
                 },
                 resolve(root, params) {
                     return projectModel.findByIdAndUpdate(params.id, { name: params.text, creator: params.creator, lastUpdate: new Date() }, function (err) {
