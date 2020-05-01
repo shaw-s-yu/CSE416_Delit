@@ -1,11 +1,8 @@
 import React from 'react'
-import {Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
-import {v1} from "uuid";
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from "@material-ui/core/DialogTitle";
+import { v1 } from "uuid";
+import Dialog from '../tools/Dialog'
 
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
@@ -16,116 +13,107 @@ class AddProjectDialog extends React.Component {
         super(props);
         this.state = {
             projectName: "",
-            tileWidth: "",
-            tileHeight: "",
-            mapWidth: "",
-            mapHeight: "",
+            tileWidth: 0,
+            tileHeight: 0,
+            mapWidth: 0,
+            mapHeight: 0,
             disableBt: true,
         }
     }
-    handleOnNameChange = (e) => {
-        const value = e.target.value;
-        if (value === "") {
-            this.setState( {projectName: value, disableBt : true});
-        }else {
-            this.setState( {projectName: value, disableBt : false});
-        }
+    handleOnChange = (e) => {
+        let { name, value } = e.target
+        value = name === 'projectName' ? value : parseInt(value) ? parseInt(value) : 0
+        this.state[name] = value
+        const { projectName, tileWidth, tileHeight, mapWidth, mapHeight } = this.state
+        let disableBt
+        if (projectName !== "" && tileWidth && tileHeight && mapWidth && mapHeight && tileWidth !== 0 && tileHeight !== 0 && mapWidth !== 0 && mapHeight !== 0)
+            disableBt = false
+        else
+            disableBt = true
+        this.setState({ [name]: value, disableBt })
     };
 
+    handleAddProject = (callback) => {
+        callback()
+        this.props.handleClose()
+    }
+
     render() {
-        const { open, handleClose, query, userId, pageSkip } = this.props;
-        const mutation = MutationList.ADD_PROJECT;
+        const { open, handleClose, refetch } = this.props;
+        const { projectName, mapWidth, mapHeight, tileWidth, tileHeight, disableBt } = this.state
+
         return (
-            <Mutation mutation={mutation}>
-                {(addProject, {loading, error }) => (
-                    <Dialog open={open} onClose={handleClose}>
-                        <DialogTitle id="CreateProject-dialog-title">Create Project</DialogTitle>
-                        <form onSubmit={e => {
-                            e.preventDefault();
-                            addProject({
-                                variables: {
-                                    name: this.state.projectName, owner: this.props.auth.user._id
-                                },
-                                refetchQueries: [{
-                                    query: query,
-                                    variables:{
-                                        userId: userId,
-                                        pageSkip:pageSkip}
-                                }]
-                            });
-                            this.setState(  {
-                                projectName : "",
-                                tileWidth : "",
-                                tileHeight : "",
-                                mapWidth : "",
-                                mapHeight : "",
-                            });
-                        }}>
-                            <DialogContent>
+            <Mutation mutation={MutationList.ADD_PROJECT} refetchQueries={[refetch]}>
+                {(addProject, res) => (
+                    <Dialog
+                        header='Create New Dialog'
+                        open={open}
+                        fullWidth={true}
+                        maxWidth="xs"
+                        actions={[
+                            <Button variant="primary" size="sm" onClick={this.handleAddProject.bind(this, addProject)} key='1' disabled={disableBt}>Add</Button>,
+                            <Button variant="primary" size="sm" key='2' onClick={handleClose}>Cancel</Button>
+                        ]}
+                        content={
+                            <>
                                 <TextField
-                                    className="form-control"
+                                    className="add-project-dialog-input"
                                     label="Enter New Project Name"
-                                    type="name"
-                                    name="name"
+                                    name="projectName"
                                     variant="outlined"
                                     size="small"
-                                    key={v1()}
-                                    value={this.state.projectName}
-                                    onChange={(e) => this.handleOnNameChange(e)}
+                                    value={projectName}
+                                    onChange={this.handleOnChange}
                                 />
+                                <div className='br'></div>
                                 <TextField
-                                    className="form-control"
-                                    label="Enter New Project Tile Width"
-                                    type="tileWidth"
+                                    className="project-property-input"
+                                    label="Enter Tile Width"
                                     name="tileWidth"
+                                    type="number"
                                     variant="outlined"
                                     size="small"
-                                    key={v1()}
-                                    value={this.state.tileWidth}
-                                    onChange={(e) => this.setState({tileWidth: e.target.value})}
+                                    value={tileWidth}
+                                    onChange={this.handleOnChange}
                                 />
+
                                 <TextField
-                                    className="form-control"
-                                    label="Enter New Project Tile Height"
-                                    type="tileHeight"
+                                    className="project-property-input"
+                                    label="Enter Tile Height"
                                     name="tileHeight"
+                                    type="number"
                                     variant="outlined"
                                     size="small"
-                                    key={v1()}
-                                    value={this.state.tileHeight}
-                                    onChange={(e) => this.setState({tileHeight: e.target.value})}
+                                    value={tileHeight}
+                                    onChange={this.handleOnChange}
                                 />
+                                <div className='br'></div>
                                 <TextField
-                                    className="form-control"
-                                    label="Enter New Project Map Width"
-                                    type="mapWidth"
+                                    className="project-property-input"
+                                    label="Enter Map Width"
                                     name="mapWidth"
+                                    type="number"
                                     variant="outlined"
                                     size="small"
-                                    key={v1()}
-                                    value={this.state.mapWidth}
-                                    onChange={(e) => this.setState({mapWidth: e.target.value})}
+                                    value={mapWidth}
+                                    onChange={this.handleOnChange}
                                 />
+
                                 <TextField
-                                    className="form-control"
-                                    label="Enter New Project Map Height"
-                                    type="mapHeight"
+                                    className="project-property-input"
+                                    label="Enter Map Height"
                                     name="mapHeight"
+                                    type="number"
                                     variant="outlined"
                                     size="small"
-                                    key={v1()}
-                                    value={this.state.mapHeight}
-                                    onChange={(e) => this.setState({mapHeight: e.target.value})}
+                                    value={mapHeight}
+                                    onChange={this.handleOnChange}
                                 />
-                            </DialogContent>
-                            <DialogActions>
-                                <Button variant="primary" size="sm" onClick={handleClose.bind(this, 'project')} key='1' type="submit" disabled={ this.state.disableBt }>Add</Button>
-                                <Button variant="primary" size="sm" key='2' onClick={handleClose.bind(this, 'project')}>Cancel</Button>
-                            </DialogActions>
-                        </form>
-                        {loading && <p>Loading...</p>}
-                        {error && <p>Error :( Please try again</p>}
-                    </Dialog>
+                                {
+                                    res.loading ? 'loading' : res.error ? res.error.message : null
+                                }
+                            </>
+                        } />
                 )}
             </Mutation>
         )

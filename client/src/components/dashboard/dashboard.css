@@ -245,3 +245,24 @@ nav {
     margin-left:calc(50% - 20px);
     margin-top:15%
 }
+
+.MuiDialogContent-root{
+    overflow-y: hidden !important;
+}
+
+.add-project-dialog-input{
+    width: 100%;
+}
+
+.project-name-input{
+    width: 100%;
+}
+
+.project-property-input{
+    width: 50%;
+    display: inline-block;
+}
+
+.br{
+    height: 24px;
+}

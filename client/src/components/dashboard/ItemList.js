@@ -4,12 +4,24 @@ import Card from '../tools/Card'
 import { Mutation } from 'react-apollo';
 import MutationList from '../../graphql/Mutation';
 import '../tools/tools.css'
+import Dialogs from './Dialogs'
+
+
 class ItemList extends React.Component {
 
     state = {
-        modelActive1: false,
-        modelActive2: false,
+        rename: false,
+        delete: false,
+        team: false,
+        invite: false,
+    };
 
+    handleDialogsOpen = (type) => {
+        this.setState({ [type]: true });
+    };
+
+    handleDialogsClose = (type) => {
+        this.setState({ [type]: false })
     };
 
     handleGoEdit = () => {
@@ -56,7 +68,7 @@ class ItemList extends React.Component {
                                             className='item-card'
                                             project={project}
                                             style={cardStyle}
-                                            handleOpen={this.props.handleOpen}
+                                            handleOpen={this.handleDialogsOpen}
                                             handleDelete={this.handleDelete.bind(this, removeProject, _id)}
                                             onClick={this.handleGoEdit}
                                             key={_id}
@@ -67,6 +79,11 @@ class ItemList extends React.Component {
                         })
                     }
                 </div>
+                <Dialogs
+                    {...this.state}
+                    handleOpen={this.handleDialogsOpen}
+                    handleClose={this.handleDialogsClose}
+                />
             </div>
         )
     }

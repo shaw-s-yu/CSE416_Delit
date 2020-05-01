@@ -20,12 +20,9 @@ class Dashboard extends React.Component {
     state = {
         showSidebar: true,
         project: false,
-        team: false,
-        invite: false,
         selected: 'all',
         page: 1,
         search: '',
-        rename: false,
     };
 
     handleSearchChange = (e) => {
@@ -36,12 +33,12 @@ class Dashboard extends React.Component {
         this.setState({ selected: type })
     };
 
-    handleDialogsOpen = (type) => {
-        this.setState({ [type]: true });
+    handleDialogOpen = (type) => {
+        this.setState({ project: true });
     };
 
-    handleDialogsClose = (type) => {
-        this.setState({ [type]: false })
+    handleDialogClose = (type) => {
+        this.setState({ project: false })
     };
 
     handleSidebarOpen = () => {
@@ -99,7 +96,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page, search } = this.state;
+        const { showSidebar, selected, user, page, search, project } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -118,8 +115,7 @@ class Dashboard extends React.Component {
                 <TopNavbar handleSidebarOpen={this.handleSidebarOpen} site='dashboard' history={history} />
                 <Sidebar
                     showSidebar={showSidebar}
-                    handleOpen={this.handleDialogsOpen}
-                    handleClose={this.handleDialogsClose}
+                    handleOpen={this.handleDialogOpen}
                     handleSelect={this.handleSelectSide}
                     selected={selected}
                 />
@@ -145,8 +141,6 @@ class Dashboard extends React.Component {
                                 <>
                                     <ItemList
                                         history={this.props.history}
-                                        handleOpen={this.handleDialogsOpen}
-                                        handleClose={this.handleDialogsClose}
                                         selected={selected}
                                         projects={projects}
                                         refetch={refetch}
@@ -159,19 +153,18 @@ class Dashboard extends React.Component {
                                         handlePagination={this.handlePagination}
                                         defaultPage={page}
                                     />
+                                    <AddProjectDialog
+                                        open={project}
+                                        handleClose={this.handleDialogClose}
+                                        refetch={refetch}
+                                    />
                                 </>
                             )
                         }}
                     </Query>
                 </div>
-                <AddProjectDialog
-                    open={this.state.project}
-                    handleClose={this.handleDialogsClose}
-                    query={query}
-                    userId={user._id}
-                    pageSkip={pageSkip}
-                />
-                <UpdateProjectDialog
+
+                {/* <UpdateProjectDialog
                     open={this.state.rename}
                     handleClose={this.handleDialogsClose}
                     query={query}
@@ -182,7 +175,7 @@ class Dashboard extends React.Component {
                     {...this.state}
                     handleOpen={this.handleDialogsOpen}
                     handleClose={this.handleDialogsClose}
-                />
+                /> */}
             </div >
 
         )
