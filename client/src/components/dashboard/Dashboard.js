@@ -135,6 +135,10 @@ class Dashboard extends React.Component {
                                         handleClose={this.handleDialogsClose}
                                         selected={selected}
                                         projects={projects}
+                                        query={query}
+                                        userId={user._id}
+                                        pageSkip={pageSkip}
+
                                     />
                                     <Pagination
                                         className="dashboard-pagination center"

@@ -25,6 +25,7 @@ export default {
             id:$userId
         ){
             projectsOwned(skip: $pageSkip){
+                _id
                 name
                 ownerInfo{
                     username
@@ -42,6 +43,7 @@ export default {
             id:$userId
         ){
             projectsRelated(skip: $pageSkip){
+                _id
                 name
                 ownerInfo{
                     username
@@ -59,6 +61,7 @@ export default {
             id:$userId
         ){
             projectsShared(skip: $pageSkip){
+                _id
                 name
                 ownerInfo{
                     username
