@@ -13,6 +13,7 @@ class ItemList extends React.Component {
         delete: false,
         team: false,
         invite: false,
+        duplicate: false,
         remove: false,
         project: null,
         refetch: null,

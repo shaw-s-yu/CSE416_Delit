@@ -70,7 +70,7 @@ class Card extends React.Component {
 
                 <div className="card-info-btn-box" style={style}>
                     <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', project, refetch)}>Rename</div>
-                    <div className="card-info-btn-tr card-info-btn">Dupliate</div>
+                    <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', project, refetch)}>Dupliate</div>
                     <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', project, refetch)}>Team</div>
                     <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', project, refetch)}>Delete</div>
                     <div className="card-info-btn-center card-info-btn" >edit</div>

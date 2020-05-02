@@ -73,4 +73,21 @@ export default {
     }
     `,
 
+    DUPLICATE_PROJECT: gql`
+    mutation duplicationProject(
+        $id:String!
+        $name:String!
+        $owner:String!
+    ){
+        duplicationProject(id: $id, name:$name, owner:$owner){
+            name
+            owner
+            editors
+            ownerInfo{
+                username
+            }
+        }
+    }
+    `
+
 }

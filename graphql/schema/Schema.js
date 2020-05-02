@@ -4,6 +4,7 @@ const updateProjectMutation = require('../mutations/updateProjectMutation')
 const removeProjectMutation = require('../mutations/removeProjectMutation')
 const addTilesetMutation = require('../mutations/addTilesetMutation')
 const invite2ProjectMutation = require('../mutations/invite2ProjectMutation')
+const duplicationProjectMutation = require('../mutations/duplicateProjectMutation')
 const emptyQuery = require('../queries/emptyQuery')
 const projectQuery = require('../queries/projectsQuery')
 const projectsQuery = require('../queries/projectQuery')
@@ -43,6 +44,7 @@ const mutation = new GraphQLObjectType({
             clearProjects: clearProjectsMutation,
             addTileset: addTilesetMutation,
             invite2Project: invite2ProjectMutation,
+            duplicationProject: duplicationProjectMutation,
         }
     }
 });
