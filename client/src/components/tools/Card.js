@@ -50,7 +50,7 @@ class Card extends React.Component {
 
         return (
             <div >
-                <div className={className} style={style} onClick={onClick}>
+                <div className={className} style={style} onClick={onClick.bind(this, item)}>
                     {
                         imageData === '' ?
                             <div className='card-preview-img'><CircularProgress className="image-loading" /></div> :

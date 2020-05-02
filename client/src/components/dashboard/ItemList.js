@@ -32,8 +32,11 @@ class ItemList extends React.Component {
         this.setState({ [type]: false, item: null, refetch: null })
     };
 
-    handleGoEdit = () => {
-        this.props.history.push('/project/fwef')
+    handleGoEdit = (item) => {
+        if (!item || !this.props.selected) return
+        const type = this.props.selected === 'tileset' ? 'tileset' : 'project'
+        const { _id } = item
+        this.props.history.push(`/${type}/${_id}`)
     };
 
     handleDelete = (callback, _id) => {

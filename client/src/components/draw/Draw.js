@@ -12,6 +12,8 @@ import ReactFileReader from 'react-file-reader';
 import DrawTransaction from './DrawTransaction'
 import { Button } from "react-bootstrap";
 import Dialog from '../tools/Dialog'
+import QueryList from '../../graphql/Query'
+import { Query } from 'react-apollo'
 
 class Draw extends React.Component {
 
@@ -151,11 +153,12 @@ class Draw extends React.Component {
     }
 
     render() {
-
+        const { key } = this.props.match.params
         const { history } = this.props;
         const { sliderValue, borderColor, fillColor, scale, saveDialogOpen } = this.state;
 
         return (
+
             <div onClick={this.handleUnselect}>
                 <TopNavbar site='tileset' history={history} />
                 <div className="painter-wrapper">
@@ -198,15 +201,27 @@ class Draw extends React.Component {
                         handleVerticalFlip={this.handleVerticalFlip}
                         handleClear={this.handleClear}
                     />
-                    <DisplayPlace
-                        childRef={ref => this.display = ref}
-                        borderThic={sliderValue}
-                        fillColor={fillColor}
-                        borderColor={borderColor}
-                        transactions={this.transactions}
-                        handleZoomEffect={this.handleZoomEffect}
-                        scale={scale}
-                    />
+                    <Query query={QueryList.GET_tILESET} variables={{ id: key }} fetchPolicy={'network-only'}>
+                        {({ loading, error, data }) => {
+                            if (loading) return 'loading'
+                            if (error) return 'error'
+                            if (!data) return 'error'
+                            console.log(data)
+                            const { tileset } = data
+                            return (
+                                <DisplayPlace
+                                    tileset={tileset}
+                                    childRef={ref => this.display = ref}
+                                    borderThic={sliderValue}
+                                    fillColor={fillColor}
+                                    borderColor={borderColor}
+                                    transactions={this.transactions}
+                                    handleZoomEffect={this.handleZoomEffect}
+                                    scale={scale}
+                                />
+                            )
+                        }}
+                    </Query>
                 </div>
                 <Dialog
                     header="Save Image"
@@ -217,11 +232,12 @@ class Draw extends React.Component {
                     ]}
                     var totalTextbox='1'
                     content={[
-                        <h3>Are You Sure to Save In Delit Database?</h3>,
-                        <h3>Old Version will be overwriten</h3>
+                        <h3 key='q'>Are You Sure to Save In Delit Database?</h3>,
+                        <h3 key='w'>Old Version will be overwriten</h3>
                     ]} />
 
             </div>
+
         )
     }
 }

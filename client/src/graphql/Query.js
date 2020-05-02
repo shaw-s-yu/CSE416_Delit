@@ -144,4 +144,23 @@ export default {
         }
     }
     `,
+    GET_tILESET: graphql`
+    query tileset($id: String!){
+        tileset(id:$id){
+            name
+            ownerInfo{
+                username
+            }
+            teamInfo{
+                _id
+                username
+            }
+            imageId
+            width
+            height
+            tileWidth
+            tileHeight
+        }
+    }
+    `,
 }
