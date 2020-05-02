@@ -1,14 +1,14 @@
-const ProjectModel = require('../../models/mongo-project')
+const TilesetModel = require('../../models/mongo-tileset')
 const {
     GraphQLList,
     GraphQLNonNull,
     GraphQLString,
 } = require('graphql');
 
-const ProjectType = require('../types/ProjectType')
+const TilesetType = require('../types/TilesetType')
 
 module.exports = {
-    type: ProjectType,
+    type: TilesetType,
     args: {
         name: {
             type: new GraphQLNonNull(GraphQLString)
@@ -21,23 +21,23 @@ module.exports = {
         }
     },
     resolve: (root, params) => {
-        ProjectModel.findOne({ _id: params.id }).then(currentProject => {
-            if (!currentProject) throw new Error('error')
+        console.log(params.name)
+        TilesetModel.findOne({ _id: params.id }).then(currentTileset => {
+            if (!currentTileset) throw new Error('error')
             else {
-                let { editors } = currentProject
+                let { width, height, editors, imageId, tileWidth, tileHeight, owner } = currentTileset
                 const index = editors.indexOf(params.owner)
                 if (index !== -1) {
                     editors.splice(index, 1)
                 }
-                editors.push(currentProject.owner)
-                const newProject = new ProjectModel({
+                editors.push(owner)
+                const newTileset = new TilesetModel({
                     name: params.name,
                     owner: params.owner,
-                    editors: currentProject.editors,
-                    imageId: currentProject.imageId
+                    width, height, imageId, tileWidth, tileHeight, editors
                 }).save()
-                if (!newProject) throw new Error('Error')
-                return newProject
+                if (!newTileset) throw new Error('Error')
+                return newTileset
             }
         })
     }

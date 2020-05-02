@@ -15,13 +15,13 @@ class ItemList extends React.Component {
         invite: false,
         duplicate: false,
         remove: false,
-        project: null,
+        item: null,
         refetch: null,
 
     };
 
-    handleSetProject = (project, refetch) => {
-        this.setState({ project, refetch })
+    handleSetItem = (item, refetch) => {
+        this.setState({ item, refetch })
     }
 
     handleDialogsOpen = (type) => {
@@ -29,7 +29,7 @@ class ItemList extends React.Component {
     };
 
     handleDialogsClose = (type) => {
-        this.setState({ [type]: false })
+        this.setState({ [type]: false, item: null, refetch: null })
     };
 
     handleGoEdit = () => {
@@ -45,8 +45,8 @@ class ItemList extends React.Component {
     }
 
     render() {
-        const { projects, refetch, user } = this.props;
-        const numItem = projects.length;
+        const { items, refetch, user, selected } = this.props;
+        const numItem = items.length;
         const style = {
             height: numItem > 3 ? 600 : 300
         };
@@ -54,7 +54,7 @@ class ItemList extends React.Component {
             <div className="dashboard-itemlist">
                 <div className="dashboard-itemlist-wrapper" style={style}>
                     {
-                        projects && projects.map((project, index) => {
+                        items && items.map((item, index) => {
                             const col = index % 3;
                             const row = Math.floor(index / 3);
                             const left1s = 'calc(25% - 135px)';
@@ -67,17 +67,17 @@ class ItemList extends React.Component {
                                 top: numItem > 3 ? row === 0 ? top1s2 : top2s2 : top1s1,
                                 left: col === 0 ? left1s : col === 1 ? left2s : left3s,
                             }
-                            const { _id } = project;
+                            const { _id } = item;
                             return (
 
                                 <Card
                                     className='item-card'
-                                    project={project}
+                                    item={item}
                                     style={cardStyle}
                                     handleOpen={this.handleDialogsOpen}
                                     onClick={this.handleGoEdit}
                                     key={_id}
-                                    handleSetProject={this.handleSetProject}
+                                    handleSetItem={this.handleSetItem}
                                     refetch={refetch}
                                 />
 
@@ -85,12 +85,16 @@ class ItemList extends React.Component {
                         })
                     }
                 </div>
-                <Dialogs
-                    {...this.state}
-                    handleOpen={this.handleDialogsOpen}
-                    handleClose={this.handleDialogsClose}
-                    user={user}
-                />
+                {this.state.item ?
+                    <Dialogs
+                        {...this.state}
+                        handleOpen={this.handleDialogsOpen}
+                        handleClose={this.handleDialogsClose}
+                        handleSetItem={this.handleSetItem}
+                        selected={selected}
+                        user={user}
+                    /> : null
+                }
             </div>
         )
     }

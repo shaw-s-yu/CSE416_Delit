@@ -26,7 +26,7 @@ export default {
             id:$userId
         ){
             projectsOwned(
-                projectName: $search
+                searchName: $search
                 skip: $pageSkip
                 ){
                 name
@@ -41,7 +41,7 @@ export default {
                     picture
                 }
             }
-            projectsOwnedAmount(projectName: $search)
+            projectsOwnedAmount(searchName: $search)
         }
     }`,
     GET_MY_RELATED_PROJECTS: graphql`
@@ -54,7 +54,7 @@ export default {
             id:$userId
         ){
             projectsRelated(
-                projectName: $search
+                searchName: $search
                 skip: $pageSkip
                 ){
                 name
@@ -69,7 +69,7 @@ export default {
                     picture
                 }
             }
-            projectsRelatedAmount(projectName: $search)
+            projectsRelatedAmount(searchName: $search)
         }
     }`,
     GET_MY_SHARED_PROJECTS: graphql`
@@ -82,7 +82,7 @@ export default {
             id:$userId
         ){
             projectsShared(
-                projectName: $search
+                searchName: $search
                 skip: $pageSkip
                 ){
                 name
@@ -97,11 +97,11 @@ export default {
                     picture
                 }
             }
-            projectsSharedAmount(projectName: $search)
+            projectsSharedAmount(searchName: $search)
         }
     }`,
 
-    GET_TILESETS: graphql`
+    GET_ALL_TILESETS: graphql`
     {
         tilesets{
             _id
@@ -114,5 +114,34 @@ export default {
             tileHeight
         }
     }
-    `
+    `,
+    GET_TILESETS: graphql`
+    query user(
+        $userId: String!
+        $pageSkip: Int!
+        $search: String!
+    ){
+        user(
+            id:$userId
+        ){
+            tilesets(
+                searchName: $search
+                skip: $pageSkip
+            ){
+                name
+                _id
+                imageId
+                ownerInfo{
+                    username
+                }
+                teamInfo{
+                    _id
+                    username
+                    picture
+                }
+            }
+            tilesetsAmount(searchName: $search)
+        }
+    }
+    `,
 }

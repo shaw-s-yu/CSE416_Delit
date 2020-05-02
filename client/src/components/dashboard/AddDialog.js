@@ -7,26 +7,26 @@ import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
 import MutationList from '../../graphql/Mutation';
 
-class AddProjectDialog extends React.Component {
+class AddDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projectName: "",
+            itemName: "",
             tileWidth: 0,
             tileHeight: 0,
-            mapWidth: 0,
-            mapHeight: 0,
+            width: 0,
+            height: 0,
             disableBt: true,
         }
     }
     handleOnChange = (e) => {
         let { name, value } = e.target
-        value = name === 'projectName' ? value : parseInt(value) ? parseInt(value) : 0
+        value = name === 'itemName' ? value : parseInt(value) ? parseInt(value) : 0
         // eslint-disable-next-line
         this.state[name] = value
-        const { projectName, tileWidth, tileHeight, mapWidth, mapHeight } = this.state
+        const { itemName, tileWidth, tileHeight, width, height } = this.state
         let disableBt
-        if (projectName !== "" && tileWidth && tileHeight && mapWidth && mapHeight && tileWidth !== 0 && tileHeight !== 0 && mapWidth !== 0 && mapHeight !== 0)
+        if (itemName !== "" && tileWidth && tileHeight && width && height && tileWidth !== 0 && tileHeight !== 0 && width !== 0 && height !== 0)
             disableBt = false
         else
             disableBt = true
@@ -34,43 +34,55 @@ class AddProjectDialog extends React.Component {
     };
 
     handleAddProject = (callback) => {
-        const { userId } = this.props
-        const { projectName } = this.state
-        callback({
-            variables: {
-                name: projectName,
-                owner: userId,
-                imageId: '5eacb076d0ed064dec138c41'
-            }
-        })
-        this.props.handleClose()
+        const { userId, type } = this.props
+        const { itemName, width, height, tileWidth, tileHeight } = this.state
+        if (type === 'tileset')
+            callback({
+                variables: {
+                    name: itemName,
+                    owner: userId,
+                    width, height, tileWidth, tileHeight,
+                    imageId: '5eacb076d0ed064dec138c41'
+                }
+            })
+        else
+            callback({
+                variables: {
+                    name: itemName,
+                    owner: userId,
+                    imageId: '5eacb076d0ed064dec138c41'
+                }
+            })
+        this.props.handleClose('project')
     }
 
     render() {
-        const { open, handleClose, refetch } = this.props;
-        const { projectName, mapWidth, mapHeight, tileWidth, tileHeight, disableBt } = this.state
-
+        const { open, handleClose, refetch, type } = this.props;
+        const { itemName, width, height, tileWidth, tileHeight, disableBt } = this.state
+        const name = type === 'tileset' ? 'tileset' : 'Map'
+        const title = type === 'tileset' ? 'tileset' : 'Project'
+        const mutation = type === 'tileset' ? MutationList.ADD_TILESET : MutationList.ADD_PROJECT
         return (
-            <Mutation mutation={MutationList.ADD_PROJECT} refetchQueries={[refetch]}>
-                {(addProject, res) => (
+            <Mutation mutation={mutation} refetchQueries={[refetch]}>
+                {(addItem, res) => (
                     <Dialog
                         header='Create New Dialog'
                         open={open}
                         fullWidth={true}
                         maxWidth="xs"
                         actions={[
-                            <Button variant="primary" size="sm" onClick={this.handleAddProject.bind(this, addProject)} key='1' disabled={disableBt}>Add</Button>,
-                            <Button variant="primary" size="sm" key='2' onClick={handleClose}>Cancel</Button>
+                            <Button variant="primary" size="sm" onClick={this.handleAddProject.bind(this, addItem)} key='1' disabled={disableBt}>Add</Button>,
+                            <Button variant="primary" size="sm" key='2' onClick={handleClose.bind(this, 'cancel')}>Cancel</Button>
                         ]}
                         content={
                             <>
                                 <TextField
                                     className="add-project-dialog-input"
-                                    label="Enter New Project Name"
-                                    name="projectName"
+                                    label={`Enter New ${title} Name`}
+                                    name="itemName"
                                     variant="outlined"
                                     size="small"
-                                    value={projectName}
+                                    value={itemName}
                                     onChange={this.handleOnChange}
                                 />
                                 <div className='br'></div>
@@ -98,23 +110,23 @@ class AddProjectDialog extends React.Component {
                                 <div className='br'></div>
                                 <TextField
                                     className="project-property-input"
-                                    label="Enter Map Width"
-                                    name="mapWidth"
+                                    label={`Enter ${name} Width`}
+                                    name="width"
                                     type="number"
                                     variant="outlined"
                                     size="small"
-                                    value={mapWidth}
+                                    value={width}
                                     onChange={this.handleOnChange}
                                 />
 
                                 <TextField
                                     className="project-property-input"
-                                    label="Enter Map Height"
-                                    name="mapHeight"
+                                    label={`Enter ${name} Height`}
+                                    name="height"
                                     type="number"
                                     variant="outlined"
                                     size="small"
-                                    value={mapHeight}
+                                    value={height}
                                     onChange={this.handleOnChange}
                                 />
                                 {
@@ -130,8 +142,7 @@ class AddProjectDialog extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
     }
 };
 
-export default connect(mapStateToProps)(AddProjectDialog);
+export default connect(mapStateToProps)(AddDialog);

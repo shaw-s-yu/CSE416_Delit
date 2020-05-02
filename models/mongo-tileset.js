@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 var tilesetSchema = new Schema({
     name: String,
     owner: String,
+    editors: [String],
     imageId: String,
     tileWidth: Number,
     tileHeight: Number,

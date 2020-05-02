@@ -393,6 +393,10 @@
         {
             "name": "Fair Bear",
             "owner": "5e9fa3908dead93aa46f6a6d",
+            "editors": [
+                "5ea0e25872182f00242b848a",
+                "5ea262a9e4a7b520c829163b"
+            ],
             "imageId": "5eabdf04f064a7553cb9dd41",
             "tileWidth": 123,
             "tileHeight": 123,
@@ -402,6 +406,10 @@
         {
             "name": "Simon Demon",
             "owner": "5ea0e25872182f00242b848a",
+            "editors": [
+                "5e9fa3908dead93aa46f6a6d",
+                "5ea33ec1a8a9b4504485aa28"
+            ],
             "imageId": "5eabe0b7e9da110b6896405b",
             "tileWidth": 123,
             "tileHeight": 123,
@@ -411,6 +419,9 @@
         {
             "name": "High Sky",
             "owner": "5ea262a9e4a7b520c829163b",
+            "editors": [
+                "5ea33ec1a8a9b4504485aa28"
+            ],
             "imageId": "5eabde7398bf8c7fc8ef0308",
             "tileWidth": 123,
             "tileHeight": 123,

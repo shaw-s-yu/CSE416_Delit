@@ -43,6 +43,7 @@ class TestScreen extends React.Component {
           name: t.name,
           imageId: t.imageId,
           owner: t.owner,
+          editors: t.editors,
           width: t.width,
           height: t.height,
           tileWidth: t.tileWidth,
@@ -76,12 +77,12 @@ class TestScreen extends React.Component {
       query: QueryList.GET_PROJECTS
     }
     const refetch2 = {
-      query: QueryList.GET_TILESETS
+      query: QueryList.GET_ALL_TILESETS
     }
 
     return (
 
-      <Query query={QueryList.GET_TILESETS}>
+      <Query query={QueryList.GET_ALL_TILESETS}>
         {(tilesetsRes) => {
           if (tilesetsRes.data)
             console.log(tilesetsRes.data)

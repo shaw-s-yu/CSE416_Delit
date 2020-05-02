@@ -18,7 +18,7 @@ class DuplicateDialog extends React.Component {
     handleSubmit = (callback) => {
         callback({
             variables: {
-                id: this.props.project._id,
+                id: this.props.item._id,
                 name: this.state.name,
                 owner: this.props.user._id
             }
@@ -29,10 +29,11 @@ class DuplicateDialog extends React.Component {
 
     render() {
 
-        const { open, project, refetch, handleClose } = this.props
-        if (!project) return null
+        const { open, item, refetch, handleClose, selected } = this.props
+        if (!item) return null
+        const mutation = selected === 'tileset' ? MutationList.DUPLICATE_TILESET : MutationList.DUPLICATE_PROJECT
         return (
-            <Mutation mutation={MutationList.DUPLICATE_PROJECT} refetchQueries={[refetch]}>
+            <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(duplicateProject, res) => (
                     <Dialog
                         header="Duplicate Project"
@@ -50,7 +51,7 @@ class DuplicateDialog extends React.Component {
                                     type="name"
                                     variant="outlined"
                                     size="small"
-                                    defaultValue={project.name}
+                                    defaultValue={item.name}
                                     onChange={this.handleOnChange}
                                 />
                             </>

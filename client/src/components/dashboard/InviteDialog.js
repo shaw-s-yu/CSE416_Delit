@@ -72,8 +72,8 @@ class InviteDialog extends React.Component {
 
     getTextFields = () => {
         const { input1, input2, input3, input4, input5 } = this.state
-        const { project, user } = this.props
-        const disabled = project.ownerInfo.username === user.username ? false : true
+        const { item, user } = this.props
+        const disabled = item.ownerInfo.username === user.username ? false : true
         if (disabled) return null
 
         return (
@@ -119,7 +119,7 @@ class InviteDialog extends React.Component {
 
     handleSubmit = (callback) => {
         const { input1, input2, input3, input4, input5 } = this.state
-        const { _id } = this.props.project
+        const { _id } = this.props.item
         let usernames = []
         if (this.getSingleSubmit(input1)) usernames.push(this.getSingleSubmit(input1))
         if (this.getSingleSubmit(input2)) usernames.push(this.getSingleSubmit(input2))
@@ -142,13 +142,12 @@ class InviteDialog extends React.Component {
         return id
     }
 
-    UNSAFE_componentWillMount() {
+    componentDidMount() {
         const { username } = this.props.user
-
         this.props.socket.on('inviteBack', res => {
             let { name, err, msg, req, id } = res
             let toEdit = this.state[name]
-            const { teamInfo } = this.props.project
+            const { teamInfo } = this.props.item
             let teammates = []
             teamInfo.forEach(e => {
                 teammates.push(e.username)
@@ -173,12 +172,13 @@ class InviteDialog extends React.Component {
 
 
     render() {
-        const { open, project, user, refetch } = this.props
-        if (!project) return null
-        const disabled = project.ownerInfo.username === user.username ? false : true
+        const { open, item, user, refetch, selected } = this.props
+        if (!item) return null
+        const disabled = item.ownerInfo.username === user.username ? false : true
         const more = this.getMore()
+        const mutation = selected === 'tileset' ? MutationList.INVITE_2TILESET : MutationList.INVITE_2PROJECT
         return (
-            <Mutation mutation={MutationList.INVITE_2PROJECT} refetchQueries={[refetch]}>
+            <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(inviteUser, res) => (
                     <Dialog
                         header="Invite Teammate"

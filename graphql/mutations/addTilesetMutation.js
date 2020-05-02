@@ -1,7 +1,7 @@
 const TilesetModel = require('../../models/mongo-tileset')
 const {
     GraphQLNonNull,
-    GraphQLObjectType,
+    GraphQLList,
     GraphQLString,
     GraphQLInt
 } = require('graphql');
@@ -13,6 +13,7 @@ module.exports = {
     args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
         owner: { type: new GraphQLNonNull(GraphQLString) },
+        editors: { type: new GraphQLList(GraphQLString) },
         imageId: { type: new GraphQLNonNull(GraphQLString) },
         width: { type: new GraphQLNonNull(GraphQLInt) },
         height: { type: new GraphQLNonNull(GraphQLInt) },

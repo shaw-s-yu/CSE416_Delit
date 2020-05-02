@@ -11,14 +11,8 @@ class Card extends React.Component {
         imageData: ''
     }
 
-    handleOnClick = (type, id) => {
-        const { handleOpen } = this.props;
-        handleOpen.bind(this, type);
-        this.props.passProjectId(id);
-    }
-
-    handleOpen = (name, project, refetch) => {
-        this.props.handleSetProject(project, refetch)
+    handleOpen = (name, item, refetch) => {
+        this.props.handleSetItem(item, refetch)
         this.props.handleOpen(name)
     }
 
@@ -33,9 +27,9 @@ class Card extends React.Component {
     };
 
     componentDidMount() {
-        const { imageId } = this.props.project
+        const { imageId } = this.props.item
         if (imageId !== '')
-            axios.get(`/data/image?imageId=${this.props.project.imageId}`).then(res => {
+            axios.get(`/data/image?imageId=${this.props.item.imageId}`).then(res => {
                 const { err, msg, data } = res
                 if (err)
                     console.log(msg)
@@ -50,8 +44,8 @@ class Card extends React.Component {
 
     render() {
         const { imageData } = this.state
-        const { className, style, onClick, project, refetch } = this.props;
-        const { name, ownerInfo } = project;
+        const { className, style, onClick, item, refetch } = this.props;
+        const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
 
         return (
@@ -69,10 +63,10 @@ class Card extends React.Component {
                 </div>
 
                 <div className="card-info-btn-box" style={style}>
-                    <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', project, refetch)}>Rename</div>
-                    <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', project, refetch)}>Dupliate</div>
-                    <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', project, refetch)}>Team</div>
-                    <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', project, refetch)}>Delete</div>
+                    <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', item, refetch)}>Rename</div>
+                    <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Dupliate</div>
+                    <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
+                    <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
                     <div className="card-info-btn-center card-info-btn" >edit</div>
                 </div>
             </div>

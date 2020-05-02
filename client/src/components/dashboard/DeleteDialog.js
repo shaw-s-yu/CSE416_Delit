@@ -13,28 +13,28 @@ class DeleteDialog extends React.Component {
     }
 
     handleSubmit = (callback) => {
-        const { project } = this.props
+        const { item } = this.props
         callback({
             variables: {
-                id: project._id
+                id: item._id
             }
         })
         this.handleClose()
     }
 
     render() {
-        const { open, project, user, refetch } = this.props
-        if (!project) return null
-
-        const disabled = project.ownerInfo.username === user.username ? false : true
+        const { open, item, user, refetch, selected } = this.props
+        if (!item) return null
+        const mutation = selected === 'tileset' ? MutationList.REMOVE_TILESET : MutationList.REMOVE_PROJECT
+        const disabled = item.ownerInfo.username === user.username ? false : true
         return (
-            <Mutation mutation={MutationList.REMOVE_PROJECT} refetchQueries={[refetch]}>
-                {(removeProject, res) => (
+            <Mutation mutation={mutation} refetchQueries={[refetch]}>
+                {(removeItem, res) => (
                     <Dialog
                         header="Delete Project?"
                         open={open}
                         actions={[
-                            <Button key='1' disabled={disabled} onClick={this.handleSubmit.bind(this, removeProject)}>Confirm</Button>,
+                            <Button key='1' disabled={disabled} onClick={this.handleSubmit.bind(this, removeItem)}>Confirm</Button>,
                             <Button key='2' onClick={this.handleClose}>Cancel</Button>,
                         ]}
                         var totalTextbox='1'

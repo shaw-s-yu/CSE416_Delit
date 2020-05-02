@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql');
 const ProjectModel = require('../../models/mongo-project')
-
+const TilesetModel = require('../../models/mongo-tileset')
 
 
 module.exports = new GraphQLObjectType({
@@ -15,14 +15,14 @@ module.exports = new GraphQLObjectType({
             projectsOwned: {
                 args: {
                     skip: { type: GraphQLInt },
-                    projectName: { type: GraphQLString }
+                    searchName: { type: GraphQLString }
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
                     const projects = ProjectModel.find({
                         $and: [
                             { owner: parent._id },
-                            { name: { $regex: `.*${args.projectName}.*` } }
+                            { name: { $regex: `.*${args.searchName}.*` } }
                         ]
                     }).skip(args.skip).limit(6).exec()
                     if (!projects) throw new Error('Error')
@@ -30,12 +30,12 @@ module.exports = new GraphQLObjectType({
                 }
             },
             projectsOwnedAmount: {
-                args: { projectName: { type: GraphQLString } },
+                args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
                     const projectsAmount = ProjectModel.find({
                         $and: [
-                            { name: { $regex: `.*${args.projectName}.*` } },
+                            { name: { $regex: `.*${args.searchName}.*` } },
                             { owner: parent._id }
                         ]
                     }).countDocuments()
@@ -45,14 +45,14 @@ module.exports = new GraphQLObjectType({
             },
             projectsRelated: {
                 args: {
-                    projectName: { type: GraphQLString },
+                    searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt }
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
-                    let projects = ProjectModel.find({
+                    const projects = ProjectModel.find({
                         $and: [
-                            { name: { $regex: `.*${args.projectName}.*` } },
+                            { name: { $regex: `.*${args.searchName}.*` } },
                             {
                                 $or: [
                                     { owner: parent._id },
@@ -66,12 +66,12 @@ module.exports = new GraphQLObjectType({
                 }
             },
             projectsRelatedAmount: {
-                args: { projectName: { type: GraphQLString } },
+                args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    let projectsAmount = ProjectModel.find({
+                    const projectsAmount = ProjectModel.find({
                         $and: [
-                            { name: { $regex: `.*${args.projectName}.*` } },
+                            { name: { $regex: `.*${args.searchName}.*` } },
                             {
                                 $or: [
                                     { owner: parent._id },
@@ -85,15 +85,15 @@ module.exports = new GraphQLObjectType({
             },
             projectsShared: {
                 args: {
-                    projectName: { type: GraphQLString },
+                    searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt }
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
-                    let projects = ProjectModel.find({
+                    const projects = ProjectModel.find({
                         $and: [
                             { editors: parent._id },
-                            { name: { $regex: `.*${args.projectName}.*` } }
+                            { name: { $regex: `.*${args.searchName}.*` } }
                         ]
                     }).skip(args.skip).limit(6).exec()
                     if (!projects) throw new Error('Error')
@@ -101,15 +101,38 @@ module.exports = new GraphQLObjectType({
                 }
             },
             projectsSharedAmount: {
-                args: { projectName: { type: GraphQLString } },
+                args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    let projectsAmount = ProjectModel.find({
+                    const projectsAmount = ProjectModel.find({
                         $and: [
                             { editors: parent._id },
-                            { name: { $regex: `.*${args.projectName}.*` } }
+                            { name: { $regex: `.*${args.searchName}.*` } }
                         ]
                     }).countDocuments()
+                    if (!projectsAmount) throw new Error('Error')
+                    return projectsAmount
+                }
+            },
+            tilesets: {
+                args: {
+                    skip: { type: GraphQLInt },
+                    searchName: { type: GraphQLString }
+                },
+                type: new GraphQLList(TilesetType),
+                resolve: (parent, args) => {
+                    const tilesets = TilesetModel.find({ name: { $regex: `.*${args.searchName}.*` } }).skip(args.skip).limit(6).exec()
+                    if (!tilesets) {
+                        throw new Error('Error')
+                    }
+                    return tilesets
+                }
+            },
+            tilesetsAmount: {
+                args: { searchName: { type: GraphQLString } },
+                type: GraphQLInt,
+                resolve: (parent, args) => {
+                    const projectsAmount = ProjectModel.find({ name: { $regex: `.*${args.searchName}.*` } }).countDocuments()
                     if (!projectsAmount) throw new Error('Error')
                     return projectsAmount
                 }
@@ -119,3 +142,4 @@ module.exports = new GraphQLObjectType({
 });
 
 const ProjectType = require('./ProjectType')
+const TilesetType = require('../types/TilesetType')
