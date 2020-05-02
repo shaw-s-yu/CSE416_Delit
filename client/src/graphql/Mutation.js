@@ -88,6 +88,39 @@ export default {
             }
         }
     }
-    `
+    `,
+
+    ADD_TILESET: gql`
+    mutation addTileset(
+        $name:String!
+        $owner:String!
+        $imageId:String!
+        $width: Int!
+        $height:Int!
+        $tileWidth:Int!
+        $tileHeight:Int!
+    ){
+        addTileset(
+            name:$name
+            owner:$owner
+            imageId:$imageId
+            width:$width
+            height:$height
+            tileWidth:$tileWidth
+            tileHeight:$tileHeight
+        ){
+            imageId
+            width
+            height
+            tileWidth
+            tileHeight
+        }
+    }`,
+
+    CLEAR_TILESETS: gql`
+    mutation {
+        clearTilesets
+    }
+    `,
 
 }

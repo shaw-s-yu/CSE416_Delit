@@ -9,7 +9,10 @@ const emptyQuery = require('../queries/emptyQuery')
 const projectQuery = require('../queries/projectsQuery')
 const projectsQuery = require('../queries/projectQuery')
 const userQuery = require('../queries/userQuery')
+
 const tilesetQuery = require('../queries/tilesetQuery')
+const tilesetsQuery = require('../queries/tilesetsQuery')
+const clearTilesetsMutation = require('../mutations/clearTilesetsMutation')
 
 const {
     GraphQLSchema,
@@ -25,7 +28,8 @@ const queryType = new GraphQLObjectType({
             projects: projectQuery,
             project: projectsQuery,
             user: userQuery,
-            tileset: tilesetQuery
+            tileset: tilesetQuery,
+            tilesets: tilesetsQuery
         }
     }
 });
@@ -42,9 +46,11 @@ const mutation = new GraphQLObjectType({
             updateProject: updateProjectMutation,
             removeProject: removeProjectMutation,
             clearProjects: clearProjectsMutation,
-            addTileset: addTilesetMutation,
             invite2Project: invite2ProjectMutation,
             duplicationProject: duplicationProjectMutation,
+
+            addTileset: addTilesetMutation,
+            clearTilesets: clearTilesetsMutation,
         }
     }
 });

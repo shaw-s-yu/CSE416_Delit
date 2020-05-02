@@ -101,5 +101,18 @@ export default {
         }
     }`,
 
-
+    GET_TILESETS: graphql`
+    {
+        tilesets{
+            _id
+            name
+            owner
+            imageId
+            width
+            height
+            tileWidth
+            tileHeight
+        }
+    }
+    `
 }
