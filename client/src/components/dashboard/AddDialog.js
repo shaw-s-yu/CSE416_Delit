@@ -21,7 +21,7 @@ class AddDialog extends React.Component {
     }
     handleOnChange = (e) => {
         let { name, value } = e.target
-        value = name === 'itemName' ? value : parseInt(value) ? parseInt(value) : 0
+        value = (name === 'itemName' ? value : parseInt(value) ? parseInt(value) : 0)
         // eslint-disable-next-line
         this.state[name] = value
         const { itemName, tileWidth, tileHeight, width, height } = this.state
@@ -41,7 +41,10 @@ class AddDialog extends React.Component {
                 variables: {
                     name: itemName,
                     owner: userId,
-                    width, height, tileWidth, tileHeight,
+                    width: parseInt(width),
+                    height: parseInt(height),
+                    tileWidth: parseInt(tileWidth),
+                    tileHeight: parseInt(tileHeight),
                     imageId: '5eacb076d0ed064dec138c41'
                 }
             })
@@ -59,6 +62,7 @@ class AddDialog extends React.Component {
     render() {
         const { open, handleClose, refetch, type } = this.props;
         const { itemName, width, height, tileWidth, tileHeight, disableBt } = this.state
+        console.log(width)
         const name = type === 'tileset' ? 'tileset' : 'Map'
         const title = type === 'tileset' ? 'tileset' : 'Project'
         const mutation = type === 'tileset' ? MutationList.ADD_TILESET : MutationList.ADD_PROJECT
@@ -93,7 +97,7 @@ class AddDialog extends React.Component {
                                     type="number"
                                     variant="outlined"
                                     size="small"
-                                    value={tileWidth}
+                                    value={tileWidth.toString()}
                                     onChange={this.handleOnChange}
                                 />
 
@@ -104,7 +108,7 @@ class AddDialog extends React.Component {
                                     type="number"
                                     variant="outlined"
                                     size="small"
-                                    value={tileHeight}
+                                    value={tileHeight.toString()}
                                     onChange={this.handleOnChange}
                                 />
                                 <div className='br'></div>
@@ -115,7 +119,7 @@ class AddDialog extends React.Component {
                                     type="number"
                                     variant="outlined"
                                     size="small"
-                                    value={width}
+                                    value={width.toString()}
                                     onChange={this.handleOnChange}
                                 />
 
@@ -126,7 +130,7 @@ class AddDialog extends React.Component {
                                     type="number"
                                     variant="outlined"
                                     size="small"
-                                    value={height}
+                                    value={height.toString()}
                                     onChange={this.handleOnChange}
                                 />
                                 {
