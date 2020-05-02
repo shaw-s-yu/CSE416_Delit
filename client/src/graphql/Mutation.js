@@ -55,5 +55,22 @@ export default {
     mutation {
         clearProjects
     }
-    `
+    `,
+
+    INVITE_2PROJECT: gql`
+    mutation invite2Project(
+        $id:String!
+        $users:[String]!,
+    ){
+        invite2Project(id: $id, invites:$users){
+            name
+            owner
+            editors
+            ownerInfo{
+                username
+            }
+        }
+    }
+    `,
+
 }

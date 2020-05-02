@@ -36,6 +36,7 @@ export default {
                     username
                 }
                 teamInfo{
+                    _id
                     username
                     picture
                 }
@@ -63,6 +64,7 @@ export default {
                     username
                 }
                 teamInfo{
+                    _id
                     username
                     picture
                 }
@@ -90,6 +92,7 @@ export default {
                     username
                 }
                 teamInfo{
+                    _id
                     username
                     picture
                 }
