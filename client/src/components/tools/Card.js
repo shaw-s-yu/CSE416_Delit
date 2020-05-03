@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as handler from "../../store/database/DashboardHandler";
 import axios from 'axios'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { arrayBufferToBase64 } from '../controller/ImageController'
 
 class Card extends React.Component {
 
@@ -16,16 +17,6 @@ class Card extends React.Component {
         this.props.handleOpen(name)
     }
 
-    arrayBufferToBase64(buffer) {
-        var binary = '';
-        var bytes = new Uint8Array(buffer);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
-    };
-
     componentDidMount() {
         const { imageId } = this.props.item
         if (imageId !== '')
@@ -35,7 +26,7 @@ class Card extends React.Component {
                     console.log(msg)
                 else {
                     const base64Flag = 'data:image/jpeg;base64,';
-                    const imageStr = this.arrayBufferToBase64(data.data.data)
+                    const imageStr = arrayBufferToBase64(data.data.data)
                     this.setState({ imageData: base64Flag + imageStr })
                 }
             })

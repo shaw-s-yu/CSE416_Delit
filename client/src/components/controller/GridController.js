@@ -84,4 +84,8 @@ export default class DrawGridController {
         }
     }
 
+    getGridPositions = () => {
+        return this.gridPositions
+    }
+
 }

@@ -6,6 +6,7 @@ import CanvasController from './CanvasController'
 import squirtle from '../../img/squirtle.jpg'
 import DrawTransaction from "./DrawTransaction"
 import GridController from '../controller/GridController'
+import ImageController from '../controller/ImageController'
 
 class DisplayPlace extends React.Component {
 
@@ -255,11 +256,16 @@ class DisplayPlace extends React.Component {
         const { tileset } = this.props
         const { width, height, tileWidth, tileHeight } = tileset
         this.ctx = this.refs.canvas.getContext('2d')
+        this.helperCtx = this.refs.helperCanvas.getContext('2d')
 
         this.GridController = new GridController(this.ctx, width, height, tileWidth, tileHeight)
         const canvasDimension = this.GridController.getCanvasDimension()
+        const gridPositions = this.GridController.getGridPositions()
 
         const DisplayBoxDimension = this.refs.painterBox.getBoundingClientRect()
+
+        this.ImageController = new ImageController(this.ctx, this.helperCtx, canvasDimension.width, canvasDimension.height, tileWidth, tileHeight)
+        this.ImageController.drawToGrid(squirtle, gridPositions)
 
         this.setState({
             canvasWidth: canvasDimension.width,
@@ -331,9 +337,13 @@ class DisplayPlace extends React.Component {
                         onMouseOut={this.handleToolEnd}
                         onClick={this.handleToolEnd}
                         style={displayStyle}>
+                        <canvas ref='helperCanvas' width={canvasWidth} height={canvasHeight} className='helper-canvas'>
+                            Your Browser Does Not Support Canvas
+                        </canvas>
                         <canvas ref='canvas' width={canvasWidth} height={canvasHeight} className='draw-canvas'>
                             Your Browser Does Not Support Canvas
                         </canvas>
+
                     </div>
 
                 </ Scrollbars>
