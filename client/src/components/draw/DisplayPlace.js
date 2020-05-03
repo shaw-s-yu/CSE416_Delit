@@ -17,11 +17,10 @@ class DisplayPlace extends React.Component {
         DisplayBoxWidth: 0,
         DisplayBoxHeight: 0,
         mouseDown: false,
-        selectedGrid: []
+        selectedGrid: [],
+        multiSelecting: false,
+        cropDimension: null,
     }
-
-    cropBox = React.createRef();
-
 
     getSelectedTools = () => {
         const { selectedTool } = this.props
@@ -43,10 +42,22 @@ class DisplayPlace extends React.Component {
     handleToolStart = (e) => {
         const { selectedTool, borderThic, fillColor, borderColor } = this.props
         if (!selectedTool) return
+
+
         this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
         if (selectedTool === TOOLS.FILL) return
+
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
+
+        if (selectedTool === TOOLS.CROP) {
+            this.setState({
+                cropDimension: {
+                    start: { x, y }
+                }
+            })
+        }
+
         this.painter.startDraw(x, y)
 
 
@@ -73,7 +84,7 @@ class DisplayPlace extends React.Component {
             this.handleSelect(e)
             return
         }
-        if (selectedTool === TOOLS.CROP) e.stopPropagation()
+
         if (this.state.mouseDown === false && selectedTool !== TOOLS.FILL) return
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
             this.props.handleZoomEffect(e)
@@ -83,24 +94,61 @@ class DisplayPlace extends React.Component {
         e.stopPropagation()
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
+
+        if (selectedTool === TOOLS.CROP) {
+            let { cropDimension } = this.state
+            cropDimension.end = { x, y }
+            this.setState(cropDimension, () => {
+                this.handleCropSelect()
+            })
+        }
+
         this.painter.endDraw(x, y)
         this.GridController.drawGridBorder()
 
-        let cropData = (selectedTool === TOOLS.CROP ? this.painter.CROP.getCroppedData() : null);
-
         this.setState({
             mouseDown: false,
-            cropData: cropData,
-            cropping: selectedTool === TOOLS.CROP ? true : false
         })
     }
 
+    handleCropSelect = () => {
+        let { multiSelecting, selectedGrid, cropDimension } = this.state
+        const posistions = this.GridController.getGridPositionsFromCropMouse(cropDimension)
+        if (!multiSelecting) {
+            this.setState({ selectedGrid: posistions })
+            return
+        } else {
+            for (let o = 0; o < posistions.length; o++) {
+                let found = false
+                for (let i = 0; i < selectedGrid.length; i++) {
+                    if (posistions[o].x === selectedGrid[i].x && posistions[o].x === selectedGrid[i].x) {
+                        found = true
+                        break
+                    }
+                }
+                if (!found) {
+                    selectedGrid.push(posistions[o])
+                }
+            }
+            this.setState(selectedGrid)
+        }
+    }
+
     handleSelect = (e) => {
+        e.stopPropagation()
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
         if (!gridIndex) return
-        let { selectedGrid } = this.state
+
+        let { multiSelecting, selectedGrid } = this.state
+        if (!multiSelecting) {
+            selectedGrid = []
+            selectedGrid.push(gridIndex)
+            this.setState({ selectedGrid })
+            return
+        }
+
         let found = false
         for (let i = 0; i < selectedGrid.length; i++) {
             if (selectedGrid[i].x === gridIndex.x && selectedGrid[i].y === gridIndex.y) {
@@ -111,7 +159,7 @@ class DisplayPlace extends React.Component {
 
         if (!found) {
             selectedGrid.push(gridIndex)
-            this.setState(selectedGrid)
+            this.setState({ selectedGrid })
         }
     }
 
@@ -147,19 +195,8 @@ class DisplayPlace extends React.Component {
     handleHorizontalFlip = () => {
         const { selectedGrid } = this.state
         if (selectedGrid.length !== 0) {
-            this.ImageController.handleHorizontalFlip(() => {
-                let gridsData = []
-                for (let i = 0; i < selectedGrid.length; i++) {
-                    const gridPosition = this.GridController.getHorizontalSymetricalPosition(selectedGrid[i].x, selectedGrid[i].y)
-                    const gridData = this.GridController.getGridImageDataFromPosition(gridPosition.x, gridPosition.y)
-                    gridsData.push(gridData)
-                }
-                this.ImageController.handleHorizontalFlip(() => {
-                    for (let i = 0; i < gridsData.length; i++) {
-                        this.GridController.putGridImageDataToPosition(gridsData[i], selectedGrid[i].x, selectedGrid[i].y)
-                    }
-                })
-            })
+            const dimension = this.GridController.getCropPositionFromGridPositions(selectedGrid)
+            this.ImageController.handleSelectedHorizontalFlip(dimension)
         } else
             this.ImageController.handleHorizontalFlip()
     }
@@ -167,23 +204,17 @@ class DisplayPlace extends React.Component {
     handleVerticalFlip = () => {
         const { selectedGrid } = this.state
         if (selectedGrid.length !== 0) {
-            this.ImageController.handleVerticalFlip(() => {
-                let gridsData = []
-                for (let i = 0; i < selectedGrid.length; i++) {
-                    const gridPosition = this.GridController.getVerticalSymetricalPosition(selectedGrid[i].x, selectedGrid[i].y)
-                    const gridData = this.GridController.getGridImageDataFromPosition(gridPosition.x, gridPosition.y)
-                    gridsData.push(gridData)
-                }
-                this.ImageController.handleVerticalFlip(() => {
-                    for (let i = 0; i < gridsData.length; i++) {
-                        this.GridController.putGridImageDataToPosition(gridsData[i], selectedGrid[i].x, selectedGrid[i].y)
-                    }
-                })
-            })
+            const dimension = this.GridController.getCropPositionFromGridPositions(selectedGrid)
+            this.ImageController.handleSelectedVerticalFlip(dimension)
         } else
             this.ImageController.handleVerticalFlip()
     }
 
+    handleUnselectGrid = () => {
+        this.setState({
+            selectedGrid: []
+        })
+    }
 
 
 
@@ -197,7 +228,6 @@ class DisplayPlace extends React.Component {
         const { tileset } = this.props
         const { width, height, tileWidth, tileHeight } = tileset
         this.ctx = this.refs.canvas.getContext('2d')
-        this.helperCtx = this.refs.helperCanvas.getContext('2d')
 
         this.GridController = new GridController(this.ctx, width, height, tileWidth, tileHeight)
         const canvasDimension = this.GridController.getCanvasDimension()
@@ -210,7 +240,7 @@ class DisplayPlace extends React.Component {
         const DisplayBoxWidth = DisplayBoxDimension.width
         const DisplayBoxHeight = DisplayBoxDimension.height
 
-        this.ImageController = new ImageController(this.ctx, this.helperCtx, canvasWidth, canvasHeight, tileWidth, tileHeight)
+        this.ImageController = new ImageController(this.ctx, canvasWidth, canvasHeight, tileWidth, tileHeight)
 
         this.setState({
             canvasWidth,
@@ -285,7 +315,7 @@ class DisplayPlace extends React.Component {
         }
 
         return (
-            <div className="painter-display" ref='painterBox'>
+            <div className="painter-display" ref='painterBox' onClick={this.handleUnselectGrid}>
                 <Scrollbars ref="scrollbar"
                     style={scrollStyle}
                     renderThumbHorizontal={props => <div {...props} className="thumb" />}
@@ -298,9 +328,6 @@ class DisplayPlace extends React.Component {
                         onMouseLeave={e => this.handleToolEnd(e, 'out')}
                         onClick={e => this.handleToolEnd(e, 'click')}
                         style={displayStyle}>
-                        <canvas ref='helperCanvas' width={canvasWidth} height={canvasHeight} className='helper-canvas'>
-                            Your Browser Does Not Support Canvas
-                        </canvas>
                         <canvas ref='canvas' width={canvasWidth} height={canvasHeight} className='draw-canvas'>
                             Your Browser Does Not Support Canvas
                         </canvas>

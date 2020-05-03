@@ -42,7 +42,7 @@ class CanvasController {
         if (!this.drawing && this.tool !== 'FILL') return
         this[this.tool].endDraw(x, y)
         this.drawing = false
-
+        this.startData = null
         // this.newImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
         // this.view.props.socket.emit('draw', { data: this.newImg, type: 'new' })
         // this.view.props.transactions.addTransaction(new drawTransaction(this.oldImg, this.newImg, this.view.drawImage))
@@ -135,49 +135,6 @@ class CanvasController {
         }
     }
 
-    CROP = {
-        startDraw: (x, y) => {
-            this.ctx.lineWidth = 1
-            this.ctx.fillStyle = `rgba(0,0,0,0)`
-            this.ctx.strokeStyle = `rgba({0,0,0,1}})`
-
-            this.startX = x
-            this.startY = y
-            this.CROP.endCrop();
-            this.startData = this.ctx.getImageData(0, 0, this.width, this.height);
-        },
-        onDraw: (x, y) => {
-            if (this.startX === null || this.startY === null) return
-            this.ctx.putImageData(this.startData, 0, 0);
-            this.ctx.save()
-            this.ctx.beginPath();
-            this.ctx.setLineDash([6]);
-            this.ctx.strokeRect(this.startX, this.startY, x - this.startX, y - this.startY);
-            this.ctx.restore()
-        },
-        endDraw: (x, y) => {
-
-            if (this.startX === null || this.startY === null) return
-
-
-            this.ctx.putImageData(this.startData, 0, 0)
-
-            this.left = this.startX < x ? this.startX : x
-            this.top = this.startY < y ? this.startY : y
-            this.cropWidth = Math.abs(this.startX - x)
-            this.cropHeight = Math.abs(this.startY - y)
-
-            try {
-                this.croppedArea = this.ctx.getImageData(this.left, this.top, this.cropWidth, this.cropHeight)
-            } catch{
-                return
-            }
-
-            this.startX = null
-            this.startY = null
-        },
-    }
-
     ERASER = {
         startDraw: (x, y) => {
             this.ctx.save()
@@ -202,6 +159,33 @@ class CanvasController {
     FILL = {
         endDraw: (x, y) => {
             this.view.GridController.fillGridFromMouseXY(x, y)
+        }
+    }
+
+    CROP = {
+        startDraw: (x, y) => {
+            this.ctx.save()
+            this.ctx.lineWidth = 1
+            this.ctx.fillStyle = `rgba(0,0,0,0)`
+            this.ctx.strokeStyle = `rgba({0,0,0,1}})`
+
+            this.startX = x
+            this.startY = y
+            this.startData = this.ctx.getImageData(0, 0, this.width, this.height)
+        },
+
+        onDraw: (x, y) => {
+            if (this.startX === null || this.startY === null) return
+            this.ctx.putImageData(this.startData, 0, 0)
+            this.ctx.beginPath();
+            this.ctx.setLineDash([6])
+            this.ctx.strokeRect(this.startX, this.startY, x - this.startX, y - this.startY)
+        },
+
+        endDraw: (x, y) => {
+            this.onDraw(x, y)
+            this.ctx.putImageData(this.startData, 0, 0)
+            this.ctx.restore()
         }
     }
 }

@@ -137,7 +137,7 @@ export default class DrawGridController {
 
     getGridPositionFromMouseXY = (x, y) => {
         const gridIndex = this.getGridIndexFromMouseXY(x, y)
-        if (!gridIndex) return null
+        if (!gridIndex) return this.getGridPositionFromMouseXY(x + this.gridThickness, y + this.gridThickness)
         return this.getGridPositionFromIndex(gridIndex.x, gridIndex.y)
     }
 
@@ -176,6 +176,46 @@ export default class DrawGridController {
         }
 
         return this.getGridPositionFromIndex(newGridIndex.x, newGridIndex.y)
+    }
+
+    getGridPositionsFromCropMouse = (cropDimension) => {
+        let positions = []
+        const startPosition = this.getGridPositionFromMouseXY(cropDimension.start.x, cropDimension.start.y)
+        const endPosition = this.getGridPositionFromMouseXY(cropDimension.end.x, cropDimension.end.y)
+
+        for (let i = 0; i < this.gridPositions.length; i++) {
+            if (
+                this.gridPositions[i].x > (startPosition.x - this.gridThickness - this.tileWidth) &&
+                this.gridPositions[i].x < (endPosition.x + this.gridThickness + this.tileWidth) &&
+                this.gridPositions[i].y > (startPosition.y - this.gridThickness - this.tileHeight) &&
+                this.gridPositions[i].y < (endPosition.y + this.gridThickness + this.tileHeight)
+            )
+                positions.push({
+                    x: this.gridPositions[i].x,
+                    y: this.gridPositions[i].y
+                })
+        }
+
+        return positions
+    }
+
+    getCropPositionFromGridPositions = (grids) => {
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity
+        for (let i = 0; i < grids.length; i++) {
+            if (grids[i].x < minX)
+                minX = grids[i].x
+            if (grids[i].x > maxX)
+                maxX = grids[i].x
+            if (grids[i].y < minY)
+                minY = grids[i].y
+            if (grids[i].y > maxY)
+                maxY = grids[i].y
+        }
+        return {
+            left: minX, top: minY,
+            width: maxX + this.tileWidth - minX,
+            height: maxY + this.tileHeight - minY
+        }
     }
 
 }

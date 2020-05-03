@@ -126,7 +126,7 @@
 }
 
 .helper-canvas{
-    display: none;
+    /* display: none; */
 }
 
 .selected-box{

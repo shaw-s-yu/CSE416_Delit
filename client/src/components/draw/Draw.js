@@ -95,14 +95,9 @@ class Draw extends React.Component {
     };
 
     handleUnselect = () => {
-        this.handleCropPaste()
         this.props.handleUnselect();
     };
 
-    handleCropPaste = () => {
-        if (this.props.selectedTool === TOOLS.CROP)
-            this.display.handleEndCrop();
-    }
 
     handleHorizontalFlip = (e) => {
         e.stopPropagation();
@@ -155,7 +150,6 @@ class Draw extends React.Component {
                 <TopNavbar site='tileset' history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
-                        selectCallback={this.handleCropPaste}
                         className="map-toolbar"
                         content={[
                             { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
