@@ -51,23 +51,25 @@ export default class ImageController {
         return this.helperImageData
     }
 
-    handleHorizontalFlip = () => {
+    handleHorizontalFlip = (callback) => {
         const imgSrc = this.ctx.canvas.toDataURL('image/jpeg', 1)
         this.ctx.scale(-1, 1)
         this.ctx.translate(-this.width, 0);
         this.drawImage(imgSrc, () => {
             this.ctx.scale(-1, 1)
             this.ctx.translate(-this.width, 0);
+            callback()
         })
     }
 
-    handleVerticalFlip = () => {
+    handleVerticalFlip = (callback) => {
         const imgSrc = this.ctx.canvas.toDataURL('image/jpeg', 1)
         this.ctx.scale(1, -1)
         this.ctx.translate(0, -this.height);
         this.drawImage(imgSrc, () => {
             this.ctx.scale(1, -1)
             this.ctx.translate(0, -this.height);
+            callback()
         })
     }
 }

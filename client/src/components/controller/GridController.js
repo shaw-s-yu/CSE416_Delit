@@ -1,3 +1,4 @@
+
 export default class DrawGridController {
     constructor(ctx, visialWidth, visialHeight, tileWidth, tileHeight) {
         this.ctx = ctx
@@ -120,6 +121,13 @@ export default class DrawGridController {
         return null
     }
 
+    getGridIndexFromPosition = (x, y) => {
+        return {
+            x: Math.floor((x - this.gridThickness) / (this.gridThickness + this.tileWidth)),
+            y: Math.floor((y - this.gridThickness) / (this.gridThickness + this.tileHeight))
+        }
+    }
+
     getGridPositionFromIndex = (x, y) => {
         return {
             x: this.gridThickness + x * (this.tileWidth + this.gridThickness),
@@ -137,6 +145,37 @@ export default class DrawGridController {
         const gridPosition = this.getGridPositionFromMouseXY(x, y)
         if (!gridPosition) return
         this.ctx.fillRect(gridPosition.x, gridPosition.y, this.tileWidth, this.tileHeight)
+    }
+
+    getGridImageDataFromPosition = (x, y) => {
+        return this.ctx.getImageData(x, y, this.tileWidth, this.tileHeight)
+    }
+
+    putGridImageDataToPosition = (data, x, y) => {
+        this.ctx.putImageData(data, x, y)
+    }
+
+
+    getHorizontalSymetricalPosition = (x, y) => {
+        const gridIndex = this.getGridIndexFromPosition(x, y)
+        if (!gridIndex) return
+        const newGridIndex = {
+            x: this.numColumn - 1 - gridIndex.x,
+            y: gridIndex.y
+        }
+
+        return this.getGridPositionFromIndex(newGridIndex.x, newGridIndex.y)
+    }
+
+    getVerticalSymetricalPosition = (x, y) => {
+        const gridIndex = this.getGridIndexFromPosition(x, y)
+        if (!gridIndex) return
+        const newGridIndex = {
+            x: gridIndex.x,
+            y: this.numRow - 1 - gridIndex.y
+        }
+
+        return this.getGridPositionFromIndex(newGridIndex.x, newGridIndex.y)
     }
 
 }

@@ -106,21 +106,13 @@ class Draw extends React.Component {
 
     handleHorizontalFlip = (e) => {
         e.stopPropagation();
-        if (!this.display.state.cropping) {
-            this.display.handleHorizontalFlip();
-        } else {
-            this.display.cropBox.handleHorizontalFlip();
-        }
+        this.display.handleHorizontalFlip();
         this.props.handleUnselect();
     };
 
     handleVerticalFlip = (e) => {
         e.stopPropagation();
-        if (!this.display.state.cropping) {
-            this.display.handleVerticalFlip();
-        } else {
-            this.display.cropBox.handleVerticalFlip();
-        }
+        this.display.handleVerticalFlip();
         this.props.handleUnselect();
     };
 

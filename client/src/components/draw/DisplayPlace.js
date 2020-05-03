@@ -145,11 +145,43 @@ class DisplayPlace extends React.Component {
     }
 
     handleHorizontalFlip = () => {
-        this.ImageController.handleHorizontalFlip()
+        const { selectedGrid } = this.state
+        if (selectedGrid.length !== 0) {
+            this.ImageController.handleHorizontalFlip(() => {
+                let gridsData = []
+                for (let i = 0; i < selectedGrid.length; i++) {
+                    const gridPosition = this.GridController.getHorizontalSymetricalPosition(selectedGrid[i].x, selectedGrid[i].y)
+                    const gridData = this.GridController.getGridImageDataFromPosition(gridPosition.x, gridPosition.y)
+                    gridsData.push(gridData)
+                }
+                this.ImageController.handleHorizontalFlip(() => {
+                    for (let i = 0; i < gridsData.length; i++) {
+                        this.GridController.putGridImageDataToPosition(gridsData[i], selectedGrid[i].x, selectedGrid[i].y)
+                    }
+                })
+            })
+        } else
+            this.ImageController.handleHorizontalFlip()
     }
 
     handleVerticalFlip = () => {
-        this.ImageController.handleVerticalFlip()
+        const { selectedGrid } = this.state
+        if (selectedGrid.length !== 0) {
+            this.ImageController.handleVerticalFlip(() => {
+                let gridsData = []
+                for (let i = 0; i < selectedGrid.length; i++) {
+                    const gridPosition = this.GridController.getVerticalSymetricalPosition(selectedGrid[i].x, selectedGrid[i].y)
+                    const gridData = this.GridController.getGridImageDataFromPosition(gridPosition.x, gridPosition.y)
+                    gridsData.push(gridData)
+                }
+                this.ImageController.handleVerticalFlip(() => {
+                    for (let i = 0; i < gridsData.length; i++) {
+                        this.GridController.putGridImageDataToPosition(gridsData[i], selectedGrid[i].x, selectedGrid[i].y)
+                    }
+                })
+            })
+        } else
+            this.ImageController.handleVerticalFlip()
     }
 
 
