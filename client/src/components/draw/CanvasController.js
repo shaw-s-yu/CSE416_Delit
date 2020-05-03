@@ -1,4 +1,5 @@
 import drawTransaction from "./DrawTransaction"
+import { TOOLBAR_SELECT } from "../../store/actions/actionCreators"
 
 class CanvasController {
     constructor(view) {
@@ -39,7 +40,7 @@ class CanvasController {
 
     endDraw = (x, y) => {
         if (this[this.tool] === undefined) return
-        if (!this.drawing) return
+        if (!this.drawing && this.tool !== 'FILL') return
         this[this.tool].endDraw(x, y)
         this.drawing = false
 
@@ -237,6 +238,12 @@ class CanvasController {
             this.onDraw(x, y)
             this.ctx.restore()
         },
+    }
+
+    FILL = {
+        endDraw: (x, y) => {
+            this.view.GridController.fillGridFromMouseXY(x, y)
+        }
     }
 }
 export default CanvasController

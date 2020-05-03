@@ -43,6 +43,7 @@ class DisplayPlace extends React.Component {
         const { selectedTool, borderThic, fillColor, borderColor } = this.props
         if (!selectedTool) return
         this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
+        if (selectedTool === TOOLS.FILL) return
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
@@ -71,14 +72,13 @@ class DisplayPlace extends React.Component {
         const { selectedTool } = this.props
         if (!selectedTool) return
         if (selectedTool === TOOLS.CROP) e.stopPropagation()
-        if (this.state.mouseDown === false) return
+        if (this.state.mouseDown === false && selectedTool !== TOOLS.FILL) return
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
             this.props.handleZoomEffect(e)
             return
         }
 
         e.stopPropagation()
-
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         this.painter.endDraw(x, y)

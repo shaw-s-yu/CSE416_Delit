@@ -105,7 +105,7 @@ export default class DrawGridController {
         return false
     }
 
-    getGridPositionFromMouseXY = (x, y) => {
+    getGridIndexFromMouseXY = (x, y) => {
         for (let o = 0; o < this.numRow; o++)
             for (let i = 0; i < this.numColumn; i++) {
                 const gridLeft = this.gridThickness + i * (this.tileWidth + this.gridThickness)
@@ -120,9 +120,23 @@ export default class DrawGridController {
         return null
     }
 
-    onDrawGrid = (startX, startY, mouseX, mouseY) => {
+    getGridPositionFromIndex = (x, y) => {
+        return {
+            x: this.gridThickness + x * (this.tileWidth + this.gridThickness),
+            y: this.gridThickness + y * (this.tileHeight + this.gridThickness)
+        }
+    }
 
+    getGridPositionFromMouseXY = (x, y) => {
+        const gridIndex = this.getGridIndexFromMouseXY(x, y)
+        if (!gridIndex) return null
+        return this.getGridPositionFromIndex(gridIndex.x, gridIndex.y)
+    }
 
+    fillGridFromMouseXY = (x, y) => {
+        const gridPosition = this.getGridPositionFromMouseXY(x, y)
+        if (!gridPosition) return
+        this.ctx.fillRect(gridPosition.x, gridPosition.y, this.tileWidth, this.tileHeight)
     }
 
 }
