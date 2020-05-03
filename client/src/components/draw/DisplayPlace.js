@@ -121,6 +121,14 @@ class DisplayPlace extends React.Component {
         return this.refs.canvas.toDataURL('image/jpeg', 1)
     }
 
+    handleHorizontalFlip = () => {
+        this.ImageController.handleHorizontalFlip()
+    }
+
+    handleVerticalFlip = () => {
+        this.ImageController.handleVerticalFlip()
+    }
+
 
 
 
