@@ -1,40 +1,72 @@
 import React from 'react'
-
 class selectedBoxes extends React.Component {
     state = {
         mouseDown: false,
         lastX: null,
         lastY: null,
         selectedGrid: null,
+        grid: null,
+        lastGrid: null,
+        startX: null,
+        startY: null,
+        startGrids: null,
     }
 
-    handleMoveStart = e => {
+    handleMoveStart = (e, grid) => {
         e.stopPropagation()
 
         const { clientX, clientY } = e
         const { x, y } = this.props.parent.handleFixPosition(clientX, clientY)
-        const { selectedGrid } = this.props
-
-        this.setState({ mouseDown: true, lastX: x, lastY: y, selectedGrid })
+        let { selectedGrid } = this.props
+        const startImgData = this.props.parent.GridController.getImageData()
+        const startGrids = JSON.parse(JSON.stringify(selectedGrid))
+        const lastGrid = JSON.parse(JSON.stringify(grid))
+        this.setState({
+            mouseDown: true,
+            lastX: x, lastY: y,
+            selectedGrid, grid,
+            startX: grid.x, startY: grid.y,
+            startGrids, startImgData, lastGrid
+        })
     }
 
     handleMove = (x, y) => {
-        const { mouseDown, lastX, lastY, selectedGrid } = this.state
+        let { mouseDown, lastX, lastY, selectedGrid, startX, startY, startGrids, startImgData, lastGrid } = this.state
+
         if (!mouseDown || !lastX || !lastY) return
         const dx = x - lastX
         const dy = y - lastY
         this.props.parent.GridController.handleShiftSelectedGrids(dx, dy, selectedGrid)
-        this.setState({ lastX: x, lastY: y })
+        let gridsToDraw = this.props.parent.GridController.getGridsPositionFromMouseGrids(x, y, startGrids, {
+            x: startX, y: startY
+        })
+        this.props.parent.GridController.clearGridsByRegion(startGrids)
+        this.props.parent.GridController.DrawGridsByRegion(startImgData, gridsToDraw, startGrids)
+
+        lastGrid = this.props.parent.GridController.getGridPositionFromMouseXY(x, y)
+
+        if (!this.props.parent.GridController.mouseXYisInGrid(x, y, lastGrid.x, lastGrid.y)) {
+            this.props.parent.ctx.putImageData(startImgData, 0, 0)
+            this.props.parent.GridController.clearGridsByRegion(startGrids)
+        }
+
+        this.setState({ lastX: x, lastY: y, lastGrid })
     }
 
-    handleMoveEnd = (e, grid) => {
+    handleMoveEnd = e => {
         e.stopPropagation()
 
         const { clientX, clientY } = e
-        const { selectedGrid } = this.state
+        const { selectedGrid, grid } = this.state
         const { x, y } = this.props.parent.handleFixPosition(clientX, clientY)
         this.props.parent.GridController.handleShift2Grids(x, y, selectedGrid, grid)
-        this.setState({ mouseDown: false, lastX: null, lastY: null, startGrids: null })
+        this.setState({
+            mouseDown: false, lastX: null,
+            lastY: null, startGrids: null,
+            startX: null, startY: null,
+            grid: null, startImgData: null,
+            lastGrid: null
+        })
     }
 
     handleMoveLeave = e => {
@@ -65,7 +97,7 @@ class selectedBoxes extends React.Component {
                         }
                         return (
                             <div
-                                onMouseDown={this.handleMoveStart}
+                                onMouseDown={e => this.handleMoveStart(e, grid)}
                                 onMouseLeave={this.handleMoveLeave}
                                 onClick={e => this.handleMoveEnd(e, grid)}
                                 key={index}

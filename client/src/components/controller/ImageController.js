@@ -110,6 +110,16 @@ export default class ImageController {
             this.ctx.putImageData(this.helperImageData, left, top)
         })
     }
+
+    GetDataFromGrids = (grids) => {
+        for (let i = 0; i < grids.length; i++) {
+            const { x, y } = grids[i]
+            const imgData = this.ctx.getImageData(x, y, this.gridWidth, this.gridHeight)
+            grids[i].imgData = imgData
+        }
+        return grids
+
+    }
 }
 
 

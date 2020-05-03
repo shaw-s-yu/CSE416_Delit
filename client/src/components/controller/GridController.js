@@ -18,6 +18,10 @@ export default class DrawGridController {
         this.setCanvasDimension()
     }
 
+    getImageData = () => {
+        return this.ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight)
+    }
+
     drawGrid = () => {
         this.drawGridBackground()
         this.drawGridBorder()
@@ -42,6 +46,23 @@ export default class DrawGridController {
         this.ctx.fillStyle = this.backgroundColor
         this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight)
         this.ctx.restore()
+    }
+
+    DrawGridsByRegion = (imgData, grids, startGrids) => {
+
+        for (let i = 0; i < grids.length; i++) {
+            this.ctx.putImageData(imgData, grids[i].dx, grids[i].dy, startGrids[i].x, startGrids[i].y, this.tileWidth, this.tileHeight)
+        }
+    }
+
+    clearGridsByRegion = (grids) => {
+        this.ctx.save()
+        this.ctx.fillStyle = this.backgroundColor
+        for (let i = 0; i < grids.length; i++) {
+            this.ctx.fillRect(grids[i].x, grids[i].y, this.tileWidth, this.tileHeight)
+        }
+        this.ctx.restore()
+        this.drawGridBorder()
     }
 
     setGridThickness = (gridThickness) => {
@@ -252,5 +273,23 @@ export default class DrawGridController {
             grids[i].x += dx
             grids[i].y += dy
         }
+    }
+
+    getGridsPositionFromMouseGrids = (x, y, grids, startGridPosition) => {
+        let returnGrids = []
+        const mouseGridPosition = this.getGridPositionFromMouseXY(x, y)
+
+        const dx = mouseGridPosition.x - startGridPosition.x
+        const dy = mouseGridPosition.y - startGridPosition.y
+
+        for (let i = 0; i < grids.length; i++) {
+            returnGrids.push({
+                x: grids[i].x + dx,
+                y: grids[i].y + dy,
+                dx, dy
+            })
+        }
+
+        return returnGrids
     }
 }
