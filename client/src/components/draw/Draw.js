@@ -98,6 +98,10 @@ class Draw extends React.Component {
         this.props.handleUnselect();
     };
 
+    handleUnselectGrid = () => {
+        this.display.handleUnselectGrid()
+    }
+
 
     handleHorizontalFlip = (e) => {
         e.stopPropagation();
@@ -150,6 +154,7 @@ class Draw extends React.Component {
                 <TopNavbar site='tileset' history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
+                        selectCallback={this.handleUnselectGrid}
                         className="map-toolbar"
                         content={[
                             { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },

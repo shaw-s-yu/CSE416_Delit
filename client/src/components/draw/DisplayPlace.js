@@ -85,6 +85,8 @@ class DisplayPlace extends React.Component {
             return
         }
 
+        if (selectedTool === TOOLS.FILL && type === 'out') return
+
         if (this.state.mouseDown === false && selectedTool !== TOOLS.FILL) return
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
             this.props.handleZoomEffect(e)

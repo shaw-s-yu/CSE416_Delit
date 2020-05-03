@@ -104,7 +104,7 @@
 }
 
 .display-fill{
-    cursor: url(./img/fill_rollover.svg), auto;
+    cursor: url(./img/fill_rollover.svg) 20 20, auto;
 }
 
 .display-cross-cursor{
@@ -125,11 +125,8 @@
     outline: 2px solid black;
 }
 
-.helper-canvas{
-    /* display: none; */
-}
-
 .selected-box{
     position: absolute;
     background-color: rgba(0, 0, 205, 0.4);
+    cursor: move;
 }

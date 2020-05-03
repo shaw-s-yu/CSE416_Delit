@@ -2,7 +2,17 @@ import React from 'react'
 
 class selectedBoxes extends React.Component {
     state = {
+        mouseDown: false
+    }
 
+    handleMoveStart = e => {
+        e.stopPropagation()
+        this.setState({ mouseDown: true })
+    }
+
+    handleMoveEnd = e => {
+        e.stopPropagation()
+        this.setState({ mouseDown: false })
     }
 
 
@@ -14,12 +24,15 @@ class selectedBoxes extends React.Component {
                 {
                     selectedGrid && selectedGrid.map((grid, index) => {
                         const style = {
-                            left: grid.x,
-                            top: grid.y,
-                            width, height
+                            left: grid.x - 1,
+                            top: grid.y - 1,
+                            width: width + 2,
+                            height: height + 2
                         }
                         return (
                             <div
+                                onMouseDown={this.handleMoveStart}
+                                onClick={this.handleMoveEnd}
                                 key={index}
                                 style={style}
                                 className='selected-box'
