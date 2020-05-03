@@ -3,7 +3,6 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
-import squirtle from '../../img/squirtle.jpg'
 import DrawTransaction from "./DrawTransaction"
 import GridController from '../controller/GridController'
 import ImageController, { arrayBufferToBase64 } from '../controller/ImageController'
@@ -112,8 +111,9 @@ class DisplayPlace extends React.Component {
         const color = { r: 211, g: 211, b: 211, a: 1 }
         this.painter.initDraw('SQUARE', 1, color, color)
         this.painter.startDraw(0, 0)
-        this.painter.onDraw(this.state.imgWidth, this.state.imgHeight)
-        this.painter.endDraw(this.state.imgWidth, this.state.imgHeight)
+        this.painter.onDraw(this.state.canvasWidth, this.state.canvasHeight)
+        this.painter.endDraw(this.state.canvasWidth, this.state.canvasHeight)
+        this.GridController.drawGridBorder()
     }
 
 
@@ -207,7 +207,7 @@ class DisplayPlace extends React.Component {
 
     render() {
         const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight } = this.state;
-        const { scale, tileset } = this.props
+        const { scale } = this.props
         const scrollStyle = {
             width: '100%',
             height: '100%',

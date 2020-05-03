@@ -1,5 +1,4 @@
 import drawTransaction from "./DrawTransaction"
-import { TOOLBAR_SELECT } from "../../store/actions/actionCreators"
 
 class CanvasController {
     constructor(view) {
@@ -177,46 +176,6 @@ class CanvasController {
             this.startX = null
             this.startY = null
         },
-        getCroppedData: () => {
-            return {
-                imgData: this.croppedArea,
-                left: this.left,
-                top: this.top,
-                width: this.cropWidth,
-                height: this.cropHeight,
-            }
-        },
-        endCrop: () => {
-            this.croppedArea = null
-            this.cropWidth = null
-            this.cropHeight = null
-            this.left = null
-            this.top = null
-        },
-
-        reCrop: (data) => {
-
-            const { left, top, width, height } = data
-            const toReturn = this.ctx.getImageData(left, top, width, height)
-
-            return toReturn
-
-        },
-
-        clearCropArea: (left, top, width, height) => {
-
-            this.ctx.save()
-            this.ctx.fillStyle = 'rgba(211,211,211,1)'
-            this.ctx.strokeStyle = 'rgba(0,0,0,0)'
-            this.ctx.lineWidth = 0
-            this.ctx.beginPath();
-            this.ctx.rect(left, top, width, height);
-            this.ctx.fill()
-            this.ctx.stroke();
-            this.ctx.restore()
-        }
-
-
     }
 
     ERASER = {
