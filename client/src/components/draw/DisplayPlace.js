@@ -45,16 +45,12 @@ class DisplayPlace extends React.Component {
         this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
-        if (this.state.cropping)
-            this.handleEndCrop()
-        // console.log(this.state.cropping, this.state.cropData)
-        this.painter.startDraw(x, y)
+        const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
+        if (gridIndex) this.painter.startDraw(x, y)
 
 
         this.setState({
             mouseDown: true,
-            cropData: this.state.cropping ? null : this.state.cropData,
-            cropping: selectedTool === TOOLS.CROP ? true : false
         })
     }
 
@@ -65,9 +61,10 @@ class DisplayPlace extends React.Component {
 
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
-        const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
-        console.log(gridIndex)
+        // const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
         this.painter.onDraw(x, y)
+        this.GridController.drawGridBorder()
+
     }
 
     handleToolEnd = (e) => {
@@ -75,14 +72,17 @@ class DisplayPlace extends React.Component {
         if (!selectedTool) return
         if (selectedTool === TOOLS.CROP) e.stopPropagation()
         if (this.state.mouseDown === false) return
-        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT)
+        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
             this.props.handleZoomEffect(e)
+            return
+        }
 
         e.stopPropagation()
 
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         this.painter.endDraw(x, y)
+        this.GridController.drawGridBorder()
 
         let cropData = (selectedTool === TOOLS.CROP ? this.painter.CROP.getCroppedData() : null);
 

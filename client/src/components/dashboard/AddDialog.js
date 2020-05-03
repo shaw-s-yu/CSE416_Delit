@@ -62,7 +62,6 @@ class AddDialog extends React.Component {
     render() {
         const { open, handleClose, refetch, type } = this.props;
         const { itemName, width, height, tileWidth, tileHeight, disableBt } = this.state
-        console.log(width)
         const name = type === 'tileset' ? 'tileset' : 'Map'
         const title = type === 'tileset' ? 'tileset' : 'Project'
         const mutation = type === 'tileset' ? MutationList.ADD_TILESET : MutationList.ADD_PROJECT

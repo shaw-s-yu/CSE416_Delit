@@ -19,7 +19,10 @@ class Toolbar extends React.Component {
         }
 
         this.props.handleUnselect();
-        this.props.handleSelect(item.name);
+
+        const { selected } = this.props
+        if (selected !== item.name)
+            this.props.handleSelect(item.name);
     }
 
     getSelected = (item) => {

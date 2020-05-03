@@ -9,7 +9,7 @@ export default class DrawGridController {
         this.numColumn = 0
         this.numRow = 0
         this.gridColor = '#000000'
-        this.backgroundColor = '#808080'
+        this.backgroundColor = 'rgba(211,211,211,1)'
         this.gridThickness = 2
         this.canvasWidth = 0
         this.canvasHeight = 0
@@ -19,20 +19,26 @@ export default class DrawGridController {
 
     drawGrid = () => {
         this.drawGridBackground()
-        this.drawGridTileBoxes()
+        this.drawGridBorder()
     }
 
-    drawGridTileBoxes = () => {
+    drawGridBorder = () => {
         this.ctx.save()
-        this.ctx.fillStyle = this.backgroundColor
-        for (let position in this.gridPositions)
-            this.ctx.fillRect(this.gridPositions[position].x, this.gridPositions[position].y, this.tileWidth, this.tileHeight)
+        this.ctx.fillStyle = this.gridColor
+        for (let i = 0; i < this.numRow + 1; i++) {
+            const top = i * (this.gridThickness + this.tileHeight)
+            this.ctx.fillRect(0, top, this.canvasWidth, this.gridThickness)
+        }
+        for (let i = 0; i < this.numColumn + 1; i++) {
+            const left = i * (this.gridThickness + this.tileWidth)
+            this.ctx.fillRect(left, 0, this.gridThickness, this.canvasHeight)
+        }
         this.ctx.restore()
     }
 
     drawGridBackground = () => {
         this.ctx.save()
-        this.ctx.fillStyle = this.gridColor
+        this.ctx.fillStyle = this.backgroundColor
         this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight)
         this.ctx.restore()
     }
@@ -112,6 +118,11 @@ export default class DrawGridController {
             }
 
         return null
+    }
+
+    onDrawGrid = (startX, startY, mouseX, mouseY) => {
+
+
     }
 
 }
