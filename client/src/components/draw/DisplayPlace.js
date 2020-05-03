@@ -6,7 +6,8 @@ import CanvasController from './CanvasController'
 import squirtle from '../../img/squirtle.jpg'
 import DrawTransaction from "./DrawTransaction"
 import GridController from '../controller/GridController'
-import ImageController from '../controller/ImageController'
+import ImageController, { arrayBufferToBase64 } from '../controller/ImageController'
+import axios from 'axios'
 
 class DisplayPlace extends React.Component {
 
@@ -92,48 +93,6 @@ class DisplayPlace extends React.Component {
         })
     }
 
-    handleCropFlip = () => {
-        console.log(this.state.cropping)
-        if (this.state.cropping === false)
-            return
-
-        const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-        const { imgData, left, top } = this.cropBox.getCropData()
-        this.ctx.putImageData(imgData, left, top)
-        this.painter.CROP.endCrop()
-        this.setState({
-            cropData: null,
-            cropping: false
-        })
-        const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-
-        this.props.socket.emit('draw', { data: newImg, type: 'new' })
-        this.props.transactions.addTransaction(new DrawTransaction(oldImg, newImg, this.drawImage))
-
-    }
-
-    handleEndCrop = () => {
-        this.painter.CROP.endCrop()
-        const { cropData } = this.state
-        const { left, top } = cropData
-        if (this.state.cropData !== null) {
-            const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-            try {
-                this.ctx.putImageData(this.state.cropData.imgData, left, top)
-            }
-            catch{
-                return
-            }
-            const new_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-            this.props.socket.emit('draw', { data: new_img, type: 'new' })
-            this.props.transactions.addTransaction(new DrawTransaction(old_img, new_img, this.drawImage))
-        }
-        this.setState({
-            cropData: null,
-            cropping: false
-        })
-    }
-
     handleFixPosition = (clientX, clientY) => {
         const windowScrollX = window.scrollX
         const windowScrollY = window.scrollY
@@ -158,47 +117,10 @@ class DisplayPlace extends React.Component {
     }
 
 
-    drawImage = (src, callback) => {
-        let img = new Image()
-        img.src = src
-        img.onload = () => {
-            const { width, height } = this.refs.painterBox.getBoundingClientRect()
-            this.setState({
-                imgWidth: img.width,
-                imgHeight: img.height,
-                DisplayBoxWidth: width,
-                DisplayBoxHeight: height,
-            }, () => {
-                this.ctx.drawImage(img, 0, 0)
-                this.painter.setDimension(img.width, img.height)
-                if (callback) callback()
-            })
-        }
-    }
-
     getImageData = () => {
         return this.refs.canvas.toDataURL('image/jpeg', 1)
     }
 
-    handleHorizontalFlip = () => {
-        const imgSrc = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.ctx.scale(-1, 1)
-        this.ctx.translate(-this.state.imgWidth, 0);
-        this.drawImage(imgSrc, () => {
-            this.ctx.scale(-1, 1)
-            this.ctx.translate(-this.state.imgWidth, 0);
-        })
-    }
-
-    handleVerticalFlip = () => {
-        const imgSrc = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.ctx.scale(1, -1)
-        this.ctx.translate(0, -this.state.imgHeight);
-        this.drawImage(imgSrc, () => {
-            this.ctx.scale(1, -1)
-            this.ctx.translate(0, -this.state.imgHeight);
-        })
-    }
 
 
 
@@ -216,25 +138,43 @@ class DisplayPlace extends React.Component {
 
         this.GridController = new GridController(this.ctx, width, height, tileWidth, tileHeight)
         const canvasDimension = this.GridController.getCanvasDimension()
+        const canvasWidth = canvasDimension.width
+        const canvasHeight = canvasDimension.height
+
         const gridPositions = this.GridController.getGridPositions()
 
         const DisplayBoxDimension = this.refs.painterBox.getBoundingClientRect()
+        const DisplayBoxWidth = DisplayBoxDimension.width
+        const DisplayBoxHeight = DisplayBoxDimension.height
 
-        this.ImageController = new ImageController(this.ctx, this.helperCtx, canvasDimension.width, canvasDimension.height, tileWidth, tileHeight)
-        this.ImageController.drawToGrid(squirtle, gridPositions)
+        this.ImageController = new ImageController(this.ctx, this.helperCtx, canvasWidth, canvasHeight, tileWidth, tileHeight)
 
         this.setState({
-            canvasWidth: canvasDimension.width,
-            canvasHeight: canvasDimension.height,
-            DisplayBoxWidth: DisplayBoxDimension.width,
-            DisplayBoxHeight: DisplayBoxDimension.height,
+            canvasWidth,
+            canvasHeight,
+            DisplayBoxWidth,
+            DisplayBoxHeight
         }, () => {
+
             this.GridController.drawGrid()
+            this.painter.setDimension(canvasWidth, canvasHeight)
+            const { imageId } = this.props.tileset
+            if (imageId !== '' && imageId !== '5eacb076d0ed064dec138c41')
+                axios.get(`/data/image?imageId=${imageId}`).then(res => {
+                    const { err, msg, data } = res
+                    if (err)
+                        console.log(msg)
+                    else {
+                        const base64Flag = 'data:image/jpeg;base64,';
+                        const imageStr = arrayBufferToBase64(data.data.data)
+                        this.ImageController.drawToGrid(base64Flag + imageStr, gridPositions)
+                    }
+                })
+
+
         })
 
         this.painter = new CanvasController(this)
-
-        // this.drawImage(squirtle)
 
         window.onresize = () => {
             const { width, height } = this.refs.painterBox.getBoundingClientRect()
@@ -243,6 +183,8 @@ class DisplayPlace extends React.Component {
                 DisplayBoxHeight: height,
             })
         }
+
+
     }
 
     UNSAFE_componentWillMount() {

@@ -20,7 +20,7 @@ class Card extends React.Component {
     componentDidMount() {
         const { imageId } = this.props.item
         if (imageId !== '')
-            axios.get(`/data/image?imageId=${this.props.item.imageId}`).then(res => {
+            axios.get(`/data/image?imageId=${imageId}`).then(res => {
                 const { err, msg, data } = res
                 if (err)
                     console.log(msg)

@@ -43,9 +43,9 @@ class CanvasController {
         this[this.tool].endDraw(x, y)
         this.drawing = false
 
-        this.newImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
-        this.view.props.socket.emit('draw', { data: this.newImg, type: 'new' })
-        this.view.props.transactions.addTransaction(new drawTransaction(this.oldImg, this.newImg, this.view.drawImage))
+        // this.newImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
+        // this.view.props.socket.emit('draw', { data: this.newImg, type: 'new' })
+        // this.view.props.transactions.addTransaction(new drawTransaction(this.oldImg, this.newImg, this.view.drawImage))
     }
 
     PENCIL = {
