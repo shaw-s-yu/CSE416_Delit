@@ -180,8 +180,14 @@ export default class DrawGridController {
 
     getGridPositionsFromCropMouse = (cropDimension) => {
         let positions = []
-        const startPosition = this.getGridPositionFromMouseXY(cropDimension.start.x, cropDimension.start.y)
-        const endPosition = this.getGridPositionFromMouseXY(cropDimension.end.x, cropDimension.end.y)
+        let startPosition = this.getGridPositionFromMouseXY(cropDimension.start.x, cropDimension.start.y)
+        let endPosition = this.getGridPositionFromMouseXY(cropDimension.end.x, cropDimension.end.y)
+
+        if (startPosition.x > endPosition.x && startPosition.y > endPosition.y) {
+            const temp = startPosition
+            startPosition = endPosition
+            endPosition = temp
+        }
 
         for (let i = 0; i < this.gridPositions.length; i++) {
             if (
