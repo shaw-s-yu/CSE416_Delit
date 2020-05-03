@@ -22,6 +22,8 @@ class DisplayPlace extends React.Component {
         cropDimension: null,
     }
 
+    selectedBoxes = React.createRef()
+
     getSelectedTools = () => {
         const { selectedTool } = this.props
         if (selectedTool === TOOLS.ZOOM_IN)
@@ -67,14 +69,23 @@ class DisplayPlace extends React.Component {
     }
 
     handleToolMove = (e) => {
-        const { mouseDown } = this.state
+        const { mouseDown, selectedGrid } = this.state
+        const { clientX, clientY } = e
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+        if (selectedGrid.length !== 0) {
+            if (this.selectedBoxes.state.mouseDown) {
+                this.selectedBoxes.handleMove(x, y)
+            }
+        }
+
         if (!mouseDown) return
 
 
-        const { clientX, clientY } = e
-        const { x, y } = this.handleFixPosition(clientX, clientY)
+
+
         this.painter.onDraw(x, y)
         this.GridController.drawGridBorder()
+
     }
 
     handleToolEnd = (e, type) => {
@@ -85,7 +96,7 @@ class DisplayPlace extends React.Component {
             return
         }
 
-        if (selectedTool === TOOLS.FILL && type === 'out') return
+        if ((selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT || selectedTool === TOOLS.FILL) && type === 'out') return
 
         if (this.state.mouseDown === false && selectedTool !== TOOLS.FILL) return
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
@@ -337,6 +348,8 @@ class DisplayPlace extends React.Component {
                             selectedGrid={selectedGrid}
                             width={tileWidth}
                             height={tileHeight}
+                            parent={this}
+                            childRef={ref => this.selectedBoxes = ref}
                         />
 
                     </div>

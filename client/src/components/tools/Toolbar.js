@@ -40,7 +40,7 @@ class Toolbar extends React.Component {
                 {
                     content && content.map((c, i) => {
                         return (
-                            <div className={"toolbar-cell " + this.getSelected(c.name)} key={i} onMouseDown={this.stopPropagation}>
+                            <div className={"toolbar-cell " + this.getSelected(c)} key={i} onMouseDown={this.stopPropagation}>
                                 {c.item}
                             </div>
                         )
@@ -61,7 +61,7 @@ class Toolbar extends React.Component {
                 {
                     rightContent && rightContent.map((c, i) => {
                         return (
-                            <div className={"toolbar-right-cell " + this.getSelected(c.name)} key={i} onMouseDown={this.stopPropagation} onClick={this.handleSelect.bind(this, c)}>
+                            <div className={"toolbar-right-cell " + this.getSelected(c)} key={i} onMouseDown={this.stopPropagation} onClick={this.handleSelect.bind(this, c)}>
                                 {c.item}
                             </div>
                         )

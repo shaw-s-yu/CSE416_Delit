@@ -224,4 +224,33 @@ export default class DrawGridController {
         }
     }
 
+    mouseXYisInGrids = (x, y, grids) => {
+        for (let i = 0; i < grids.length; i++) {
+            if (
+                x > grids[i].x &&
+                y > grids[i].y &&
+                x < grids[i].x + this.tileWidth &&
+                y < grids[i].y + this.tileHeight
+            )
+                return true
+        }
+        return false
+    }
+
+    handleShiftSelectedGrids = (dx, dy, grids) => {
+        for (let i = 0; i < grids.length; i++) {
+            grids[i].x += dx
+            grids[i].y += dy
+        }
+    }
+
+    handleShift2Grids = (x, y, grids, grid) => {
+        const gridPosition = this.getGridPositionFromMouseXY(x, y)
+        const dx = gridPosition.x - grid.x
+        const dy = gridPosition.y - grid.y
+        for (let i = 0; i < grids.length; i++) {
+            grids[i].x += dx
+            grids[i].y += dy
+        }
+    }
 }
