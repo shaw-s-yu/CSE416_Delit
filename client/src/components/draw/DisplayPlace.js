@@ -20,52 +20,6 @@ class DisplayPlace extends React.Component {
 
     cropBox = React.createRef();
 
-    cropResizeStart = () => {
-        const { left, top } = this.state.cropData
-        const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-        try {
-            this.ctx.putImageData(this.state.cropData.imgData, left, top)
-        } catch{
-            return
-        }
-
-        const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.props.socket.emit('draw', { data: newImg, type: 'new' })
-        this.props.transactions.addTransaction(new DrawTransaction(oldImg, newImg, this.drawImage))
-    }
-
-    cropResize = (ref, position) => {
-        const { width, height } = ref.style
-        const { x, y } = position
-        const newData = this.painter.CROP.reCrop({
-            left: x, top: y,
-            width: parseInt(width),
-            height: parseInt(height)
-        })
-
-        const cropData = {
-            left: x, top: y,
-            width: parseInt(width),
-            height: parseInt(height),
-            imgData: newData
-        }
-        this.setState({ cropData })
-    }
-
-    cropDragStart = () => {
-        const { left, top, width, height } = this.state.cropData
-        this.painter.CROP.clearCropArea(left, top, width, height)
-    }
-
-    cropDragEnd = (d) => {
-        this.setState({
-            cropData: {
-                ...this.state.cropData,
-                left: d.x,
-                top: d.y
-            }
-        })
-    }
 
     getSelectedTools = () => {
         const { selectedTool } = this.props
@@ -110,6 +64,8 @@ class DisplayPlace extends React.Component {
 
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
+        const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
+        console.log(gridIndex)
         this.painter.onDraw(x, y)
     }
 
@@ -276,7 +232,7 @@ class DisplayPlace extends React.Component {
             this.GridController.drawGrid()
         })
 
-        // this.painter = new CanvasController(this)
+        this.painter = new CanvasController(this)
 
         // this.drawImage(squirtle)
 

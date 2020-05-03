@@ -88,4 +88,30 @@ export default class DrawGridController {
         return this.gridPositions
     }
 
+    mouseXYisInGrid = (mouseX, mouseY, gridLeft, gridTop) => {
+        if (
+            mouseX > gridLeft &&
+            mouseY > gridTop &&
+            mouseX < gridLeft + this.tileWidth &&
+            mouseY < gridTop + this.tileHeight
+        )
+            return true
+        return false
+    }
+
+    getGridPositionFromMouseXY = (x, y) => {
+        for (let o = 0; o < this.numRow; o++)
+            for (let i = 0; i < this.numColumn; i++) {
+                const gridLeft = this.gridThickness + i * (this.tileWidth + this.gridThickness)
+                const gridTop = this.gridThickness + o * (this.tileHeight + this.gridThickness)
+                if (this.mouseXYisInGrid(x, y, gridLeft, gridTop))
+                    return {
+                        x: i,
+                        y: o
+                    }
+            }
+
+        return null
+    }
+
 }
