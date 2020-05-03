@@ -96,7 +96,11 @@ export default class DrawGridController {
             for (let i = 0; i < this.numColumn; i++)
                 this.gridPositions.push({
                     x: this.gridThickness + i * (this.tileWidth + this.gridThickness),
-                    y: this.gridThickness + o * (this.tileHeight + this.gridThickness)
+                    y: this.gridThickness + o * (this.tileHeight + this.gridThickness),
+                    dx: this.gridThickness + i * (this.tileWidth + this.gridThickness) - i * this.tileWidth,
+                    dy: this.gridThickness + o * (this.tileHeight + this.gridThickness) - o * this.tileHeight,
+                    sx: i * this.tileWidth,
+                    sy: o * this.tileHeight
                 })
     }
 
@@ -287,6 +291,22 @@ export default class DrawGridController {
                 y: grids[i].y + dy,
                 dx, dy
             })
+        }
+
+        return returnGrids
+    }
+
+    getPositionsForNoGridsImage = () => {
+        let returnGrids = []
+        for (let o = 0; o < this.numRow; o++) {
+            for (let i = 0; i < this.numColumn; i++) {
+                returnGrids.push({
+                    x: i * this.tileWidth,
+                    y: o * this.tileHeight,
+                    dx: i * this.tileWidth - (this.gridThickness + i * (this.tileWidth + this.gridThickness)),
+                    dy: o * this.tileHeight - (this.gridThickness + o * (this.tileHeight + this.gridThickness))
+                })
+            }
         }
 
         return returnGrids

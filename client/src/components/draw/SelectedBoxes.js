@@ -94,7 +94,7 @@ class selectedBoxes extends React.Component {
                             top: grid.y - 1,
                             width: width + 2,
                             height: height + 2,
-                            backgroundColor: mouseDown ? 'rgba(0,0,0,0)' : 'rgba(0,0,205,0.4)'
+                            backgroundColor: mouseDown ? 'rgba(0,0,0,0)' : 'rgba(0,0,205,0.4)',
                         }
                         return (
                             <div

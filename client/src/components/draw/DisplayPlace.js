@@ -229,7 +229,19 @@ class DisplayPlace extends React.Component {
         })
     }
 
+    handleGetImageNoGrid = () => {
+        const { width, height } = this.props.tileset
+        const gridPositions = this.GridController.getGridPositions()
+        const imageDimension = { width, height }
+        return this.ImageController.getImageFromGrid(gridPositions, imageDimension)
+    }
 
+    handleDrawImageNoGrid = () => {
+        const { width, height } = this.props.tileset
+        const gridPositions = this.GridController.getGridPositions()
+        const imageDimension = { width, height }
+        this.ImageController.drawImageFromGrid(gridPositions, imageDimension)
+    }
 
 
     componentDidMount() {
@@ -253,7 +265,11 @@ class DisplayPlace extends React.Component {
         const DisplayBoxWidth = DisplayBoxDimension.width
         const DisplayBoxHeight = DisplayBoxDimension.height
 
-        this.ImageController = new ImageController(this.ctx, canvasWidth, canvasHeight, tileWidth, tileHeight)
+        this.ImageController = new ImageController(
+            this.ctx, canvasWidth,
+            canvasHeight, tileWidth,
+            tileHeight, width, height
+        )
 
         this.setState({
             canvasWidth,
@@ -261,6 +277,7 @@ class DisplayPlace extends React.Component {
             DisplayBoxWidth,
             DisplayBoxHeight
         }, () => {
+            this.GridController.getPositionsForNoGridsImage()
 
             this.GridController.drawGrid()
             this.painter.setDimension(canvasWidth, canvasHeight)

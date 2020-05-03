@@ -1,6 +1,6 @@
 const User = require('../models/mongo-user')
 const ImageModel = require('../models/mongo-image')
-
+const TilesetModel = require('../models/mongo-tileset')
 
 exports.Socket = function (socket) {
     this.socket = socket
@@ -30,9 +30,22 @@ exports.Socket = function (socket) {
     }
 
     this.drawSaveController = data => {
-        let newimg = new ImageModel();
-        newimg.data = new Buffer.from(data.split(",")[1], "base64");
-        newimg.save();
+        TilesetModel.findOne({ _id: data.tilesetId }).then(tileset => {
+            if (!tileset) throw new Error('Error')
+            else {
+
+                ImageModel.findOne({ _id: tileset.imageId }).then(image => {
+                    if (!image) throw new Error('image not found')
+                    image.data = new Buffer.from(data.data.split(',')[1], 'base64')
+                    image.save()
+                })
+            }
+        })
+
+
+        // let newimg = new ImageModel();
+        // newimg.data = new Buffer.from(data.split(",")[1], "base64");
+        // newimg.save();
     }
 
     this.inviteController = req => {

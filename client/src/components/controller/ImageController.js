@@ -1,12 +1,12 @@
 export default class ImageController {
-    constructor(ctx, width, height, gridWidth, gridHeight) {
+    constructor(ctx, width, height, gridWidth, gridHeight, imgWidth, imgHeight) {
         this.ctx = ctx
         this.width = width
         this.height = height
         this.gridWidth = gridWidth
         this.gridHeight = gridHeight
         this.helper = document.createElement("CANVAS");
-        this.initHelper(width, height)
+        this.initHelper(imgWidth, imgHeight)
     }
 
     initHelper = (width, height) => {
@@ -17,14 +17,16 @@ export default class ImageController {
 
 
     drawToGrid = (src, gridPositions) => {
-        this.drawImageHelper(src, this.width, this.height, () => {
+
+        this.drawImageHelper(src, () => {
             const imageData = this.getImageDataFromHelper()
             for (let i = 0; i < gridPositions.length; i++)
                 this.ctx.putImageData(
                     imageData,
-                    0, 0,
-                    gridPositions[i].x,
-                    gridPositions[i].y,
+                    gridPositions[i].dx,
+                    gridPositions[i].dy,
+                    gridPositions[i].sx,
+                    gridPositions[i].sy,
                     this.gridWidth,
                     this.gridHeight
                 )
@@ -41,12 +43,12 @@ export default class ImageController {
         }
     }
 
-    drawImageHelper = (src, width, height, callback) => {
+    drawImageHelper = (src, callback) => {
         let img = new Image()
         img.src = src
         img.onload = () => {
             this.helperctx.drawImage(img, 0, 0)
-            this.helperImageData = this.helperctx.getImageData(0, 0, width, height)
+            this.helperImageData = this.helperctx.getImageData(0, 0, img.width, img.height)
             if (callback) callback()
         }
     }
@@ -119,6 +121,41 @@ export default class ImageController {
         }
         return grids
 
+    }
+
+    getImageFromGrid = (gridPositions, imageDimension) => {
+        const imageData = this.ctx.getImageData(0, 0, this.width, this.height)
+        this.initHelper(imageDimension.width, imageDimension.height)
+        for (let i = 0; i < gridPositions.length; i++) {
+            this.helperctx.putImageData(
+                imageData,
+                -gridPositions[i].dx,
+                -gridPositions[i].dy,
+                gridPositions[i].x,
+                gridPositions[i].y,
+                this.gridWidth,
+                this.gridHeight
+            )
+        }
+        return this.helperctx.canvas.toDataURL('image/jpeg', 1)
+    }
+
+    drawImageFromGrid = (gridPositions, imageDimension) => {
+        const imageData = this.ctx.getImageData(0, 0, this.width, this.height)
+        this.initHelper(imageDimension.width, imageDimension.height)
+        for (let i = 0; i < gridPositions.length; i++) {
+            this.helperctx.putImageData(
+                imageData,
+                -gridPositions[i].dx,
+                -gridPositions[i].dy,
+                gridPositions[i].x,
+                gridPositions[i].y,
+                this.gridWidth,
+                this.gridHeight
+            )
+        }
+        const img = this.helperctx.canvas.toDataURL('image/jpeg', 1)
+        this.drawImage(img)
     }
 }
 
