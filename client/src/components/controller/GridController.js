@@ -158,7 +158,8 @@ export default class DrawGridController {
 
     getGridPositionFromMouseXY = (x, y) => {
         const gridIndex = this.getGridIndexFromMouseXY(x, y)
-        if (!gridIndex) return this.getGridPositionFromMouseXY(x + this.gridThickness, y + this.gridThickness)
+        if (!gridIndex)
+            return this.getGridPositionFromMouseXY(x + this.gridThickness, y + this.gridThickness)
         return this.getGridPositionFromIndex(gridIndex.x, gridIndex.y)
     }
 
@@ -278,10 +279,8 @@ export default class DrawGridController {
     getGridsPositionFromMouseGrids = (x, y, grids, startGridPosition) => {
         let returnGrids = []
         const mouseGridPosition = this.getGridPositionFromMouseXY(x, y)
-
         const dx = mouseGridPosition.x - startGridPosition.x
         const dy = mouseGridPosition.y - startGridPosition.y
-
         for (let i = 0; i < grids.length; i++) {
             returnGrids.push({
                 x: grids[i].x + dx,

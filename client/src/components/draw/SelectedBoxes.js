@@ -41,12 +41,13 @@ class selectedBoxes extends React.Component {
             x: startX, y: startY
         })
         this.props.parent.GridController.clearGridsByRegion(startGrids)
-        this.props.parent.GridController.DrawGridsByRegion(startImgData, gridsToDraw, startGrids)
 
-        if (!this.props.parent.GridController.mouseXYisInGrid(x, y, lastGrid.x, lastGrid.y)) {
+        if (!lastGrid || !this.props.parent.GridController.mouseXYisInGrid(x, y, lastGrid.x, lastGrid.y)) {
             this.props.parent.ctx.putImageData(startImgData, 0, 0)
             this.props.parent.GridController.clearGridsByRegion(startGrids)
+
         }
+        this.props.parent.GridController.DrawGridsByRegion(startImgData, gridsToDraw, startGrids)
 
         lastGrid = this.props.parent.GridController.getGridPositionFromMouseXY(x, y)
 
