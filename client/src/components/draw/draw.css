@@ -104,7 +104,7 @@
 }
 
 .display-fill{
-    cursor: url(./img/fill.png), auto;
+    cursor: url(./img/fill_rollover.svg), auto;
 }
 
 .display-cross-cursor{
@@ -127,4 +127,9 @@
 
 .helper-canvas{
     display: none;
+}
+
+.selected-box{
+    position: absolute;
+    background-color: rgba(0, 0, 205, 0.4);
 }

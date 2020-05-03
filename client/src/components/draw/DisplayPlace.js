@@ -6,6 +6,7 @@ import CanvasController from './CanvasController'
 import DrawTransaction from "./DrawTransaction"
 import GridController from '../controller/GridController'
 import ImageController, { arrayBufferToBase64 } from '../controller/ImageController'
+import SelectedBoxes from './SelectedBoxes'
 import axios from 'axios'
 
 class DisplayPlace extends React.Component {
@@ -16,6 +17,7 @@ class DisplayPlace extends React.Component {
         DisplayBoxWidth: 0,
         DisplayBoxHeight: 0,
         mouseDown: false,
+        selectedGrid: []
     }
 
     cropBox = React.createRef();
@@ -45,8 +47,7 @@ class DisplayPlace extends React.Component {
         if (selectedTool === TOOLS.FILL) return
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
-        const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
-        if (gridIndex) this.painter.startDraw(x, y)
+        this.painter.startDraw(x, y)
 
 
         this.setState({
@@ -61,15 +62,17 @@ class DisplayPlace extends React.Component {
 
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
-        // const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
         this.painter.onDraw(x, y)
         this.GridController.drawGridBorder()
-
     }
 
-    handleToolEnd = (e) => {
+    handleToolEnd = (e, type) => {
+
         const { selectedTool } = this.props
-        if (!selectedTool) return
+        if (!selectedTool && type === 'click') {
+            this.handleSelect(e)
+            return
+        }
         if (selectedTool === TOOLS.CROP) e.stopPropagation()
         if (this.state.mouseDown === false && selectedTool !== TOOLS.FILL) return
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
@@ -90,6 +93,26 @@ class DisplayPlace extends React.Component {
             cropData: cropData,
             cropping: selectedTool === TOOLS.CROP ? true : false
         })
+    }
+
+    handleSelect = (e) => {
+        const { clientX, clientY } = e
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+        const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
+        if (!gridIndex) return
+        let { selectedGrid } = this.state
+        let found = false
+        for (let i = 0; i < selectedGrid.length; i++) {
+            if (selectedGrid[i].x === gridIndex.x && selectedGrid[i].y === gridIndex.y) {
+                found = true
+                break
+            }
+        }
+
+        if (!found) {
+            selectedGrid.push(gridIndex)
+            this.setState(selectedGrid)
+        }
     }
 
     handleFixPosition = (clientX, clientY) => {
@@ -214,8 +237,9 @@ class DisplayPlace extends React.Component {
     }
 
     render() {
-        const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight } = this.state;
-        const { scale } = this.props
+        const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight, selectedGrid } = this.state;
+        const { scale, tileset } = this.props
+        const { tileWidth, tileHeight } = tileset
         const scrollStyle = {
             width: '100%',
             height: '100%',
@@ -228,7 +252,6 @@ class DisplayPlace extends React.Component {
             top: canvasHeight ? canvasHeight * scale >= DisplayBoxHeight ? 6 : (DisplayBoxHeight - canvasHeight * scale) / 2 + 6 : 6,
         }
 
-
         return (
             <div className="painter-display" ref='painterBox'>
                 <Scrollbars ref="scrollbar"
@@ -240,8 +263,8 @@ class DisplayPlace extends React.Component {
                     <div className={"display " + this.getSelectedTools()} id='display'
                         onMouseDown={this.handleToolStart}
                         onMouseMove={this.handleToolMove}
-                        onMouseOut={this.handleToolEnd}
-                        onClick={this.handleToolEnd}
+                        onMouseLeave={e => this.handleToolEnd(e, 'out')}
+                        onClick={e => this.handleToolEnd(e, 'click')}
                         style={displayStyle}>
                         <canvas ref='helperCanvas' width={canvasWidth} height={canvasHeight} className='helper-canvas'>
                             Your Browser Does Not Support Canvas
@@ -249,6 +272,11 @@ class DisplayPlace extends React.Component {
                         <canvas ref='canvas' width={canvasWidth} height={canvasHeight} className='draw-canvas'>
                             Your Browser Does Not Support Canvas
                         </canvas>
+                        <SelectedBoxes
+                            selectedGrid={selectedGrid}
+                            width={tileWidth}
+                            height={tileHeight}
+                        />
 
                     </div>
 
