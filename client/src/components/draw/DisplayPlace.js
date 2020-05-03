@@ -5,20 +5,16 @@ import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
 import squirtle from '../../img/squirtle.jpg'
 import DrawTransaction from "./DrawTransaction"
-import CropBox from './CropBox'
+import GridController from '../controller/GridController'
 
 class DisplayPlace extends React.Component {
 
     state = {
-        imgWidth: 0,
-        imgHeight: 0,
-        width: 0,
-        height: 0,
+        canvasWidth: 0,
+        canvasHeight: 0,
+        DisplayBoxWidth: 0,
+        DisplayBoxHeight: 0,
         mouseDown: false,
-        offsetLeft: 0,
-        offsetTop: 0,
-        cropData: null,
-        cropping: false,
     }
 
     cropBox = React.createRef();
@@ -213,7 +209,8 @@ class DisplayPlace extends React.Component {
             this.setState({
                 imgWidth: img.width,
                 imgHeight: img.height,
-                width, height,
+                DisplayBoxWidth: width,
+                DisplayBoxHeight: height,
             }, () => {
                 this.ctx.drawImage(img, 0, 0)
                 this.painter.setDimension(img.width, img.height)
@@ -253,18 +250,35 @@ class DisplayPlace extends React.Component {
 
         this.props.childRef(this)
         const { canvas } = this.refs;
-
         if (!canvas) return
 
+        const { tileset } = this.props
+        const { width, height, tileWidth, tileHeight } = tileset
         this.ctx = this.refs.canvas.getContext('2d')
-        this.painter = new CanvasController(this)
 
-        this.drawImage(squirtle)
+        this.GridController = new GridController(this.ctx, width, height, tileWidth, tileHeight)
+        const canvasDimension = this.GridController.getCanvasDimension()
+
+        const DisplayBoxDimension = this.refs.painterBox.getBoundingClientRect()
+
+        this.setState({
+            canvasWidth: canvasDimension.width,
+            canvasHeight: canvasDimension.height,
+            DisplayBoxWidth: DisplayBoxDimension.width,
+            DisplayBoxHeight: DisplayBoxDimension.height,
+        }, () => {
+            this.GridController.drawGrid()
+        })
+
+        // this.painter = new CanvasController(this)
+
+        // this.drawImage(squirtle)
 
         window.onresize = () => {
             const { width, height } = this.refs.painterBox.getBoundingClientRect()
             this.setState({
-                width, height,
+                DisplayBoxWidth: width,
+                DisplayBoxHeight: height,
             })
         }
     }
@@ -288,8 +302,8 @@ class DisplayPlace extends React.Component {
     }
 
     render() {
-        const { imgWidth, imgHeight, width, height, cropData } = this.state;
-        const { selectedTool, scale } = this.props
+        const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight } = this.state;
+        const { scale, tileset } = this.props
         const scrollStyle = {
             width: '100%',
             height: '100%',
@@ -298,16 +312,10 @@ class DisplayPlace extends React.Component {
         }
 
         const displayStyle = {
-            left: imgWidth ? imgWidth * scale >= width ? 6 : (width - imgWidth * scale) / 2 + 6 : 6,
-            top: imgHeight ? imgHeight * scale >= height ? 6 : (height - imgHeight * scale) / 2 + 6 : 6,
+            left: canvasWidth ? canvasWidth * scale >= DisplayBoxWidth ? 6 : (DisplayBoxWidth - canvasWidth * scale) / 2 + 6 : 6,
+            top: canvasHeight ? canvasHeight * scale >= DisplayBoxHeight ? 6 : (DisplayBoxHeight - canvasHeight * scale) / 2 + 6 : 6,
         }
 
-        const cropStyle = {
-            x: cropData === null ? 'auto' : cropData.left,
-            y: cropData === null ? 'auto' : cropData.top,
-            width: cropData === null ? 'auto' : cropData.width,
-            height: cropData === null ? 'auto' : cropData.height
-        }
 
         return (
             <div className="painter-display" ref='painterBox'>
@@ -323,20 +331,9 @@ class DisplayPlace extends React.Component {
                         onMouseOut={this.handleToolEnd}
                         onClick={this.handleToolEnd}
                         style={displayStyle}>
-                        <canvas ref='canvas' width={imgWidth} height={imgHeight} className='draw-canvas'>
+                        <canvas ref='canvas' width={canvasWidth} height={canvasHeight} className='draw-canvas'>
                             Your Browser Does Not Support Canvas
                         </canvas>
-
-                        {
-                            (selectedTool === TOOLS.CROP && cropData) ?
-                                <CropBox className='cropped-area'
-                                    style={cropStyle}
-                                    cropData={cropData}
-                                    childRef={ref => this.cropBox = ref}
-                                    parentRef={this}
-                                />
-                                : null
-                        }
                     </div>
 
                 </ Scrollbars>

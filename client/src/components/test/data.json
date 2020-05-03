@@ -398,10 +398,10 @@
                 "5ea262a9e4a7b520c829163b"
             ],
             "imageId": "5eabdf04f064a7553cb9dd41",
-            "tileWidth": 123,
-            "tileHeight": 123,
-            "width": 10,
-            "height": 10
+            "tileWidth": 40,
+            "tileHeight": 40,
+            "width": 600,
+            "height": 400
         },
         {
             "name": "Simon Demon",
@@ -411,10 +411,10 @@
                 "5ea33ec1a8a9b4504485aa28"
             ],
             "imageId": "5eabe0b7e9da110b6896405b",
-            "tileWidth": 123,
-            "tileHeight": 123,
-            "width": 10,
-            "height": 10
+            "tileWidth": 40,
+            "tileHeight": 40,
+            "width": 600,
+            "height": 600
         },
         {
             "name": "High Sky",
@@ -423,10 +423,10 @@
                 "5ea33ec1a8a9b4504485aa28"
             ],
             "imageId": "5eabde7398bf8c7fc8ef0308",
-            "tileWidth": 123,
-            "tileHeight": 123,
-            "width": 10,
-            "height": 10
+            "tileWidth": 40,
+            "tileHeight": 40,
+            "width": 600,
+            "height": 600
         }
     ]
 }
