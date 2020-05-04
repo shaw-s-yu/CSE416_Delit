@@ -6,7 +6,7 @@ import './dashboard.css'
 import Pagination from '../tools/Pagination'
 import { connect } from 'react-redux';
 import Sidebar from "./Sidebar";
-import AddProjectDialog from "./AddProjectDialog";
+import AddDialog from "./AddDialog";
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios'
@@ -17,7 +17,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class Dashboard extends React.Component {
     state = {
         showSidebar: true,
-        project: false,
+        dialogOpen: false,
+        dialogType: 'project',
         selected: 'all',
         page: 1,
         search: '',
@@ -31,12 +32,18 @@ class Dashboard extends React.Component {
         this.setState({ selected: type })
     };
 
-    handleDialogOpen = (type) => {
-        this.setState({ project: true });
+    handleDialogOpen = (dialogType) => {
+        this.setState({ dialogOpen: true, dialogType });
     };
 
     handleDialogClose = (type) => {
-        this.setState({ project: false })
+        const { dialogType, selected } = this.state
+        this.setState({
+            dialogOpen: false,
+            selected: type === 'cancel' ?
+                selected : dialogType === 'project' ?
+                    'create' : 'tileset'
+        })
     };
 
     handleSidebarOpen = () => {
@@ -53,6 +60,8 @@ class Dashboard extends React.Component {
             return QueryList.GET_MY_OWNED_PROJECTS;
         if (selected === 'share')
             return QueryList.GET_MY_SHARED_PROJECTS;
+        if (selected === 'tileset')
+            return QueryList.GET_TILESETS;
 
         return QueryList.EMPTY_QUERY
     };
@@ -61,18 +70,23 @@ class Dashboard extends React.Component {
         const { selected } = this.state;
         if (selected === 'all')
             return {
-                projects: data.user.projectsRelated,
+                items: data.user.projectsRelated,
                 amount: data.user.projectsRelatedAmount
             };
         if (selected === 'create')
             return {
-                projects: data.user.projectsOwned,
+                items: data.user.projectsOwned,
                 amount: data.user.projectsOwnedAmount
             };
         if (selected === 'share')
             return {
-                projects: data.user.projectsShared,
+                items: data.user.projectsShared,
                 amount: data.user.projectsSharedAmount
+            };
+        if (selected === 'tileset')
+            return {
+                items: data.user.tilesets,
+                amount: data.user.tilsetsAmount
             };
         return null
     };
@@ -94,7 +108,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page, search, project } = this.state;
+        const { showSidebar, selected, user, page, search, dialogOpen, dialogType } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -129,7 +143,7 @@ class Dashboard extends React.Component {
                                 return 'Wrong Sidebar Selection or needs to be developped';
                             if (!data) return 'error';
 
-                            const { projects, amount } = this.getProjects(data);
+                            const { items, amount } = this.getProjects(data);
                             const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                             const refetch = {
                                 query: query,
@@ -138,9 +152,9 @@ class Dashboard extends React.Component {
                             return (
                                 <>
                                     <ItemList
-                                        history={this.props.history}
+                                        history={history}
                                         selected={selected}
-                                        projects={projects}
+                                        items={items}
                                         refetch={refetch}
                                     />
                                     <Pagination
@@ -151,15 +165,18 @@ class Dashboard extends React.Component {
                                         handlePagination={this.handlePagination}
                                         defaultPage={page}
                                     />
-                                    <AddProjectDialog
-                                        open={project}
+                                    <AddDialog
+                                        type={dialogType}
+                                        open={dialogOpen}
                                         handleClose={this.handleDialogClose}
                                         refetch={refetch}
+                                        userId={user._id}
                                     />
                                 </>
                             )
                         }}
                     </Query>
+
                 </div>
             </div>
 

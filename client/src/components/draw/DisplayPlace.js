@@ -3,72 +3,33 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
-import squirtle from '../../img/squirtle.jpg'
 import DrawTransaction from "./DrawTransaction"
-import CropBox from './CropBox'
+import GridController from '../controller/GridController'
+import ImageController, { arrayBufferToBase64 } from '../controller/ImageController'
+import CopyController from '../controller/CopyController'
+import SelectedBoxes from './SelectedBoxes'
+import axios from 'axios'
+import Keyboard from '../controller/KeyboardController'
+import Dialog from '../tools/Dialog'
+import { Button } from 'react-bootstrap';
 
 class DisplayPlace extends React.Component {
 
     state = {
-        imgWidth: 0,
-        imgHeight: 0,
-        width: 0,
-        height: 0,
+        canvasWidth: 0,
+        canvasHeight: 0,
+        DisplayBoxWidth: 0,
+        DisplayBoxHeight: 0,
         mouseDown: false,
-        offsetLeft: 0,
-        offsetTop: 0,
-        cropData: null,
-        cropping: false,
+        selectedGrid: [],
+        ctrlSelecting: false,
+        shiftSelecting: false,
+        cropDimension: null,
+        copying: false,
+        dialogOpen: false,
     }
 
-    cropBox = React.createRef();
-
-    cropResizeStart = () => {
-        const { left, top } = this.state.cropData
-        const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-        try {
-            this.ctx.putImageData(this.state.cropData.imgData, left, top)
-        } catch{
-            return
-        }
-
-        const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.props.socket.emit('draw', { data: newImg, type: 'new' })
-        this.props.transactions.addTransaction(new DrawTransaction(oldImg, newImg, this.drawImage))
-    }
-
-    cropResize = (ref, position) => {
-        const { width, height } = ref.style
-        const { x, y } = position
-        const newData = this.painter.CROP.reCrop({
-            left: x, top: y,
-            width: parseInt(width),
-            height: parseInt(height)
-        })
-
-        const cropData = {
-            left: x, top: y,
-            width: parseInt(width),
-            height: parseInt(height),
-            imgData: newData
-        }
-        this.setState({ cropData })
-    }
-
-    cropDragStart = () => {
-        const { left, top, width, height } = this.state.cropData
-        this.painter.CROP.clearCropArea(left, top, width, height)
-    }
-
-    cropDragEnd = (d) => {
-        this.setState({
-            cropData: {
-                ...this.state.cropData,
-                left: d.x,
-                top: d.y
-            }
-        })
-    }
+    selectedBoxes = React.createRef()
 
     getSelectedTools = () => {
         const { selectedTool } = this.props
@@ -90,95 +51,153 @@ class DisplayPlace extends React.Component {
     handleToolStart = (e) => {
         const { selectedTool, borderThic, fillColor, borderColor } = this.props
         if (!selectedTool) return
+        const { shiftSelecting } = this.state
+        if (shiftSelecting) return
+
+
         this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
+        if (selectedTool === TOOLS.FILL) return
+
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
-        if (this.state.cropping)
-            this.handleEndCrop()
-        // console.log(this.state.cropping, this.state.cropData)
+
+        if (selectedTool === TOOLS.CROP) {
+            this.setState({
+                cropDimension: {
+                    start: { x, y }
+                }
+            })
+        }
+
         this.painter.startDraw(x, y)
 
 
         this.setState({
             mouseDown: true,
-            cropData: this.state.cropping ? null : this.state.cropData,
-            cropping: selectedTool === TOOLS.CROP ? true : false
         })
     }
 
     handleToolMove = (e) => {
-        const { mouseDown } = this.state
+        const { mouseDown, selectedGrid } = this.state
+        const { clientX, clientY } = e
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+
+        if (selectedGrid.length !== 0) {
+            if (this.selectedBoxes.state.mouseDown) {
+                this.selectedBoxes.handleMove(x, y)
+            }
+        }
+
         if (!mouseDown) return
 
 
-        const { clientX, clientY } = e
-        const { x, y } = this.handleFixPosition(clientX, clientY)
+
+
         this.painter.onDraw(x, y)
+        this.GridController.drawGridBorder()
+
     }
 
-    handleToolEnd = (e) => {
+    handleToolEnd = (e, type) => {
+
         const { selectedTool } = this.props
-        if (!selectedTool) return
-        if (selectedTool === TOOLS.CROP) e.stopPropagation()
-        if (this.state.mouseDown === false) return
-        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT)
+        const { shiftSelecting } = this.state
+
+        if ((!selectedTool || shiftSelecting) && type === 'click') {
+            this.handleSelect(e)
+            return
+        }
+
+        if ((selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT || selectedTool === TOOLS.FILL) && type === 'out') return
+
+        if (this.state.mouseDown === false && selectedTool !== TOOLS.FILL) return
+        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
             this.props.handleZoomEffect(e)
+            return
+        }
 
         e.stopPropagation()
-
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
-        this.painter.endDraw(x, y)
 
-        let cropData = (selectedTool === TOOLS.CROP ? this.painter.CROP.getCroppedData() : null);
+        if (selectedTool === TOOLS.CROP) {
+            let { cropDimension } = this.state
+            cropDimension.end = { x, y }
+            this.setState(cropDimension, () => {
+                this.handleCropSelect()
+            })
+        }
+
+        this.painter.endDraw(x, y)
+        this.GridController.drawGridBorder()
 
         this.setState({
             mouseDown: false,
-            cropData: cropData,
-            cropping: selectedTool === TOOLS.CROP ? true : false
         })
     }
 
-    handleCropFlip = () => {
-        console.log(this.state.cropping)
-        if (this.state.cropping === false)
+    handleCropSelect = () => {
+        let { ctrlSelecting, selectedGrid, cropDimension } = this.state
+        const posistions = this.GridController.getGridPositionsFromCropMouse(cropDimension)
+        if (!ctrlSelecting) {
+            this.setState({ selectedGrid: posistions })
             return
-
-        const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-        const { imgData, left, top } = this.cropBox.getCropData()
-        this.ctx.putImageData(imgData, left, top)
-        this.painter.CROP.endCrop()
-        this.setState({
-            cropData: null,
-            cropping: false
-        })
-        const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
-
-        this.props.socket.emit('draw', { data: newImg, type: 'new' })
-        this.props.transactions.addTransaction(new DrawTransaction(oldImg, newImg, this.drawImage))
-
+        } else {
+            for (let o = 0; o < posistions.length; o++) {
+                let found = false
+                for (let i = 0; i < selectedGrid.length; i++) {
+                    if (posistions[o].x === selectedGrid[i].x && posistions[o].x === selectedGrid[i].x) {
+                        found = true
+                        break
+                    }
+                }
+                if (!found) {
+                    selectedGrid.push(posistions[o])
+                }
+            }
+            this.setState(selectedGrid)
+        }
     }
 
-    handleEndCrop = () => {
-        this.painter.CROP.endCrop()
-        const { cropData } = this.state
-        const { left, top } = cropData
-        if (this.state.cropData !== null) {
-            const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-            try {
-                this.ctx.putImageData(this.state.cropData.imgData, left, top)
-            }
-            catch{
-                return
-            }
-            const new_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-            this.props.socket.emit('draw', { data: new_img, type: 'new' })
-            this.props.transactions.addTransaction(new DrawTransaction(old_img, new_img, this.drawImage))
+    handleSelect = (e) => {
+        e.stopPropagation()
+        const { clientX, clientY } = e
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+        const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
+        if (!gridIndex) return
+
+        let { ctrlSelecting, selectedGrid, shiftSelecting } = this.state
+        if (ctrlSelecting === false && shiftSelecting === false) {
+            selectedGrid = []
+            selectedGrid.push(gridIndex)
+            this.setState({ selectedGrid })
+            return
         }
-        this.setState({
-            cropData: null,
-            cropping: false
-        })
+
+
+        let found = false
+        for (let i = 0; i < selectedGrid.length; i++) {
+            if (selectedGrid[i].x === gridIndex.x && selectedGrid[i].y === gridIndex.y) {
+                found = true
+                break
+            }
+        }
+
+        if (!found && ctrlSelecting) {
+            selectedGrid.push(gridIndex)
+            this.setState({ selectedGrid })
+            return
+        }
+
+        if (shiftSelecting) {
+            if (selectedGrid.length === 0) {
+                selectedGrid.push(gridIndex)
+                this.setState({ selectedGrid })
+            } else {
+                selectedGrid = this.GridController.getMinRegionGridPositionsFromGridsAndGrid(selectedGrid, gridIndex)
+                this.setState({ selectedGrid })
+            }
+        }
     }
 
     handleFixPosition = (clientX, clientY) => {
@@ -197,99 +216,276 @@ class DisplayPlace extends React.Component {
     }
 
     handleClear = () => {
-        const color = { r: 211, g: 211, b: 211, a: 1 }
-        this.painter.initDraw('SQUARE', 1, color, color)
-        this.painter.startDraw(0, 0)
-        this.painter.onDraw(this.state.imgWidth, this.state.imgHeight)
-        this.painter.endDraw(this.state.imgWidth, this.state.imgHeight)
+
+        const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
+
+        this.GridController.drawGrid()
+
+        const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
+        this.addNewTransaction(oldImg, newImg)
+        this.sendSocketNewOperation()
     }
 
 
-    drawImage = (src, callback) => {
-        let img = new Image()
-        img.src = src
-        img.onload = () => {
-            const { width, height } = this.refs.painterBox.getBoundingClientRect()
-            this.setState({
-                imgWidth: img.width,
-                imgHeight: img.height,
-                width, height,
-            }, () => {
-                this.ctx.drawImage(img, 0, 0)
-                this.painter.setDimension(img.width, img.height)
-                if (callback) callback()
-            })
-        }
-    }
-
-    getImageData = () => {
+    getImageDataWithGrid = () => {
         return this.refs.canvas.toDataURL('image/jpeg', 1)
     }
 
+    getImageDataNoGrid = () => {
+        return this.ImageController.getImageFromGrid()
+    }
+
+
+
     handleHorizontalFlip = () => {
-        const imgSrc = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.ctx.scale(-1, 1)
-        this.ctx.translate(-this.state.imgWidth, 0);
-        this.drawImage(imgSrc, () => {
-            this.ctx.scale(-1, 1)
-            this.ctx.translate(-this.state.imgWidth, 0);
-        })
+        const { selectedGrid } = this.state
+        const oldImg = this.getImageDataWithGrid()
+        const callback = () => {
+            const newImg = this.getImageDataWithGrid()
+            this.addNewTransaction(oldImg, newImg)
+            this.sendSocketNewOperation()
+        }
+        if (selectedGrid.length !== 0) {
+            const dimension = this.GridController.getCropPositionFromGridPositions(selectedGrid)
+            this.ImageController.handleSelectedHorizontalFlip(dimension, callback)
+        } else
+            this.ImageController.handleHorizontalFlip(callback)
     }
 
     handleVerticalFlip = () => {
-        const imgSrc = this.refs.canvas.toDataURL('image/jpeg', 1)
-        this.ctx.scale(1, -1)
-        this.ctx.translate(0, -this.state.imgHeight);
-        this.drawImage(imgSrc, () => {
-            this.ctx.scale(1, -1)
-            this.ctx.translate(0, -this.state.imgHeight);
+        const { selectedGrid } = this.state
+        const oldImg = this.getImageDataWithGrid()
+        const callback = () => {
+            const newImg = this.getImageDataWithGrid()
+            this.addNewTransaction(oldImg, newImg)
+            this.sendSocketNewOperation()
+        }
+        if (selectedGrid.length !== 0) {
+            const dimension = this.GridController.getCropPositionFromGridPositions(selectedGrid)
+            this.ImageController.handleSelectedVerticalFlip(dimension, callback)
+        } else
+            this.ImageController.handleVerticalFlip(callback)
+    }
+
+    handleUnselectGrid = () => {
+        this.setState({
+            selectedGrid: []
         })
     }
 
+    handleGetImageNoGrid = () => {
+        const { width, height } = this.props.tileset
+        const gridPositions = this.GridController.getGridPositions()
+        const imageDimension = { width, height }
+        return this.ImageController.getImageFromGrid(gridPositions, imageDimension)
+    }
 
+    handleDrawImageNoGrid = () => {
+        const { width, height } = this.props.tileset
+        const gridPositions = this.GridController.getGridPositions()
+        const imageDimension = { width, height }
+        this.ImageController.drawImageFromGrid(gridPositions, imageDimension)
+    }
+
+    handleDrawImgToGrid = (src, callback) => {
+        const gridPositions = this.GridController.getGridPositions()
+        this.ImageController.drawToGrid(src, gridPositions, callback)
+
+    }
+
+    handleStopCopying = () => {
+        this.GridController.drawGridBorder()
+        this.setState({ copying: false })
+    }
+
+    startCopyGrid = () => {
+        const { selectedGrid } = this.state
+        const imgData = this.getImageDataWithGrid()
+        this.CopyController = new CopyController(selectedGrid, imgData)
+        const startGrids = this.CopyController.getStartGrids()
+        this.GridController.drawCopiedGrid(startGrids)
+        this.setState({ selectedGrid: [] })
+    }
+
+
+    pasteCopiedGrid = () => {
+        const { copying, selectedGrid } = this.state
+        if (!copying) return
+        if (selectedGrid.length === 0) {
+            this.setState({ dialogOpen: true })
+        } else {
+            const startGrids = this.CopyController.getStartGrids()
+            const gridsDiff = this.GridController.getGridDiffFrom2Grids(startGrids, selectedGrid)
+            this.GridController.drawGridsByGridsDiff(startGrids, gridsDiff)
+            const newGrids = this.GridController.getGridsFromGridsDiffandGrids(startGrids, gridsDiff)
+
+            const oldImg = this.CopyController.getStartImageData()
+
+            const newImg = this.getImageDataWithGrid()
+            this.addNewTransaction(oldImg, newImg)
+            this.sendSocketNewOperation()
+
+            this.setState({ selectedGrid: newGrids })
+        }
+    }
 
 
     componentDidMount() {
 
         this.props.childRef(this)
         const { canvas } = this.refs;
-
         if (!canvas) return
 
+        const { tileset } = this.props
+        const { width, height, tileWidth, tileHeight } = tileset
         this.ctx = this.refs.canvas.getContext('2d')
-        this.painter = new CanvasController(this)
 
-        this.drawImage(squirtle)
+        this.GridController = new GridController(this.ctx, width, height, tileWidth, tileHeight)
+        const canvasDimension = this.GridController.getCanvasDimension()
+        const canvasWidth = canvasDimension.width
+        const canvasHeight = canvasDimension.height
+
+
+
+        const DisplayBoxDimension = this.refs.painterBox.getBoundingClientRect()
+        const DisplayBoxWidth = DisplayBoxDimension.width
+        const DisplayBoxHeight = DisplayBoxDimension.height
+
+        this.ImageController = new ImageController(
+            this.ctx, canvasWidth,
+            canvasHeight, tileWidth,
+            tileHeight, width, height
+        )
+
+        this.setState({
+            canvasWidth,
+            canvasHeight,
+            DisplayBoxWidth,
+            DisplayBoxHeight
+        }, () => {
+            this.GridController.getPositionsForNoGridsImage()
+
+            this.GridController.drawGrid()
+            this.painter.setDimension(canvasWidth, canvasHeight)
+            const { imageId } = this.props.tileset
+            if (imageId !== '' && imageId !== '5eacb076d0ed064dec138c41')
+                axios.get(`/data/image?imageId=${imageId}`).then(res => {
+                    const { err, msg, data } = res
+                    if (err)
+                        console.log(msg)
+                    else {
+                        const base64Flag = 'data:image/jpeg;base64,';
+                        const imageStr = arrayBufferToBase64(data.data.data)
+                        this.handleDrawImgToGrid(base64Flag + imageStr)
+                    }
+                })
+
+
+        })
+
+        this.painter = new CanvasController(this)
 
         window.onresize = () => {
             const { width, height } = this.refs.painterBox.getBoundingClientRect()
             this.setState({
-                width, height,
+                DisplayBoxWidth: width,
+                DisplayBoxHeight: height,
+            })
+        }
+
+        window.onkeydown = e => {
+            if (Keyboard.triggerLeftControll(e))
+                this.setState({ ctrlSelecting: true })
+            else if (Keyboard.triggerLeftShift(e))
+                this.setState({ shiftSelecting: true })
+            else if (Keyboard.triggerLeftCtrlC(e)) {
+                if (this.state.selectedGrid.length === 0) return
+                this.setState({ copying: true }, () => {
+                    this.startCopyGrid()
+                })
+            } else if (Keyboard.triggerLeftCtrlV(e)) {
+                if (this.state.copying === false) return
+                this.pasteCopiedGrid()
+            }
+        }
+
+        window.onkeyup = e => {
+            if (Keyboard.triggerLeftControll(e))
+                this.setState({ ctrlSelecting: false })
+            else if (Keyboard.triggerLeftShift(e))
+                this.setState({ shiftSelecting: false })
+
+        }
+    }
+
+    userIsTeammember = () => {
+        const { username } = this.props.user
+        const { teamInfo } = this.props.tileset
+        for (let i in teamInfo) {
+            if (teamInfo[i].username === username)
+                return true
+        }
+        return false
+    }
+
+    sendSocketNewOperation = () => {
+        const imgData = this.refs.canvas.toDataURL('image/jpeg', 1)
+        this.props.socket.emit('draw', {
+            data: imgData,
+            type: 'new',
+            room: this.room
+        })
+    }
+
+    addNewTransaction = (oldImg, newImg) => {
+        this.props.transactions.addTransaction(
+            new DrawTransaction(oldImg, newImg, this.ImageController.drawImage)
+        )
+    }
+
+    doTransaction = () => {
+        this.props.socket.emit('draw', {
+            type: 'redo',
+            room: this.room
+        })
+        this.props.transactions.doTransaction()
+    }
+
+    undoTransaction = () => {
+        this.props.socket.emit('draw', {
+            type: 'undo',
+            room: this.room
+        })
+        this.props.transactions.undoTransaction()
+    }
+
+    UNSAFE_componentWillMount() {
+        if (this.userIsTeammember()) {
+            this.room = `draw/${this.props.tileset._id}`
+            this.props.socket.emit('join-room', this.room)
+            this.props.socket.on('draw-back', res => {
+
+                const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
+                const { transactions } = this.props
+                const { data, type } = res
+
+                if (type === 'new') {
+                    this.addNewTransaction(old_img, data)
+                }
+                else if (type === 'redo') {
+                    transactions.doTransaction()
+                } else if (type === 'undo') {
+                    transactions.undoTransaction()
+                }
+
             })
         }
     }
 
-    UNSAFE_componentWillMount() {
-        this.props.socket.on('drawBack', res => {
-            const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-            const { transactions } = this.props
-            const { data, type } = res
-
-            if (type === 'new') {
-                transactions.addTransaction(new DrawTransaction(old_img, data, this.drawImage))
-            }
-            else if (type === 'redo') {
-                transactions.doTransaction()
-            } else if (type === 'undo') {
-                transactions.undoTransaction()
-            }
-
-        })
-    }
-
     render() {
-        const { imgWidth, imgHeight, width, height, cropData } = this.state;
-        const { selectedTool, scale } = this.props
+        const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight, selectedGrid, copying, dialogOpen } = this.state;
+        const { scale, tileset } = this.props
+        const { tileWidth, tileHeight } = tileset
         const scrollStyle = {
             width: '100%',
             height: '100%',
@@ -298,19 +494,13 @@ class DisplayPlace extends React.Component {
         }
 
         const displayStyle = {
-            left: imgWidth ? imgWidth * scale >= width ? 6 : (width - imgWidth * scale) / 2 + 6 : 6,
-            top: imgHeight ? imgHeight * scale >= height ? 6 : (height - imgHeight * scale) / 2 + 6 : 6,
+            left: canvasWidth ? canvasWidth * scale >= DisplayBoxWidth ? 6 : (DisplayBoxWidth - canvasWidth * scale) / 2 + 6 : 6,
+            top: canvasHeight ? canvasHeight * scale >= DisplayBoxHeight ? 6 : (DisplayBoxHeight - canvasHeight * scale) / 2 + 6 : 6,
         }
 
-        const cropStyle = {
-            x: cropData === null ? 'auto' : cropData.left,
-            y: cropData === null ? 'auto' : cropData.top,
-            width: cropData === null ? 'auto' : cropData.width,
-            height: cropData === null ? 'auto' : cropData.height
-        }
 
         return (
-            <div className="painter-display" ref='painterBox'>
+            <div className="painter-display" ref='painterBox' onClick={this.handleUnselectGrid}>
                 <Scrollbars ref="scrollbar"
                     style={scrollStyle}
                     renderThumbHorizontal={props => <div {...props} className="thumb" />}
@@ -320,26 +510,34 @@ class DisplayPlace extends React.Component {
                     <div className={"display " + this.getSelectedTools()} id='display'
                         onMouseDown={this.handleToolStart}
                         onMouseMove={this.handleToolMove}
-                        onMouseOut={this.handleToolEnd}
-                        onClick={this.handleToolEnd}
+                        onMouseLeave={e => this.handleToolEnd(e, 'out')}
+                        onClick={e => this.handleToolEnd(e, 'click')}
                         style={displayStyle}>
-                        <canvas ref='canvas' width={imgWidth} height={imgHeight} className='draw-canvas'>
+                        <canvas ref='canvas' width={canvasWidth} height={canvasHeight} className='draw-canvas'>
                             Your Browser Does Not Support Canvas
                         </canvas>
+                        <SelectedBoxes
+                            selectedGrid={selectedGrid}
+                            width={tileWidth}
+                            height={tileHeight}
+                            parent={this}
+                            childRef={ref => this.selectedBoxes = ref}
+                            copying={copying}
+                        />
 
-                        {
-                            (selectedTool === TOOLS.CROP && cropData) ?
-                                <CropBox className='cropped-area'
-                                    style={cropStyle}
-                                    cropData={cropData}
-                                    childRef={ref => this.cropBox = ref}
-                                    parentRef={this}
-                                />
-                                : null
-                        }
                     </div>
 
                 </ Scrollbars>
+                <Dialog
+                    header={'Notice'}
+                    open={dialogOpen}
+                    fullWidth={true}
+                    maxWidth="xs"
+                    actions={[<Button key='f' onClick={e => this.setState({ dialogOpen: false })}>OK</Button>]}
+                    content={
+                        <p>You Select A Grid To Paste</p>
+                    }
+                />
             </div>
         )
     }
@@ -348,9 +546,11 @@ class DisplayPlace extends React.Component {
 
 const mapStateToProps = (state) => {
     const { selected } = state.toolbar
+    const { user } = state.auth
     return {
         selectedTool: selected,
-        socket: state.backend.socket
+        socket: state.backend.socket,
+        user
     }
 };
 

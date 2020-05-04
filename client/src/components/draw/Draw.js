@@ -9,9 +9,10 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import Transactions from './JSTPS'
 import ReactFileReader from 'react-file-reader';
-import DrawTransaction from './DrawTransaction'
 import { Button } from "react-bootstrap";
 import Dialog from '../tools/Dialog'
+import QueryList from '../../graphql/Query'
+import { Query } from 'react-apollo'
 
 class Draw extends React.Component {
 
@@ -83,42 +84,34 @@ class Draw extends React.Component {
     };
 
     doTransaction = () => {
-        this.props.socket.emit('draw', { data: null, type: 'redo' });
-        this.transactions.doTransaction();
+        this.display.doTransaction()
+        this.display.handleUnselectGrid()
     };
 
     undoTransaction = () => {
-        this.props.socket.emit('draw', { data: null, type: 'undo' });
-        this.transactions.undoTransaction();
+        this.display.undoTransaction()
+        this.display.handleUnselectGrid()
     };
 
     handleUnselect = () => {
-        this.handleCropPaste()
         this.props.handleUnselect();
     };
 
-    handleCropPaste = () => {
-        if (this.props.selectedTool === TOOLS.CROP)
-            this.display.handleEndCrop();
+    handleClearNoneToolOperation = () => {
+        this.display.handleUnselectGrid()
+        this.display.handleStopCopying()
     }
+
 
     handleHorizontalFlip = (e) => {
         e.stopPropagation();
-        if (!this.display.state.cropping) {
-            this.display.handleHorizontalFlip();
-        } else {
-            this.display.cropBox.handleHorizontalFlip();
-        }
+        this.display.handleHorizontalFlip();
         this.props.handleUnselect();
     };
 
     handleVerticalFlip = (e) => {
         e.stopPropagation();
-        if (!this.display.state.cropping) {
-            this.display.handleVerticalFlip();
-        } else {
-            this.display.cropBox.handleVerticalFlip();
-        }
+        this.display.handleVerticalFlip();
         this.props.handleUnselect();
     };
 
@@ -127,40 +120,42 @@ class Draw extends React.Component {
     };
 
     handleImport = (file) => {
-        const oldImg = this.display.getImageData();
+        const oldImg = this.display.getImageDataWithGrid();
 
-        this.display.drawImage(file.base64);
-        this.props.socket.emit('draw', { data: file.base64, type: 'new' });
-        this.transactions.addTransaction(new DrawTransaction(oldImg, file.base64, this.display.drawImage));
-
+        this.display.handleDrawImgToGrid(file.base64, () => {
+            const newImg = this.display.getImageDataWithGrid()
+            this.display.addNewTransaction(oldImg, newImg)
+            this.display.sendSocketNewOperation()
+        })
     };
 
     handleExport = () => {
-        const imgData = this.display.getImageData();
+        const imgData = this.display.handleGetImageNoGrid();
         require("downloadjs")(imgData, "tileset@DELIT.jpeg", "image/jpeg");
     };
 
     handleSave = () => {
-        const imgData = this.display.getImageData();
-        this.props.socket.emit('draw-save', imgData);
+        const imgData = this.display.handleGetImageNoGrid()
+        this.props.socket.emit('draw-save', {
+            tilesetId: this.props.match.params.key,
+            data: imgData
+        });
         this.handleSaveDialogClose()
-    }
-
-    getDisable = () => {
-        return this.state.scale !== 1 ? true : false
+        this.handleClearNoneToolOperation()
     }
 
     render() {
-
+        const { key } = this.props.match.params
         const { history } = this.props;
         const { sliderValue, borderColor, fillColor, scale, saveDialogOpen } = this.state;
 
         return (
+
             <div onClick={this.handleUnselect}>
                 <TopNavbar site='tileset' history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
-                        selectCallback={this.handleCropPaste}
+                        selectCallback={this.handleClearNoneToolOperation}
                         className="map-toolbar"
                         content={[
                             { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
@@ -180,7 +175,8 @@ class Draw extends React.Component {
                             { name: TOOLS.SQUARE, item: <i className={"far fa-square"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.CIRCLE, item: <i className={"far fa-circle"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.ERASER, item: <i className={"fas fa-eraser"} style={{ fontSize: '24px' }} /> },
-                            { name: TOOLS.CROP, item: <i className={"fas fa-crop-alt"} style={{ fontSize: '24px' }} />, disable: this.getDisable() },
+                            { name: TOOLS.FILL, item: <i className={"fas fa-fill"} style={{ fontSize: '24px' }} /> },
+                            { name: TOOLS.CROP, item: <i className={"fas fa-crop-alt"} style={{ fontSize: '24px' }} /> },
                         ]}
                         rightContent={[
                             { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} /> },
@@ -198,15 +194,26 @@ class Draw extends React.Component {
                         handleVerticalFlip={this.handleVerticalFlip}
                         handleClear={this.handleClear}
                     />
-                    <DisplayPlace
-                        childRef={ref => this.display = ref}
-                        borderThic={sliderValue}
-                        fillColor={fillColor}
-                        borderColor={borderColor}
-                        transactions={this.transactions}
-                        handleZoomEffect={this.handleZoomEffect}
-                        scale={scale}
-                    />
+                    <Query query={QueryList.GET_tILESET} variables={{ id: key }} fetchPolicy={'network-only'}>
+                        {({ loading, error, data }) => {
+                            if (loading) return 'loading'
+                            if (error) return 'error'
+                            if (!data) return 'error'
+                            const { tileset } = data
+                            return (
+                                <DisplayPlace
+                                    tileset={tileset}
+                                    childRef={ref => this.display = ref}
+                                    borderThic={sliderValue}
+                                    fillColor={fillColor}
+                                    borderColor={borderColor}
+                                    transactions={this.transactions}
+                                    handleZoomEffect={this.handleZoomEffect}
+                                    scale={scale}
+                                />
+                            )
+                        }}
+                    </Query>
                 </div>
                 <Dialog
                     header="Save Image"
@@ -217,11 +224,12 @@ class Draw extends React.Component {
                     ]}
                     var totalTextbox='1'
                     content={[
-                        <h3>Are You Sure to Save In Delit Database?</h3>,
-                        <h3>Old Version will be overwriten</h3>
+                        <h3 key='q'>Are You Sure to Save In Delit Database?</h3>,
+                        <h3 key='w'>Old Version will be overwriten</h3>
                     ]} />
 
             </div>
+
         )
     }
 }

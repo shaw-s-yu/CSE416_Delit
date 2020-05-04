@@ -53,7 +53,7 @@
 }
 
 .sidebar-item{
-    height: 20%;
+    height: 16.6%;
     border-bottom: 1px solid gray;
     transition: ease-in-out 0.3s;
     cursor: pointer;
@@ -188,6 +188,9 @@
     font-weight: bold;
 }
 
+.dialog_content{
+    height: 300px;
+}
 
 .img{
     border: 1px solid #fff;
@@ -288,4 +291,42 @@ nav {
 .member-name{
     margin-left: 24px;
     display: inline-block;
+}
+
+.err-msg{
+    background-color: red;
+    margin-top: 24px;
+}
+
+.inputs-wrapper{
+    overflow-y: auto;
+    height: 160px;
+}
+
+.input-wrapper{
+    height:64px;
+    padding-top: 12px;
+}
+
+.team-input{
+    width: 80%;
+    display: inline-block;
+}
+
+.team-input-delete{
+    height: 40px;
+    width: 40px;
+    font-size: 32px;
+    float: right;
+    cursor: pointer;
+    transition: ease-in 0.3s;
+    border-radius: 20px;
+    margin-right: 12px;
+    padding-top: 4px;
+    padding-left: 6px;
+}
+
+.team-input-delete:hover{
+    background-color: rgb(255, 119, 7);
+    box-shadow: 0 0 3pt 2pt red
 }

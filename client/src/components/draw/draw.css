@@ -104,7 +104,7 @@
 }
 
 .display-fill{
-    cursor: url(./img/fill.png), auto;
+    cursor: url(./img/fill_rollover.svg) 20 20, auto;
 }
 
 .display-cross-cursor{
@@ -123,4 +123,9 @@
 
 .draw-canvas{
     outline: 2px solid black;
+}
+
+.selected-box{
+    position: absolute;
+    cursor: move;
 }

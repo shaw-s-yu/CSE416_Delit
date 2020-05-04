@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from '../tools/Card'
-import { Mutation } from 'react-apollo';
-import MutationList from '../../graphql/Mutation';
+
 import '../tools/tools.css'
 import Dialogs from './Dialogs'
 
@@ -14,12 +13,15 @@ class ItemList extends React.Component {
         delete: false,
         team: false,
         invite: false,
-        project: null,
+        duplicate: false,
+        remove: false,
+        item: null,
         refetch: null,
+
     };
 
-    handleSetProject = (project, refetch) => {
-        this.setState({ project, refetch })
+    handleSetItem = (item, refetch) => {
+        this.setState({ item, refetch })
     }
 
     handleDialogsOpen = (type) => {
@@ -27,11 +29,14 @@ class ItemList extends React.Component {
     };
 
     handleDialogsClose = (type) => {
-        this.setState({ [type]: false })
+        this.setState({ [type]: false, item: null, refetch: null })
     };
 
-    handleGoEdit = () => {
-        this.props.history.push('/project/fwef')
+    handleGoEdit = (item) => {
+        if (!item || !this.props.selected) return
+        const type = this.props.selected === 'tileset' ? 'tileset' : 'project'
+        const { _id } = item
+        this.props.history.push(`/${type}/${_id}`)
     };
 
     handleDelete = (callback, _id) => {
@@ -43,8 +48,8 @@ class ItemList extends React.Component {
     }
 
     render() {
-        const { projects, refetch } = this.props;
-        const numItem = projects.length;
+        const { items, refetch, user, selected } = this.props;
+        const numItem = items.length;
         const style = {
             height: numItem > 3 ? 600 : 300
         };
@@ -52,7 +57,7 @@ class ItemList extends React.Component {
             <div className="dashboard-itemlist">
                 <div className="dashboard-itemlist-wrapper" style={style}>
                     {
-                        projects && projects.map((project, index) => {
+                        items && items.map((item, index) => {
                             const col = index % 3;
                             const row = Math.floor(index / 3);
                             const left1s = 'calc(25% - 135px)';
@@ -65,33 +70,34 @@ class ItemList extends React.Component {
                                 top: numItem > 3 ? row === 0 ? top1s2 : top2s2 : top1s1,
                                 left: col === 0 ? left1s : col === 1 ? left2s : left3s,
                             }
-                            const { _id } = project;
+                            const { _id } = item;
                             return (
-                                <Mutation mutation={MutationList.REMOVE_PROJECT} key={_id} refetchQueries={[refetch]}>
-                                    {(removeProject, res) => (
-                                        <Card
-                                            res={res}
-                                            className='item-card'
-                                            project={project}
-                                            style={cardStyle}
-                                            handleOpen={this.handleDialogsOpen}
-                                            handleDelete={this.handleDelete.bind(this, removeProject, _id)}
-                                            onClick={this.handleGoEdit}
-                                            key={_id}
-                                            handleSetProject={this.handleSetProject}
-                                            refetch={refetch}
-                                        />
-                                    )}
-                                </Mutation>
+
+                                <Card
+                                    className='item-card'
+                                    item={item}
+                                    style={cardStyle}
+                                    handleOpen={this.handleDialogsOpen}
+                                    onClick={this.handleGoEdit}
+                                    key={_id}
+                                    handleSetItem={this.handleSetItem}
+                                    refetch={refetch}
+                                />
+
                             );
                         })
                     }
                 </div>
-                <Dialogs
-                    {...this.state}
-                    handleOpen={this.handleDialogsOpen}
-                    handleClose={this.handleDialogsClose}
-                />
+                {this.state.item ?
+                    <Dialogs
+                        {...this.state}
+                        handleOpen={this.handleDialogsOpen}
+                        handleClose={this.handleDialogsClose}
+                        handleSetItem={this.handleSetItem}
+                        selected={selected}
+                        user={user}
+                    /> : null
+                }
             </div>
         )
     }

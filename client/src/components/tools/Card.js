@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as handler from "../../store/database/DashboardHandler";
 import axios from 'axios'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { arrayBufferToBase64 } from '../controller/ImageController'
 
 class Card extends React.Component {
 
@@ -11,37 +12,21 @@ class Card extends React.Component {
         imageData: ''
     }
 
-    handleOnClick = (type, id) => {
-        const { handleOpen } = this.props;
-        handleOpen.bind(this, type);
-        this.props.passProjectId(id);
-    }
-
-    handleOpen = (name, project, refetch) => {
-        this.props.handleSetProject(project, refetch)
+    handleOpen = (name, item, refetch) => {
+        this.props.handleSetItem(item, refetch)
         this.props.handleOpen(name)
     }
 
-    arrayBufferToBase64(buffer) {
-        var binary = '';
-        var bytes = new Uint8Array(buffer);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
-    };
-
     componentDidMount() {
-        const { imageId } = this.props.project
+        const { imageId } = this.props.item
         if (imageId !== '')
-            axios.get(`/data/image?imageId=${this.props.project.imageId}`).then(res => {
+            axios.get(`/data/image?imageId=${imageId}`).then(res => {
                 const { err, msg, data } = res
                 if (err)
                     console.log(msg)
                 else {
                     const base64Flag = 'data:image/jpeg;base64,';
-                    const imageStr = this.arrayBufferToBase64(data.data.data)
+                    const imageStr = arrayBufferToBase64(data.data.data)
                     this.setState({ imageData: base64Flag + imageStr })
                 }
             })
@@ -50,13 +35,13 @@ class Card extends React.Component {
 
     render() {
         const { imageData } = this.state
-        const { className, style, onClick, project, handleDelete, res, refetch } = this.props;
-        const { name, ownerInfo } = project;
+        const { className, style, onClick, item, refetch } = this.props;
+        const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
 
         return (
             <div >
-                <div className={className} style={style} onClick={onClick}>
+                <div className={className} style={style} onClick={onClick.bind(this, item)}>
                     {
                         imageData === '' ?
                             <div className='card-preview-img'><CircularProgress className="image-loading" /></div> :
@@ -67,14 +52,12 @@ class Card extends React.Component {
                         <span className="card-info-last-modify">Owner: {owner}</span>
                     </div>
                 </div>
-                {
-                    res.loading ? 'loading' : res.error ? res.error.message : null
-                }
+
                 <div className="card-info-btn-box" style={style}>
-                    <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', project, refetch)}>Rename</div>
-                    <div className="card-info-btn-tr card-info-btn">Dupliate</div>
-                    <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', project, refetch)}>Team</div>
-                    <div className="card-info-btn-br card-info-btn" onClick={handleDelete}>Delete</div>
+                    <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', item, refetch)}>Rename</div>
+                    <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Dupliate</div>
+                    <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
+                    <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
                     <div className="card-info-btn-center card-info-btn" >edit</div>
                 </div>
             </div>

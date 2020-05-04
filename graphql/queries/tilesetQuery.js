@@ -13,8 +13,8 @@ module.exports = {
             type: GraphQLString
         }
     },
-    resolve: () => {
-        const tileset = TilesetModel.find(params.id).exec()
+    resolve: (parent, args) => {
+        const tileset = TilesetModel.findById(args.id).exec()
         if (!tileset) {
             throw new Error('Error')
         }

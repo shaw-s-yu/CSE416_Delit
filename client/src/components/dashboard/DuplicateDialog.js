@@ -5,9 +5,7 @@ import React from 'react'
 import { Mutation } from 'react-apollo';
 import MutationList from '../../graphql/Mutation';
 
-class RenameDialog extends React.Component {
-
-
+class DuplicateDialog extends React.Component {
 
     state = {
         name: ''
@@ -21,33 +19,32 @@ class RenameDialog extends React.Component {
         callback({
             variables: {
                 id: this.props.item._id,
-                name: this.state.name === '' ? this.props.item.name : this.state.name
+                name: this.state.name,
+                owner: this.props.user._id
             }
         })
-        this.props.handleClose('rename')
+        this.props.handleClose('duplicate')
     }
 
 
     render() {
 
-        const { open, item, user, refetch, handleClose, selected } = this.props
+        const { open, item, refetch, handleClose, selected } = this.props
         if (!item) return null
-
-        const disabled = item.ownerInfo.username === user.username ? false : true
-        const mutation = selected === 'tileset' ? MutationList.UPDATE_TILESET : MutationList.UPDATE_PROJECT
+        const mutation = selected === 'tileset' ? MutationList.DUPLICATE_TILESET : MutationList.DUPLICATE_PROJECT
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
-                {(updateItem, res) => (
+                {(duplicateProject, res) => (
                     <Dialog
-                        header="Rename Project"
+                        header="Duplicate Project"
                         open={open}
                         actions={[
-                            <Button key='1' onClick={this.handleSubmit.bind(this, updateItem)} disabled={disabled}>Enter</Button>,
-                            <Button key='2' onClick={handleClose.bind(this, 'rename')}>Cancel</Button>,
+                            <Button key='1' onClick={this.handleSubmit.bind(this, duplicateProject)}>Enter</Button>,
+                            <Button key='2' onClick={handleClose.bind(this, 'duplicate')}>Cancel</Button>,
                         ]}
                         content={
                             <>
-                                {disabled ? <p className='red'>You are not the Owner, You cannot Rename</p> : null}
+                                <p>Everything will be copied</p>
                                 <TextField
                                     className="form-control"
                                     label="Enter Project Name"
@@ -65,4 +62,4 @@ class RenameDialog extends React.Component {
     }
 }
 
-export default RenameDialog
+export default DuplicateDialog
