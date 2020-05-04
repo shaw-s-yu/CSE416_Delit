@@ -14,6 +14,14 @@ module.exports = {
 
     triggerLeftCtrlV: e => {
         return e.code === KEYS.KEY_V && e.ctrlKey
+    },
+
+    triggerLeftCtrlZ: e => {
+        return e.code === KEYS.KEY_Z && e.ctrlKey
+    },
+
+    triggerLeftCtrlY: e => {
+        return e.code === KEYS.KEY_Y && e.ctrlKey
     }
 }
 

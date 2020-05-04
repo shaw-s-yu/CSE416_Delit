@@ -407,6 +407,12 @@ class DisplayPlace extends React.Component {
                 if (this.state.copying === false) return
                 this.pasteCopiedGrid()
             }
+            else if(Keyboard.triggerLeftCtrlZ(e)){
+                this.undoTransaction()
+            }
+            else if(Keyboard.triggerLeftCtrlY(e)){
+                this.doTransaction()
+            }
         }
 
         window.onkeyup = e => {

@@ -3,6 +3,7 @@ const ProjectModel = require('../../models/mongo-project')
 const TilesetModel = require('../../models/mongo-tileset')
 
 
+
 module.exports = new GraphQLObjectType({
     name: 'user',
     fields: () => {
@@ -112,6 +113,112 @@ module.exports = new GraphQLObjectType({
                     }).countDocuments()
                     if (!projectsAmount) throw new Error('Error')
                     return projectsAmount
+                }
+            },
+
+
+
+//------------------------------------------------------------------------------------------
+            tilesetsOwned: {
+                args: {
+                    skip: { type: GraphQLInt },
+                    tilesetName: { type: GraphQLString }
+                },
+                type: new GraphQLList(TilesetType),
+                resolve: (parent, args) => {
+                    const tilesets = TilesetModel.find({
+                        $and: [
+                            { owner: parent._id },
+                            { name: { $regex: `.*${args.tilesetName}.*` } }
+                        ]
+                    }).skip(args.skip).limit(6).exec()
+                    if (!tilesets) throw new Error('Error')
+                    return tilesets
+                }
+            },
+            tilesetsOwnedAmount: {
+                args: { tilesetName: { type: GraphQLString } },
+                type: GraphQLInt,
+                resolve: (parent, args) => {
+                    const tilesetsAmount = TilesetModel.find({
+                        $and: [
+                            { name: { $regex: `.*${args.projectName}.*` } },
+                            { owner: parent._id }
+                        ]
+                    }).countDocuments()
+                    if (!tilesetsAmount) throw new Error('Error')
+                    return tilesetsAmount
+                }
+            },
+            tilesetsRelated: {
+                args: {
+                    tilesetName: { type: GraphQLString },
+                    skip: { type: GraphQLInt }
+                },
+                type: new GraphQLList(TilesetType),
+                resolve: (parent, args) => {
+                    let tilesets = TilesetModel.find({
+                        $and: [
+                            { name: { $regex: `.*${args.tilesetName}.*` } },
+                            {
+                                $or: [
+                                    { owner: parent._id },
+                                    { editors: parent._id }
+                                ]
+                            }]
+
+                    }).skip(args.skip).limit(6).exec()
+                    if (!tilesets) throw new Error('Error')
+                    return tilesets
+                }
+            },
+            tilesetsRelatedAmount: {
+                args: { tilesetName: { type: GraphQLString } },
+                type: GraphQLInt,
+                resolve: (parent, args) => {
+                    let tilesetsAmount = TilesetModel.find({
+                        $and: [
+                            { name: { $regex: `.*${args.tilesetName}.*` } },
+                            {
+                                $or: [
+                                    { owner: parent._id },
+                                    { editors: parent._id }
+                                ]
+                            }]
+                    }).countDocuments()
+                    if (!tilesetsAmount) throw new Error('Error')
+                    return tilesetsAmount
+                }
+            },       
+            tilesetsShared: {
+                args: {
+                    tilesetName: { type: GraphQLString },
+                    skip: { type: GraphQLInt }
+                },
+                type: new GraphQLList(TilesetType),
+                resolve: (parent, args) => {
+                    let tilesets = TilesetModel.find({
+                        $and: [
+                            { editors: parent._id },
+                            { name: { $regex: `.*${args.tilesetName}.*` } }
+                        ]
+                    }).skip(args.skip).limit(6).exec()
+                    if (!tilesets) throw new Error('Error')
+                    return tilesets
+                }
+            },
+            tilesetsSharedAmount: {
+                args: { tilesetName: { type: GraphQLString } },
+                type: GraphQLInt,
+                resolve: (parent, args) => {
+                    let tilesetsAmount = TilesetModel.find({
+                        $and: [
+                            { editors: parent._id },
+                            { name: { $regex: `.*${args.projectName}.*` } }
+                        ]
+                    }).countDocuments()
+                    if (!tilesetsAmount) throw new Error('Error')
+                    return tilesetsAmount
                 }
             },
             tilesets: {
