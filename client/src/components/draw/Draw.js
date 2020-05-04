@@ -85,12 +85,10 @@ class Draw extends React.Component {
 
     doTransaction = () => {
         this.display.doTransaction()
-        this.display.handleUnselectGrid()
     };
 
     undoTransaction = () => {
         this.display.undoTransaction()
-        this.display.handleUnselectGrid()
     };
 
     handleUnselect = () => {

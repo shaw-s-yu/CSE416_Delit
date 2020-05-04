@@ -394,6 +394,7 @@ class DisplayPlace extends React.Component {
         }
 
         window.onkeydown = e => {
+            console.log(e)
             if (Keyboard.triggerLeftControll(e))
                 this.setState({ ctrlSelecting: true })
             else if (Keyboard.triggerLeftShift(e))
@@ -407,10 +408,10 @@ class DisplayPlace extends React.Component {
                 if (this.state.copying === false) return
                 this.pasteCopiedGrid()
             }
-            else if(Keyboard.triggerLeftCtrlZ(e)){
+            else if (Keyboard.triggerLeftCtrlZ(e)) {
                 this.undoTransaction()
             }
-            else if(Keyboard.triggerLeftCtrlY(e)){
+            else if (Keyboard.triggerLeftCtrlY(e)) {
                 this.doTransaction()
             }
         }
@@ -455,6 +456,7 @@ class DisplayPlace extends React.Component {
             room: this.room
         })
         this.props.transactions.doTransaction()
+        this.handleUnselectGrid()
     }
 
     undoTransaction = () => {
@@ -463,6 +465,7 @@ class DisplayPlace extends React.Component {
             room: this.room
         })
         this.props.transactions.undoTransaction()
+        this.handleUnselectGrid()
     }
 
     UNSAFE_componentWillMount() {

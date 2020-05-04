@@ -30,4 +30,6 @@ const KEYS = {
     SHIFTLEFT: 'ShiftLeft',
     KEY_C: 'KeyC',
     KEY_V: 'KeyV',
+    KEY_Z: 'KeyZ',
+    KEY_Y: 'KeyY'
 }
