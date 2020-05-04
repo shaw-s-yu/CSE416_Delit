@@ -1,6 +1,7 @@
 export default class CopyController {
-    constructor(startGrids) {
+    constructor(startGrids, startImgData) {
         this.startGrids = JSON.parse(JSON.stringify(startGrids))
+        this.startImgData = startImgData
     }
 
     pastGrids = (position) => {
@@ -9,5 +10,9 @@ export default class CopyController {
 
     getStartGrids = () => {
         return this.startGrids
+    }
+
+    getStartImageData = () => {
+        return this.startImgData
     }
 }

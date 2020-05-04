@@ -300,7 +300,8 @@ class DisplayPlace extends React.Component {
 
     startCopyGrid = () => {
         const { selectedGrid } = this.state
-        this.CopyController = new CopyController(selectedGrid)
+        const imgData = this.getImageDataWithGrid()
+        this.CopyController = new CopyController(selectedGrid, imgData)
         const startGrids = this.CopyController.getStartGrids()
         this.GridController.drawCopiedGrid(startGrids)
         this.setState({ selectedGrid: [] })
@@ -317,6 +318,13 @@ class DisplayPlace extends React.Component {
             const gridsDiff = this.GridController.getGridDiffFrom2Grids(startGrids, selectedGrid)
             this.GridController.drawGridsByGridsDiff(startGrids, gridsDiff)
             const newGrids = this.GridController.getGridsFromGridsDiffandGrids(startGrids, gridsDiff)
+
+            const oldImg = this.CopyController.getStartImageData()
+
+            const newImg = this.getImageDataWithGrid()
+            this.addNewTransaction(oldImg, newImg)
+            this.sendSocketNewOperation()
+
             this.setState({ selectedGrid: newGrids })
         }
     }
