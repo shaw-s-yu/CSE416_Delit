@@ -19,7 +19,8 @@ class DisplayPlace extends React.Component {
         DisplayBoxHeight: 0,
         mouseDown: false,
         selectedGrid: [],
-        multiSelecting: false,
+        ctrlSelecting: false,
+        shiftSelecting: false,
         cropDimension: null,
     }
 
@@ -45,6 +46,8 @@ class DisplayPlace extends React.Component {
     handleToolStart = (e) => {
         const { selectedTool, borderThic, fillColor, borderColor } = this.props
         if (!selectedTool) return
+        const { shiftSelecting } = this.state
+        if (shiftSelecting) return
 
 
         this.painter.initDraw(selectedTool, borderThic, fillColor, borderColor)
@@ -92,7 +95,9 @@ class DisplayPlace extends React.Component {
     handleToolEnd = (e, type) => {
 
         const { selectedTool } = this.props
-        if (!selectedTool && type === 'click') {
+        const { shiftSelecting } = this.state
+
+        if ((!selectedTool || shiftSelecting) && type === 'click') {
             this.handleSelect(e)
             return
         }
@@ -126,9 +131,9 @@ class DisplayPlace extends React.Component {
     }
 
     handleCropSelect = () => {
-        let { multiSelecting, selectedGrid, cropDimension } = this.state
+        let { ctrlSelecting, selectedGrid, cropDimension } = this.state
         const posistions = this.GridController.getGridPositionsFromCropMouse(cropDimension)
-        if (!multiSelecting) {
+        if (!ctrlSelecting) {
             this.setState({ selectedGrid: posistions })
             return
         } else {
@@ -155,13 +160,14 @@ class DisplayPlace extends React.Component {
         const gridIndex = this.GridController.getGridPositionFromMouseXY(x, y)
         if (!gridIndex) return
 
-        let { multiSelecting, selectedGrid } = this.state
-        if (!multiSelecting) {
+        let { ctrlSelecting, selectedGrid, shiftSelecting } = this.state
+        if (ctrlSelecting === false && shiftSelecting === false) {
             selectedGrid = []
             selectedGrid.push(gridIndex)
             this.setState({ selectedGrid })
             return
         }
+
 
         let found = false
         for (let i = 0; i < selectedGrid.length; i++) {
@@ -171,9 +177,20 @@ class DisplayPlace extends React.Component {
             }
         }
 
-        if (!found) {
+        if (!found && ctrlSelecting) {
             selectedGrid.push(gridIndex)
             this.setState({ selectedGrid })
+            return
+        }
+
+        if (shiftSelecting) {
+            if (selectedGrid.length === 0) {
+                selectedGrid.push(gridIndex)
+                this.setState({ selectedGrid })
+            } else {
+                selectedGrid = this.GridController.getMinRegionGridPositionsFromGridsAndGrid(selectedGrid, gridIndex)
+                this.setState({ selectedGrid })
+            }
         }
     }
 
@@ -334,13 +351,19 @@ class DisplayPlace extends React.Component {
             })
         }
 
-        Keyboard.KeyCtrlDown(() => {
-            this.setState({ multiSelecting: true })
-        })
+        window.onkeydown = e => {
+            if (e.code === Keyboard.CONTROLLEFT)
+                this.setState({ ctrlSelecting: true })
+            else if (e.code === Keyboard.SHIFTLEFT)
+                this.setState({ shiftSelecting: true })
+        }
 
-        Keyboard.KeyCtrlUp(() => {
-            this.setState({ multiSelecting: false })
-        })
+        window.onkeyup = e => {
+            if (e.code === Keyboard.CONTROLLEFT)
+                this.setState({ ctrlSelecting: false })
+            else if (e.code === Keyboard.SHIFTLEFT)
+                this.setState({ shiftSelecting: false })
+        }
     }
 
     userIsTeammember = () => {

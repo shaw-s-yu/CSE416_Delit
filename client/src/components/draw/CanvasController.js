@@ -178,8 +178,7 @@ class CanvasController {
             this.ctx.strokeRect(this.startX, this.startY, x - this.startX, y - this.startY)
         },
 
-        endDraw: (x, y) => {
-            this.onDraw(x, y)
+        endDraw: () => {
             this.ctx.putImageData(this.startData, 0, 0)
             this.ctx.restore()
         }

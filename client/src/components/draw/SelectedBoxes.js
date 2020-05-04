@@ -59,7 +59,6 @@ class selectedBoxes extends React.Component {
     }
 
     handleMoveEnd = e => {
-        e.stopPropagation()
 
         const { clientX, clientY } = e
         const { selectedGrid, grid, startImg } = this.state

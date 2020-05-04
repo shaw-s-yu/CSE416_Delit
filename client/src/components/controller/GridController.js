@@ -205,10 +205,15 @@ export default class DrawGridController {
     }
 
     getGridPositionsFromCropMouse = (cropDimension) => {
-        let positions = []
+
         let startPosition = this.getGridPositionFromMouseXY(cropDimension.start.x, cropDimension.start.y)
         let endPosition = this.getGridPositionFromMouseXY(cropDimension.end.x, cropDimension.end.y)
 
+        return this.getGridPositionsFromCropPositions(startPosition, endPosition)
+    }
+
+    getGridPositionsFromCropPositions = (startPosition, endPosition) => {
+        let positions = []
         if (startPosition.x > endPosition.x && startPosition.y > endPosition.y) {
             const temp = startPosition
             startPosition = endPosition
@@ -245,6 +250,7 @@ export default class DrawGridController {
         }
         return {
             left: minX, top: minY,
+            leftMax: maxX, topMax: maxY,
             width: maxX + this.tileWidth - minX,
             height: maxY + this.tileHeight - minY
         }
@@ -310,5 +316,11 @@ export default class DrawGridController {
         }
 
         return returnGrids
+    }
+
+    getMinRegionGridPositionsFromGridsAndGrid = (grids, grid) => {
+        const { left, top } = this.getCropPositionFromGridPositions(grids)
+        const minX = left, minY = top, maxX = grid.x, maxY = grid.y
+        return this.getGridPositionsFromCropPositions({ x: minX, y: minY }, { x: maxX, y: maxY })
     }
 }
