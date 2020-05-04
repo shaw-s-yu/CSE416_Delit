@@ -80,7 +80,7 @@ export default class ImageController {
         })
     }
 
-    handleSelectedHorizontalFlip = (dimension) => {
+    handleSelectedHorizontalFlip = (dimension, callback) => {
         const { left, top, width, height } = dimension
         this.initHelper(width, height)
 
@@ -94,10 +94,11 @@ export default class ImageController {
             this.helperctx.scale(-1, 1)
             this.helperctx.translate(-width, 0)
             this.ctx.putImageData(this.helperImageData, left, top)
+            if (callback) callback()
         })
     }
 
-    handleSelectedVerticalFlip = (dimension) => {
+    handleSelectedVerticalFlip = (dimension, callback) => {
         const { left, top, width, height } = dimension
         this.initHelper(width, height)
 
@@ -111,6 +112,7 @@ export default class ImageController {
             this.helperctx.scale(1, -1)
             this.helperctx.translate(0, -height)
             this.ctx.putImageData(this.helperImageData, left, top)
+            if (callback) callback()
         })
     }
 

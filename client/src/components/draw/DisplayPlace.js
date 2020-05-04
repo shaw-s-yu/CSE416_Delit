@@ -8,6 +8,7 @@ import GridController from '../controller/GridController'
 import ImageController, { arrayBufferToBase64 } from '../controller/ImageController'
 import SelectedBoxes from './SelectedBoxes'
 import axios from 'axios'
+import Keyboard from '../controller/KeyboardController'
 
 class DisplayPlace extends React.Component {
 
@@ -215,20 +216,32 @@ class DisplayPlace extends React.Component {
 
     handleHorizontalFlip = () => {
         const { selectedGrid } = this.state
+        const oldImg = this.getImageDataWithGrid()
+        const callback = () => {
+            const newImg = this.getImageDataWithGrid()
+            this.addNewTransaction(oldImg, newImg)
+            this.sendSocketNewOperation()
+        }
         if (selectedGrid.length !== 0) {
             const dimension = this.GridController.getCropPositionFromGridPositions(selectedGrid)
-            this.ImageController.handleSelectedHorizontalFlip(dimension)
+            this.ImageController.handleSelectedHorizontalFlip(dimension, callback)
         } else
-            this.ImageController.handleHorizontalFlip()
+            this.ImageController.handleHorizontalFlip(callback)
     }
 
     handleVerticalFlip = () => {
         const { selectedGrid } = this.state
+        const oldImg = this.getImageDataWithGrid()
+        const callback = () => {
+            const newImg = this.getImageDataWithGrid()
+            this.addNewTransaction(oldImg, newImg)
+            this.sendSocketNewOperation()
+        }
         if (selectedGrid.length !== 0) {
             const dimension = this.GridController.getCropPositionFromGridPositions(selectedGrid)
-            this.ImageController.handleSelectedVerticalFlip(dimension)
+            this.ImageController.handleSelectedVerticalFlip(dimension, callback)
         } else
-            this.ImageController.handleVerticalFlip()
+            this.ImageController.handleVerticalFlip(callback)
     }
 
     handleUnselectGrid = () => {
@@ -320,6 +333,14 @@ class DisplayPlace extends React.Component {
                 DisplayBoxHeight: height,
             })
         }
+
+        Keyboard.KeyCtrlDown(() => {
+            this.setState({ multiSelecting: true })
+        })
+
+        Keyboard.KeyCtrlUp(() => {
+            this.setState({ multiSelecting: false })
+        })
     }
 
     userIsTeammember = () => {
