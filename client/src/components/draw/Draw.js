@@ -135,14 +135,13 @@ class Draw extends React.Component {
     };
 
     handleSave = () => {
-        // this.display.handleDrawImageNoGrid()
         const imgData = this.display.handleGetImageNoGrid()
         this.props.socket.emit('draw-save', {
             tilesetId: this.props.match.params.key,
             data: imgData
         });
         this.handleSaveDialogClose()
-        this.handleUnselectGrid()
+        this.handleClearNoneToolOperation()
     }
 
     render() {
