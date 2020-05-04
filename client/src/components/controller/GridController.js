@@ -41,6 +41,21 @@ export default class DrawGridController {
         this.ctx.restore()
     }
 
+    drawCopiedGrid = (grids) => {
+        this.ctx.save()
+        this.ctx.fillStyle = `rgba({0,0,0,1})`
+        this.ctx.strokeStyle = 'white'
+        this.ctx.lineWidth = 1
+
+        for (let i = 0; i < grids.length; i++) {
+            this.ctx.beginPath();
+            this.ctx.setLineDash([3])
+            this.ctx.strokeRect(grids[i].x - 1, grids[i].y - 1, this.tileWidth + 2, this.tileHeight + 2)
+        }
+        this.ctx.restore()
+
+    }
+
     drawGridBackground = () => {
         this.ctx.save()
         this.ctx.fillStyle = this.backgroundColor
@@ -322,5 +337,49 @@ export default class DrawGridController {
         const { left, top } = this.getCropPositionFromGridPositions(grids)
         const minX = left, minY = top, maxX = grid.x, maxY = grid.y
         return this.getGridPositionsFromCropPositions({ x: minX, y: minY }, { x: maxX, y: maxY })
+    }
+
+    getGridDiffFrom2Grids = (startGrids, currentGrids) => {
+        const startRegion = this.getCropPositionFromGridPositions(startGrids)
+        const currentRegion = this.getCropPositionFromGridPositions(currentGrids)
+
+        const dx = currentRegion.left - startRegion.left;
+        const dy = currentRegion.top - startRegion.top
+        const returnGrids = []
+
+        for (let i = 0; i < startGrids.length; i++) {
+            returnGrids.push({ dx, dy })
+        }
+
+        return returnGrids
+    }
+
+    drawGridsByGridsDiff = (startGrids, gridsDiff) => {
+        const imgData = this.ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight)
+        for (let i = 0; i < startGrids.length; i++) {
+
+            this.ctx.putImageData(
+                imgData,
+                gridsDiff[i].dx,
+                gridsDiff[i].dy,
+                startGrids[i].x,
+                startGrids[i].y,
+                this.tileWidth + this.gridThickness,
+                this.tileHeight + this.gridThickness,
+            )
+        }
+        this.drawGridBorder()
+    }
+
+    getGridsFromGridsDiffandGrids = (startGrids, gridsDiff) => {
+        if (startGrids.length !== gridsDiff.length) throw new Error('error')
+        const returnGrids = []
+        for (let i = 0; i < startGrids.length; i++) {
+            returnGrids.push({
+                x: startGrids[i].x + gridsDiff[i].dx,
+                y: startGrids[i].y + gridsDiff[i].dy
+            })
+        }
+        return returnGrids
     }
 }

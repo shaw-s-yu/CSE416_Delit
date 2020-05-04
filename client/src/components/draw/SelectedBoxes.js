@@ -31,6 +31,8 @@ class selectedBoxes extends React.Component {
             startX: grid.x, startY: grid.y,
             startGrids, startImgData, lastGrid,
             startImg
+        }, () => {
+            this.props.parent.handleStopCopying()
         })
     }
 
@@ -59,7 +61,7 @@ class selectedBoxes extends React.Component {
     }
 
     handleMoveEnd = e => {
-
+        e.stopPropagation()
         const { clientX, clientY } = e
         const { selectedGrid, grid, startImg } = this.state
         const { x, y } = this.props.parent.handleFixPosition(clientX, clientY)
@@ -93,6 +95,7 @@ class selectedBoxes extends React.Component {
 
         const { selectedGrid, width, height } = this.props
         const { mouseDown } = this.state
+        const color = mouseDown ? 'rgba(0,0,0,0)' : 'rgba(0,0,205,0.4)'
         return (
             <>
                 {
@@ -102,7 +105,7 @@ class selectedBoxes extends React.Component {
                             top: grid.y - 1,
                             width: width + 2,
                             height: height + 2,
-                            backgroundColor: mouseDown ? 'rgba(0,0,0,0)' : 'rgba(0,0,205,0.4)',
+                            backgroundColor: color,
                         }
                         return (
                             <div

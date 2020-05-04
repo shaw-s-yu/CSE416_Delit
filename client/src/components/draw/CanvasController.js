@@ -163,7 +163,7 @@ class CanvasController {
             this.ctx.save()
             this.ctx.lineWidth = 1
             this.ctx.fillStyle = `rgba(0,0,0,0)`
-            this.ctx.strokeStyle = `rgba({0,0,0,1}})`
+            this.ctx.strokeStyle = `rgba({0,0,0,1})`
 
             this.startX = x
             this.startY = y

@@ -6,9 +6,12 @@ import CanvasController from './CanvasController'
 import DrawTransaction from "./DrawTransaction"
 import GridController from '../controller/GridController'
 import ImageController, { arrayBufferToBase64 } from '../controller/ImageController'
+import CopyController from '../controller/CopyController'
 import SelectedBoxes from './SelectedBoxes'
 import axios from 'axios'
 import Keyboard from '../controller/KeyboardController'
+import Dialog from '../tools/Dialog'
+import { Button } from 'react-bootstrap';
 
 class DisplayPlace extends React.Component {
 
@@ -22,6 +25,8 @@ class DisplayPlace extends React.Component {
         ctrlSelecting: false,
         shiftSelecting: false,
         cropDimension: null,
+        copying: false,
+        dialogOpen: false,
     }
 
     selectedBoxes = React.createRef()
@@ -76,6 +81,7 @@ class DisplayPlace extends React.Component {
         const { mouseDown, selectedGrid } = this.state
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
+
         if (selectedGrid.length !== 0) {
             if (this.selectedBoxes.state.mouseDown) {
                 this.selectedBoxes.handleMove(x, y)
@@ -287,6 +293,34 @@ class DisplayPlace extends React.Component {
 
     }
 
+    handleStopCopying = () => {
+        this.GridController.drawGridBorder()
+        this.setState({ copying: false })
+    }
+
+    startCopyGrid = () => {
+        const { selectedGrid } = this.state
+        this.CopyController = new CopyController(selectedGrid)
+        const startGrids = this.CopyController.getStartGrids()
+        this.GridController.drawCopiedGrid(startGrids)
+        this.setState({ selectedGrid: [] })
+    }
+
+
+    pasteCopiedGrid = () => {
+        const { copying, selectedGrid } = this.state
+        if (!copying) return
+        if (selectedGrid.length === 0) {
+            this.setState({ dialogOpen: true })
+        } else {
+            const startGrids = this.CopyController.getStartGrids()
+            const gridsDiff = this.GridController.getGridDiffFrom2Grids(startGrids, selectedGrid)
+            this.GridController.drawGridsByGridsDiff(startGrids, gridsDiff)
+            const newGrids = this.GridController.getGridsFromGridsDiffandGrids(startGrids, gridsDiff)
+            this.setState({ selectedGrid: newGrids })
+        }
+    }
+
 
     componentDidMount() {
 
@@ -352,17 +386,27 @@ class DisplayPlace extends React.Component {
         }
 
         window.onkeydown = e => {
-            if (e.code === Keyboard.CONTROLLEFT)
+            if (Keyboard.triggerLeftControll(e))
                 this.setState({ ctrlSelecting: true })
-            else if (e.code === Keyboard.SHIFTLEFT)
+            else if (Keyboard.triggerLeftShift(e))
                 this.setState({ shiftSelecting: true })
+            else if (Keyboard.triggerLeftCtrlC(e)) {
+                if (this.state.selectedGrid.length === 0) return
+                this.setState({ copying: true }, () => {
+                    this.startCopyGrid()
+                })
+            } else if (Keyboard.triggerLeftCtrlV(e)) {
+                if (this.state.copying === false) return
+                this.pasteCopiedGrid()
+            }
         }
 
         window.onkeyup = e => {
-            if (e.code === Keyboard.CONTROLLEFT)
+            if (Keyboard.triggerLeftControll(e))
                 this.setState({ ctrlSelecting: false })
-            else if (e.code === Keyboard.SHIFTLEFT)
+            else if (Keyboard.triggerLeftShift(e))
                 this.setState({ shiftSelecting: false })
+
         }
     }
 
@@ -431,7 +475,7 @@ class DisplayPlace extends React.Component {
     }
 
     render() {
-        const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight, selectedGrid } = this.state;
+        const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight, selectedGrid, copying, dialogOpen } = this.state;
         const { scale, tileset } = this.props
         const { tileWidth, tileHeight } = tileset
         const scrollStyle = {
@@ -445,6 +489,8 @@ class DisplayPlace extends React.Component {
             left: canvasWidth ? canvasWidth * scale >= DisplayBoxWidth ? 6 : (DisplayBoxWidth - canvasWidth * scale) / 2 + 6 : 6,
             top: canvasHeight ? canvasHeight * scale >= DisplayBoxHeight ? 6 : (DisplayBoxHeight - canvasHeight * scale) / 2 + 6 : 6,
         }
+
+
         return (
             <div className="painter-display" ref='painterBox' onClick={this.handleUnselectGrid}>
                 <Scrollbars ref="scrollbar"
@@ -468,11 +514,22 @@ class DisplayPlace extends React.Component {
                             height={tileHeight}
                             parent={this}
                             childRef={ref => this.selectedBoxes = ref}
+                            copying={copying}
                         />
 
                     </div>
 
                 </ Scrollbars>
+                <Dialog
+                    header={'Notice'}
+                    open={dialogOpen}
+                    fullWidth={true}
+                    maxWidth="xs"
+                    actions={[<Button key='f' onClick={e => this.setState({ dialogOpen: false })}>OK</Button>]}
+                    content={
+                        <p>You Select A Grid To Paste</p>
+                    }
+                />
             </div>
         )
     }

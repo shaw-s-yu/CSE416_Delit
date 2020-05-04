@@ -97,8 +97,9 @@ class Draw extends React.Component {
         this.props.handleUnselect();
     };
 
-    handleUnselectGrid = () => {
+    handleClearNoneToolOperation = () => {
         this.display.handleUnselectGrid()
+        this.display.handleStopCopying()
     }
 
 
@@ -155,7 +156,7 @@ class Draw extends React.Component {
                 <TopNavbar site='tileset' history={history} />
                 <div className="painter-wrapper">
                     <Toolbar
-                        selectCallback={this.handleUnselectGrid}
+                        selectCallback={this.handleClearNoneToolOperation}
                         className="map-toolbar"
                         content={[
                             { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
