@@ -2,15 +2,16 @@ const User = require('../models/mongo-user')
 const ImageModel = require('../models/mongo-image')
 const TilesetModel = require('../models/mongo-tileset')
 
-exports.Socket = function (socket) {
+exports.Socket = function (socket, io) {
     this.socket = socket
-    // this.on()
+    this.io = io
 
     this.on = () => {
         this.socket.on('username_register', this.usernameController)
         this.socket.on('draw', this.drawController)
         this.socket.on('draw-save', this.drawSaveController)
         this.socket.on('invite', this.inviteController)
+        this.socket.on('join-room', this.joinRoomController)
     }
 
     this.usernameController = data => {
@@ -25,8 +26,9 @@ exports.Socket = function (socket) {
             })
     }
 
-    this.drawController = data => {
-        socket.broadcast.emit('drawBack', data)
+    this.drawController = req => {
+        const { room } = req
+        socket.to(room).emit('draw-back', req)
     }
 
     this.drawSaveController = data => {
@@ -56,5 +58,9 @@ exports.Socket = function (socket) {
             else
                 socket.emit('inviteBack', { name, err: true, msg: '👎 User not Exist', req: data.text, id: null })
         })
+    }
+
+    this.joinRoomController = req => {
+        socket.join(req)
     }
 }

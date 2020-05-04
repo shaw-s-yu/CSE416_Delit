@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.unsubscribe(bodyParser.urlencoded({ extended: false }))
 
 io.on('connection', socket => {
-    let socketController = new Socket(socket)
+    let socketController = new Socket(socket, io)
     socketController.on()
 })
 

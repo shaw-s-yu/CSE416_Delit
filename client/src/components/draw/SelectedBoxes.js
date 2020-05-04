@@ -10,6 +10,8 @@ class selectedBoxes extends React.Component {
         startX: null,
         startY: null,
         startGrids: null,
+        startImgData: null,
+        startImg: null
     }
 
     handleMoveStart = (e, grid) => {
@@ -19,6 +21,7 @@ class selectedBoxes extends React.Component {
         const { x, y } = this.props.parent.handleFixPosition(clientX, clientY)
         let { selectedGrid } = this.props
         const startImgData = this.props.parent.GridController.getImageData()
+        const startImg = this.props.parent.refs.canvas.toDataURL('image/jpeg', 1)
         const startGrids = JSON.parse(JSON.stringify(selectedGrid))
         const lastGrid = JSON.parse(JSON.stringify(grid))
         this.setState({
@@ -26,7 +29,8 @@ class selectedBoxes extends React.Component {
             lastX: x, lastY: y,
             selectedGrid, grid,
             startX: grid.x, startY: grid.y,
-            startGrids, startImgData, lastGrid
+            startGrids, startImgData, lastGrid,
+            startImg
         })
     }
 
@@ -58,15 +62,20 @@ class selectedBoxes extends React.Component {
         e.stopPropagation()
 
         const { clientX, clientY } = e
-        const { selectedGrid, grid } = this.state
+        const { selectedGrid, grid, startImg } = this.state
         const { x, y } = this.props.parent.handleFixPosition(clientX, clientY)
         this.props.parent.GridController.handleShift2Grids(x, y, selectedGrid, grid)
+
+        const newImg = this.props.parent.refs.canvas.toDataURL('image/jpeg', 1)
+        this.props.parent.addNewTransaction(startImg, newImg)
+        this.props.parent.sendSocketNewOperation()
+
         this.setState({
             mouseDown: false, lastX: null,
             lastY: null, startGrids: null,
             startX: null, startY: null,
             grid: null, startImgData: null,
-            lastGrid: null
+            lastGrid: null, startImg: null
         })
     }
 

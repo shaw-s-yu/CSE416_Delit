@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import Transactions from './JSTPS'
 import ReactFileReader from 'react-file-reader';
-import DrawTransaction from './DrawTransaction'
 import { Button } from "react-bootstrap";
 import Dialog from '../tools/Dialog'
 import QueryList from '../../graphql/Query'
@@ -85,13 +84,13 @@ class Draw extends React.Component {
     };
 
     doTransaction = () => {
-        this.props.socket.emit('draw', { data: null, type: 'redo' });
-        this.transactions.doTransaction();
+        this.display.doTransaction()
+        this.display.handleUnselectGrid()
     };
 
     undoTransaction = () => {
-        this.props.socket.emit('draw', { data: null, type: 'undo' });
-        this.transactions.undoTransaction();
+        this.display.undoTransaction()
+        this.display.handleUnselectGrid()
     };
 
     handleUnselect = () => {
@@ -120,16 +119,17 @@ class Draw extends React.Component {
     };
 
     handleImport = (file) => {
-        const oldImg = this.display.getImageData();
+        const oldImg = this.display.getImageDataWithGrid();
 
-        this.display.drawImage(file.base64);
-        this.props.socket.emit('draw', { data: file.base64, type: 'new' });
-        this.transactions.addTransaction(new DrawTransaction(oldImg, file.base64, this.display.drawImage));
-
+        this.display.handleDrawImgToGrid(file.base64, () => {
+            const newImg = this.display.getImageDataWithGrid()
+            this.display.addNewTransaction(oldImg, newImg)
+            this.display.sendSocketNewOperation()
+        })
     };
 
     handleExport = () => {
-        const imgData = this.display.getImageData();
+        const imgData = this.display.handleGetImageNoGrid();
         require("downloadjs")(imgData, "tileset@DELIT.jpeg", "image/jpeg");
     };
 

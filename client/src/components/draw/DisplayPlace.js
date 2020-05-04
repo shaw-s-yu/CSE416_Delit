@@ -192,18 +192,26 @@ class DisplayPlace extends React.Component {
     }
 
     handleClear = () => {
-        const color = { r: 211, g: 211, b: 211, a: 1 }
-        this.painter.initDraw('SQUARE', 1, color, color)
-        this.painter.startDraw(0, 0)
-        this.painter.onDraw(this.state.canvasWidth, this.state.canvasHeight)
-        this.painter.endDraw(this.state.canvasWidth, this.state.canvasHeight)
-        this.GridController.drawGridBorder()
+
+        const oldImg = this.refs.canvas.toDataURL('image/jpeg', 1)
+
+        this.GridController.drawGrid()
+
+        const newImg = this.refs.canvas.toDataURL('image/jpeg', 1)
+        this.addNewTransaction(oldImg, newImg)
+        this.sendSocketNewOperation()
     }
 
 
-    getImageData = () => {
+    getImageDataWithGrid = () => {
         return this.refs.canvas.toDataURL('image/jpeg', 1)
     }
+
+    getImageDataNoGrid = () => {
+        return this.ImageController.getImageFromGrid()
+    }
+
+
 
     handleHorizontalFlip = () => {
         const { selectedGrid } = this.state
@@ -243,6 +251,12 @@ class DisplayPlace extends React.Component {
         this.ImageController.drawImageFromGrid(gridPositions, imageDimension)
     }
 
+    handleDrawImgToGrid = (src, callback) => {
+        const gridPositions = this.GridController.getGridPositions()
+        this.ImageController.drawToGrid(src, gridPositions, callback)
+
+    }
+
 
     componentDidMount() {
 
@@ -259,7 +273,7 @@ class DisplayPlace extends React.Component {
         const canvasWidth = canvasDimension.width
         const canvasHeight = canvasDimension.height
 
-        const gridPositions = this.GridController.getGridPositions()
+
 
         const DisplayBoxDimension = this.refs.painterBox.getBoundingClientRect()
         const DisplayBoxWidth = DisplayBoxDimension.width
@@ -290,7 +304,7 @@ class DisplayPlace extends React.Component {
                     else {
                         const base64Flag = 'data:image/jpeg;base64,';
                         const imageStr = arrayBufferToBase64(data.data.data)
-                        this.ImageController.drawToGrid(base64Flag + imageStr, gridPositions)
+                        this.handleDrawImgToGrid(base64Flag + imageStr)
                     }
                 })
 
@@ -306,26 +320,70 @@ class DisplayPlace extends React.Component {
                 DisplayBoxHeight: height,
             })
         }
+    }
 
+    userIsTeammember = () => {
+        const { username } = this.props.user
+        const { teamInfo } = this.props.tileset
+        for (let i in teamInfo) {
+            if (teamInfo[i].username === username)
+                return true
+        }
+        return false
+    }
 
+    sendSocketNewOperation = () => {
+        const imgData = this.refs.canvas.toDataURL('image/jpeg', 1)
+        this.props.socket.emit('draw', {
+            data: imgData,
+            type: 'new',
+            room: this.room
+        })
+    }
+
+    addNewTransaction = (oldImg, newImg) => {
+        this.props.transactions.addTransaction(
+            new DrawTransaction(oldImg, newImg, this.ImageController.drawImage)
+        )
+    }
+
+    doTransaction = () => {
+        this.props.socket.emit('draw', {
+            type: 'redo',
+            room: this.room
+        })
+        this.props.transactions.doTransaction()
+    }
+
+    undoTransaction = () => {
+        this.props.socket.emit('draw', {
+            type: 'undo',
+            room: this.room
+        })
+        this.props.transactions.undoTransaction()
     }
 
     UNSAFE_componentWillMount() {
-        this.props.socket.on('drawBack', res => {
-            const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-            const { transactions } = this.props
-            const { data, type } = res
+        if (this.userIsTeammember()) {
+            this.room = `draw/${this.props.tileset._id}`
+            this.props.socket.emit('join-room', this.room)
+            this.props.socket.on('draw-back', res => {
 
-            if (type === 'new') {
-                transactions.addTransaction(new DrawTransaction(old_img, data, this.drawImage))
-            }
-            else if (type === 'redo') {
-                transactions.doTransaction()
-            } else if (type === 'undo') {
-                transactions.undoTransaction()
-            }
+                const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
+                const { transactions } = this.props
+                const { data, type } = res
 
-        })
+                if (type === 'new') {
+                    this.addNewTransaction(old_img, data)
+                }
+                else if (type === 'redo') {
+                    transactions.doTransaction()
+                } else if (type === 'undo') {
+                    transactions.undoTransaction()
+                }
+
+            })
+        }
     }
 
     render() {
@@ -343,7 +401,6 @@ class DisplayPlace extends React.Component {
             left: canvasWidth ? canvasWidth * scale >= DisplayBoxWidth ? 6 : (DisplayBoxWidth - canvasWidth * scale) / 2 + 6 : 6,
             top: canvasHeight ? canvasHeight * scale >= DisplayBoxHeight ? 6 : (DisplayBoxHeight - canvasHeight * scale) / 2 + 6 : 6,
         }
-
         return (
             <div className="painter-display" ref='painterBox' onClick={this.handleUnselectGrid}>
                 <Scrollbars ref="scrollbar"
@@ -380,9 +437,11 @@ class DisplayPlace extends React.Component {
 
 const mapStateToProps = (state) => {
     const { selected } = state.toolbar
+    const { user } = state.auth
     return {
         selectedTool: selected,
-        socket: state.backend.socket
+        socket: state.backend.socket,
+        user
     }
 };
 

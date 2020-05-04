@@ -147,6 +147,7 @@ export default {
     GET_tILESET: graphql`
     query tileset($id: String!){
         tileset(id:$id){
+            _id
             name
             ownerInfo{
                 username

@@ -16,7 +16,7 @@ export default class ImageController {
     }
 
 
-    drawToGrid = (src, gridPositions) => {
+    drawToGrid = (src, gridPositions, callback) => {
 
         this.drawImageHelper(src, () => {
             const imageData = this.getImageDataFromHelper()
@@ -30,6 +30,7 @@ export default class ImageController {
                     this.gridWidth,
                     this.gridHeight
                 )
+            if (callback) callback()
         })
     }
 
@@ -89,7 +90,7 @@ export default class ImageController {
         const imgSrc = this.helperctx.canvas.toDataURL('image/jpeg', 1)
         this.helperctx.scale(-1, 1)
         this.helperctx.translate(-width, 0)
-        this.drawImageHelper(imgSrc, width, height, () => {
+        this.drawImageHelper(imgSrc, () => {
             this.helperctx.scale(-1, 1)
             this.helperctx.translate(-width, 0)
             this.ctx.putImageData(this.helperImageData, left, top)
@@ -106,7 +107,7 @@ export default class ImageController {
         const imgSrc = this.helperctx.canvas.toDataURL('image/jpeg', 1)
         this.helperctx.scale(1, -1)
         this.helperctx.translate(0, -height)
-        this.drawImageHelper(imgSrc, width, height, () => {
+        this.drawImageHelper(imgSrc, () => {
             this.helperctx.scale(1, -1)
             this.helperctx.translate(0, -height)
             this.ctx.putImageData(this.helperImageData, left, top)

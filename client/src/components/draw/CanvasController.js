@@ -1,5 +1,3 @@
-import drawTransaction from "./DrawTransaction"
-
 class CanvasController {
     constructor(view) {
         this.tool = null
@@ -43,9 +41,11 @@ class CanvasController {
         this[this.tool].endDraw(x, y)
         this.drawing = false
         this.startData = null
-        // this.newImg = this.view.refs.canvas.toDataURL('image/jpeg', 1)
-        // this.view.props.socket.emit('draw', { data: this.newImg, type: 'new' })
-        // this.view.props.transactions.addTransaction(new drawTransaction(this.oldImg, this.newImg, this.view.drawImage))
+
+        this.view.sendSocketNewOperation()
+        const newImg = this.ctx.canvas.toDataURL('image/jpeg', 1)
+        this.view.addNewTransaction(this.oldImg, newImg)
+        this.oldImg = null
     }
 
     PENCIL = {
@@ -61,8 +61,8 @@ class CanvasController {
             this.ctx.stroke()
         },
 
-        endDraw: (x, y) => {
-            this.onDraw(x, y)
+        endDraw: () => {
+            return
         },
     }
 
@@ -81,8 +81,7 @@ class CanvasController {
             this.ctx.lineCap = 'round'
             this.ctx.stroke()
         },
-        endDraw: (x, y) => {
-            this.onDraw(x, y)
+        endDraw: () => {
             this.startX = null
             this.startY = null
         },
@@ -103,8 +102,7 @@ class CanvasController {
             this.ctx.fill()
             this.ctx.stroke();
         },
-        endDraw: (x, y) => {
-            this.onDraw(x, y)
+        endDraw: () => {
             this.startX = null
             this.startY = null
         }
@@ -128,8 +126,7 @@ class CanvasController {
             this.ctx.fill()
             this.ctx.stroke();
         },
-        endDraw: (x, y) => {
-            this.onDraw(x, y)
+        endDraw: () => {
             this.startX = null
             this.startY = null
         }
@@ -150,8 +147,7 @@ class CanvasController {
             this.ctx.stroke();
         },
 
-        endDraw: (x, y) => {
-            this.onDraw(x, y)
+        endDraw: () => {
             this.ctx.restore()
         },
     }
