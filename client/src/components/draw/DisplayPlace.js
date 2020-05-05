@@ -394,6 +394,7 @@ class DisplayPlace extends React.Component {
         }
 
         window.onkeydown = e => {
+            // console.log(e)
             if (Keyboard.triggerLeftControll(e))
                 this.setState({ ctrlSelecting: true })
             else if (Keyboard.triggerLeftShift(e))
@@ -413,6 +414,7 @@ class DisplayPlace extends React.Component {
             else if(Keyboard.triggerLeftCtrlY(e)){
                 this.doTransaction()
             }
+
         }
 
         window.onkeyup = e => {
