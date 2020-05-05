@@ -13,8 +13,8 @@ import ReactFileReader from 'react-file-reader';
 class TopNavbar extends React.Component {
 
     state = {
-        username: 'error',
-        picture: 'error',
+        username: '',
+        picture: '',
         file: false,
         edit: false,
         view: false
@@ -78,7 +78,6 @@ class TopNavbar extends React.Component {
     render() {
         const { site, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
         const { username, picture, file, edit, view } = this.state;
-        console.log(picture)
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
@@ -132,7 +131,7 @@ class TopNavbar extends React.Component {
 
                         </Nav>
                         <Navbar.Brand><a href='/test'>Test</a></Navbar.Brand>
-                        <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo" /></Navbar.Brand>
+                        <Navbar.Brand><img src={picture} className="profile-img" alt="logo" /></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>

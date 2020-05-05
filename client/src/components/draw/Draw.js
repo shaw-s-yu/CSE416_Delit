@@ -9,8 +9,7 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import Transactions from './JSTPS'
 import ReactFileReader from 'react-file-reader';
-import { Button } from "react-bootstrap";
-import Dialog from '../tools/Dialog'
+import Dialogs from './Dialogs'
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios';
@@ -23,7 +22,9 @@ class Draw extends React.Component {
         borderColor: { r: 0, g: 0, b: 0, a: 1 },
         fillColor: { r: 255, g: 255, b: 255, a: 1 },
         scale: 1,
-        saveDialogOpen: false,
+        saveOpen: false,
+        duplicaOpen: false,
+        startAuthOpen: false,
         username: null
     };
 
@@ -32,13 +33,42 @@ class Draw extends React.Component {
 
 
     handleSaveDialogOpen = () => {
-        this.setState({ saveDialogOpen: true })
+        if (this.display.userIsTeammember())
+            this.setState({ saveOpen: true })
+        else
+            this.setState({ startAuthOpen: true })
     }
 
     handleSaveDialogClose = () => {
-        this.setState({ saveDialogOpen: false })
+        this.setState({ saveOpen: false })
     }
 
+    handleStartDialogOpen = () => {
+        this.setState({ startAuthOpen: true })
+    }
+
+    handleStartDialogClose = () => {
+        this.setState({ startAuthOpen: false })
+    }
+
+    handleDuplicateDialogOpen = () => {
+        this.setState({ duplicaOpen: true })
+    }
+
+    handleDuplicateDialogClose = () => {
+        this.setState({ duplicaOpen: false })
+    }
+
+    handleDuplicate = (name) => {
+        const imgData = this.display.handleGetImageNoGrid()
+        const tileset = this.display.getTileset()
+        const { userId } = this.state
+        this.props.socket.emit('duplicate-image', {
+            name: name,
+            data: imgData,
+            tileset, userId
+        })
+    }
 
     handleZoomEffect = (e) => {
 
@@ -153,21 +183,31 @@ class Draw extends React.Component {
         this.display.pasteCopiedGrid()
     }
 
+    handleGoBack = () => {
+        this.props.history.push('/dashboard')
+    }
+
     componentDidMount() {
         axios.get('/auth/current').then(res => {
-            const { username } = res.data;
-            if (!username)
+            const { username, _id } = res.data;
+            if (!username || !_id)
                 this.props.history.push('/');
             else {
-                this.setState({ username });
+                this.setState({ username, userId: _id });
             }
+        })
+    }
+
+    UNSAFE_componentWillMount() {
+        this.props.socket.on('duplicate-image-back', res => {
+            this.props.history.push(`/tileset/${res}`)
         })
     }
 
     render() {
         const { key } = this.props.match.params
         const { history } = this.props;
-        const { sliderValue, borderColor, fillColor, scale, saveDialogOpen, username } = this.state;
+        const { sliderValue, borderColor, fillColor, scale, saveOpen, startAuthOpen, duplicaOpen, username } = this.state;
 
         return (
 
@@ -176,7 +216,7 @@ class Draw extends React.Component {
                     handleSave={this.handleSaveDialogOpen}
                     handleImport={this.handleImport}
                     handleExport={this.handleExport}
-                    handleDuplicate={() => { }}
+                    handleDuplicate={this.handleDuplicateDialogOpen}
                     handleDoTransaction={this.doTransaction}
                     handleUndoTransaction={this.undoTransaction}
                     handleCopy={this.handleCopy}
@@ -231,6 +271,7 @@ class Draw extends React.Component {
                             if (error) return 'error'
                             if (!data) return 'error'
                             const { tileset } = data
+
                             return (
                                 <DisplayPlace
                                     tileset={tileset}
@@ -242,23 +283,13 @@ class Draw extends React.Component {
                                     handleZoomEffect={this.handleZoomEffect}
                                     scale={scale}
                                     username={username}
+                                    handleStartDialogOpen={this.handleStartDialogOpen}
                                 />
                             )
                         }}
                     </Query>
                 </div>
-                <Dialog
-                    header="Save Image"
-                    open={saveDialogOpen}
-                    actions={[
-                        <Button key='1' onClick={this.handleSave}>Yes</Button>,
-                        <Button key='2' onClick={this.handleSaveDialogClose}>Cancel</Button>
-                    ]}
-                    var totalTextbox='1'
-                    content={[
-                        <h3 key='q'>Are You Sure to Save In Delit Database?</h3>,
-                        <h3 key='w'>Old Version will be overwriten</h3>
-                    ]} />
+                <Dialogs parent={this} save={saveOpen} start={startAuthOpen} duplicate={duplicaOpen} />
 
             </div>
 

@@ -12,6 +12,7 @@ exports.Socket = function (socket, io) {
         this.socket.on('draw-save', this.drawSaveController)
         this.socket.on('invite', this.inviteController)
         this.socket.on('join-room', this.joinRoomController)
+        this.socket.on('duplicate-image', this.duplicateImageController)
     }
 
     this.usernameController = data => {
@@ -43,11 +44,6 @@ exports.Socket = function (socket, io) {
                 })
             }
         })
-
-
-        // let newimg = new ImageModel();
-        // newimg.data = new Buffer.from(data.split(",")[1], "base64");
-        // newimg.save();
     }
 
     this.inviteController = req => {
@@ -62,5 +58,27 @@ exports.Socket = function (socket, io) {
 
     this.joinRoomController = req => {
         socket.join(req)
+    }
+
+    this.duplicateImageController = req => {
+        const { name, data, tileset, userId } = req
+        new ImageModel({
+            data: new Buffer.from(data.split(',')[1], 'base64')
+        }).save().then(newImage => {
+            if (!newImage) throw new Error('create new image error')
+            new TilesetModel({
+                name: name,
+                width: tileset.width,
+                height: tileset.height,
+                tileWidth: tileset.tileWidth,
+                tileHeight: tileset.tileHeight,
+                owner: userId,
+                imageId: newImage._id,
+                editors: []
+            }).save().then(newTileset => {
+                if (!newTileset) throw new Error('create new tileset error')
+                socket.emit('duplicate-image-back', newTileset._id)
+            })
+        })
     }
 }

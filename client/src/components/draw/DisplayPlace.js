@@ -231,12 +231,6 @@ class DisplayPlace extends React.Component {
         return this.refs.canvas.toDataURL('image/jpeg', 1)
     }
 
-    getImageDataNoGrid = () => {
-        return this.ImageController.getImageFromGrid()
-    }
-
-
-
     handleHorizontalFlip = () => {
         const { selectedGrid } = this.state
         const oldImg = this.getImageDataWithGrid()
@@ -313,6 +307,10 @@ class DisplayPlace extends React.Component {
         this.setState({ selectedGrid: [] })
     }
 
+    getTileset = () => {
+        return this.props.tileset
+    }
+
 
     pasteCopiedGrid = () => {
         const { copying, selectedGrid } = this.state
@@ -357,6 +355,9 @@ class DisplayPlace extends React.Component {
                 }
 
             })
+        }
+        else {
+            this.props.handleStartDialogOpen()
         }
 
         this.props.childRef(this)
