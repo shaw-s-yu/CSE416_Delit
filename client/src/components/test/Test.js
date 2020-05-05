@@ -177,9 +177,18 @@ class TestScreen extends React.Component {
 
 
 
+// render() {
 
-
-
+//   const { history, maps } = this.props
+//   const { projectsInJson, mapsInJson, tilesetsInJson } = this.projectToDisplay
+//   const refetch1 = {
+//     query: QueryList.GET_PROJECTS
+//   }
+//   const refetch2 = {
+//     query: QueryList.GET_ALL_TILESETS
+//   }
+//   const 
+// }
 
 
 

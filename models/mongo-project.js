@@ -9,8 +9,8 @@ var ProjectSchema = new Schema({
     mapId: String,
     tilesetId: [String],
     imageId: String,
-    mapId: String
-    // lastUpdate: { type: Date, default: Date.now },
+    mapId: String,
+    lastUpdate: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('project', ProjectSchema);

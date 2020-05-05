@@ -25,7 +25,7 @@ var projectType = new GraphQLObjectType({
             },
             lastUpdate: {
                 type: GraphQLDate
-            }
+            },
         }
     }
 });
