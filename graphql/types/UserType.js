@@ -118,7 +118,7 @@ module.exports = new GraphQLObjectType({
 
 
 
-//------------------------------------------------------------------------------------------
+            //------------------------------------------------------------------------------------------
             tilesetsOwned: {
                 args: {
                     skip: { type: GraphQLInt },
@@ -189,7 +189,7 @@ module.exports = new GraphQLObjectType({
                     if (!tilesetsAmount) throw new Error('Error')
                     return tilesetsAmount
                 }
-            },       
+            },
             tilesetsShared: {
                 args: {
                     tilesetName: { type: GraphQLString },
@@ -239,9 +239,9 @@ module.exports = new GraphQLObjectType({
                 args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    const projectsAmount = ProjectModel.find({ name: { $regex: `.*${args.searchName}.*` } }).countDocuments()
-                    if (!projectsAmount) throw new Error('Error')
-                    return projectsAmount
+                    const tilesetsAmount = TilesetModel.find({ name: { $regex: `.*${args.searchName}.*` } }).countDocuments()
+                    if (!tilesetsAmount) throw new Error('Error')
+                    return tilesetsAmount
                 }
             }
         }

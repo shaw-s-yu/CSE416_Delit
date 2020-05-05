@@ -40,7 +40,14 @@ exports.Socket = function (socket, io) {
                 ImageModel.findOne({ _id: tileset.imageId }).then(image => {
                     if (!image) throw new Error('image not found')
                     image.data = new Buffer.from(data.data.split(',')[1], 'base64')
-                    image.save()
+                    image.save().then(savedImage => {
+                        if (!savedImage) {
+                            socket.emit('draw-save-back', { err: true, msg: 'save image error' })
+                            throw new Error('save image error')
+                        } else {
+                            socket.emit('draw-save-back', { err: false, msg: 'image saved' })
+                        }
+                    })
                 })
             }
         })

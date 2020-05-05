@@ -133,3 +133,19 @@
 .duplicate-input{
     width: 100%;
 }
+
+.wait-saving{
+    margin-left: calc(50% - 20px);
+}
+
+.dialog-saved-icon{
+    margin-left: calc(50% - 20px);
+    font-size: 40px;
+    color:green;
+}
+
+.dialog-saved-error{
+    margin-left: calc(50% - 20px);
+    font-size: 40px;
+    color:red;
+}

@@ -2,6 +2,7 @@ import Dialog from '../tools/Dialog'
 import React from 'react'
 import { Button } from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Dialogs extends React.Component {
 
@@ -15,17 +16,16 @@ class Dialogs extends React.Component {
 
     render() {
         const { name } = this.state
-        const { save, start, duplicate, parent } = this.props
+        const { save, start, duplicate, parent, confirmSave, saved, saveErrorMsg } = this.props
         return (
             <>
                 <Dialog
-                    header="Save Image"
+                    header="Save Tileset"
                     open={save}
                     actions={[
                         <Button key='1' onClick={parent.handleSave}>Yes</Button>,
                         <Button key='2' onClick={parent.handleSaveDialogClose}>Cancel</Button>
                     ]}
-                    var totalTextbox='1'
                     content={[
                         <h3 key='q'>Are You Sure to Save In Delit Database?</h3>,
                         <h3 key='w'>Old Version will be overwriten</h3>
@@ -39,7 +39,6 @@ class Dialogs extends React.Component {
                         <Button key='2' onClick={parent.handleDuplicateDialogOpen}>Make a Copy</Button>,
                         <Button key='3' onClick={parent.handleStartDialogClose}>Continue</Button>
                     ]}
-                    var totalTextbox='1'
                     content={[
                         <h4 key='q'>You are not in team of this tileset</h4>,
                         <h4 key='w'>You operation will not be saved</h4>,
@@ -53,7 +52,6 @@ class Dialogs extends React.Component {
                         <Button key='1' onClick={parent.handleDuplicate.bind(this, name)}>Yes</Button>,
                         <Button key='2' onClick={parent.handleDuplicateDialogClose}>Cancel</Button>
                     ]}
-                    var totalTextbox='1'
                     content={[
                         <h4 key='q'>Are You Sure to duplicate this tileset?</h4>,
                         <h4 key='w'>You will be the owner of the new tileset</h4>,
@@ -67,6 +65,18 @@ class Dialogs extends React.Component {
                             value={name}
                             onChange={this.handleOnChange}
                         />
+                    ]} />
+                <Dialog
+                    header="Saving Tileset"
+                    open={confirmSave}
+                    actions={[
+                        <Button key='1' onClick={parent.handleGoBack} disabled={!saved}>Leave(to dashboard)</Button>,
+                        <Button key='2' onClick={parent.handleConfirmSaveDialogClose}>Cancel</Button>
+                    ]}
+                    content={[
+                        saved ? <h3 key='q'>Your Tileset is save successfully</h3> : <h3 key='q'>Your Tileset is being saved</h3>,
+                        saveErrorMsg === '' ? null : <h3 key='w'>saveErrorMsg</h3>,
+                        saveErrorMsg === '' ? saved ? <i key='e' className="fas fa-check-circle dialog-saved-icon"></i> : <CircularProgress key='e' className="wait-saving" /> : <i class="fas fa-times-circle dialog-saved-error"></i>,
                     ]} />
             </>
         )

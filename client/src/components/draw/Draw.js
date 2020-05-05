@@ -25,7 +25,10 @@ class Draw extends React.Component {
         saveOpen: false,
         duplicaOpen: false,
         startAuthOpen: false,
-        username: null
+        confirmSaveOpen: false,
+        saved: false,
+        username: null,
+        saveErrorMsg: ''
     };
 
     transactions = new Transactions();
@@ -41,6 +44,14 @@ class Draw extends React.Component {
 
     handleSaveDialogClose = () => {
         this.setState({ saveOpen: false })
+    }
+
+    handleConfirmSaveDialogOpen = () => {
+        this.setState({ saved: false, confirmSaveOpen: true, saveOpen: false, saveErrorMsg: '' })
+    }
+
+    handleConfirmSaveDialogClose = () => {
+        this.setState({ saved: false, confirmSaveOpen: false, saveErrorMsg: '' })
     }
 
     handleStartDialogOpen = () => {
@@ -68,6 +79,7 @@ class Draw extends React.Component {
             data: imgData,
             tileset, userId
         })
+        this.handleDuplicateDialogClose()
     }
 
     handleZoomEffect = (e) => {
@@ -171,7 +183,7 @@ class Draw extends React.Component {
             tilesetId: this.props.match.params.key,
             data: imgData
         });
-        this.handleSaveDialogClose()
+        this.handleConfirmSaveDialogOpen()
         this.handleClearNoneToolOperation()
     }
 
@@ -202,12 +214,21 @@ class Draw extends React.Component {
         this.props.socket.on('duplicate-image-back', res => {
             this.props.history.push(`/tileset/${res}`)
         })
+
+        this.props.socket.on('draw-save-back', res => {
+            const { err, msg } = res
+            if (err) {
+                this.setState({ saveErrorMsg: msg })
+            } else {
+                this.setState({ saved: true })
+            }
+        })
     }
 
     render() {
         const { key } = this.props.match.params
         const { history } = this.props;
-        const { sliderValue, borderColor, fillColor, scale, saveOpen, startAuthOpen, duplicaOpen, username } = this.state;
+        const { sliderValue, saved, borderColor, fillColor, scale, saveOpen, startAuthOpen, duplicaOpen, username, confirmSaveOpen, saveErrorMsg } = this.state;
 
         return (
 
@@ -289,7 +310,15 @@ class Draw extends React.Component {
                         }}
                     </Query>
                 </div>
-                <Dialogs parent={this} save={saveOpen} start={startAuthOpen} duplicate={duplicaOpen} />
+                <Dialogs
+                    parent={this}
+                    save={saveOpen}
+                    start={startAuthOpen}
+                    duplicate={duplicaOpen}
+                    confirmSave={confirmSaveOpen}
+                    saved={saved}
+                    saveErrorMsg={saveErrorMsg}
+                />
 
             </div>
 
