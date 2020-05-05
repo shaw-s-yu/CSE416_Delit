@@ -4,6 +4,8 @@ module.exports = {
     UPLOAD: "UPLOAD",
     DOWNLOAD: "DOWNLOAD",
     SAVE: "SAVE",
+    COPY: "COPY",
+    PASTE: "PASTE",
 
     PENCIL: "PENCIL",
     STAMP: "STAMP",

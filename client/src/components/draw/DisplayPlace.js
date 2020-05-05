@@ -231,12 +231,6 @@ class DisplayPlace extends React.Component {
         return this.refs.canvas.toDataURL('image/jpeg', 1)
     }
 
-    getImageDataNoGrid = () => {
-        return this.ImageController.getImageFromGrid()
-    }
-
-
-
     handleHorizontalFlip = () => {
         const { selectedGrid } = this.state
         const oldImg = this.getImageDataWithGrid()
@@ -298,6 +292,12 @@ class DisplayPlace extends React.Component {
         this.setState({ copying: false })
     }
 
+    handleCopy = () => {
+        this.setState({ copying: true }, () => {
+            this.startCopyGrid()
+        })
+    }
+
     startCopyGrid = () => {
         const { selectedGrid } = this.state
         const imgData = this.getImageDataWithGrid()
@@ -305,6 +305,10 @@ class DisplayPlace extends React.Component {
         const startGrids = this.CopyController.getStartGrids()
         this.GridController.drawCopiedGrid(startGrids)
         this.setState({ selectedGrid: [] })
+    }
+
+    getTileset = () => {
+        return this.props.tileset
     }
 
 
@@ -325,12 +329,36 @@ class DisplayPlace extends React.Component {
             this.addNewTransaction(oldImg, newImg)
             this.sendSocketNewOperation()
 
-            this.setState({ selectedGrid: newGrids })
+            this.setState({ selectedGrid: newGrids, copying: false })
         }
     }
 
 
     componentDidMount() {
+
+        if (this.userIsTeammember()) {
+            this.room = `draw/${this.props.tileset._id}`
+            this.props.socket.emit('join-room', this.room)
+            this.props.socket.on('draw-back', res => {
+
+                const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
+                const { transactions } = this.props
+                const { data, type } = res
+
+                if (type === 'new') {
+                    this.addNewTransaction(old_img, data)
+                }
+                else if (type === 'redo') {
+                    transactions.doTransaction()
+                } else if (type === 'undo') {
+                    transactions.undoTransaction()
+                }
+
+            })
+        }
+        else {
+            this.props.handleStartDialogOpen()
+        }
 
         this.props.childRef(this)
         const { canvas } = this.refs;
@@ -401,17 +429,15 @@ class DisplayPlace extends React.Component {
                 this.setState({ shiftSelecting: true })
             else if (Keyboard.triggerLeftCtrlC(e)) {
                 if (this.state.selectedGrid.length === 0) return
-                this.setState({ copying: true }, () => {
-                    this.startCopyGrid()
-                })
+                this.handleCopy()
             } else if (Keyboard.triggerLeftCtrlV(e)) {
                 if (this.state.copying === false) return
                 this.pasteCopiedGrid()
             }
-            else if(Keyboard.triggerLeftCtrlZ(e)){
+            else if (Keyboard.triggerLeftCtrlZ(e)) {
                 this.undoTransaction()
             }
-            else if(Keyboard.triggerLeftCtrlY(e)){
+            else if (Keyboard.triggerLeftCtrlY(e)) {
                 this.doTransaction()
             }
 
@@ -427,7 +453,7 @@ class DisplayPlace extends React.Component {
     }
 
     userIsTeammember = () => {
-        const { username } = this.props.user
+        const { username } = this.props
         const { teamInfo } = this.props.tileset
         for (let i in teamInfo) {
             if (teamInfo[i].username === username)
@@ -457,6 +483,7 @@ class DisplayPlace extends React.Component {
             room: this.room
         })
         this.props.transactions.doTransaction()
+        this.handleUnselectGrid()
     }
 
     undoTransaction = () => {
@@ -465,29 +492,11 @@ class DisplayPlace extends React.Component {
             room: this.room
         })
         this.props.transactions.undoTransaction()
+        this.handleUnselectGrid()
     }
 
     UNSAFE_componentWillMount() {
-        if (this.userIsTeammember()) {
-            this.room = `draw/${this.props.tileset._id}`
-            this.props.socket.emit('join-room', this.room)
-            this.props.socket.on('draw-back', res => {
 
-                const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-                const { transactions } = this.props
-                const { data, type } = res
-
-                if (type === 'new') {
-                    this.addNewTransaction(old_img, data)
-                }
-                else if (type === 'redo') {
-                    transactions.doTransaction()
-                } else if (type === 'undo') {
-                    transactions.undoTransaction()
-                }
-
-            })
-        }
     }
 
     render() {
@@ -505,7 +514,6 @@ class DisplayPlace extends React.Component {
             left: canvasWidth ? canvasWidth * scale >= DisplayBoxWidth ? 6 : (DisplayBoxWidth - canvasWidth * scale) / 2 + 6 : 6,
             top: canvasHeight ? canvasHeight * scale >= DisplayBoxHeight ? 6 : (DisplayBoxHeight - canvasHeight * scale) / 2 + 6 : 6,
         }
-
 
         return (
             <div className="painter-display" ref='painterBox' onClick={this.handleUnselectGrid}>
@@ -537,7 +545,7 @@ class DisplayPlace extends React.Component {
 
                 </ Scrollbars>
                 <Dialog
-                    header={'Notice'}
+                    header={'Attention'}
                     open={dialogOpen}
                     fullWidth={true}
                     maxWidth="xs"
@@ -554,11 +562,9 @@ class DisplayPlace extends React.Component {
 
 const mapStateToProps = (state) => {
     const { selected } = state.toolbar
-    const { user } = state.auth
     return {
         selectedTool: selected,
         socket: state.backend.socket,
-        user
     }
 };
 

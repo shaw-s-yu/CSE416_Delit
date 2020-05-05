@@ -8,13 +8,40 @@ import './tools.css'
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { API_URL } from '../../config'
+import ReactFileReader from 'react-file-reader';
 
 class TopNavbar extends React.Component {
 
     state = {
-        username: 'error',
-        picture: 'error'
+        username: '',
+        picture: '',
+        file: false,
+        edit: false,
+        view: false
     };
+
+    file = React.createRef()
+    edit = React.createRef()
+    view = React.createRef()
+
+    handleCloseDropDown = (type) => {
+        const { file, edit, view } = this.state
+        if (type === 'all')
+            this.setState({
+                file: false,
+                edit: false,
+                view: false
+            })
+        else {
+            if (!file && !edit && !view) return
+            this.setState({
+                file: false,
+                edit: false,
+                view: false,
+                [type]: true,
+            })
+        }
+    }
 
     componentDidMount() {
         axios.get('/auth/current').then(res => {
@@ -26,6 +53,20 @@ class TopNavbar extends React.Component {
                 this.props.handleLoginSuccess(res.data);
             }
         })
+
+        window.onclick = e => {
+            const { target } = e
+            const { file, edit, view } = this.state
+            if (file || edit || view) {
+                this.handleCloseDropDown('all')
+            } else if (target === this.file) {
+                this.setState({ file: true })
+            } else if (target === this.edit) {
+                this.setState({ edit: true })
+            } else if (target === this.view) {
+                this.setState({ view: true })
+            }
+        }
     }
 
     UNSAFE_componentWillMount() {
@@ -36,28 +77,30 @@ class TopNavbar extends React.Component {
 
     render() {
         const { site, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
-        const { username, picture } = this.state;
+        const { username, picture, file, edit, view } = this.state;
         return (
             <>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
                     {site === 'dashboard' ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list" /></Navbar.Brand> : null}
                     <Navbar.Brand href="/dashboard"> <div className="logo" >Delit</div></Navbar.Brand>
                     {site === 'workspace' || site === 'tileset' ? <>
-                        <Dropdown title="FILE" width={96} handleOpen={this.handleOpen}
+                        <Dropdown title="FILE" width={96} childRef={ref => this.file = ref} open={file} handleCloseDropDown={this.handleCloseDropDown}
                             items={[
-                                <div className="better-dropdown-item" key={v1()}>Import</div>,
-                                <div className="better-dropdown-item" key={v1()}>Export</div>,
-                                <div className="better-dropdown-item" key={v1()}>Save</div>,
-                                <div className="better-dropdown-item" key={v1()}>Duplicate</div>,
+                                <ReactFileReader key='o' ref='fileUploader' handleFiles={this.props.handleImport} base64={true}>
+                                    <div className="better-dropdown-item">Import</div>
+                                </ReactFileReader>,
+                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handleExport}>Export</div>,
+                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handleSave}>Save</div>,
+                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handleDuplicate}>Duplicate</div>,
                             ]} />
-                        <Dropdown title="EDIT" width={128} handleOpen={this.handleOpen}
+                        <Dropdown title="EDIT" width={128} childRef={ref => this.edit = ref} open={edit} handleCloseDropDown={this.handleCloseDropDown}
                             items={[
-                                <div className="better-dropdown-item" key={v1()}>{"Undo   CTRL+Z"}</div>,
-                                <div className="better-dropdown-item" key={v1()}>{"Redo   CTRL+Y"}</div>,
-                                <div className="better-dropdown-item" key={v1()}>{"Copy   CTRL+C"}</div>,
-                                <div className="better-dropdown-item" key={v1()}>{"Paste  CTRL+V"}</div>,
+                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handleUndoTransaction}>{"Undo   CTRL+Z"}</div>,
+                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handleDoTransaction}>{"Redo   CTRL+Y"}</div>,
+                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handleCopy}>{"Copy   CTRL+C"}</div>,
+                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handlePaste}>{"Paste  CTRL+V"}</div>,
                             ]} />
-                        {site === 'workspace' ? <Dropdown title="VIEW" width={196} handleOpen={this.handleOpen}
+                        {site === 'workspace' ? <Dropdown title="VIEW" width={196} childRef={ref => this.view = ref} open={view} handleCloseDropDown={this.handleCloseDropDown}
                             items={[
                                 <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'property')}>
                                     <Checkbox
@@ -88,7 +131,7 @@ class TopNavbar extends React.Component {
 
                         </Nav>
                         <Navbar.Brand><a href='/test'>Test</a></Navbar.Brand>
-                        <Navbar.Brand><img src={picture} className="profile-img" alt="delit-profile-logo" /></Navbar.Brand>
+                        <Navbar.Brand><img src={picture} className="profile-img" alt="logo" /></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>

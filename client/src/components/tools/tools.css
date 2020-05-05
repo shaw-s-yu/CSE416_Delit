@@ -38,6 +38,7 @@
     cursor: pointer;
     text-align: left;
     padding-left: 1rem;
+    border-bottom: 0.5px dashed gray;
 }
 
 .better-dropdown-item:hover{

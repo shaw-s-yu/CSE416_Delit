@@ -9,10 +9,11 @@ import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import Transactions from './JSTPS'
 import ReactFileReader from 'react-file-reader';
-import { Button } from "react-bootstrap";
-import Dialog from '../tools/Dialog'
+import Dialogs from './Dialogs'
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
+import axios from 'axios';
+
 
 class Draw extends React.Component {
 
@@ -21,7 +22,13 @@ class Draw extends React.Component {
         borderColor: { r: 0, g: 0, b: 0, a: 1 },
         fillColor: { r: 255, g: 255, b: 255, a: 1 },
         scale: 1,
-        saveDialogOpen: false
+        saveOpen: false,
+        duplicaOpen: false,
+        startAuthOpen: false,
+        confirmSaveOpen: false,
+        saved: false,
+        username: null,
+        saveErrorMsg: ''
     };
 
     transactions = new Transactions();
@@ -29,13 +36,51 @@ class Draw extends React.Component {
 
 
     handleSaveDialogOpen = () => {
-        this.setState({ saveDialogOpen: true })
+        if (this.display.userIsTeammember())
+            this.setState({ saveOpen: true })
+        else
+            this.setState({ startAuthOpen: true })
     }
 
     handleSaveDialogClose = () => {
-        this.setState({ saveDialogOpen: false })
+        this.setState({ saveOpen: false })
     }
 
+    handleConfirmSaveDialogOpen = () => {
+        this.setState({ saved: false, confirmSaveOpen: true, saveOpen: false, saveErrorMsg: '' })
+    }
+
+    handleConfirmSaveDialogClose = () => {
+        this.setState({ saved: false, confirmSaveOpen: false, saveErrorMsg: '' })
+    }
+
+    handleStartDialogOpen = () => {
+        this.setState({ startAuthOpen: true })
+    }
+
+    handleStartDialogClose = () => {
+        this.setState({ startAuthOpen: false })
+    }
+
+    handleDuplicateDialogOpen = () => {
+        this.setState({ duplicaOpen: true })
+    }
+
+    handleDuplicateDialogClose = () => {
+        this.setState({ duplicaOpen: false })
+    }
+
+    handleDuplicate = (name) => {
+        const imgData = this.display.handleGetImageNoGrid()
+        const tileset = this.display.getTileset()
+        const { userId } = this.state
+        this.props.socket.emit('duplicate-image', {
+            name: name,
+            data: imgData,
+            tileset, userId
+        })
+        this.handleDuplicateDialogClose()
+    }
 
     handleZoomEffect = (e) => {
 
@@ -85,12 +130,10 @@ class Draw extends React.Component {
 
     doTransaction = () => {
         this.display.doTransaction()
-        this.display.handleUnselectGrid()
     };
 
     undoTransaction = () => {
         this.display.undoTransaction()
-        this.display.handleUnselectGrid()
     };
 
     handleUnselect = () => {
@@ -140,19 +183,66 @@ class Draw extends React.Component {
             tilesetId: this.props.match.params.key,
             data: imgData
         });
-        this.handleSaveDialogClose()
+        this.handleConfirmSaveDialogOpen()
         this.handleClearNoneToolOperation()
+    }
+
+    handleCopy = () => {
+        this.display.handleCopy()
+    }
+
+    handlePaste = () => {
+        this.display.pasteCopiedGrid()
+    }
+
+    handleGoBack = () => {
+        this.props.history.push('/dashboard')
+    }
+
+    componentDidMount() {
+        axios.get('/auth/current').then(res => {
+            const { username, _id } = res.data;
+            if (!username || !_id)
+                this.props.history.push('/');
+            else {
+                this.setState({ username, userId: _id });
+            }
+        })
+    }
+
+    UNSAFE_componentWillMount() {
+        this.props.socket.on('duplicate-image-back', res => {
+            this.props.history.push(`/tileset/${res}`)
+        })
+
+        this.props.socket.on('draw-save-back', res => {
+            const { err, msg } = res
+            if (err) {
+                this.setState({ saveErrorMsg: msg })
+            } else {
+                this.setState({ saved: true })
+            }
+        })
     }
 
     render() {
         const { key } = this.props.match.params
         const { history } = this.props;
-        const { sliderValue, borderColor, fillColor, scale, saveDialogOpen } = this.state;
+        const { sliderValue, saved, borderColor, fillColor, scale, saveOpen, startAuthOpen, duplicaOpen, username, confirmSaveOpen, saveErrorMsg } = this.state;
 
         return (
 
             <div onClick={this.handleUnselect}>
-                <TopNavbar site='tileset' history={history} />
+                <TopNavbar site='tileset' history={history}
+                    handleSave={this.handleSaveDialogOpen}
+                    handleImport={this.handleImport}
+                    handleExport={this.handleExport}
+                    handleDuplicate={this.handleDuplicateDialogOpen}
+                    handleDoTransaction={this.doTransaction}
+                    handleUndoTransaction={this.undoTransaction}
+                    handleCopy={this.handleCopy}
+                    handlePaste={this.handlePaste}
+                />
                 <div className="painter-wrapper">
                     <Toolbar
                         selectCallback={this.handleClearNoneToolOperation}
@@ -168,6 +258,8 @@ class Draw extends React.Component {
                             },
                             { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} onClick={this.handleExport} /> },
                             { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} onClick={this.handleSaveDialogOpen} /> },
+                            { name: TOOLS.COPY, item: <i className={"fas fa-copy"} style={{ fontSize: '24px' }} onClick={this.handleCopy} /> },
+                            { name: TOOLS.PASTE, item: <i className={"fas fa-paste"} style={{ fontSize: '24px' }} onClick={this.handlePaste} /> },
                         ]}
                         secondaryContent={[
                             { name: TOOLS.PENCIL, item: <i className={"fas fa-pencil-alt"} style={{ fontSize: '24px' }} /> },
@@ -200,6 +292,7 @@ class Draw extends React.Component {
                             if (error) return 'error'
                             if (!data) return 'error'
                             const { tileset } = data
+
                             return (
                                 <DisplayPlace
                                     tileset={tileset}
@@ -210,23 +303,22 @@ class Draw extends React.Component {
                                     transactions={this.transactions}
                                     handleZoomEffect={this.handleZoomEffect}
                                     scale={scale}
+                                    username={username}
+                                    handleStartDialogOpen={this.handleStartDialogOpen}
                                 />
                             )
                         }}
                     </Query>
                 </div>
-                <Dialog
-                    header="Save Image"
-                    open={saveDialogOpen}
-                    actions={[
-                        <Button key='1' onClick={this.handleSave}>Yes</Button>,
-                        <Button key='2' onClick={this.handleSaveDialogClose}>Cancel</Button>
-                    ]}
-                    var totalTextbox='1'
-                    content={[
-                        <h3 key='q'>Are You Sure to Save In Delit Database?</h3>,
-                        <h3 key='w'>Old Version will be overwriten</h3>
-                    ]} />
+                <Dialogs
+                    parent={this}
+                    save={saveOpen}
+                    start={startAuthOpen}
+                    duplicate={duplicaOpen}
+                    confirmSave={confirmSaveOpen}
+                    saved={saved}
+                    saveErrorMsg={saveErrorMsg}
+                />
 
             </div>
 

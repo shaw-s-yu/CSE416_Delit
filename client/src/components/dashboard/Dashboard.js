@@ -86,7 +86,7 @@ class Dashboard extends React.Component {
         if (selected === 'tileset')
             return {
                 items: data.user.tilesets,
-                amount: data.user.tilsetsAmount
+                amount: data.user.tilesetsAmount
             };
         return null
     };
