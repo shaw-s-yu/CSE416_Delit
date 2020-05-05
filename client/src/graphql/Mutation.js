@@ -190,4 +190,16 @@ export default {
     }
     `,
 
+
+    ADD_MAP: gql`
+    mutation addMap(
+        $id:String!
+        $mapJsonFile:String!
+    ){
+        addMap(id: $id, mapJsonFile:$mapJsonFile){
+            id,
+            mapJsonFile
+        }
+    }
+    `,
 }

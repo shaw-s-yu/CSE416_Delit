@@ -18,6 +18,12 @@ const invite2TilesetMutation = require('../mutations/invite2TilesetMutation')
 const updateTilesetMutation = require('../mutations/updateTilesetMutation')
 const duplicateTilesetMutation = require('../mutations/duplicateTilesetMutation')
 
+
+const mapQuery = require('../queries/mapQuery')
+const addMapMutation = require('../mutations/addMapMutation')
+
+
+
 const {
     GraphQLSchema,
     GraphQLObjectType,
@@ -33,7 +39,8 @@ const queryType = new GraphQLObjectType({
             project: projectsQuery,
             user: userQuery,
             tileset: tilesetQuery,
-            tilesets: tilesetsQuery
+            tilesets: tilesetsQuery,
+            map: mapQuery,
         }
     }
 });
@@ -59,6 +66,8 @@ const mutation = new GraphQLObjectType({
             invite2Tileset: invite2TilesetMutation,
             updateTileset: updateTilesetMutation,
             duplicateTileset: duplicateTilesetMutation,
+
+            addMap: addMapMutation,
         }
     }
 });
