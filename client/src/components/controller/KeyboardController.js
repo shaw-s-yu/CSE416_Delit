@@ -19,7 +19,6 @@ module.exports = {
     triggerLeftCtrlZ: e => {
         return e.code === KEYS.KEY_Z && e.ctrlKey
     },
-
     triggerLeftCtrlY: e => {
         return e.code === KEYS.KEY_Y && e.ctrlKey
     }
@@ -31,5 +30,5 @@ const KEYS = {
     KEY_C: 'KeyC',
     KEY_V: 'KeyV',
     KEY_Z: 'KeyZ',
-    KEY_Y: 'KeyY'
+    KEY_Y: 'KeyY',
 }
