@@ -40,6 +40,7 @@ class LoginScreen extends React.Component {
 
 
     componentDidMount() {
+        console.log(process.env)
         console.log('running on:', API_URL)
         this.props.socket.on('authBack', data => {
             const { err, msg, auth } = data
