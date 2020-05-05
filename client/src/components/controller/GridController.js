@@ -176,6 +176,10 @@ export default class DrawGridController {
     }
 
     getGridPositionFromMouseXY = (x, y) => {
+        if (x > this.canvasWidth)
+            return this.getGridPositionFromIndex(this.canvasWidth - this.gridThickness - this.tileWidth, y)
+        if (y > this.canvasHeight)
+            return this.getGridPositionFromIndex(x, this.canvasHeight - this.gridThickness - this.tileHeight)
         const gridIndex = this.getGridIndexFromMouseXY(x, y)
         if (!gridIndex)
             return this.getGridPositionFromMouseXY(x + this.gridThickness, y + this.gridThickness)
