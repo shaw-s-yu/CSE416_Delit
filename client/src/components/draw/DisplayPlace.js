@@ -298,6 +298,12 @@ class DisplayPlace extends React.Component {
         this.setState({ copying: false })
     }
 
+    handleCopy = () => {
+        this.setState({ copying: true }, () => {
+            this.startCopyGrid()
+        })
+    }
+
     startCopyGrid = () => {
         const { selectedGrid } = this.state
         const imgData = this.getImageDataWithGrid()
@@ -325,7 +331,7 @@ class DisplayPlace extends React.Component {
             this.addNewTransaction(oldImg, newImg)
             this.sendSocketNewOperation()
 
-            this.setState({ selectedGrid: newGrids })
+            this.setState({ selectedGrid: newGrids, copying: false })
         }
     }
 
@@ -421,9 +427,7 @@ class DisplayPlace extends React.Component {
                 this.setState({ shiftSelecting: true })
             else if (Keyboard.triggerLeftCtrlC(e)) {
                 if (this.state.selectedGrid.length === 0) return
-                this.setState({ copying: true }, () => {
-                    this.startCopyGrid()
-                })
+                this.handleCopy()
             } else if (Keyboard.triggerLeftCtrlV(e)) {
                 if (this.state.copying === false) return
                 this.pasteCopiedGrid()
@@ -508,7 +512,6 @@ class DisplayPlace extends React.Component {
             top: canvasHeight ? canvasHeight * scale >= DisplayBoxHeight ? 6 : (DisplayBoxHeight - canvasHeight * scale) / 2 + 6 : 6,
         }
 
-
         return (
             <div className="painter-display" ref='painterBox' onClick={this.handleUnselectGrid}>
                 <Scrollbars ref="scrollbar"
@@ -539,7 +542,7 @@ class DisplayPlace extends React.Component {
 
                 </ Scrollbars>
                 <Dialog
-                    header={'Notice'}
+                    header={'Attention'}
                     open={dialogOpen}
                     fullWidth={true}
                     maxWidth="xs"

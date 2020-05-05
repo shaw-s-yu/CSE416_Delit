@@ -145,6 +145,14 @@ class Draw extends React.Component {
         this.handleClearNoneToolOperation()
     }
 
+    handleCopy = () => {
+        this.display.handleCopy()
+    }
+
+    handlePaste = () => {
+        this.display.pasteCopiedGrid()
+    }
+
     componentDidMount() {
         axios.get('/auth/current').then(res => {
             const { username } = res.data;
@@ -164,7 +172,16 @@ class Draw extends React.Component {
         return (
 
             <div onClick={this.handleUnselect}>
-                <TopNavbar site='tileset' history={history} />
+                <TopNavbar site='tileset' history={history}
+                    handleSave={this.handleSaveDialogOpen}
+                    handleImport={this.handleImport}
+                    handleExport={this.handleExport}
+                    handleDuplicate={() => { }}
+                    handleDoTransaction={this.doTransaction}
+                    handleUndoTransaction={this.undoTransaction}
+                    handleCopy={this.handleCopy}
+                    handlePaste={this.handlePaste}
+                />
                 <div className="painter-wrapper">
                     <Toolbar
                         selectCallback={this.handleClearNoneToolOperation}
@@ -180,6 +197,8 @@ class Draw extends React.Component {
                             },
                             { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} onClick={this.handleExport} /> },
                             { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} onClick={this.handleSaveDialogOpen} /> },
+                            { name: TOOLS.COPY, item: <i className={"fas fa-copy"} style={{ fontSize: '24px' }} onClick={this.handleCopy} /> },
+                            { name: TOOLS.PASTE, item: <i className={"fas fa-paste"} style={{ fontSize: '24px' }} onClick={this.handlePaste} /> },
                         ]}
                         secondaryContent={[
                             { name: TOOLS.PENCIL, item: <i className={"fas fa-pencil-alt"} style={{ fontSize: '24px' }} /> },
