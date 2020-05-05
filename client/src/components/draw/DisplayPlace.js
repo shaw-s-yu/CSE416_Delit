@@ -332,6 +332,27 @@ class DisplayPlace extends React.Component {
 
     componentDidMount() {
 
+        if (this.userIsTeammember()) {
+            this.room = `draw/${this.props.tileset._id}`
+            this.props.socket.emit('join-room', this.room)
+            this.props.socket.on('draw-back', res => {
+
+                const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
+                const { transactions } = this.props
+                const { data, type } = res
+
+                if (type === 'new') {
+                    this.addNewTransaction(old_img, data)
+                }
+                else if (type === 'redo') {
+                    transactions.doTransaction()
+                } else if (type === 'undo') {
+                    transactions.undoTransaction()
+                }
+
+            })
+        }
+
         this.props.childRef(this)
         const { canvas } = this.refs;
         if (!canvas) return
@@ -425,7 +446,7 @@ class DisplayPlace extends React.Component {
     }
 
     userIsTeammember = () => {
-        const { username } = this.props.user
+        const { username } = this.props
         const { teamInfo } = this.props.tileset
         for (let i in teamInfo) {
             if (teamInfo[i].username === username)
@@ -468,27 +489,7 @@ class DisplayPlace extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-        console.log(this.props.user)
-        if (this.userIsTeammember()) {
-            this.room = `draw/${this.props.tileset._id}`
-            this.props.socket.emit('join-room', this.room)
-            this.props.socket.on('draw-back', res => {
 
-                const old_img = this.refs.canvas.toDataURL('image/jpeg', 1)
-                const { transactions } = this.props
-                const { data, type } = res
-
-                if (type === 'new') {
-                    this.addNewTransaction(old_img, data)
-                }
-                else if (type === 'redo') {
-                    transactions.doTransaction()
-                } else if (type === 'undo') {
-                    transactions.undoTransaction()
-                }
-
-            })
-        }
     }
 
     render() {
@@ -555,11 +556,9 @@ class DisplayPlace extends React.Component {
 
 const mapStateToProps = (state) => {
     const { selected } = state.toolbar
-    const { user } = state.auth
     return {
         selectedTool: selected,
         socket: state.backend.socket,
-        user
     }
 };
 

@@ -13,6 +13,8 @@ import { Button } from "react-bootstrap";
 import Dialog from '../tools/Dialog'
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
+import axios from 'axios';
+
 
 class Draw extends React.Component {
 
@@ -21,7 +23,8 @@ class Draw extends React.Component {
         borderColor: { r: 0, g: 0, b: 0, a: 1 },
         fillColor: { r: 255, g: 255, b: 255, a: 1 },
         scale: 1,
-        saveDialogOpen: false
+        saveDialogOpen: false,
+        username: null
     };
 
     transactions = new Transactions();
@@ -142,10 +145,21 @@ class Draw extends React.Component {
         this.handleClearNoneToolOperation()
     }
 
+    componentDidMount() {
+        axios.get('/auth/current').then(res => {
+            const { username } = res.data;
+            if (!username)
+                this.props.history.push('/');
+            else {
+                this.setState({ username });
+            }
+        })
+    }
+
     render() {
         const { key } = this.props.match.params
         const { history } = this.props;
-        const { sliderValue, borderColor, fillColor, scale, saveDialogOpen } = this.state;
+        const { sliderValue, borderColor, fillColor, scale, saveDialogOpen, username } = this.state;
 
         return (
 
@@ -208,6 +222,7 @@ class Draw extends React.Component {
                                     transactions={this.transactions}
                                     handleZoomEffect={this.handleZoomEffect}
                                     scale={scale}
+                                    username={username}
                                 />
                             )
                         }}
