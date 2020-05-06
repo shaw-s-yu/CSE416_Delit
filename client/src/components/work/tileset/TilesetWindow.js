@@ -59,6 +59,7 @@ class TilesetWindow extends React.Component {
                 onResize={this.handleOnResize}
                 onResizeStop={this.handleStopResize}
                 id='tileset'
+                onDragStop={(e,d)=>this.props.handleOnDragStop(e,d,'tileset')}
             >
                 <Titlebar title="Tileset Window" />
 

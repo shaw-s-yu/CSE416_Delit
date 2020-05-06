@@ -64,6 +64,7 @@ class PropertyWindow extends React.Component {
                 minWidth={202}
                 minHeight={391}
                 id='property'
+                 onDragStop={(e,d)=>this.props.handleOnDragStop(e,d,'property')}
             >
                 <Titlebar title="Property Window" />
                 <Collapsible data={

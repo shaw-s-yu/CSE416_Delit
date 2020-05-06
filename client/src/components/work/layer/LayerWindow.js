@@ -37,6 +37,7 @@ class LayerWindow extends React.Component {
                 onResizeStop={this.handleOnResize}
                 onResizeStart={() => this.props.handleToTop('layer')}
                 id='layer'
+                 onDragStop={(e,d)=>this.props.handleOnDragStop(e,d,'layer')}
             >
                 <Titlebar title="Layer Window" />
                 <LayerList maxWidth={maxWidth} />

@@ -43,10 +43,10 @@ class WorkScreen extends React.Component {
         const { history } = this.props
         return (
             <>
-                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} />
-                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} />
-                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} />
-                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} />
+                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop}/>
+                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop}/>
+                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop}/>
+                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop}/>
             </>
         )
     }
@@ -60,6 +60,11 @@ class WorkScreen extends React.Component {
             this.setState({ layerOpen: !layerOpen })
         else if (window === 'tileset')
             this.setState({ tilesetOpen: !tilesetOpen })
+    }
+
+    handleOnDragStop=(e,d,type)=>{
+        const {size} = this.state[type]
+        this.setState({[type]:{size, position:{x:d.x, y:d.y}}})
     }
 
     componentDidMount() {
@@ -76,6 +81,17 @@ class WorkScreen extends React.Component {
             layer: { size: { width: width * 0.2, height: height * 0.32 }, position: { x: width * 0.8, y: 0 } },
             tileset: { size: { width: width * 0.2, height: height * 0.56 }, position: { x: width * 0.8, y: height * 0.32 } },
         })
+
+        window.onresize=()=>{
+            const { width, height } = document.body.getBoundingClientRect();
+
+        this.setState({
+            property: { size: { width: width * 0.2, height: height * 0.88 }, position: { x: 0, y: 0 } },
+            map: { size: { width: width * 0.6, height: height * 0.88 }, position: { x: width * 0.2, y: 0 } },
+            layer: { size: { width: width * 0.2, height: height * 0.32 }, position: { x: width * 0.8, y: 0 } },
+            tileset: { size: { width: width * 0.2, height: height * 0.56 }, position: { x: width * 0.8, y: height * 0.32 } },
+        })
+        }
     }
 
     render = () => {
