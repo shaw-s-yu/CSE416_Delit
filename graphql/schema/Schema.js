@@ -21,7 +21,7 @@ const duplicateTilesetMutation = require('../mutations/duplicateTilesetMutation'
 
 const mapQuery = require('../queries/mapQuery')
 const addMapMutation = require('../mutations/addMapMutation')
-
+const clearMapsMutation = require('../mutations/clearMapsMutation')
 
 
 const {
@@ -68,6 +68,7 @@ const mutation = new GraphQLObjectType({
             duplicateTileset: duplicateTilesetMutation,
 
             addMap: addMapMutation,
+            clearMaps: clearMapsMutation,
         }
     }
 });

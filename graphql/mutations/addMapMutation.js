@@ -1,4 +1,4 @@
-const MapModel = require('../../models/mongo-project')
+const MapModel = require('../../models/mongo-map')
 const {
     GraphQLList,
     GraphQLNonNull,
@@ -15,8 +15,8 @@ module.exports = {
             type: GraphQLString
         },
         mapJsonFile: {
-            name: 'MapJsonFile',
-            type: new GraphQLNonNull(GraphQLString)
+            name: 'mapJsonFile',
+            type: MapModel.MapJsonFile
         },
     },
     resolve: (root, params) => {

@@ -193,13 +193,117 @@ export default {
 
     ADD_MAP: gql`
     mutation addMap(
-        $id:String!
-        $mapJsonFile:String!
+            $width: Number!,
+            $height: Number,
+            $infinite: Boolean,
+                $data: [Number],
+                $width: Number,
+                $height: Number,
+                $id: Number,
+                $name: String,
+                $opacity: Number,
+                $type: String,
+                $visible: Boolean,
+                $x: Number,
+                $y: Number
+            $nextLayerid: Number,
+            $nextObjectid: Number,
+            $orientation: String,
+            $renderorder: String,
+            $tiledversion: String,
+            $tileWidth: Number,
+            $tilesheight: Number,
+                $columns: Number,
+                $firstgid: Number,
+                $image: String,
+                $imageWidth: Number,
+                $imageheight: Number,
+                $margin: Number,
+                $name: String,
+                $spacing: Number,
+                $tilecount: Number,
+                $tileheight: Number,
+                $tilewidth: Number
+            $type: String,
+            $version: Number
     ){
-        addMap(id: $id, mapJsonFile:$mapJsonFile){
-            id,
-            mapJsonFile
+        addMap(
+                width: $width,
+                height: $height,
+                infinite: $infinite,
+                    data: $data,
+                    width: $width,
+                    height: $height,
+                    id: $id,
+                    name: $name,
+                    opacity: $opacity,
+                    type: $type,
+                    visible: $visible,
+                    x: $x,
+                    y: $y,
+                nextLayerid: $nextLayerid,
+                nextObjectid: $nextObjectid,
+                orientation: $orientation,
+                renderorder: $renderorder,
+                tiledversion: $tiledversion,
+                tileWidth: $tileWidth,
+                tilesheight: $tilesheight,
+                    columns: $columns,
+                    firstgid: $firstgid,
+                    image: $image,
+                    imageWidth: $imageWidth,
+                    imageheight: $imageheight,
+                    margin: $margin,
+                    name: $name,
+                    spacing: $spacing,
+                    tilecount: $tilecount,
+                    tileheight: $tileheight,
+                    tilewidth: $tilewidth
+                type: $type,
+                version: $version,
+            ){
+                    width,
+                    height,
+                    infinite,
+                    layers
+                        data,
+                        width,
+                        height,
+                        id,
+                        name,
+                        opacity,
+                        type,
+                        visible,
+                        x,
+                        y,
+                nextLayerid,
+                nextObjectid,
+                orientation,
+                renderorder,
+                tiledversion,
+                tileWidth,
+                tilesheight,
+                    columns,
+                    firstgid,
+                    image,
+                    imageWidth,
+                    imageheight,
+                    margin,
+                    name,
+                    spacing,
+                    tilecount,
+                    tileheight,
+                    tilewidth
+                type,
+                version,
         }
+    }
+    `,
+
+
+    CLEAR_MAP: gql`
+    mutation clearMaps{
+        clearMaps
     }
     `,
 }
