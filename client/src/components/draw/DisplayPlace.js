@@ -293,6 +293,11 @@ class DisplayPlace extends React.Component {
     }
 
     handleCopy = () => {
+        const { selectedGrid } = this.state
+        if (selectedGrid.length === 0) {
+            this.setState({ dialogOpen: true })
+            return
+        }
         this.setState({ copying: true }, () => {
             this.startCopyGrid()
         })
@@ -314,8 +319,7 @@ class DisplayPlace extends React.Component {
 
     pasteCopiedGrid = () => {
         const { copying, selectedGrid } = this.state
-        if (!copying) return
-        if (selectedGrid.length === 0) {
+        if (selectedGrid.length === 0 || !copying) {
             this.setState({ dialogOpen: true })
         } else {
             const startGrids = this.CopyController.getStartGrids()
@@ -546,7 +550,7 @@ class DisplayPlace extends React.Component {
                     maxWidth="xs"
                     actions={[<Button key='f' onClick={e => this.setState({ dialogOpen: false })}>OK</Button>]}
                     content={
-                        <p>You Select A Grid To Paste</p>
+                        <p>You Must Select A Grid To Copy or To Paste</p>
                     }
                 />
             </div>

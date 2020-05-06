@@ -201,6 +201,7 @@ nav i{
     color: white;
     background-color: blue !important;
     box-shadow: 0 0 2pt 2pt grey;
+    border-radius: 50px;
 }
 
 .toolbar-sec-cellbox{
@@ -238,4 +239,11 @@ nav i{
 .image-loading{
     margin-left: calc(50% - 20px);
     margin-top: calc(50% - 20px)
+}
+
+.toolbar-cell-clicked{
+    background-color: blue !important;
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0 0 2pt 2pt grey;
 }

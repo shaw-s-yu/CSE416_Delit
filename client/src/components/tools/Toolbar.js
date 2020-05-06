@@ -25,6 +25,27 @@ class Toolbar extends React.Component {
             this.props.handleSelect(item.name);
     }
 
+    handleClick = e => {
+        let { target } = e
+        if (target.childElementCount === 1)
+            target.firstChild.click()
+        else {
+            target = target.parentNode
+            setTimeout(() => {
+                target.classList.remove('toolbar-cell-clicked')
+            }, 150);
+
+        }
+    }
+
+    handleMouseDown = e => {
+        e.stopPropagation()
+        let { target } = e
+        if (target.childElementCount === 0)
+            target = target.parentNode
+        target.classList.add('toolbar-cell-clicked')
+    }
+
     getSelected = (item) => {
 
         if (item.disable === true)
@@ -40,7 +61,7 @@ class Toolbar extends React.Component {
                 {
                     content && content.map((c, i) => {
                         return (
-                            <div className={"toolbar-cell " + this.getSelected(c)} key={i} onMouseDown={this.stopPropagation}>
+                            <div className={"toolbar-cell " + this.getSelected(c)} key={i} onMouseDown={this.handleMouseDown} onClick={this.handleClick}>
                                 {c.item}
                             </div>
                         )
@@ -51,7 +72,7 @@ class Toolbar extends React.Component {
                         secondaryContent && secondaryContent.map((c, i) => {
                             const style = { left: i * 40 }
                             return (
-                                <div className={"toolbar-cell " + this.getSelected(c)} key={i} onMouseDown={this.stopPropagation} style={style} onClick={this.handleSelect.bind(this, c)}>
+                                <div className={"toolbar-cell " + this.getSelected(c)} key={i} onMouseDown={e => e.stopPropagation()} style={style} onClick={this.handleSelect.bind(this, c)}>
                                     {c.item}
                                 </div>
                             )
