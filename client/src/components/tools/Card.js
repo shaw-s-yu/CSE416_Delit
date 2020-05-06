@@ -3,9 +3,8 @@ import './tools.css'
 import { connect } from 'react-redux';
 import * as handler from "../../store/database/DashboardHandler";
 import axios from 'axios'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { arrayBufferToBase64 } from '../controller/ImageController'
-
 class Card extends React.Component {
 
     state = {
@@ -40,7 +39,7 @@ class Card extends React.Component {
         const owner = ownerInfo.username;
 
         return (
-            <div >
+            <div>
                 <div className={className} style={style} onClick={onClick.bind(this, item)}>
                     {
                         imageData === '' ?
@@ -48,8 +47,8 @@ class Card extends React.Component {
                             <img src={imageData} className='card-preview-img' alt='Loading' />
                     }
                     <div className="card-info-box">
-                        <span className="card-info-name">Name: {name}</span>
-                        <span className="card-info-last-modify">Owner: {owner}</span>
+                        <span className="card-info-name"><b>Name:</b> {name}</span>
+                        <span className="card-owner"><b>Owner:</b> {owner}</span>
                     </div>
                 </div>
 
