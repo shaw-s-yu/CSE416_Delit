@@ -22,6 +22,28 @@ class LayerWindow extends React.Component {
         this.setState({ nothing: 'nothing' })
     }
 
+    handleVisibilityClick = e => {
+        let { target } = e
+        if (target.classList.contains('fa-eye')) {
+            target.classList.remove('fa-eye');
+            target.classList.add('fa-eye-slash');
+        } else {
+            target.classList.remove( 'fa-eye-slash');
+            target.classList.add('fa-eye');
+        }
+    }
+
+    handleLockClick = e => {
+        let { target } = e
+        if (target.classList.contains('fa-unlock')) {
+            target.classList.remove('fa-unlock');
+            target.classList.add('fa-lock');
+        } else {
+            target.classList.remove('fa-lock');
+            target.classList.add('fa-unlock');
+        }
+    }
+
     getClassName = (id) => {
         const { selected } = this.props;
         if (selected === null)
@@ -54,8 +76,8 @@ class LayerWindow extends React.Component {
 
                             </div>
                             <div className="layer-item-btn-fixedbox">
-                                <i className="fas fa-eye better-btn layer-item-btn-eye" />
-                                <i className="fas fa-lock better-btn layer-item-btn" />
+                                <i className="fas fa-eye better-btn layer-item-btn-eye" onClick={this.handleVisibilityClick}/>
+                                <i className="fas fa-unlock better-btn layer-item-btn" onClick={this.handleLockClick}/>
                             </div>
                             <div className="layer-item-btn-box">
                                 <i className="fas fa-edit better-btn layer-item-btn" />
