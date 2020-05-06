@@ -8,7 +8,8 @@ var tilesetSchema = new Schema({
     tileWidth: Number,
     tileHeight: Number,
     width: Number,
-    height: Number
+    height: Number,
+    lastUpdate: { type: Date, default: Date.now },
 })
 
 

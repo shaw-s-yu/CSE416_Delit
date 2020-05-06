@@ -21,7 +21,13 @@ module.exports = {
         },
         imageId: {
             type: new GraphQLNonNull(GraphQLString)
-        }
+        },
+        // mapId: {
+        //     type: new GraphQLNonNull(GraphQLString)
+        // },
+        // lastUpdate: {
+        //     type: Date
+        // }
     },
     resolve: (root, params) => {
         const projectModel = new ProjectModel(params);

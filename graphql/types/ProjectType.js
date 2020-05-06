@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
 const UserModel = require('../../models/mongo-user')
-
+var GraphQLDate = require('graphql-date');
 
 module.exports = new GraphQLObjectType({
     name: 'project',
@@ -43,7 +43,13 @@ module.exports = new GraphQLObjectType({
                     })
                     return users
                 }
-            }
+            },
+            // lastUpdate: {
+            //     type: GraphQLDate
+            // },
+            // mapId:{
+            //     type: GraphQLString
+            // }
 
         }
     }

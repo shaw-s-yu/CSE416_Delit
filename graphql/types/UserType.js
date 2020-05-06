@@ -24,8 +24,11 @@ module.exports = new GraphQLObjectType({
                         $and: [
                             { owner: parent._id },
                             { name: { $regex: `.*${args.searchName}.*` } }
-                        ]
-                    }).skip(args.skip).limit(6).exec()
+                        ],
+                        // $orderby:{
+                        //     lastUpdate: -1
+                        // }
+                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
                     if (!projects) throw new Error('Error')
                     return projects
                 }
@@ -61,7 +64,7 @@ module.exports = new GraphQLObjectType({
                                 ]
                             }]
 
-                    }).skip(args.skip).limit(6).exec()
+                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
                     if (!projects) throw new Error('Error')
                     return projects
                 }
@@ -96,7 +99,7 @@ module.exports = new GraphQLObjectType({
                             { editors: parent._id },
                             { name: { $regex: `.*${args.searchName}.*` } }
                         ]
-                    }).skip(args.skip).limit(6).exec()
+                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
                     if (!projects) throw new Error('Error')
                     return projects
                 }
@@ -131,7 +134,7 @@ module.exports = new GraphQLObjectType({
                             { owner: parent._id },
                             { name: { $regex: `.*${args.tilesetName}.*` } }
                         ]
-                    }).skip(args.skip).limit(6).exec()
+                    }).sort({"lastUpdate": -1}).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
                     if (!tilesets) throw new Error('Error')
                     return tilesets
                 }
@@ -167,7 +170,7 @@ module.exports = new GraphQLObjectType({
                                 ]
                             }]
 
-                    }).skip(args.skip).limit(6).exec()
+                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
                     if (!tilesets) throw new Error('Error')
                     return tilesets
                 }
@@ -202,7 +205,7 @@ module.exports = new GraphQLObjectType({
                             { editors: parent._id },
                             { name: { $regex: `.*${args.tilesetName}.*` } }
                         ]
-                    }).skip(args.skip).limit(6).exec()
+                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
                     if (!tilesets) throw new Error('Error')
                     return tilesets
                 }
@@ -228,7 +231,7 @@ module.exports = new GraphQLObjectType({
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
-                    const tilesets = TilesetModel.find({ name: { $regex: `.*${args.searchName}.*` } }).skip(args.skip).limit(6).exec()
+                    const tilesets = TilesetModel.find({ name: { $regex: `.*${args.searchName}.*` } }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
                     if (!tilesets) {
                         throw new Error('Error')
                     }
