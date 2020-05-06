@@ -144,7 +144,7 @@ export default {
         }
     }
     `,
-    GET_tILESET: graphql`
+    GET_TILESET: graphql`
     query tileset($id: String!){
         tileset(id:$id){
             _id
@@ -164,4 +164,49 @@ export default {
         }
     }
     `,
+    GET_MAPS: graphql`
+    query map($id: String!){
+        maps(id:$id){
+            _id
+            mapJsonFile{
+                width
+                height
+                infinite
+                layers{
+                    data
+                    width
+                    height
+                    id
+                    name
+                    opacity
+                    type
+                    visible
+                    x
+                    y
+                }
+                nextLayerid
+                nextObjectid
+                orientation
+                renderorder
+                tiledversion
+                tileWidth
+                tilesheight
+                tilesets{
+                    columns
+                    firstgid
+                    image
+                    imageWidth
+                    imageheight
+                    margin
+                    name
+                    spacing
+                    tilecount
+                    tileheight
+                    tilewidth
+                }
+                type
+                version
+            }
+        }
+    }`,
 }

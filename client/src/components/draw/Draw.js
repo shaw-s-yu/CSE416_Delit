@@ -286,7 +286,7 @@ class Draw extends React.Component {
                         handleVerticalFlip={this.handleVerticalFlip}
                         handleClear={this.handleClear}
                     />
-                    <Query query={QueryList.GET_tILESET} variables={{ id: key }} fetchPolicy={'network-only'}>
+                    <Query query={QueryList.GET_TILESET} variables={{ id: key }} fetchPolicy={'network-only'}>
                         {({ loading, error, data }) => {
                             if (loading) return 'loading'
                             if (error) return 'error'
