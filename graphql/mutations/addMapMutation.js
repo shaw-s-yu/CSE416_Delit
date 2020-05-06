@@ -14,10 +14,10 @@ module.exports = {
             name: '_id',
             type: GraphQLString
         },
-        mapJsonFile: {
-            name: 'mapJsonFile',
-            type: MapModel.MapJsonFile
-        },
+        // mapJsonFile: {
+        //     name: 'mapJsonFile',
+        //     type: 
+        // },
     },
     resolve: (root, params) => {
         const mapModel = new MapModel(params);

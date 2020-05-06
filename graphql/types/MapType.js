@@ -142,8 +142,3 @@ module.exports = new GraphQLObjectType({
         }
     }
 });
-
-
-
-
-
