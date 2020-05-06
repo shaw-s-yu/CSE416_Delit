@@ -51,7 +51,7 @@ nav i{
 
 .item-card{
     position: absolute;
-    height:200px;
+    height:230px;
     width: 180px;
     background-color: lightblue;
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
@@ -87,7 +87,18 @@ nav i{
     white-space: nowrap;
     text-overflow: ellipsis;
     display: block;
-    font-size: smaller;
+    font-size: xx-small;
+}
+
+.card-owner{
+    margin-left: 10px;
+    width: 160px;
+    overflow: hidden;
+    background-color: transparent;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: xx-small;
 }
 
 .card-info-last-modify{
@@ -103,7 +114,7 @@ nav i{
 
 .card-info-btn-box{
     position: absolute;
-    margin-top:180px;
+    margin-top:200px;
     margin-left:122px;
     height:16px;
     width: 48px;
@@ -147,12 +158,12 @@ nav i{
     position:absolute;
     border: 1px solid black;
     border-radius: 5px;
-    font-size: x-small;
+    font-size: xx-small;
     background-color: turquoise;
     transition: ease-in 0.2s;
     cursor: pointer;
-    height:16px;
-    width: 48px;
+    height: 25px;
+    width: 55px;
     box-shadow: 0px 0px 4px 1px rgba(116, 116, 116, 0.75);
     text-align: center;
 }
