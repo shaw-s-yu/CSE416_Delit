@@ -8,8 +8,6 @@ import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
 
 
-const rect = document.body.getBoundingClientRect();
-const { width, height } = rect
 
 
 class PropertyWindow extends React.Component {
@@ -17,7 +15,7 @@ class PropertyWindow extends React.Component {
     state = {
         resizing: false,
         position: { x: 0, y: 0 },
-        size: { width: width * 0.2, height: height * 0.7 < 442.867 ? 442.867 : height * 0.7 },
+        size: { width: 72, height: 450 }
     }
 
     handleOnResize = (e, direction, ref, delta, position) => {
@@ -42,6 +40,22 @@ class PropertyWindow extends React.Component {
     onlyNumber = (obj) => {
         console.log(obj.value);
         obj.value = obj.value.replace(/[^\d]/gi, "");
+    }
+
+    adjustSize = () => {
+        const { width, height } = document.body.getBoundingClientRect();
+        this.setState({
+            size: {
+                width: width * 0.2, height: height - 88 < 442.867 ? 442.867 : height - 88
+            }
+        })
+    }
+
+    componentDidMount() {
+        this.adjustSize()
+        window.onresize = () => {
+            this.adjustSize()
+        }
     }
 
     render() {
@@ -72,9 +86,11 @@ class PropertyWindow extends React.Component {
                 <Collapsible data={
                     [
                         { title: 'Layer Property', content: <PropertyList data={layer} window='layer' width={width} />, open: false },
-                        { title: 'Map Property', content: <PropertyList data={map} window='map' width={width} onKeyUp="this.value=this.value.replace(/[^\.\d]/g,'');
+                        {
+                            title: 'Map Property', content: <PropertyList data={map} window='map' width={width} onKeyUp="this.value=this.value.replace(/[^\.\d]/g,'');
 if(this.value.split('.').length>2){
-this.value=this.value.split('.')[0]+'.'+this.value.split('.')[1]}"/>, open: true },
+this.value=this.value.split('.')[0]+'.'+this.value.split('.')[1]}"/>, open: true
+                        },
                         { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} />, open: false },
                     ]
                 }

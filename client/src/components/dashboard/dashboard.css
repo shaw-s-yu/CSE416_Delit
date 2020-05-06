@@ -18,7 +18,7 @@
     color: white;
     font-weight: bold;
     margin-top: 0.44vw;
-    height:70%;
+    height:calc(100% - 88px);
     width: 20%;
     position: absolute;
     overflow-x: hidden;
@@ -41,6 +41,7 @@
 .dashboard-top-navbar{
     color: whitesmoke;
     text-align: center;
+    height:72px
 }
 
 .text-center{
@@ -74,7 +75,6 @@
 .dashboard-display{
     background-color: aliceblue;
     margin-top:8px;
-    height:70%;
     position: absolute;
     transition: 0.5s;
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);

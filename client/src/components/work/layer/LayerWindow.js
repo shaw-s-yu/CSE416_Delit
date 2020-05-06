@@ -28,6 +28,22 @@ class LayerWindow extends React.Component {
 
     }
 
+    adjustSize = () => {
+        const { width, height } = document.body.getBoundingClientRect();
+        this.setState({
+            size: {
+                width: width * 0.2, height: height * 0.36 < 265.717 ? 265.717 : height * 0.36
+            },
+        })
+    }
+
+    componentDidMount() {
+        this.adjustSize()
+        window.onresize = () => {
+            this.adjustSize()
+        }
+    }
+
     render() {
         const { size, position } = this.state
         const { open } = this.props

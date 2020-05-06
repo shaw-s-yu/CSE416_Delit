@@ -79,7 +79,7 @@ class TopNavbar extends React.Component {
         const { site, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
         const { username, picture, file, edit, view } = this.state;
         return (
-            <>
+            <div>
                 <Navbar className="dashboard-top-navbar" bg="white" expand="lg">
                     {site === 'dashboard' ? <Navbar.Brand onClick={this.props.handleSidebarOpen} style={{ cursor: "pointer" }}><i className="fas fa-list" /></Navbar.Brand> : null}
                     <Navbar.Brand href="/dashboard"> <div className="logo" >Delit</div></Navbar.Brand>
@@ -136,7 +136,7 @@ class TopNavbar extends React.Component {
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
                     </Navbar.Collapse>
                 </Navbar>
-            </>
+            </div>
         )
     }
 

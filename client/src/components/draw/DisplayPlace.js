@@ -439,7 +439,6 @@ class DisplayPlace extends React.Component {
             else if (Keyboard.triggerLeftCtrlY(e)) {
                 this.doTransaction()
             }
-
         }
 
         window.onkeyup = e => {

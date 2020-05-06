@@ -6,16 +6,14 @@ import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
 import Collapsible from '../../tools/Collapsible'
 
-
-const rect = document.body.getBoundingClientRect();
-const { width, height } = rect
+const { width, height } = document.body.getBoundingClientRect();
 
 class TilesetWindow extends React.Component {
 
     state = {
         resizing: false,
-        position: { x: width * 0.8, y: height * 0.28 < 177.15 ? 177.15 : height * 0.28 },
-        size: { width: width * 0.2, height: height * 0.42 < 265.717 ? 265.717 : height * 0.42 },
+        position: { x: width * 0.8, y: height * 0.35 < 177.15 ? 177.15 : height * 0.35 },
+        size: {},
     }
 
     tileMap = React.createRef()
@@ -43,6 +41,23 @@ class TilesetWindow extends React.Component {
     handleGoPaint = () => {
         this.props.history.push('/tileset/ffe')
     }
+
+    adjustSize = () => {
+        const { width, height } = document.body.getBoundingClientRect();
+        this.setState({
+            size: {
+                width: width * 0.2, height: height * 0.52 < 265.717 ? 265.717 : height * 0.52
+            },
+        })
+    }
+
+    componentDidMount() {
+        this.adjustSize()
+        window.onresize = () => {
+            this.adjustSize()
+        }
+    }
+
 
     render() {
         const { resizing, size, position } = this.state;

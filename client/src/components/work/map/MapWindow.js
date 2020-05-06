@@ -14,7 +14,7 @@ class MapWindow extends React.Component {
 
     state = {
         position: { x: width * 0.2, y: 0 },
-        size: { width: width * 0.6, height: height * 0.7 < 442.867 ? 442.867 : height * 0.7 },
+        size: {},
     }
 
     tileMap = React.createRef()
@@ -24,6 +24,22 @@ class MapWindow extends React.Component {
         width = parseInt(width)
         height = parseInt(height)
         this.setState({ size: { width, height } })
+    }
+
+    adjustSize = () => {
+        const { width, height } = document.body.getBoundingClientRect();
+        this.setState({
+            size: {
+                width: width * 0.6, height: height * 0.88 < 442.867 ? 442.867 : height * 0.88
+            },
+        })
+    }
+
+    componentDidMount() {
+        this.adjustSize()
+        window.onresize = () => {
+            this.adjustSize()
+        }
     }
 
     render() {

@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page, search, dialogOpen, dialogType } = this.state;
+        const { showSidebar, selected, user, page, search, dialogOpen, dialogType, displayHeight } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -117,6 +117,7 @@ class Dashboard extends React.Component {
         const displayStyle = {
             marginLeft: left + "%",
             width: width + "%",
+            height: 'calc(100% - 88px)'
         };
 
         const pageSkip = (page - 1) * 6;
