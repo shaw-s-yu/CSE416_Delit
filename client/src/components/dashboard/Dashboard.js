@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page, search, dialogOpen, dialogType, displayHeight } = this.state;
+        const { showSidebar, selected, user, page, search, dialogOpen, dialogType } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;

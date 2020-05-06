@@ -7,15 +7,8 @@ import * as handler from '../../../store/database/WorkScreenHandler';
 import Slider from '@material-ui/core/Slider';
 
 
-const rect = document.body.getBoundingClientRect();
-const { width, height } = rect
-
 class LayerWindow extends React.Component {
 
-    state = {
-        position: { x: width * 0.8, y: 0 },
-        size: { width: width * 0.2, height: height * 0.28 < 177.15 ? 177.15 : height * 0.28 },
-    }
 
     handleOnResize = (e, direction, ref, delta, position) => {
         let { width, height } = ref.style
@@ -28,33 +21,17 @@ class LayerWindow extends React.Component {
 
     }
 
-    adjustSize = () => {
-        const { width, height } = document.body.getBoundingClientRect();
-        this.setState({
-            size: {
-                width: width * 0.2, height: height * 0.36 < 265.717 ? 265.717 : height * 0.36
-            },
-        })
-    }
-
-    componentDidMount() {
-        this.adjustSize()
-        window.onresize = () => {
-            this.adjustSize()
-        }
-    }
 
     render() {
-        const { size, position } = this.state
-        const { open } = this.props
-        const { width } = size
+        const { open, dimension } = this.props
+        const { width } = dimension.size
         const maxWidth = width - 142;
 
         return (
             <Rnd
                 className={"workscreen-window " + (open ? '' : 'invisible')}
-                size={size}
-                default={position}
+                size={dimension.size}
+                position={dimension.position}
                 onMouseDown={() => { this.props.handleToTop('layer') }}
                 onResize={this.handleOnResize}
                 onResizeStop={this.handleOnResize}

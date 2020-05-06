@@ -7,15 +7,8 @@ import Toolbar from '../../tools/Toolbar'
 import ImageWrapper from '../canvas/ImageWrapper'
 import TOOLS from '../../tools/ToolbarTools'
 
-const rect = document.body.getBoundingClientRect();
-const { width, height } = rect
 
 class MapWindow extends React.Component {
-
-    state = {
-        position: { x: width * 0.2, y: 0 },
-        size: {},
-    }
 
     tileMap = React.createRef()
 
@@ -26,25 +19,10 @@ class MapWindow extends React.Component {
         this.setState({ size: { width, height } })
     }
 
-    adjustSize = () => {
-        const { width, height } = document.body.getBoundingClientRect();
-        this.setState({
-            size: {
-                width: width * 0.6, height: height * 0.88 < 442.867 ? 442.867 : height * 0.88
-            },
-        })
-    }
-
-    componentDidMount() {
-        this.adjustSize()
-        window.onresize = () => {
-            this.adjustSize()
-        }
-    }
 
     render() {
-        const { size, position, selectedTool } = this.state
-        const { width, height } = size;
+        const { dimension, selectedTool } = this.props
+        const { width, height } = dimension.size
         const style = {
             maxWidth: width,
             maxHeight: height - 90,
@@ -54,8 +32,8 @@ class MapWindow extends React.Component {
             <Rnd
                 className="workscreen-window "
                 id="map"
-                size={size}
-                default={position}
+                size={dimension.size}
+                position={dimension.position}
                 onMouseDown={() => { this.props.handleToTop('map') }}
                 onClick={this.props.handleUnselect}
                 onResizeStart={() => this.props.handleToTop('map')}

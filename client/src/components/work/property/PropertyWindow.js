@@ -14,8 +14,6 @@ class PropertyWindow extends React.Component {
 
     state = {
         resizing: false,
-        position: { x: 0, y: 0 },
-        size: { width: 72, height: 450 }
     }
 
     handleOnResize = (e, direction, ref, delta, position) => {
@@ -42,26 +40,11 @@ class PropertyWindow extends React.Component {
         obj.value = obj.value.replace(/[^\d]/gi, "");
     }
 
-    adjustSize = () => {
-        const { width, height } = document.body.getBoundingClientRect();
-        this.setState({
-            size: {
-                width: width * 0.2, height: height - 88 < 442.867 ? 442.867 : height - 88
-            }
-        })
-    }
 
-    componentDidMount() {
-        this.adjustSize()
-        window.onresize = () => {
-            this.adjustSize()
-        }
-    }
 
     render() {
-        const { size, position } = this.state
-        const { layer, map, selected, open } = this.props
-        const { width, height } = size;
+        const { layer, map, selected, open, dimension } = this.props
+        const { width, height } = dimension.size;
         const style = {
             maxWidth: width,
             maxHeight: height - 140,
@@ -71,8 +54,8 @@ class PropertyWindow extends React.Component {
 
             <Rnd
                 className={"workscreen-window " + (open ? '' : 'invisible')}
-                size={size}
-                default={position}
+                size={dimension.size}
+                position={dimension.position}
                 onMouseDown={() => this.props.handleToTop('property')}
                 onResizeStart={() => this.props.handleToTop('property')}
                 onResize={this.handleOnResize}

@@ -13,6 +13,10 @@ class WorkScreen extends React.Component {
         propertyOpen: true,
         layerOpen: true,
         tilesetOpen: true,
+        property: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 } },
+        map: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 } },
+        tileset: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 } },
+        layer: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 } },
     }
 
     handleToTop = (window) => {
@@ -35,14 +39,14 @@ class WorkScreen extends React.Component {
     }
 
     getScreen = () => {
-        const { propertyOpen, layerOpen, tilesetOpen } = this.state;
+        const { propertyOpen, layerOpen, tilesetOpen, property, map, layer, tileset } = this.state;
         const { history } = this.props
         return (
             <>
-                <MapWindow key="map" handleToTop={this.handleToTop} />
-                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} />
-                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} />
-                <TilesetWindow key="tileset" open={tilesetOpen} history={history} handleToTop={this.handleToTop} />
+                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} />
+                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} />
+                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} />
+                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} />
             </>
         )
     }
@@ -63,6 +67,15 @@ class WorkScreen extends React.Component {
         document.getElementById('property').style.zIndex = 2;
         document.getElementById('layer').style.zIndex = 3;
         document.getElementById('tileset').style.zIndex = 4;
+
+        const { width, height } = document.body.getBoundingClientRect();
+
+        this.setState({
+            property: { size: { width: width * 0.2, height: height * 0.88 }, position: { x: 0, y: 0 } },
+            map: { size: { width: width * 0.6, height: height * 0.88 }, position: { x: width * 0.2, y: 0 } },
+            layer: { size: { width: width * 0.2, height: height * 0.32 }, position: { x: width * 0.8, y: 0 } },
+            tileset: { size: { width: width * 0.2, height: height * 0.56 }, position: { x: width * 0.8, y: height * 0.32 } },
+        })
     }
 
     render = () => {

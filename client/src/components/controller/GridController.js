@@ -233,11 +233,12 @@ export default class DrawGridController {
 
     getGridPositionsFromCropPositions = (startPosition, endPosition) => {
         let positions = []
-        if (startPosition.x > endPosition.x && startPosition.y > endPosition.y) {
-            const temp = startPosition
-            startPosition = endPosition
-            endPosition = temp
-        }
+        const minX = Math.min(startPosition.x, endPosition.x)
+        const minY = Math.min(startPosition.y, endPosition.y)
+        const maxX = Math.max(startPosition.x, endPosition.x)
+        const maxY = Math.max(startPosition.y, endPosition.y)
+        startPosition = { x: minX, y: minY }
+        endPosition = { x: maxX, y: maxY }
 
         for (let i = 0; i < this.gridPositions.length; i++) {
             if (

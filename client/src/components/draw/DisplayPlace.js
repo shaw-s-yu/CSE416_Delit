@@ -356,9 +356,6 @@ class DisplayPlace extends React.Component {
 
             })
         }
-        else {
-            this.props.handleStartDialogOpen()
-        }
 
         this.props.childRef(this)
         const { canvas } = this.refs;
