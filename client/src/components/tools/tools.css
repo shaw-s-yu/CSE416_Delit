@@ -88,7 +88,7 @@ nav i{
     white-space: nowrap;
     text-overflow: ellipsis;
     display: block;
-    font-size: xx-small;
+    font-size: x-small;
 }
 
 .card-owner{
@@ -99,7 +99,7 @@ nav i{
     white-space: nowrap;
     text-overflow: ellipsis;
     display: block;
-    font-size: xx-small;
+    font-size: x-small;
 }
 
 .card-info-last-modify{
@@ -115,7 +115,7 @@ nav i{
 
 .card-info-btn-box{
     position: absolute;
-    margin-top:200px;
+    margin-top:180px;
     margin-left:122px;
     height:16px;
     width: 48px;
@@ -159,7 +159,7 @@ nav i{
     position:absolute;
     border: 1px solid black;
     border-radius: 5px;
-    font-size: xx-small;
+    font-size: x-small;
     background-color: turquoise;
     transition: ease-in 0.2s;
     cursor: pointer;
