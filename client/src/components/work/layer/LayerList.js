@@ -23,7 +23,7 @@ class LayerWindow extends React.Component {
     }
 
     handleVisibilityClick = e => {
-        let { target } = e
+        let { target } = e;
         if (target.classList.contains('fa-eye')) {
             target.classList.remove('fa-eye');
             target.classList.add('fa-eye-slash');
@@ -34,7 +34,7 @@ class LayerWindow extends React.Component {
     }
 
     handleLockClick = e => {
-        let { target } = e
+        let { target } = e;
         if (target.classList.contains('fa-unlock')) {
             target.classList.remove('fa-unlock');
             target.classList.add('fa-lock');
@@ -42,6 +42,18 @@ class LayerWindow extends React.Component {
             target.classList.remove('fa-lock');
             target.classList.add('fa-unlock');
         }
+    }
+
+    handleMoveUp = (id, e) => {
+        e.stopPropagation()
+        this.props.handleMoveUp(id);
+        this.setState({ nothing: 'nothing' });
+    }
+
+    handleMoveDown = (id, e) => {
+        e.stopPropagation();
+        this.props.handleMoveDown(id);
+        this.setState({ nothing: 'nothing' });
     }
 
     getClassName = (id) => {
@@ -82,8 +94,8 @@ class LayerWindow extends React.Component {
                             <div className="layer-item-btn-box">
                                 <i className="fas fa-edit better-btn layer-item-btn" />
                                 <i className="fas fa-trash-alt better-btn layer-item-btn" onClick={this.handleDelete.bind(this, layer._id)} />
-                                <i className="fas fa-arrow-down better-btn layer-item-btn" />
-                                <i className="fas fa-arrow-up better-btn layer-item-btn" />
+                                <i className="fas fa-arrow-down better-btn layer-item-btn" onClick={this.handleMoveDown.bind(this, layer._id)}/>
+                                <i className="fas fa-arrow-up better-btn layer-item-btn" onClick={this.handleMoveUp.bind(this, layer._id)}/>
                             </div>
 
                         </div>
@@ -110,6 +122,8 @@ const mapDispatchToProps = (dispatch) => ({
     handleSelect: (id) => dispatch(handler.layerSelectHandler(id)),
     handleUnselect: () => dispatch(handler.layerUnselectHandler()),
     handleDelete: (id) => dispatch(handler.layerDeleteHandler(id)),
-})
+    handleMoveUp: (id) => dispatch(handler.layerMoveUpHandler(id)),
+    handleMoveDown: (id) => dispatch(handler.layerMoveDownHandler(id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)
