@@ -30,7 +30,7 @@ class TestScreen extends React.Component {
                     <div className="test-title">Controll of mongoDB</div>
                     <ProjectManager dataToAdd={this.projectToReduer.projects} />
                     <TilesetManager dataToAdd={this.projectToReduer.tilesets} />
-                    <MapManager />
+                    <MapManager dataToAdd={this.projectToReduer.maps} />
                 </div>
             </>
         )
