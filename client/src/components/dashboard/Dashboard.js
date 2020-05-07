@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
             dialogOpen: false,
             selected: type === 'cancel' ?
                 selected : dialogType === 'project' ?
-                    'create' : 'tileset'
+                    'create' : 'tilesets'
         })
     };
 
@@ -60,7 +60,7 @@ class Dashboard extends React.Component {
             return QueryList.GET_MY_OWNED_PROJECTS;
         if (selected === 'share')
             return QueryList.GET_MY_SHARED_PROJECTS;
-        if (selected === 'Tilesets')
+        if (selected === 'tilesets')
             return QueryList.GET_TILESETS;
         if (selected === 'tilesetsOwned')
             return QueryList.GET_MY_OWNED_TILESETS;
@@ -92,7 +92,7 @@ class Dashboard extends React.Component {
                 type: "project",
             };
         }
-        if (selected === 'Tilesets') {
+        if (selected === 'tilesets') {
             return {
                 items: data.user.tilesets,
                 amount: data.user.tilesetsAmount,

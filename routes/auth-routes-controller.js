@@ -41,7 +41,6 @@ exports.authCallback = (req, res) => {
             const io = req.app.get('io')
             const id = req.session.socketId;
             if (currentUser) {
-                console.log(id)
                 currentUser.googleId = user.id
                 currentUser.picture = user.picture
                 currentUser.save().then((e) => {
