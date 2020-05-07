@@ -125,14 +125,14 @@ module.exports = new GraphQLObjectType({
             tilesetsOwned: {
                 args: {
                     skip: { type: GraphQLInt },
-                    tilesetName: { type: GraphQLString }
+                    searchName: { type: GraphQLString },
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
                     const tilesets = TilesetModel.find({
                         $and: [
                             { owner: parent._id },
-                            { name: { $regex: `.*${args.tilesetName}.*` } }
+                            { name: { $regex: `.*${args.searchName}.*` } }
                         ]
                     }).sort({"lastUpdate": -1}).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
                     if (!tilesets) throw new Error('Error')
@@ -140,12 +140,12 @@ module.exports = new GraphQLObjectType({
                 }
             },
             tilesetsOwnedAmount: {
-                args: { tilesetName: { type: GraphQLString } },
+                args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
                     const tilesetsAmount = TilesetModel.find({
                         $and: [
-                            { name: { $regex: `.*${args.projectName}.*` } },
+                            { name: { $regex: `.*${args.searchName}.*` } },
                             { owner: parent._id }
                         ]
                     }).countDocuments()

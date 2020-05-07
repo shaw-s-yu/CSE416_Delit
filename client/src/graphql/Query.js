@@ -164,6 +164,34 @@ export default {
         }
     }
     `,
+    GET_OWNED_TILESETS: graphql`
+    query user(
+        $userId: String!
+        $pageSkip: Int!
+        $search: String!
+    ){
+        user(
+            id:$userId
+        ){
+            tilesetsOwned(
+                searchName: $search
+                skip: $pageSkip
+                ){
+                name
+                _id
+                imageId
+                ownerInfo{
+                    username
+                }
+                teamInfo{
+                    _id
+                    username
+                    picture
+                }
+            }
+            tilesetsOwnedAmount(searchName: $search)
+        }
+    }`,
     GET_MAPS: graphql`
     query map($id: String!){
         maps(id:$id){

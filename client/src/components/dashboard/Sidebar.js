@@ -17,7 +17,8 @@ class Sidebar extends React.Component {
 					<div className={'sidebar-item ' + this.getClassName("all")} onClick={handleSelect.bind(this, 'all')}><div className='item-text'>All Projects</div></div>
 					<div className={'sidebar-item ' + this.getClassName("create")} onClick={handleSelect.bind(this, 'create')}><div className='item-text'>Project Created By Me</div></div>
 					<div className={'sidebar-item ' + this.getClassName("share")} onClick={handleSelect.bind(this, 'share')}><div className='item-text'>Project Shared With Me</div></div>
-					<div className={'sidebar-item ' + this.getClassName("tileset")} onClick={handleSelect.bind(this, 'tileset')}><div className='item-text'>Manage Tilesets</div></div>
+					<div className={'sidebar-item ' + this.getClassName("allTilesets")} onClick={handleSelect.bind(this, 'allTilesets')}><div className='item-text'>Manage Tilesets</div></div>
+					<div className={'sidebar-item ' + this.getClassName("ownedTilesets")} onClick={handleSelect.bind(this, 'ownedTilesets')}><div className='item-text'>Manage My Tilesets</div></div>
 				</div>
 			</div>
 
