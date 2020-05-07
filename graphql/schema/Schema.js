@@ -67,8 +67,8 @@ const mutation = new GraphQLObjectType({
             updateTileset: updateTilesetMutation,
             duplicateTileset: duplicateTilesetMutation,
 
-            addMap: addMapMutation,
-            clearMaps: clearMapsMutation,
+            // addMap: addMapMutation,
+            // clearMaps: clearMapsMutation,
         }
     }
 });

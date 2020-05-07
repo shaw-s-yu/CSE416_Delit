@@ -52,23 +52,23 @@ class TestScreen extends React.Component {
         }
       })
     })
-    mapsInJson.forEach(m =>{
+    mapsInJson.forEach(m => {
       console.log(m)
       callback3({
-        variables:{
+        variables: {
           // width: m.width,
           // height: m.height,
           infinite: m.infinite,
-              data: m.data,
-              width: m.width,
-              height: m.height,
-              id: m.id,
-              // name: m.name,
-              opacity: m.opacity,
-              // type: m.type,
-              visible: m.visible,
-              x: m.x,
-              y: m.y,
+          data: m.data,
+          width: m.width,
+          height: m.height,
+          id: m.id,
+          // name: m.name,
+          opacity: m.opacity,
+          // type: m.type,
+          visible: m.visible,
+          x: m.x,
+          y: m.y,
           nextLayerid: m.nextLayerid,
           nextObjectid: m.nextObjectid,
           orientation: m.orientation,
@@ -76,17 +76,17 @@ class TestScreen extends React.Component {
           tiledversion: m.tiledversion,
           tileWidth: m.tileWidth,
           tilesheight: m.tilesheight,
-              columns: m.columns,
-              firstgid: m.firstgid,
-              image: m.image,
-              imageWidth: m.imageWidth,
-              imageheight: m.imageheight,
-              margin: m.margin,
-              name: m.name,
-              spacing: m.spacing,
-              tilecount: m.tilecount,
-              tileheight: m.tileheight,
-              tilewidth: m.tilewidth,
+          columns: m.columns,
+          firstgid: m.firstgid,
+          image: m.image,
+          imageWidth: m.imageWidth,
+          imageheight: m.imageheight,
+          margin: m.margin,
+          name: m.name,
+          spacing: m.spacing,
+          tilecount: m.tilecount,
+          tileheight: m.tileheight,
+          tilewidth: m.tilewidth,
           type: m.type,
           version: m.version,
         }
@@ -144,7 +144,7 @@ class TestScreen extends React.Component {
                   <Query query={QueryList.GET_MAPS}>
                     {(mapsRes) => {
                       if (mapsRes.data)
-                        console.log(mapsRes.data,maps)
+                        console.log(mapsRes.data, maps)
                       if (mapsRes.loading) return 'loading'
                       if (mapsRes.error) return 'error'
                       return (
@@ -162,7 +162,7 @@ class TestScreen extends React.Component {
                                               <Mutation mutation={MutationList.CLEAR_MAP} refetchQueries={[refetch1, refetch2, refetch3]}>
                                                 {(clearMaps, clearMapsRes) => (
                                                   <>
-                                                    <TopNavbar sidte='test' history={history} />
+                                                    <TopNavbar side='test' history={history} />
                                                     <div className="test-wrapper">
                                                       <div className="test-title">Controll of mongoDB</div>
                                                       <div className="test-btn-box">
@@ -172,14 +172,14 @@ class TestScreen extends React.Component {
                                                           {(addProjectRes.loading || clearProjectsRes.loading || addTilesetRes.loading || clearTilesetsRes.loading || addMapRes.loading || clearMapsRes.loading) ? 'loading' :
                                                             addTilesetRes.error ? addTilesetRes.error.message :
                                                               addProjectRes.error ? addProjectRes.error.message :
-                                                                addMapRes.error ? addMapRes.error.message:
+                                                                addMapRes.error ? addMapRes.error.message :
                                                                   clearProjectsRes.error ? clearProjectsRes.error.message :
                                                                     clearTilesetsRes.error ? clearTilesetsRes.error.message :
                                                                       clearMapsRes.error ? clearMapsRes.error.message :
                                                                         clearProjectsRes.data ? clearProjectsRes.data.clearProjects :
                                                                           clearTilesetsRes.data ? clearTilesetsRes.data.clearTilesets :
-                                                                            clearMapsRes.data ? clearMapsRes.data.clearMaps:
-                                                                            'no status'}
+                                                                            clearMapsRes.data ? clearMapsRes.data.clearMaps :
+                                                                              'no status'}
                                                         </div>
                                                       </div>
                                                       <div className="test-display">
@@ -213,13 +213,13 @@ class TestScreen extends React.Component {
                                     )
                                   }}
                                 </Mutation>
-                                )}
+                              )}
                             </Mutation>
                           )}
                         </Mutation>
                       )
-                  }}
-                </Query>
+                    }}
+                  </Query>
                 )
               }}
             </Query>

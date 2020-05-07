@@ -34,7 +34,6 @@ class Toolbar extends React.Component {
             setTimeout(() => {
                 target.classList.remove('toolbar-cell-clicked')
             }, 150);
-
         }
     }
 

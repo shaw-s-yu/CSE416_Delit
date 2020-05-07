@@ -7,7 +7,7 @@ import RegisterScreen from './components/home/RegisterScreen';
 import Dashboard from './components/dashboard/Dashboard';
 import WorkScreen from './components/work/WorkScreen';
 import DrawScreen from './components/draw/Draw'
-import TestScreen from './components/test/Test'
+import TestScreen from './components/test/TestScreen'
 import { createSocketHandler } from './store/database/HomeScreenHandler'
 
 

@@ -6,6 +6,7 @@
     padding-left: 4px;
     padding-right: 4px;
     padding-bottom: 4px;
+    background-color: wheat;
 }
 
 .test-title{
@@ -13,9 +14,17 @@
     text-align: center;
 }
 
+.test-manager-wrapper{
+    display: inline-block;
+    width: 33%;
+    margin-left: 0.25%;
+    height:calc(100% - 32px);
+    border:1px solid black;
+    overflow: auto;
+}
+
 .test-btn-box{
-    width: 30%;
-    margin-left: 35%;
+    width: 100%;
     position: relative;
 }
 
