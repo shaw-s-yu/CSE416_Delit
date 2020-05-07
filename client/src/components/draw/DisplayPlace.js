@@ -499,7 +499,7 @@ class DisplayPlace extends React.Component {
     }
 
     render() {
-        const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight, selectedGrid, copying, dialogOpen } = this.state;
+        const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight, selectedGrid, copying, dialogOpen, shiftSelecting } = this.state;
         const { scale, tileset } = this.props
         const { tileWidth, tileHeight } = tileset
         const scrollStyle = {
@@ -538,6 +538,7 @@ class DisplayPlace extends React.Component {
                             parent={this}
                             childRef={ref => this.selectedBoxes = ref}
                             copying={copying}
+                            shiftSelecting={shiftSelecting}
                         />
 
                     </div>

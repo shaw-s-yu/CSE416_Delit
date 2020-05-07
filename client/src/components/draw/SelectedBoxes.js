@@ -61,6 +61,9 @@ class selectedBoxes extends React.Component {
     }
 
     handleMoveEnd = e => {
+        const { shiftSelecting } = this.props
+        if (!shiftSelecting)
+            e.stopPropagation()
         const { clientX, clientY } = e
         const { selectedGrid, grid, startImg } = this.state
         const { x, y } = this.props.parent.handleFixPosition(clientX, clientY)
