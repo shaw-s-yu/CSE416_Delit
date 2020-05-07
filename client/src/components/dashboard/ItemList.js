@@ -33,10 +33,9 @@ class ItemList extends React.Component {
     };
 
     handleGoEdit = (item) => {
-        if (!item || !this.props.type) return
-        const type = this.props.type === 'tileset' ? 'tileset' : 'project'
-        const { _id } = item
-        this.props.history.push(`/${type}/${_id}`)
+        if (!item || !this.props.type) return;
+        const { _id } = item;
+        this.props.history.push(`/${this.props.type}/${_id}`)
     };
 
     handleDelete = (callback, _id) => {

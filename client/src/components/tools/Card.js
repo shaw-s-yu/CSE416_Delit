@@ -9,23 +9,23 @@ class Card extends React.Component {
 
     state = {
         imageData: ''
-    }
+    };
 
     handleOpen = (name, item, refetch) => {
-        this.props.handleSetItem(item, refetch)
-        this.props.handleOpen(name)
-    }
+        this.props.handleSetItem(item, refetch);
+        this.props.handleOpen(name);
+    };
 
     componentDidMount() {
-        const { imageId } = this.props.item
+        const { imageId } = this.props.item;
         if (imageId !== '')
             axios.get(`/data/image?imageId=${imageId}`).then(res => {
-                const { err, msg, data } = res
+                const { err, msg, data } = res;
                 if (err)
-                    console.log(msg)
+                    console.log(msg);
                 else {
                     const base64Flag = 'data:image/jpeg;base64,';
-                    const imageStr = arrayBufferToBase64(data.data.data)
+                    const imageStr = arrayBufferToBase64(data.data.data);
                     this.setState({ imageData: base64Flag + imageStr })
                 }
             })
@@ -33,7 +33,7 @@ class Card extends React.Component {
     }
 
     render() {
-        const { imageData } = this.state
+        const { imageData } = this.state;
         const { className, style, onClick, item, refetch } = this.props;
         const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
@@ -57,7 +57,7 @@ class Card extends React.Component {
                     <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Dupliate</div>
                     <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
                     <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
-                    <div className="card-info-btn-center card-info-btn" >edit</div>
+                    <div className="card-info-btn-center card-info-btn" >Edit</div>
                 </div>
             </div>
         )
@@ -71,7 +71,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    passProjectId: (id) => dispatch(handler.passProjectIdHandler(id))
+
 });
 
 
