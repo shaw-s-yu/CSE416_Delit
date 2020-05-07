@@ -54,8 +54,8 @@ const layerReducer = (state = initState, action) => {
             layerList,
             selected: null
         }
-    }  else if (action.type === actionCreators.LAYER_MOVE_DOWN) {
-        let {layerList} = state;
+    } else if (action.type === actionCreators.LAYER_MOVE_DOWN) {
+        let { layerList } = state;
         for (let i = 0; i < layerList.length - 1; i++)
             if (layerList[i]._id === action.id) {
                 let layer = layerList[i];
@@ -68,8 +68,6 @@ const layerReducer = (state = initState, action) => {
             layerList,
             selected: null
         }
-
-        return state;
     }
 
     return state;

@@ -1,5 +1,4 @@
 import React from 'react'
-import projectJson from './data.json'
 
 class MapManager extends React.Component {
     render() {
