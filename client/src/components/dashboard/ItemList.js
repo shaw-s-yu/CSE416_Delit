@@ -33,8 +33,8 @@ class ItemList extends React.Component {
     };
 
     handleGoEdit = (item) => {
-        if (!item || !this.props.selected) return
-        const type = this.props.selected === 'tileset' ? 'tileset' : 'project'
+        if (!item || !this.props.type) return
+        const type = this.props.type === 'tileset' ? 'tileset' : 'project'
         const { _id } = item
         this.props.history.push(`/${type}/${_id}`)
     };
@@ -48,7 +48,7 @@ class ItemList extends React.Component {
     }
 
     render() {
-        const { items, refetch, user, selected } = this.props;
+        const { items, refetch, user, type } = this.props;
         const numItem = items.length;
         const style = {
             height: numItem > 3 ? 600 : 300
@@ -69,7 +69,7 @@ class ItemList extends React.Component {
                             const cardStyle = {
                                 top: numItem > 3 ? row === 0 ? top1s2 : top2s2 : top1s1,
                                 left: col === 0 ? left1s : col === 1 ? left2s : left3s,
-                            }
+                            };
                             const { _id } = item;
                             return (
 
@@ -94,8 +94,8 @@ class ItemList extends React.Component {
                         handleOpen={this.handleDialogsOpen}
                         handleClose={this.handleDialogsClose}
                         handleSetItem={this.handleSetItem}
-                        selected={selected}
                         user={user}
+                        type={type}
                     /> : null
                 }
             </div>

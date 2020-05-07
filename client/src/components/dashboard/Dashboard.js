@@ -70,37 +70,47 @@ class Dashboard extends React.Component {
     };
 
     getProjects = (data) => {
-        console.log(data)
         const { selected } = this.state;
-        if (selected === 'all')
+        if (selected === 'all') {
             return {
                 items: data.user.projectsRelated,
-                amount: data.user.projectsRelatedAmount
+                amount: data.user.projectsRelatedAmount,
+                type: "project",
             };
-        if (selected === 'create')
+        }
+        if (selected === 'create') {
             return {
                 items: data.user.projectsOwned,
-                amount: data.user.projectsOwnedAmount
+                amount: data.user.projectsOwnedAmount,
+                type: "project",
             };
-        if (selected === 'share')
+        }
+        if (selected === 'share') {
             return {
                 items: data.user.projectsShared,
-                amount: data.user.projectsSharedAmount
+                amount: data.user.projectsSharedAmount,
+                type: "project",
             };
-        if (selected === 'Tilesets')
+        }
+        if (selected === 'Tilesets') {
             return {
                 items: data.user.tilesets,
-                amount: data.user.tilesetsAmount
+                amount: data.user.tilesetsAmount,
+                type: "tileset",
             };
-        if (selected === 'tilesetsOwned')
+        }
+        if (selected === 'tilesetsOwned') {
             return {
                 items: data.user.tilesetsOwned,
-                amount: data.user.tilesetsOwnedAmount
+                amount: data.user.tilesetsOwnedAmount,
+                type: "tileset",
             };
+        }
         if (selected === 'tilesetsShared') {
             return {
                 items: data.user.tilesetsShared,
-                amount: data.user.tilesetsSharedAmount
+                amount: data.user.tilesetsSharedAmount,
+                type: "tileset",
             };
         }
         return null
@@ -159,7 +169,7 @@ class Dashboard extends React.Component {
                                 return 'Wrong Sidebar Selection or needs to be developped';
                             if (!data) return 'error';
 
-                            const { items, amount } = this.getProjects(data);
+                            const { items, amount, type } = this.getProjects(data);
                             const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                             const refetch = {
                                 query: query,
@@ -169,9 +179,9 @@ class Dashboard extends React.Component {
                                 <>
                                     <ItemList
                                         history={history}
-                                        selected={selected}
                                         items={items}
                                         refetch={refetch}
+                                        type={type}
                                     />
                                     <Pagination
                                         className="dashboard-pagination center"

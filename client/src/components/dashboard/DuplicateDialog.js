@@ -9,11 +9,11 @@ class DuplicateDialog extends React.Component {
 
     state = {
         name: ''
-    }
+    };
 
     handleOnChange = (e) => {
         this.setState({ name: e.target.value })
-    }
+    };
 
     handleSubmit = (callback) => {
         callback({
@@ -22,16 +22,17 @@ class DuplicateDialog extends React.Component {
                 name: this.state.name,
                 owner: this.props.user._id
             }
-        })
+        });
         this.props.handleClose('duplicate')
-    }
+    };
 
 
     render() {
 
-        const { open, item, refetch, handleClose, selected } = this.props
-        if (!item) return null
-        const mutation = selected === 'tileset' ? MutationList.DUPLICATE_TILESET : MutationList.DUPLICATE_PROJECT
+        const { open, item, refetch, handleClose, type } = this.props;
+        if (!item) return null;
+        const mutation = type === 'tileset' ? MutationList.DUPLICATE_TILESET : MutationList.DUPLICATE_PROJECT;
+        const label = type === 'tileset'? "Enter Tileset Name" :"Enter Project Name";
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(duplicateProject, res) => (
@@ -47,7 +48,7 @@ class DuplicateDialog extends React.Component {
                                 <p>Everything will be copied</p>
                                 <TextField
                                     className="form-control"
-                                    label="Enter Project Name"
+                                    label={label}
                                     type="name"
                                     variant="outlined"
                                     size="small"

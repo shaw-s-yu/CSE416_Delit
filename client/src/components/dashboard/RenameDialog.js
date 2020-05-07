@@ -6,16 +6,13 @@ import { Mutation } from 'react-apollo';
 import MutationList from '../../graphql/Mutation';
 
 class RenameDialog extends React.Component {
-
-
-
     state = {
         name: ''
-    }
+    };
 
     handleOnChange = (e) => {
         this.setState({ name: e.target.value })
-    }
+    };
 
     handleSubmit = (callback) => {
         callback({
@@ -23,23 +20,23 @@ class RenameDialog extends React.Component {
                 id: this.props.item._id,
                 name: this.state.name === '' ? this.props.item.name : this.state.name
             }
-        })
+        });
         this.props.handleClose('rename')
-    }
+    };
 
 
     render() {
-
-        const { open, item, user, refetch, handleClose, selected } = this.props
-        if (!item) return null
-
-        const disabled = item.ownerInfo.username === user.username ? false : true
-        const mutation = selected === 'tileset' ? MutationList.UPDATE_TILESET : MutationList.UPDATE_PROJECT
+        const { open, item, user, refetch, handleClose, type } = this.props;
+        if (!item) return null;
+        const header = type === 'tileset'? "Rename Tileset" :"Rename Project";
+        const label = type === 'tileset'? "Enter Tileset Name" :"Enter Project Name";
+        const disabled = item.ownerInfo.username !== user.username;
+        const mutation = type === 'tileset' ? MutationList.UPDATE_TILESET : MutationList.UPDATE_PROJECT;
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(updateItem, res) => (
                     <Dialog
-                        header="Rename Project"
+                        header={header}
                         open={open}
                         actions={[
                             <Button key='1' onClick={this.handleSubmit.bind(this, updateItem)} disabled={disabled}>Enter</Button>,
@@ -50,7 +47,7 @@ class RenameDialog extends React.Component {
                                 {disabled ? <p className='red'>You are not the Owner, You cannot Rename</p> : null}
                                 <TextField
                                     className="form-control"
-                                    label="Enter Project Name"
+                                    label={label}
                                     type="name"
                                     variant="outlined"
                                     size="small"
