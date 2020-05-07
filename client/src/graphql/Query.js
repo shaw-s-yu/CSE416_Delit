@@ -164,7 +164,7 @@ export default {
         }
     }
     `,
-    GET_OWNED_TILESETS: graphql`
+    GET_MY_OWNED_TILESETS: graphql`
     query user(
         $userId: String!
         $pageSkip: Int!
@@ -190,6 +190,34 @@ export default {
                 }
             }
             tilesetsOwnedAmount(searchName: $search)
+        }
+    }`,
+    GET_MY_SHARED_TILESETS: graphql`
+    query user(
+        $userId: String!
+        $pageSkip: Int!
+        $search: String!
+    ){
+        user(
+            id:$userId
+        ){
+            tilesetsShared(
+                searchName: $search
+                skip: $pageSkip
+                ){
+                name
+                _id
+                imageId
+                ownerInfo{
+                    username
+                }
+                teamInfo{
+                    _id
+                    username
+                    picture
+                }
+            }
+            tilesetsSharedAmount(searchName: $search)
         }
     }`,
     GET_MAPS: graphql`

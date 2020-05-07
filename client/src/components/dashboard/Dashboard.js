@@ -60,11 +60,13 @@ class Dashboard extends React.Component {
             return QueryList.GET_MY_OWNED_PROJECTS;
         if (selected === 'share')
             return QueryList.GET_MY_SHARED_PROJECTS;
-        if (selected === 'allTilesets')
+        if (selected === 'Tilesets')
             return QueryList.GET_TILESETS;
-        if (selected === 'ownedTilesets')
-            return QueryList.GET_OWNED_TILESETS;
-        return QueryList.EMPTY_QUERY
+        if (selected === 'tilesetsOwned')
+            return QueryList.GET_MY_OWNED_TILESETS;
+        if (selected === 'tilesetsShared')
+            return QueryList.GET_MY_SHARED_TILESETS;
+        return QueryList.EMPTY_QUERY;
     };
 
     getProjects = (data) => {
@@ -85,16 +87,22 @@ class Dashboard extends React.Component {
                 items: data.user.projectsShared,
                 amount: data.user.projectsSharedAmount
             };
-        if (selected === 'allTilesets')
+        if (selected === 'Tilesets')
             return {
                 items: data.user.tilesets,
                 amount: data.user.tilesetsAmount
             };
-        if (selected === 'ownedTilesets')
+        if (selected === 'tilesetsOwned')
             return {
                 items: data.user.tilesetsOwned,
                 amount: data.user.tilesetsOwnedAmount
             };
+        if (selected === 'tilesetsShared') {
+            return {
+                items: data.user.tilesetsShared,
+                amount: data.user.tilesetsSharedAmount
+            };
+        }
         return null
     };
 
