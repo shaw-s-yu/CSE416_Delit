@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
     name: String,
+    name_lower: String,
     owner: String,
     img: String,
     editors: [String],
     mapId: String,
     tilesetId: [String],
     imageId: String,
-    mapId: String,
     lastUpdate: { type: Date, default: Date.now },
 });
 

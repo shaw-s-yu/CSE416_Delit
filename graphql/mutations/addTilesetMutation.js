@@ -58,7 +58,8 @@ module.exports = {
         // tileHeight: { type: new GraphQLNonNull(GraphQLInt) },
     },
     resolve: (root, params) => {
-        const newTileset = new TilesetModel(params).save()
+        params.name_lower = params.name.toLowerCase();
+        const newTileset = new TilesetModel(params).save();
         if (!newTileset) {
             throw new Error('Error');
         }

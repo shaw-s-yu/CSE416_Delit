@@ -22,11 +22,20 @@ class Dashboard extends React.Component {
         selected: 'all',
         page: 1,
         search: '',
+        sortBt: 'date',
     };
 
     handleSearchChange = (e) => {
-        this.setState({ search: e.target.value })
-    }
+        this.setState({ search: e.target.value });
+    };
+
+    handleSortByName = () => {
+        this.setState({sortBt: 'name'});
+    };
+
+    handleSortByDate = () => {
+        this.setState({sortBt: 'date'});
+    };
 
     handleSelectSide = (type) => {
         this.setState({ selected: type })
@@ -37,7 +46,7 @@ class Dashboard extends React.Component {
     };
 
     handleDialogClose = (type) => {
-        const { dialogType, selected } = this.state
+        const { dialogType, selected } = this.state;
         this.setState({
             dialogOpen: false,
             selected: type === 'cancel' ?
@@ -116,6 +125,7 @@ class Dashboard extends React.Component {
         return null
     };
 
+
     handlePagination = (e, value) => {
         this.setState({ page: value })
     };
@@ -133,7 +143,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page, search, dialogOpen, dialogType } = this.state;
+        const { showSidebar, selected, user, page, search, dialogOpen, dialogType, sortBt } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -160,7 +170,11 @@ class Dashboard extends React.Component {
 
                 <div className="dashboard-display" style={displayStyle}>
                     <Searchbar value={search} onChange={this.handleSearchChange} />
-                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search }} fetchPolicy={'network-only'}>
+                    <div className="dashboard-sort-btn-group">
+                        <button className="dashboard-sort-btn" onClick={this.handleSortByName}>Name <i className="fa fa-arrow-down dashboard-sort-icon"/></button>
+                        <button className="dashboard-sort-btn" onClick={this.handleSortByDate}>Last Modified <i className="fa fa-arrow-down dashboard-sort-icon"/></button>
+                    </div>
+                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBt: sortBt }} fetchPolicy={'network-only'}>
                         {({ loading, error, data }) => {
                             if (loading)
                                 return <CircularProgress className="dashboard-loading" />;
@@ -173,8 +187,8 @@ class Dashboard extends React.Component {
                             const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                             const refetch = {
                                 query: query,
-                                variables: { userId: user._id, pageSkip: pageSkip, search: search }
-                            }
+                                variables: { userId: user._id, pageSkip: pageSkip, search: search, sortBt: sortBt}
+                            };
                             return (
                                 <>
                                     <ItemList

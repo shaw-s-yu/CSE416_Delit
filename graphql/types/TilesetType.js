@@ -12,6 +12,9 @@ module.exports = new GraphQLObjectType({
             name: {
                 type: GraphQLString
             },
+            name_lower: {
+                type: GraphQLString
+            },
             owner: {
                 type: GraphQLString,
             },
@@ -29,15 +32,15 @@ module.exports = new GraphQLObjectType({
             teamInfo: {
                 type: new GraphQLList(UserType),
                 resolve: (parent, args) => {
-                    let users = []
+                    let users = [];
                     let user = UserModel.findById(parent.owner);
-                    if (!user) throw new Error('Error')
-                    else users.push(user)
+                    if (!user) throw new Error('Error');
+                    else users.push(user);
                     parent.editors.forEach(e => {
-                        let user = UserModel.findById(e)
-                        if (!user) throw new Error('Error')
+                        let user = UserModel.findById(e);
+                        if (!user) throw new Error('Error');
                         else users.push(user)
-                    })
+                    });
                     return users
                 }
             },

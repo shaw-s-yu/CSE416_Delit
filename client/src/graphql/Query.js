@@ -11,7 +11,7 @@ export default {
             name
             editors
             owner
-            ownerInfo{  
+            ownerInfo{
                 username
             }
         }
@@ -21,6 +21,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -28,6 +29,7 @@ export default {
             projectsOwned(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id
@@ -49,6 +51,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -56,6 +59,7 @@ export default {
             projectsRelated(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id
@@ -77,6 +81,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -84,6 +89,7 @@ export default {
             projectsShared(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id
@@ -121,11 +127,32 @@ export default {
         }
     }
     `,
+    GET_TILESET: graphql`
+    query tileset($id: String!){
+        tileset(id:$id){
+            _id
+            name
+            ownerInfo{
+                username
+            }
+            teamInfo{
+                _id
+                username
+            }
+            imageId
+            width
+            height
+            tileWidth
+            tileHeight
+        }
+    }
+    `,
     GET_TILESETS: graphql`
     query user(
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -133,6 +160,7 @@ export default {
             tilesets(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
             ){
                 name
                 _id
@@ -181,6 +209,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -188,6 +217,7 @@ export default {
             tilesetsOwned(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id
@@ -209,6 +239,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -216,6 +247,7 @@ export default {
             tilesetsShared(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id

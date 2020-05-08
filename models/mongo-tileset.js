@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var tilesetSchema = new Schema({
     name: String,
+    name_lower: String,
     owner: String,
     editors: [String],
     

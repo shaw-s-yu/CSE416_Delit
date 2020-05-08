@@ -1,7 +1,6 @@
 import React from 'react'
 import './tools.css'
 import { connect } from 'react-redux';
-import * as handler from "../../store/database/DashboardHandler";
 import axios from 'axios'
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { arrayBufferToBase64 } from '../controller/ImageController'
