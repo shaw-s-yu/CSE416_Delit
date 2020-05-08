@@ -301,24 +301,22 @@ export default {
 
     ADD_MAP: gql`
     mutation addMap(
-        $id: String,
-        $width: Number,
-        $height: Number,
+        $width: Int!,
+        $height: Int!,
         $infinite: Boolean,
         $layers: [String],
-        $nextlayerid: Number,
-        $nextobjectid: Number,
-        $orientation: String,
-        $renderorder: String,
-        $tiledversion: String,
-        $tileheight: Number,
-        $tilewidth: Number,
+        $nextlayerid: Int!,
+        $nextobjectid: Int!,
+        $orientation: String!,
+        $renderorder: String!,
+        $tiledversion: String!,
+        $tileheight: Int!,
+        $tilewidth: Int!,
         $tilesets: [String],
-        $type: String,
-        $version: Number
+        $type: String!,
+        $version: Float!
     ){
         addMap(
-            id: $id
             width: $width
             height: $height
             infinite: $infinite
@@ -334,7 +332,6 @@ export default {
             type: $type
             version: $version
         ){
-            id
             width
             height
             infinite
@@ -362,21 +359,21 @@ export default {
 
     ADD_LAYER: gql`
     mutation addLayer(
-        $data: [Number],
-        $width: Number,
-        $height: Number,
-        $id: Number,
+        $data: [Int],
+        $width: Int!,
+        $height: Int!,
+        $idNumber: Int,
         $name: String,
-        $opacity: Number,
+        $opacity: Int!,
         $type: String,
         $visible: Boolean,
-        $x: Number,
-        $y: Number,
+        $x: Int!,
+        $y: Int!,
     ){
         addLayer(
             data: $data
             height: $height
-            id: $id
+            idNumber: $idNumber
             name: $name
             opacity: $opacity
             type: $type
@@ -387,7 +384,7 @@ export default {
         ){
             data
             height
-            id
+            idNumber
             name
             opacity
             type

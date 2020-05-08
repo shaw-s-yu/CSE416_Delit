@@ -5,7 +5,7 @@ var LayerSchema = new Schema({
     data: [Number],
     width: Number,
     height: Number,
-    id: Number,
+    idNumber: Number,
     name: String,
     opacity: Number,
     type: String,

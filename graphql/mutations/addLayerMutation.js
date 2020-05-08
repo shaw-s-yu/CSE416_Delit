@@ -12,10 +12,6 @@ const LayerType = require('../types/LayerType')
 module.exports = {
     type: LayerType,
     args: {
-        id: {
-            name: '_id',
-            type: GraphQLString
-        },
         data: {
             type: new GraphQLList(GraphQLInt)
         },
@@ -25,7 +21,7 @@ module.exports = {
         height: {
             type: new GraphQLNonNull(GraphQLInt)
         },
-        id: {
+        idNumber: {
             type: GraphQLInt
         },
         name: {
