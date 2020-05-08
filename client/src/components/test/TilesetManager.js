@@ -20,8 +20,8 @@ class TilesetManager extends React.Component {
                     width: t.width,
                     height: t.height,
 
-                    tilewidth: t.tilewidth,
-                    tileheight: t.tileheight,
+                    tileWidth: t.tileWidth,
+                    tileHeight: t.tileHeight,
                     tilecount: t.tilecount,
                     projectName: t.projectName,
                     columns: t.columns,

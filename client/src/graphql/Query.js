@@ -117,8 +117,8 @@ export default {
             imageId
             width
             height
-            tilewidth
-            tileheight
+            tileWidth
+            tileHeight
             columns
             firstgid
             margin
@@ -144,6 +144,11 @@ export default {
             height
             tileWidth
             tileHeight
+            columns
+            firstgid
+            margin
+            spacing
+            tilecount
         }
     }
     `,
@@ -178,32 +183,32 @@ export default {
         }
     }
     `,
-    GET_TILESET: graphql`
-    query tileset($id: String!){
-        tileset(id:$id){
-            _id
-            name
-            ownerInfo{
-                username
-            }
-            teamInfo{
-                _id
-                username
-            }
-            imageId
-            width
-            height
-            tilewidth
-            tileheight
-            columns
-            firstgid
-            margin
-            spacing
-            tilecount
+    // GET_TILESET: graphql`
+    // query tileset($id: String!){
+    //     tileset(id:$id){
+    //         _id
+    //         name
+    //         ownerInfo{
+    //             username
+    //         }
+    //         teamInfo{
+    //             _id
+    //             username
+    //         }
+    //         imageId
+    //         width
+    //         height
+    //         tilewidth
+    //         tileheight
+    //         columns
+    //         firstgid
+    //         margin
+    //         spacing
+    //         tilecount
 
-        }
-    }
-    `,
+    //     }
+    // }
+    // `,
     GET_MY_OWNED_TILESETS: graphql`
     query user(
         $userId: String!
@@ -289,8 +294,8 @@ export default {
                 orientation
                 renderorder
                 tiledversion
-                tilewidth
-                tilesheight
+                tileWidth
+                tilesHeight
                 tilesets{
                     columns
                     firstgid
@@ -301,8 +306,8 @@ export default {
                     name
                     spacing
                     tilecount
-                    tileheight
-                    tilewidth
+                    tileHeight
+                    tileWidth
                 }
                 type
                 version

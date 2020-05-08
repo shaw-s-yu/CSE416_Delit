@@ -22,8 +22,8 @@ var tilesetSchema = new Schema({
     margin: Number,
     spacing: Number,
     tilecount: Number,
-    tileheight: Number,
-    tilewidth: Number,
+    tileHeight: Number,
+    tileWidth: Number,
 
     lastUpdate: { type: Date, default: Date.now },
 })

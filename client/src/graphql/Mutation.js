@@ -97,8 +97,8 @@ export default {
         $owner:String!
         $editors:[String]
         $imageId:String!
-        $tilewidth:Int
-        $tileheight:Int
+        $tileWidth:Int
+        $tileHeight:Int
         $width: Int!
         $height:Int!
 
@@ -116,8 +116,8 @@ export default {
             imageId:$imageId
             width:$width
             height:$height
-            tilewidth:$tilewidth
-            tileheight:$tileheight
+            tileWidth:$tileWidth
+            tileHeight:$tileHeight
             margin:$margin
             spacing:$spacing
             tilecount:$tilecount
@@ -127,8 +127,8 @@ export default {
             imageId
             width
             height
-            tilewidth
-            tileheight
+            tileWidth
+            tileHeight
             margin
             spacing
             tilecount
@@ -240,8 +240,8 @@ export default {
                 $name: String,
                 $spacing: Number,
                 $tilecount: Number,
-                $tileheight: Number,
-                $tilewidth: Number
+                $tileHeight: Number,
+                $tileWidth: Number
             $type: String,
             $version: Number
     ){
@@ -275,8 +275,8 @@ export default {
                     name: $name,
                     spacing: $spacing,
                     tilecount: $tilecount,
-                    tileheight: $tileheight,
-                    tilewidth: $tilewidth
+                    tileHeight: $tileHeight,
+                    tileWidth: $tileWidth
                 type: $type,
                 version: $version,
             ){
@@ -310,8 +310,8 @@ export default {
                     name,
                     spacing,
                     tilecount,
-                    tileheight,
-                    tilewidth
+                    tileHeight,
+                    tileWidth
                 type,
                 version,
         }

@@ -73,10 +73,10 @@ module.exports = new GraphQLObjectType({
             tilecount: {
                 type: GraphQLInt
             },
-            tileheight: {
+            tileHeight: {
                 type: GraphQLInt
             },
-            tilewidth: {
+            tileWidth: {
                 type: GraphQLInt
             }
         }

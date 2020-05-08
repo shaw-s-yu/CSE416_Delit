@@ -15,8 +15,8 @@ export default {
             owner
             width
             height
-            tilewidth
-            tileheight
+            tileWidth
+            tileHeight
             spacing
             margin
             columns
@@ -45,8 +45,8 @@ export default {
                 imageId
                 width
                 height
-                tilewidth
-                tileheight
+                tileWidth
+                tileHeight
                 ownerInfo{
                     username
                 }
@@ -72,8 +72,8 @@ export default {
                 imageId
                 width
                 height
-                tilewidth
-                tileheight
+                tileWidth
+                tileHeight
                 ownerInfo{
                     username
                 }
@@ -99,8 +99,8 @@ export default {
                 imageId
                 width
                 height
-                tilewidth
-                tileheight
+                tileWidth
+                tileHeight
                 ownerInfo{
                     username
                 }

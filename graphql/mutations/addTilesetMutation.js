@@ -45,10 +45,10 @@ module.exports = {
         tilecount: {
             type: GraphQLInt
         },
-        tileheight: {
+        tileHeight: {
             type: GraphQLInt
         },
-        tilewidth: {
+        tileWidth: {
             type: GraphQLInt
         },
         // image: { type: new GraphQLNonNull(GraphQLString) },
