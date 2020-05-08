@@ -272,7 +272,7 @@ export default {
     GET_ALL_MAPS: graphql`
     {
         maps{
-            id
+            _id
             width
             height
             infinite
@@ -292,7 +292,7 @@ export default {
     GET_MAP: graphql`
     query map($id: String!){
         map(id:$id){
-            id
+            _id
             width
             height
             infinite
@@ -314,9 +314,10 @@ export default {
     GET_ALL_LAYERS: graphql`
     {
         layers{
+            _id
+            idNumber
             data
             height
-            id
             name
             opacity
             type
@@ -330,9 +331,10 @@ export default {
     GET_LAYER: graphql`
     query layer($id: String!){
         layer(id:$id){
+            _id
+            idNumber
             data
             height
-            id
             name
             opacity
             type

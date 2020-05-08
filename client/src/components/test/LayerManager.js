@@ -13,7 +13,7 @@ class LayerManager extends React.Component {
                 variables: {
                     data: l.data,
                     height: l.height,
-                    id: l.id,
+                    idNumber: l.idNumber,
                     name: l.name,
                     opacity: l.opacity,
                     type: l.type,
@@ -57,6 +57,9 @@ class LayerManager extends React.Component {
                                                 <button className='test-btn' onClick={() => this.handleAddLayer(addLayers)}>ADD</button>
                                                 <button className='test-btn' onClick={() => this.handleClear(clearLayers)}>CLEAR</button>
                                             </div>
+                                            {
+                                                console.log(layers)
+                                            }
                                             {layers.map(p => <div key={v1()} className="test-context">{JSON.stringify(p)}</div>)}
                                         </div>
                                     )}

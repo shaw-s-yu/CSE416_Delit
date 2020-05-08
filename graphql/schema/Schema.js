@@ -83,7 +83,7 @@ const mutation = new GraphQLObjectType({
             clearMaps: clearMapsMutation,
 
             addLayer: addLayerMutation,
-            clearLayer: clearLayersMutation,
+            clearLayers: clearLayersMutation,
         }
     }
 });

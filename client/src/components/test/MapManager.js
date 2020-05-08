@@ -44,6 +44,8 @@ class MapManager extends React.Component {
         return (
             <Query query={QueryList.GET_ALL_MAPS}>
                 {(mapsRes) => {
+                    console.log(mapsRes.data)
+
                     if (mapsRes.data)
                         console.log(mapsRes.data)
                     console.log("4444444444444444444444444")

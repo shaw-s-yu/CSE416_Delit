@@ -8,6 +8,9 @@ const { GraphQLObjectType,
 module.exports = new GraphQLObjectType({
     name: "layers",
     fields:{
+        _id:{
+            type: GraphQLString
+        },
         data: {
             type: new GraphQLList(GraphQLInt)
         },
@@ -17,7 +20,7 @@ module.exports = new GraphQLObjectType({
         height: {
             type: new GraphQLNonNull(GraphQLInt)
         },
-        id: {
+        idNumber: {
             type: GraphQLInt
         },
         name: {

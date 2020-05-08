@@ -52,6 +52,9 @@ class ProjectManager extends React.Component {
                                                 <button className='test-btn' onClick={() => this.handleAddProject(addProjects)}>ADD</button>
                                                 <button className='test-btn' onClick={() => this.handleClear(clearProjects)}>CLEAR</button>
                                             </div>
+                                            {
+                                                console.log(projects)
+                                            }
                                             {projects.map(p => <div key={v1()} className="test-context">{JSON.stringify(p)}</div>)}
                                         </div>
                                     )}
