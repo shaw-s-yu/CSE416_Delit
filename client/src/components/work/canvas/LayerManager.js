@@ -3,6 +3,7 @@ import ImageLayer from './ImageLayer'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
 import TopClickableLayer from './TopClickableLayer'
+import MapjsonController from '../../controller/MapjsonController'
 
 class LayerManager extends React.Component {
 
@@ -56,6 +57,11 @@ class LayerManager extends React.Component {
         this.setState({ click_layer })
     }
 
+    UNSAFE_componentWillMount() {
+        const { map } = this.props
+        this.mapjsonController = new MapjsonController(map)
+    }
+
     render = () => {
         const { imgWidth, imgHeight, click_layer } = this.state;
         let { canvas } = this.props;
@@ -76,8 +82,64 @@ const mapStateToProps = (state) => {
     let selected = tileset.selected ? tileset.selected : null;
     return {
         selected: selected,
+        map: {
+
+            "width": 100,
+            "height": 100,
+            "infinite": false,
+            "layers": [
+                {
+                    "data": [],
+                    "height": 100,
+                    "id": 1,
+                    "name": "backgroundLayer",
+                    "opacity": 1,
+                    "type": "tilelayer",
+                    "visible": true,
+                    "width": 100,
+                    "x": 0,
+                    "y": 0
+                },
+                {
+                    "data": [],
+                    "height": 100,
+                    "id": 2,
+                    "name": "blockedLayer",
+                    "opacity": 1,
+                    "type": "tilelayer",
+                    "visible": true,
+                    "width": 100,
+                    "x": 0,
+                    "y": 0
+                }
+            ],
+            "nextlayerid": 3,
+            "nextobjectid": 1,
+            "orientation": "orthogonal",
+            "renderorder": "right-down",
+            "tiledversion": "2019.03.13",
+            "tileheight": 150,
+            "tilesets": [
+                {
+                    "columns": 4,
+                    "firstgid": 1,
+                    "image": "tiles.png",
+                    "imageheight": 600,
+                    "imagewidth": 600,
+                    "margin": 0,
+                    "name": "tiles",
+                    "spacing": 0,
+                    "tilecount": 16,
+                    "tileheight": 150,
+                    "tilewidth": 150
+                }
+            ],
+            "tilewidth": 150,
+            "type": "map",
+            "version": 1.2
+        }
     }
-};
+}
 
 
 const mapDispatchToProps = (dispatch) => ({
