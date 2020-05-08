@@ -3,7 +3,8 @@ const { GraphQLObjectType,
         GraphQLNonNull, 
         GraphQLInt,
         GraphQLBoolean,
-        GraphQLList, } = require('graphql');
+        GraphQLList,
+        GraphQLFloat } = require('graphql');
 
 
         // const Layers = new GraphQLObjectType({
@@ -84,6 +85,9 @@ const { GraphQLObjectType,
 const MapJsonFile = new GraphQLObjectType({
     name: "mapJsonFile",
     fields: {
+        // id:{
+        //     type: GraphQLString
+        // },
         width: {
             type: GraphQLInt
         },
@@ -93,10 +97,10 @@ const MapJsonFile = new GraphQLObjectType({
         infinite: {
             type: GraphQLBoolean
         },
-        nextLayerid: {
+        nextlayerid: {
             type: new GraphQLNonNull(GraphQLInt)
         },
-        nextObjectid: {
+        nextobjectid: {
             type: new GraphQLNonNull(GraphQLInt)
         },
         orientation: {
@@ -111,21 +115,21 @@ const MapJsonFile = new GraphQLObjectType({
         tilewidth: {
             type: new GraphQLNonNull(GraphQLInt)
         },
-        tilesheight: {
+        tileheight: {
             type: new GraphQLNonNull(GraphQLInt)
         },
         type: {
             type: new GraphQLNonNull(GraphQLString)
         },
         version: {
-            type: new GraphQLNonNull(GraphQLInt)
+            type: new GraphQLNonNull(GraphQLFloat)
         },
         layers: {
-            type: new GraphQLNonNull(GraphQLString)
+            type: new GraphQLList(GraphQLString)
         },
 
         tilesets: {
-            type: new GraphQLNonNull(GraphQLString)
+            type: new GraphQLList(GraphQLString)
         },
 
     }
@@ -138,13 +142,56 @@ module.exports = new GraphQLObjectType({
             _id: {
                 type: GraphQLString
             },
-            mapJsonFile:{
-                type: MapJsonFile
-            }
+            id:{
+                type: GraphQLString
+            },
+            width: {
+                type: GraphQLInt
+            },
+            height: {
+                type: GraphQLInt
+            },
+            infinite: {
+                type: GraphQLBoolean
+            },
+            nextlayerid: {
+                type: new GraphQLNonNull(GraphQLInt)
+            },
+            nextobjectid: {
+                type: new GraphQLNonNull(GraphQLInt)
+            },
+            orientation: {
+                type: new GraphQLNonNull(GraphQLString)
+            },
+            renderorder: {
+                type: new GraphQLNonNull(GraphQLString)
+            },
+            tiledversion: {
+                type: new GraphQLNonNull(GraphQLString)
+            },
+            tilewidth: {
+                type: new GraphQLNonNull(GraphQLInt)
+            },
+            tileheight: {
+                type: new GraphQLNonNull(GraphQLInt)
+            },
+            type: {
+                type: new GraphQLNonNull(GraphQLString)
+            },
+            version: {
+                type: new GraphQLNonNull(GraphQLFloat)
+            },
+            layers: {
+                type: new GraphQLList(GraphQLString)
+            },
+
+            tilesets: {
+                type: new GraphQLList(GraphQLString)
+            },
         }
     }
 });
 
 // const UserType = require('./UserType')
-const LayerType = require('./LayerType')
-const TilesetType = require('./TilesetType')
+// const LayerType = require('./LayerType')
+// const TilesetType = require('./TilesetType')

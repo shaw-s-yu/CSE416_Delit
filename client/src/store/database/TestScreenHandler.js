@@ -15,3 +15,7 @@ export const tilesetAddHandler = (item) => (dispatch, getState) => {
 export const clearHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.TEST_CLEAR });
 }
+
+export const layerAddHandler = (item) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.TEST_LAYER_ADD, item });
+}

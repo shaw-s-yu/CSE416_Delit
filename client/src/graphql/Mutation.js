@@ -209,119 +209,198 @@ export default {
     `,
 
 
+    // ADD_MAP: gql`
+    // mutation addMap(
+    //         $width: Number!,
+    //         $height: Number,
+    //         $infinite: Boolean,
+    //         $layers: [String],
+    //         $nextLayerid: Number,
+    //         $nextObjectid: Number,
+    //         $orientation: String,
+    //         $renderorder: String,
+    //         $tiledversion: String,
+    //         $tilewidth: Number,
+    //         $tilesheight: Number,
+    //         $tilesets: [String],
+    //         $type: String,
+    //         $version: Number
+    // ){
+    //     addMap(
+    //             width: $width,
+    //             height: $height,
+    //             infinite: $infinite,
+    //                 data: $data,
+    //                 width: $width,
+    //                 height: $height,
+    //                 id: $id,
+    //                 name: $name,
+    //                 opacity: $opacity,
+    //                 type: $type,
+    //                 visible: $visible,
+    //                 x: $x,
+    //                 y: $y,
+    //             nextLayerid: $nextLayerid,
+    //             nextObjectid: $nextObjectid,
+    //             orientation: $orientation,
+    //             renderorder: $renderorder,
+    //             tiledversion: $tiledversion,
+    //             tilewidth: $tilewidth,
+    //             tilesheight: $tilesheight,
+    //                 columns: $columns,
+    //                 firstgid: $firstgid,
+    //                 imageId: $imageId,
+    //                 width: $width,
+    //                 height: $height,
+    //                 margin: $margin,
+    //                 name: $name,
+    //                 spacing: $spacing,
+    //                 tilecount: $tilecount,
+    //                 tileHeight: $tileHeight,
+    //                 tileWidth: $tileWidth
+    //             type: $type,
+    //             version: $version,
+    //         ){
+    //                 width,
+    //                 height,
+    //                 infinite,
+    //                 layers
+    //                     data,
+    //                     width,
+    //                     height,
+    //                     id,
+    //                     name,
+    //                     opacity,
+    //                     type,
+    //                     visible,
+    //                     x,
+    //                     y,
+    //             nextLayerid,
+    //             nextObjectid,
+    //             orientation,
+    //             renderorder,
+    //             tiledversion,
+    //             tilewidth,
+    //             tilesheight,
+    //                 columns,
+    //                 firstgid,
+    //                 imageId,
+    //                 width,
+    //                 height,
+    //                 margin,
+    //                 name,
+    //                 spacing,
+    //                 tilecount,
+    //                 tileHeight,
+    //                 tileWidth
+    //             type,
+    //             version,
+    //     }
+    // }
+    // `,
+
     ADD_MAP: gql`
     mutation addMap(
-            $width: Number!,
-            $height: Number,
-            $infinite: Boolean,
-                $data: [Number],
-                $width: Number,
-                $height: Number,
-                $id: Number,
-                $name: String,
-                $opacity: Number,
-                $type: String,
-                $visible: Boolean,
-                $x: Number,
-                $y: Number
-            $nextLayerid: Number,
-            $nextObjectid: Number,
-            $orientation: String,
-            $renderorder: String,
-            $tiledversion: String,
-            $tilewidth: Number,
-            $tilesheight: Number,
-                $columns: Number,
-                $firstgid: Number,
-                $imageId: String,
-                $width: Number,
-                $height: Number,
-                $margin: Number,
-                $name: String,
-                $spacing: Number,
-                $tilecount: Number,
-                $tileHeight: Number,
-                $tileWidth: Number
-            $type: String,
-            $version: Number
+        $id: String,
+        $width: Number,
+        $height: Number,
+        $infinite: Boolean,
+        $layers: [String],
+        $nextlayerid: Number,
+        $nextobjectid: Number,
+        $orientation: String,
+        $renderorder: String,
+        $tiledversion: String,
+        $tileheight: Number,
+        $tilewidth: Number,
+        $tilesets: [String],
+        $type: String,
+        $version: Number
     ){
         addMap(
-                width: $width,
-                height: $height,
-                infinite: $infinite,
-                    data: $data,
-                    width: $width,
-                    height: $height,
-                    id: $id,
-                    name: $name,
-                    opacity: $opacity,
-                    type: $type,
-                    visible: $visible,
-                    x: $x,
-                    y: $y,
-                nextLayerid: $nextLayerid,
-                nextObjectid: $nextObjectid,
-                orientation: $orientation,
-                renderorder: $renderorder,
-                tiledversion: $tiledversion,
-                tilewidth: $tilewidth,
-                tilesheight: $tilesheight,
-                    columns: $columns,
-                    firstgid: $firstgid,
-                    imageId: $imageId,
-                    width: $width,
-                    height: $height,
-                    margin: $margin,
-                    name: $name,
-                    spacing: $spacing,
-                    tilecount: $tilecount,
-                    tileHeight: $tileHeight,
-                    tileWidth: $tileWidth
-                type: $type,
-                version: $version,
-            ){
-                    width,
-                    height,
-                    infinite,
-                    layers
-                        data,
-                        width,
-                        height,
-                        id,
-                        name,
-                        opacity,
-                        type,
-                        visible,
-                        x,
-                        y,
-                nextLayerid,
-                nextObjectid,
-                orientation,
-                renderorder,
-                tiledversion,
-                tilewidth,
-                tilesheight,
-                    columns,
-                    firstgid,
-                    imageId,
-                    width,
-                    height,
-                    margin,
-                    name,
-                    spacing,
-                    tilecount,
-                    tileHeight,
-                    tileWidth
-                type,
-                version,
+            id: $id
+            width: $width
+            height: $height
+            infinite: $infinite
+            layers: $layers
+            nextlayerid: $nextlayerid
+            nextobjectid: $nextobjectid
+            orientation: $orientation
+            renderorder: $renderorder
+            tiledversion: $tiledversion
+            tileheight: $tileheight
+            tilewidth: $tilewidth
+            tilesets: $tilesets
+            type: $type
+            version: $version
+        ){
+            id
+            width
+            height
+            infinite
+            layers
+            nextlayerid
+            nextobjectid
+            orientation
+            renderorder
+            tiledversion
+            tileheight
+            tilewidth
+            tilesets
+            type
+            version
         }
-    }
-    `,
+    }`
+    ,
 
 
-    CLEAR_MAP: gql`
+    CLEAR_MAPS: gql`
     mutation clearMaps{
         clearMaps
     }
     `,
+
+    ADD_LAYER: gql`
+    mutation addLayer(
+        $data: [Number],
+        $width: Number,
+        $height: Number,
+        $id: Number,
+        $name: String,
+        $opacity: Number,
+        $type: String,
+        $visible: Boolean,
+        $x: Number,
+        $y: Number,
+    ){
+        addLayer(
+            data: $data
+            height: $height
+            id: $id
+            name: $name
+            opacity: $opacity
+            type: $type
+            visible: $visible
+            width: $width
+            x: $x
+            y: $y
+        ){
+            data
+            height
+            id
+            name
+            opacity
+            type
+            visible
+            width
+            x
+            y
+        }
+    }
+    `,
+    CLEAR_LAYERS: gql`
+    mutation clearLayers{
+        clearLayers
+    }
+    `
 }

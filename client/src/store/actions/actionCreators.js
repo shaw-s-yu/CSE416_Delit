@@ -44,3 +44,5 @@ export const TEST_MAP_ADD = 'TEST_MAP_ADD';
 export const TEST_TILESET_ADD = 'TEST_TILESET_ADD';
 export const TEST_CLEAR = 'TEST_CLEAR';
 
+export const TEST_LAYER_ADD = 'TEST_LAYER_ADD';
+

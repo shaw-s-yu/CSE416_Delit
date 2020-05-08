@@ -269,49 +269,78 @@ export default {
             tilesetsSharedAmount(searchName: $search)
         }
     }`,
-    GET_MAPS: graphql`
-    query map($id: String!){
-        maps(id:$id){
-            _id
-            mapJsonFile{
-                width
-                height
-                infinite
-                layers{
-                    data
-                    width
-                    height
-                    id
-                    name
-                    opacity
-                    type
-                    visible
-                    x
-                    y
-                }
-                nextLayerid
-                nextObjectid
-                orientation
-                renderorder
-                tiledversion
-                tileWidth
-                tilesHeight
-                tilesets{
-                    columns
-                    firstgid
-                    imageId
-                    width
-                    height
-                    margin
-                    name
-                    spacing
-                    tilecount
-                    tileHeight
-                    tileWidth
-                }
-                type
-                version
-            }
+    GET_ALL_MAPS: graphql`
+    {
+        maps{
+            id
+            width
+            height
+            infinite
+            layers
+            nextlayerid
+            nextobjectid
+            orientation
+            renderorder
+            tiledversion
+            tileheight
+            tilewidth
+            tilesets
+            type
+            version
         }
     }`,
+    GET_MAP: graphql`
+    query map($id: String!){
+        map(id:$id){
+            id
+            width
+            height
+            infinite
+            layers
+            nextlayerid
+            nextobjectid
+            orientation
+            renderorder
+            tiledversion
+            tileheight
+            tilewidth
+            tilesets
+            type
+            version
+        }
+    }
+    `,
+
+    GET_ALL_LAYERS: graphql`
+    {
+        layers{
+            data
+            height
+            id
+            name
+            opacity
+            type
+            visible
+            width
+            x
+            y
+        }
+    }
+    `,
+    GET_LAYER: graphql`
+    query layer($id: String!){
+        layer(id:$id){
+            data
+            height
+            id
+            name
+            opacity
+            type
+            visible
+            width
+            x
+            y
+        }
+    }
+    `,
 }

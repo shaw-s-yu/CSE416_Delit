@@ -46,6 +46,7 @@ class TilesetManager extends React.Component {
                 {(tilesetsRes) => {
                     if (tilesetsRes.data)
                         console.log(tilesetsRes.data)
+                        console.log("2222222222222222222222222")
                     if (tilesetsRes.loading) return 'loading'
                     if (tilesetsRes.error) return 'error'
                     const { tilesets } = tilesetsRes.data

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var mapSchema = new Schema({
+    id: String,
     width: Number,
     height: Number,
     infinite: Boolean,
@@ -17,14 +18,14 @@ var mapSchema = new Schema({
     //     x: Number,
     //     y: Number
     // }],
-    layers: String,
-    nextLayerid: Number,
-    nextObjectid: Number,
+    layers: [String],
+    nextlayerid: Number,
+    nextobjectid: Number,
     orientation: String,
     renderorder: String,
     tiledversion: String,
-    tileWidth: Number,
-    tilesheight: Number,
+    tilewidth: Number,
+    tileheight: Number,
     // tilesets: [{
     //     columns: Number,
     //     firstgid: Number,
@@ -38,7 +39,7 @@ var mapSchema = new Schema({
     //     tileheight: Number,
     //     tilewidth: Number
     // }],
-    tilesets: String,
+    tilesets: [String],
     type: String,
     version: Number
 });

@@ -37,6 +37,7 @@ class ProjectManager extends React.Component {
                 {(projectsRes) => {
                     if (projectsRes.data)
                         console.log(projectsRes.data.projects)
+                        console.log("1111111111111111111111111")
                     if (projectsRes.loading) return 'loading'
                     if (projectsRes.error) return 'error'
                     const { projects } = projectsRes.data

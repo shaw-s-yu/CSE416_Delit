@@ -10,6 +10,9 @@ const projectQuery = require('../queries/projectsQuery')
 const projectsQuery = require('../queries/projectQuery')
 const userQuery = require('../queries/userQuery')
 
+const layerQuery = require('../queries/layerQuery')
+const layersQuery = require('../queries/layersQuery')
+
 const tilesetQuery = require('../queries/tilesetQuery')
 const tilesetsQuery = require('../queries/tilesetsQuery')
 const clearTilesetsMutation = require('../mutations/clearTilesetsMutation')
@@ -20,8 +23,12 @@ const duplicateTilesetMutation = require('../mutations/duplicateTilesetMutation'
 
 
 const mapQuery = require('../queries/mapQuery')
+const mapsQuery = require('../queries/mapsQuery')
 const addMapMutation = require('../mutations/addMapMutation')
 const clearMapsMutation = require('../mutations/clearMapsMutation')
+
+const addLayerMutation = require('../mutations/addLayerMutation')
+const clearLayersMutation = require('../mutations/clearLayersMutation')
 
 
 const {
@@ -40,7 +47,12 @@ const queryType = new GraphQLObjectType({
             user: userQuery,
             tileset: tilesetQuery,
             tilesets: tilesetsQuery,
+
             map: mapQuery,
+            maps: mapsQuery,
+
+            layer: layerQuery,
+            layers: layersQuery,
         }
     }
 });
@@ -67,8 +79,11 @@ const mutation = new GraphQLObjectType({
             updateTileset: updateTilesetMutation,
             duplicateTileset: duplicateTilesetMutation,
 
-            // addMap: addMapMutation,
-            // clearMaps: clearMapsMutation,
+            addMap: addMapMutation,
+            clearMaps: clearMapsMutation,
+
+            addLayer: addLayerMutation,
+            clearLayer: clearLayersMutation,
         }
     }
 });

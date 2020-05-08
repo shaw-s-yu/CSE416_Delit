@@ -4,6 +4,7 @@ const initState = {
     projects: [],
     maps: [],
     tilesets: [],
+    layers: [],
     projectId: null,
 };
 
@@ -40,6 +41,17 @@ const projectReducer = (state = initState, action) => {
         return {
             ...state,
             tilesets: toAdd,
+        }
+    } else if (action.type === actionCreators.TEST_LAYER_ADD) {
+        let { layers } = state
+        let toAdd = []
+        for (let i in layers)
+            toAdd.push(layers[i])
+        for (let i in action.item)
+            toAdd.push(action.item[i])
+        return {
+            ...state,
+            layers: toAdd,
         }
     } else if (action.type === actionCreators.TEST_CLEAR) {
         return {

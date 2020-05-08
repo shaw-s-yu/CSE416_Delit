@@ -3,6 +3,8 @@ const {
     GraphQLList,
     GraphQLNonNull,
     GraphQLString,
+    GraphQLInt,
+    GraphQLBoolean
 } = require('graphql');
 
 const LayerType = require('../types/LayerType')
