@@ -93,29 +93,29 @@ export default {
     ADD_TILESET: gql`
     mutation addTileset(
         $name:String!
-        $projectName:String!
+        $projectName:String
         $owner:String!
         $editors:[String]
-        $image:String!
-        $tilewidth:Int!
-        $tileheight:Int!
-        $imagewidth: Int!
-        $imageheight:Int!
+        $imageId:String!
+        $tilewidth:Int
+        $tileheight:Int
+        $width: Int!
+        $height:Int!
 
-        $margin:Int!
-        $spacing:Int!
-        $tilecount:Int!
-        $firstgid:Int!
-        $columns:Int!
+        $margin:Int
+        $spacing:Int
+        $tilecount:Int
+        $firstgid:Int
+        $columns:Int
     ){
         addTileset(
             name:$name
             projectName:$projectName
             owner:$owner
             editors:$editors
-            image:$image
-            imagewidth:$imagewidth
-            imageheight:$imageheight
+            imageId:$imageId
+            width:$width
+            height:$height
             tilewidth:$tilewidth
             tileheight:$tileheight
             margin:$margin
@@ -124,9 +124,9 @@ export default {
             firstgid:$firstgid
             columns:$columns
         ){
-            image
-            imagewidth
-            imageheight
+            imageId
+            width
+            height
             tilewidth
             tileheight
             margin
@@ -233,9 +233,9 @@ export default {
             $tilesheight: Number,
                 $columns: Number,
                 $firstgid: Number,
-                $image: String,
-                $imagewidth: Number,
-                $imageheight: Number,
+                $imageId: String,
+                $width: Number,
+                $height: Number,
                 $margin: Number,
                 $name: String,
                 $spacing: Number,
@@ -268,9 +268,9 @@ export default {
                 tilesheight: $tilesheight,
                     columns: $columns,
                     firstgid: $firstgid,
-                    image: $image,
-                    imagewidth: $imagewidth,
-                    imageheight: $imageheight,
+                    imageId: $imageId,
+                    width: $width,
+                    height: $height,
                     margin: $margin,
                     name: $name,
                     spacing: $spacing,
@@ -303,9 +303,9 @@ export default {
                 tilesheight,
                     columns,
                     firstgid,
-                    image,
-                    imagewidth,
-                    imageheight,
+                    imageId,
+                    width,
+                    height,
                     margin,
                     name,
                     spacing,

@@ -25,7 +25,7 @@ module.exports = {
         TilesetModel.findOne({ _id: params.id }).then(currentTileset => {
             if (!currentTileset) throw new Error('error')
             else {
-                let { imagewidth, imageheight, editors, image, tilewidth, 
+                let { width, height, editors, imageId, tilewidth, 
                     tileheight, owner, spacing, margin, tilecount, firstgid } = currentTileset
                 const index = editors.indexOf(params.owner)
                 if (index !== -1) {
@@ -35,7 +35,7 @@ module.exports = {
                 const newTileset = new TilesetModel({
                     name: params.name,
                     owner: params.owner,
-                    imagewidth, imageheight, image, tilewidth, tileheight, editors,
+                    width, height, imageId, tilewidth, tileheight, editors,
                     spacing, margin, tilecount, firstgid
                 }).save()
                 if (!newTileset) throw new Error('Error')

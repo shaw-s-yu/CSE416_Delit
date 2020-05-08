@@ -24,13 +24,13 @@ module.exports = {
         firstgid: {
             type: GraphQLInt
         },
-        image: {
+        imageId: {
             type: GraphQLString
         },
-        imagewidth: {
+        width: {
             type: GraphQLInt
         },
-        imageheight: {
+        height: {
             type: GraphQLInt
         },
         margin: {
@@ -53,7 +53,7 @@ module.exports = {
         },
         // image: { type: new GraphQLNonNull(GraphQLString) },
         // imageWidth: { type: new GraphQLNonNull(GraphQLInt) },
-        // imageheight: { type: new GraphQLNonNull(GraphQLInt) },
+        // height: { type: new GraphQLNonNull(GraphQLInt) },
         // tileWidth: { type: new GraphQLNonNull(GraphQLInt) },
         // tileHeight: { type: new GraphQLNonNull(GraphQLInt) },
     },

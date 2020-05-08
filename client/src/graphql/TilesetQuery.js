@@ -13,8 +13,8 @@ export default {
             
             
             owner
-            imagewidth
-            imageheight
+            width
+            height
             tilewidth
             tileheight
             spacing
@@ -42,9 +42,9 @@ export default {
                 ){
                 name
                 _id
-                image
-                imagewidth
-                imageheight
+                imageId
+                width
+                height
                 tilewidth
                 tileheight
                 ownerInfo{

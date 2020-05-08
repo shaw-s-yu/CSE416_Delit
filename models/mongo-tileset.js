@@ -16,9 +16,9 @@ var tilesetSchema = new Schema({
     
     columns: Number,
     firstgid: Number,
-    image: String,
-    imagewidth: Number,
-    imageheight: Number,
+    imageId: String,
+    width: Number,
+    height: Number,
     margin: Number,
     spacing: Number,
     tilecount: Number,

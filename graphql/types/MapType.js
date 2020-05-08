@@ -57,7 +57,7 @@ const { GraphQLObjectType,
 //         imageWidth: {
 //             type: new GraphQLNonNull(GraphQLInt)
 //         },
-//         imageheight: {
+//         height: {
 //             type: new GraphQLNonNull(GraphQLInt)
 //         },
 //         margin: {

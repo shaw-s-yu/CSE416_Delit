@@ -30,7 +30,7 @@ var mapSchema = new Schema({
     //     firstgid: Number,
     //     image: String,
     //     imageWidth: Number,
-    //     imageheight: Number,
+    //     height: Number,
     //     margin: Number,
     //     name: String,
     //     spacing: Number,

@@ -55,13 +55,13 @@ module.exports = new GraphQLObjectType({
             firstgid: {
                 type: GraphQLInt
             },
-            image: {
+            imageId: {
                 type: GraphQLString
             },
-            imagewidth: {
+            width: {
                 type: GraphQLInt
             },
-            imageheight: {
+            height: {
                 type: GraphQLInt
             },
             margin: {

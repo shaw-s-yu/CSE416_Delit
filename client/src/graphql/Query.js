@@ -114,9 +114,9 @@ export default {
             name
             projectName
             owner
-            image
-            imagewidth
-            imageheight
+            imageId
+            width
+            height
             tilewidth
             tileheight
             columns
@@ -164,7 +164,7 @@ export default {
             ){
                 name
                 _id
-                image
+                imageId
                 ownerInfo{
                     username
                 }
@@ -190,9 +190,9 @@ export default {
                 _id
                 username
             }
-            image
-            imagewidth
-            imageheight
+            imageId
+            width
+            height
             tilewidth
             tileheight
             columns
@@ -221,7 +221,7 @@ export default {
                 ){
                 name
                 _id
-                image
+                imageId
                 ownerInfo{
                     username
                 }
@@ -251,7 +251,7 @@ export default {
                 ){
                 name
                 _id
-                image
+                imageId
                 ownerInfo{
                     username
                 }
@@ -294,9 +294,9 @@ export default {
                 tilesets{
                     columns
                     firstgid
-                    image
-                    imagewidth
-                    imageheight
+                    imageId
+                    width
+                    height
                     margin
                     name
                     spacing
