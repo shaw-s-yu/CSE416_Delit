@@ -171,8 +171,8 @@ class Dashboard extends React.Component {
                 <div className="dashboard-display" style={displayStyle}>
                     <Searchbar value={search} onChange={this.handleSearchChange} />
                     <div>
-                        <button className="dashboard-sort-btn" onClick={this.handleSortByName}>Name <i className="fa fa-arrow-down"/></button>
-                        <button className="dashboard-sort-btn" onClick={this.handleSortByDate}>Last Modified <i className="fa fa-arrow-down"/></button>
+                        <button className="dashboard-sort-btn" onClick={this.handleSortByName}>Name <i className="fa fa-arrow-down dashboard-sort-icon"/></button>
+                        <button className="dashboard-sort-btn" onClick={this.handleSortByDate}>Last Modified <i className="fa fa-arrow-down dashboard-sort-icon"/></button>
                     </div>
                     <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBt: sortBt }} fetchPolicy={'network-only'}>
                         {({ loading, error, data }) => {

@@ -27,27 +27,40 @@
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.56), 0 2px 10px 0 rgba(0, 0, 0, 0.52);
 }
 
-.dashboard-search{
+.dashboard-search {
     margin-top: 18px;
     margin-left: 5%;
     width: 90%;
     transition: 0.5s;
 }
 
-.dashboard-sort-btn{
-    background-color: DodgerBlue;
+.dashboard-sort-btn {
+    background-color: aliceblue;
     border: none;
-    color: white;
+    color: gray;
     padding: 15px 32px;
     font-size: 16px;
-    margin: 10px 5px;
-    /*width: 300px;*/
-    /*height: 150px;*/
+    margin-top: 10px;
+    margin-left: 5%;
 }
 
 .dashboard-sort-btn:hover {
-    background-color: RoyalBlue;
+    color: black;
 }
+
+.dashboard-sort-btn:focus {
+    outline: none;
+}
+
+.dashboard-sort-icon {
+    padding: 6px 6px 6px 6px;
+    border-radius: 50px;
+}
+
+.dashboard-sort-icon:hover {
+    background-color: lightgray;
+}
+
 .dashboard-input{
     width: 100%;
 }
