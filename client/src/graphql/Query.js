@@ -21,6 +21,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -28,6 +29,7 @@ export default {
             projectsOwned(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id
@@ -49,6 +51,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -56,6 +59,7 @@ export default {
             projectsRelated(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id
@@ -77,6 +81,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -84,6 +89,7 @@ export default {
             projectsShared(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id
@@ -115,35 +121,6 @@ export default {
         }
     }
     `,
-    GET_TILESETS: graphql`
-    query user(
-        $userId: String!
-        $pageSkip: Int!
-        $search: String!
-    ){
-        user(
-            id:$userId
-        ){
-            tilesets(
-                searchName: $search
-                skip: $pageSkip
-            ){
-                name
-                _id
-                imageId
-                ownerInfo{
-                    username
-                }
-                teamInfo{
-                    _id
-                    username
-                    picture
-                }
-            }
-            tilesetsAmount(searchName: $search)
-        }
-    }
-    `,
     GET_TILESET: graphql`
     query tileset($id: String!){
         tileset(id:$id){
@@ -164,11 +141,43 @@ export default {
         }
     }
     `,
+    GET_TILESETS: graphql`
+    query user(
+        $userId: String!
+        $pageSkip: Int!
+        $search: String!
+        $sortBt: String!
+    ){
+        user(
+            id:$userId
+        ){
+            tilesets(
+                searchName: $search
+                skip: $pageSkip
+                sortBt: $sortBt
+            ){
+                name
+                _id
+                imageId
+                ownerInfo{
+                    username
+                }
+                teamInfo{
+                    _id
+                    username
+                    picture
+                }
+            }
+            tilesetsAmount(searchName: $search)
+        }
+    }
+    `,
     GET_MY_OWNED_TILESETS: graphql`
     query user(
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -176,6 +185,7 @@ export default {
             tilesetsOwned(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id
@@ -197,6 +207,7 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
+        $sortBt: String!
     ){
         user(
             id:$userId
@@ -204,6 +215,7 @@ export default {
             tilesetsShared(
                 searchName: $search
                 skip: $pageSkip
+                sortBt: $sortBt
                 ){
                 name
                 _id

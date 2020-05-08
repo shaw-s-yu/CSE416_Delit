@@ -34,6 +34,20 @@
     transition: 0.5s;
 }
 
+.dashboard-sort-btn{
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    margin: 10px 5px;
+    /*width: 300px;*/
+    /*height: 150px;*/
+}
+
+.dashboard-sort-btn:hover {
+    background-color: RoyalBlue;
+}
 .dashboard-input{
     width: 100%;
 }
@@ -103,6 +117,7 @@
     top:64px;
     position: absolute;
     overflow: auto;
+    margin: 50px;
 }
 
 .dashboard-itemlist-wrapper{

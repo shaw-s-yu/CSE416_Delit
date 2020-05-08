@@ -14,20 +14,29 @@ module.exports = new GraphQLObjectType({
             projectsOwned: {
             args: {
                     skip: { type: GraphQLInt },
-                    searchName: { type: GraphQLString }
+                    searchName: { type: GraphQLString },
+                     sortBt: { type: GraphQLString},
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
+                    let projects = null;
+                    const { sortBt, skip} = args;
                     const searchName = args.searchName.toLowerCase();
-                    const projects = ProjectModel.find({
-                        $and: [
-                            { owner: parent._id },
-                            { name_lower: { $regex: `.*${searchName}.*` } }
-                        ],
-                        // $orderby:{
-                        //     lastUpdate: -1
-                        // }
-                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec();
+                    if (sortBt === "name") {
+                        projects = ProjectModel.find({
+                            $and: [
+                                {owner: parent._id},
+                                {name_lower: {$regex: `.*${searchName}.*`}}
+                            ],
+                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                    }else if(sortBt === "date") {
+                        projects = ProjectModel.find({
+                            $and: [
+                                {owner: parent._id},
+                                {name_lower: {$regex: `.*${searchName}.*`}}
+                            ],
+                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
+                    }
                     if (!projects) throw new Error('Error');
                     return projects
                 }
@@ -50,22 +59,39 @@ module.exports = new GraphQLObjectType({
             projectsRelated: {
                 args: {
                     searchName: { type: GraphQLString },
-                    skip: { type: GraphQLInt }
+                    skip: { type: GraphQLInt },
+                    sortBt: { type: GraphQLString},
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
+                    let projects = null;
+                    const { sortBt, skip} = args;
                     const searchName = args.searchName.toLowerCase();
-                    const projects = ProjectModel.find({
-                        $and: [
-                            { name_lower: { $regex: `.*${searchName}.*` } },
-                            {
-                                $or: [
-                                    { owner: parent._id },
-                                    { editors: parent._id }
-                                ]
-                            }]
+                    if (sortBt === "name") {
+                        projects = ProjectModel.find({
+                            $and: [
+                                {name_lower: {$regex: `.*${searchName}.*`}},
+                                {
+                                    $or: [
+                                        {owner: parent._id},
+                                        {editors: parent._id}
+                                    ]
+                                }]
 
-                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec();
+                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                    } else if (sortBt === "date") {
+                        projects = ProjectModel.find({
+                            $and: [
+                                {name_lower: {$regex: `.*${searchName}.*`}},
+                                {
+                                    $or: [
+                                        {owner: parent._id},
+                                        {editors: parent._id}
+                                    ]
+                                }]
+
+                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
+                    }
                     if (!projects) throw new Error('Error');
                     return projects
                 }
@@ -92,17 +118,29 @@ module.exports = new GraphQLObjectType({
             projectsShared: {
                 args: {
                     searchName: { type: GraphQLString },
-                    skip: { type: GraphQLInt }
+                    skip: { type: GraphQLInt },
+                    sortBt: { type: GraphQLString},
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
+                    let projects = null;
+                    const { sortBt, skip} = args;
                     const searchName = args.searchName.toLowerCase();
-                    const projects = ProjectModel.find({
-                        $and: [
-                            { editors: parent._id },
-                            { name_lower: { $regex: `.*${searchName}.*` } }
-                        ]
-                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec();
+                    if (sortBt === "name") {
+                        projects = ProjectModel.find({
+                            $and: [
+                                {editors: parent._id},
+                                {name_lower: {$regex: `.*${searchName}.*`}}
+                            ]
+                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                    } else if (sortBt === "date") {
+                        projects = ProjectModel.find({
+                            $and: [
+                                {editors: parent._id},
+                                {name_lower: {$regex: `.*${searchName}.*`}}
+                            ]
+                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
+                    }
                     if (!projects) throw new Error('Error');
                     return projects
                 }
@@ -117,7 +155,7 @@ module.exports = new GraphQLObjectType({
                             { editors: parent._id },
                             { name_lower: { $regex: `.*${searchName}.*` }}
                         ]
-                    }).countDocuments()
+                    }).countDocuments();
                     if (!projectsAmount) throw new Error('Error');
                     return projectsAmount
                 }
@@ -129,16 +167,23 @@ module.exports = new GraphQLObjectType({
             tilesets: {
                 args: {
                     skip: { type: GraphQLInt },
-                    searchName: { type: GraphQLString }
+                    searchName: { type: GraphQLString },
+                    sortBt: { type: GraphQLString},
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
+                    let tilesets = null;
+                    const { sortBt, skip} = args;
                     const searchName = args.searchName.toLowerCase();
-                    const tilesets = TilesetModel.find({ name_lower: { $regex: `.*${searchName}.*` } }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec()
-                    if (!tilesets) {
-                        throw new Error('Error')
+                    if (sortBt === "name") {
+                        tilesets = TilesetModel.find({name_lower: {$regex: `.*${searchName}.*`}}).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                    } else if (sortBt === "date") {
+                        tilesets = TilesetModel.find({name_lower: {$regex: `.*${searchName}.*`}}).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
                     }
-                    return tilesets
+                    if (!tilesets) {
+                        throw new Error('Error');
+                    }
+                    return tilesets;
                 }
             },
             tilesetsAmount: {
@@ -155,16 +200,28 @@ module.exports = new GraphQLObjectType({
                 args: {
                     skip: { type: GraphQLInt },
                     searchName: { type: GraphQLString },
+                    sortBt: { type: GraphQLString},
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
+                    let tilesets = null;
+                    const { sortBt, skip} = args;
                     const searchName = args.searchName.toLowerCase();
-                    const tilesets = TilesetModel.find({
-                        $and: [
-                            { owner: parent._id },
-                            { name_lower: { $regex: `.*${searchName}.*` } }
-                        ]
-                    }).sort({"lastUpdate": -1}).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec();
+                    if (sortBt === "name") {
+                        tilesets = TilesetModel.find({
+                            $and: [
+                                {owner: parent._id},
+                                {name_lower: {$regex: `.*${searchName}.*`}}
+                            ]
+                        }).sort({"lastUpdate": -1}).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                    } else if (sortBt === "date") {
+                        tilesets = TilesetModel.find({
+                            $and: [
+                                {owner: parent._id},
+                                {name_lower: {$regex: `.*${searchName}.*`}}
+                            ]
+                        }).sort({"lastUpdate": -1}).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
+                    }
                     if (!tilesets) throw new Error('Error');
                     return tilesets
                 }
@@ -187,22 +244,39 @@ module.exports = new GraphQLObjectType({
             tilesetsRelated: {
                 args: {
                     searchName: { type: GraphQLString },
-                    skip: { type: GraphQLInt }
+                    skip: { type: GraphQLInt },
+                    sortBt: { type: GraphQLString},
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
+                    let tilesets = null;
+                    const { sortBt, skip} = args;
                     const searchName = args.searchName.toLowerCase();
-                    let tilesets = TilesetModel.find({
-                        $and: [
-                            { name_lower: { $regex: `.*${searchName}.*` } },
-                            {
-                                $or: [
-                                    { owner: parent._id },
-                                    { editors: parent._id }
-                                ]
-                            }]
+                    if (sortBt === "name") {
+                        tilesets = TilesetModel.find({
+                            $and: [
+                                {name_lower: {$regex: `.*${searchName}.*`}},
+                                {
+                                    $or: [
+                                        {owner: parent._id},
+                                        {editors: parent._id}
+                                    ]
+                                }]
 
-                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec();
+                        }).sort({"name-lower": 1}).skip(skip).limit(6).exec();
+                    } else if (sortBt === "date") {
+                        tilesets = TilesetModel.find({
+                            $and: [
+                                {name_lower: {$regex: `.*${searchName}.*`}},
+                                {
+                                    $or: [
+                                        {owner: parent._id},
+                                        {editors: parent._id}
+                                    ]
+                                }]
+
+                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
+                    }
                     if (!tilesets) throw new Error('Error');
                     return tilesets
                 }
@@ -229,17 +303,29 @@ module.exports = new GraphQLObjectType({
             tilesetsShared: {
                 args: {
                     searchName: { type: GraphQLString },
-                    skip: { type: GraphQLInt }
+                    skip: { type: GraphQLInt },
+                    sortBt: { type: GraphQLString},
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
+                    let tilesets = null;
+                    const { sortBt, skip} = args;
                     const searchName = args.searchName.toLowerCase();
-                    let tilesets = TilesetModel.find({
-                        $and: [
-                            { editors: parent._id },
-                            { name_lower: { $regex: `.*${searchName}.*` } }
-                        ]
-                    }).sort({"lastUpdate": -1}).skip(args.skip).limit(6).exec();
+                    if (sortBt === "name") {
+                        tilesets = TilesetModel.find({
+                            $and: [
+                                {editors: parent._id},
+                                {name_lower: {$regex: `.*${searchName}.*`}}
+                            ]
+                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                    } else if (sortBt === "date") {
+                        tilesets = TilesetModel.find({
+                            $and: [
+                                {editors: parent._id},
+                                {name_lower: {$regex: `.*${searchName}.*`}}
+                            ]
+                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
+                    }
                     if (!tilesets) throw new Error('Error');
                     return tilesets
                 }
