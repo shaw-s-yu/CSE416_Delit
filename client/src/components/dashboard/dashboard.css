@@ -34,14 +34,19 @@
     transition: 0.5s;
 }
 
+.dashboard-sort-btn-group {
+    margin-top: 10px;
+    position: absolute;
+    right: 30px;
+}
+
 .dashboard-sort-btn {
     background-color: aliceblue;
     border: none;
     color: gray;
     padding: 15px 32px;
     font-size: 16px;
-    margin-top: 10px;
-    margin-left: 5%;
+    margin-left: 10px;
 }
 
 .dashboard-sort-btn:hover {

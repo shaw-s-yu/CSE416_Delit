@@ -170,7 +170,7 @@ class Dashboard extends React.Component {
 
                 <div className="dashboard-display" style={displayStyle}>
                     <Searchbar value={search} onChange={this.handleSearchChange} />
-                    <div>
+                    <div className="dashboard-sort-btn-group">
                         <button className="dashboard-sort-btn" onClick={this.handleSortByName}>Name <i className="fa fa-arrow-down dashboard-sort-icon"/></button>
                         <button className="dashboard-sort-btn" onClick={this.handleSortByDate}>Last Modified <i className="fa fa-arrow-down dashboard-sort-icon"/></button>
                     </div>
