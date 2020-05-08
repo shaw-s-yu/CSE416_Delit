@@ -46,7 +46,7 @@ class MapManager extends React.Component {
                 {(mapsRes) => {
                     if (mapsRes.data)
                         console.log(mapsRes.data)
-                        console.log("4444444444444444444444444")
+                    console.log("4444444444444444444444444")
                     if (mapsRes.loading) return 'loading'
                     if (mapsRes.error) return 'error'
                     const { maps } = mapsRes.data
