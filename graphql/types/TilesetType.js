@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList} = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull} = require('graphql');
 const UserType = require('./UserType')
 const UserModel = require('../../models/mongo-user')
 
@@ -14,21 +14,6 @@ module.exports = new GraphQLObjectType({
             },
             owner: {
                 type: GraphQLString,
-            },
-            imageId: {
-                type: GraphQLString
-            },
-            width: {
-                type: GraphQLInt,
-            },
-            height: {
-                type: GraphQLInt,
-            },
-            tileWidth: {
-                type: GraphQLInt,
-            },
-            tileHeight: {
-                type: GraphQLInt,
             },
             editors: {
                 type: new GraphQLList(GraphQLString)
@@ -55,6 +40,41 @@ module.exports = new GraphQLObjectType({
                     })
                     return users
                 }
+            },
+
+            projectName:{
+                type: GraphQLString
+            },
+
+            columns: {
+                type: GraphQLInt
+            },
+            firstgid: {
+                type: GraphQLInt
+            },
+            image: {
+                type: GraphQLString
+            },
+            imagewidth: {
+                type: GraphQLInt
+            },
+            imageheight: {
+                type: GraphQLInt
+            },
+            margin: {
+                type: GraphQLInt
+            },
+            spacing: {
+                type: GraphQLInt
+            },
+            tilecount: {
+                type: GraphQLInt
+            },
+            tileheight: {
+                type: GraphQLInt
+            },
+            tilewidth: {
+                type: GraphQLInt
             }
         }
     }

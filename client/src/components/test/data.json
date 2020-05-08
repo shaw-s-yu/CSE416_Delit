@@ -100,7 +100,7 @@
     "maps": [
         {
             "_id": "1",
-            "MapJsonFile": {
+            "mapJsonFile": {
                 "width": 100,
                 "height": 100,
                 "infinite": false,
@@ -158,7 +158,7 @@
         },
         {
             "_id": "2",
-            "MapJsonFile": {
+            "mapJsonFile": {
                 "width": 100,
                 "height": 100,
                 "infinite": false,
@@ -216,7 +216,7 @@
         },
         {
             "_id": "3",
-            "MapJsonFile": {
+            "mapJsonFile": {
                 "width": 100,
                 "height": 100,
                 "infinite": false,
@@ -274,7 +274,7 @@
         },
         {
             "_id": "4",
-            "MapJsonFile": {
+            "mapJsonFile": {
                 "width": 100,
                 "height": 100,
                 "infinite": false,
@@ -332,7 +332,7 @@
         },
         {
             "_id": "5",
-            "MapJsonFile": {
+            "mapJsonFile": {
                 "width": 100,
                 "height": 100,
                 "infinite": false,
@@ -397,11 +397,17 @@
                 "5ea0e25872182f00242b848a",
                 "5ea262a9e4a7b520c829163b"
             ],
-            "imageId": "5eabdf04f064a7553cb9dd41",
-            "tileWidth": 40,
-            "tileHeight": 40,
-            "width": 600,
-            "height": 400
+            "image": "5eabdf04f064a7553cb9dd41",
+            "imagewidth": 600,
+            "imageheight": 400,
+            "tilewidth": 40,
+            "tileheight": 40,
+            "columns": 15,
+            "firstgid": 1,
+            "margin": 0,
+            "spacing": 0,
+            "tilecount": 150,
+            "projectName": "diu lei"
         },
         {
             "name": "Simon Demon",
@@ -410,11 +416,17 @@
                 "5e9fa3908dead93aa46f6a6d",
                 "5ea33ec1a8a9b4504485aa28"
             ],
-            "imageId": "5eabe0b7e9da110b6896405b",
-            "tileWidth": 40,
-            "tileHeight": 40,
-            "width": 600,
-            "height": 600
+            "image": "5eabe0b7e9da110b6896405b",
+            "imagewidth": 600,
+            "imageheight": 600,
+            "tilewidth": 40,
+            "tileheight": 40,
+            "columns": 15,
+            "firstgid": 1,
+            "margin": 0,
+            "spacing": 0,
+            "tilecount": 225,
+            "projectName": "lou mou"
         },
         {
             "name": "High Sky",
@@ -422,11 +434,17 @@
             "editors": [
                 "5ea33ec1a8a9b4504485aa28"
             ],
-            "imageId": "5eabde7398bf8c7fc8ef0308",
-            "tileWidth": 40,
-            "tileHeight": 40,
-            "width": 600,
-            "height": 600
+            "image": "5eabde7398bf8c7fc8ef0308",
+            "imagewidth": 600,
+            "imageheight": 600,
+            "tilewidth": 40,
+            "tileheight": 40,
+            "columns": 15,
+            "firstgid": 1,
+            "margin": 0,
+            "spacing": 0,
+            "tilecount": 225,
+            "projectName": "got hai"
         }
     ]
 }

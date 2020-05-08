@@ -10,11 +10,18 @@ export default {
             _id
             name
             imageId
+            
+            
             owner
-            width
-            height
-            tileWidth
-            tileHeight
+            imagewidth
+            imageheight
+            tilewidth
+            tileheight
+            spacing
+            margin
+            columns
+            projectName
+            firstgid
             ownerInfo{  
                 username
             }
@@ -35,11 +42,11 @@ export default {
                 ){
                 name
                 _id
-                imageId
-                width
-                height
-                tileWidth
-                tileHeight
+                image
+                imagewidth
+                imageheight
+                tilewidth
+                tileheight
                 ownerInfo{
                     username
                 }
@@ -65,8 +72,8 @@ export default {
                 imageId
                 width
                 height
-                tileWidth
-                tileHeight
+                tilewidth
+                tileheight
                 ownerInfo{
                     username
                 }
@@ -92,8 +99,8 @@ export default {
                 imageId
                 width
                 height
-                tileWidth
-                tileHeight
+                tilewidth
+                tileheight
                 ownerInfo{
                     username
                 }

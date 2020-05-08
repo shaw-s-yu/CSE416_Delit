@@ -93,29 +93,47 @@ export default {
     ADD_TILESET: gql`
     mutation addTileset(
         $name:String!
+        $projectName:String!
         $owner:String!
         $editors:[String]
-        $imageId:String!
-        $width: Int!
-        $height:Int!
-        $tileWidth:Int!
-        $tileHeight:Int!
+        $image:String!
+        $tilewidth:Int!
+        $tileheight:Int!
+        $imagewidth: Int!
+        $imageheight:Int!
+
+        $margin:Int!
+        $spacing:Int!
+        $tilecount:Int!
+        $firstgid:Int!
+        $columns:Int!
     ){
         addTileset(
             name:$name
+            projectName:$projectName
             owner:$owner
             editors:$editors
-            imageId:$imageId
-            width:$width
-            height:$height
-            tileWidth:$tileWidth
-            tileHeight:$tileHeight
+            image:$image
+            imagewidth:$imagewidth
+            imageheight:$imageheight
+            tilewidth:$tilewidth
+            tileheight:$tileheight
+            margin:$margin
+            spacing:$spacing
+            tilecount:$tilecount
+            firstgid:$firstgid
+            columns:$columns
         ){
-            imageId
-            width
-            height
-            tileWidth
-            tileHeight
+            image
+            imagewidth
+            imageheight
+            tilewidth
+            tileheight
+            margin
+            spacing
+            tilecount
+            firstgid
+            columns
         }
     }`,
 
@@ -211,12 +229,12 @@ export default {
             $orientation: String,
             $renderorder: String,
             $tiledversion: String,
-            $tileWidth: Number,
+            $tilewidth: Number,
             $tilesheight: Number,
                 $columns: Number,
                 $firstgid: Number,
                 $image: String,
-                $imageWidth: Number,
+                $imagewidth: Number,
                 $imageheight: Number,
                 $margin: Number,
                 $name: String,
@@ -246,12 +264,12 @@ export default {
                 orientation: $orientation,
                 renderorder: $renderorder,
                 tiledversion: $tiledversion,
-                tileWidth: $tileWidth,
+                tilewidth: $tilewidth,
                 tilesheight: $tilesheight,
                     columns: $columns,
                     firstgid: $firstgid,
                     image: $image,
-                    imageWidth: $imageWidth,
+                    imagewidth: $imagewidth,
                     imageheight: $imageheight,
                     margin: $margin,
                     name: $name,
@@ -281,12 +299,12 @@ export default {
                 orientation,
                 renderorder,
                 tiledversion,
-                tileWidth,
+                tilewidth,
                 tilesheight,
                     columns,
                     firstgid,
                     image,
-                    imageWidth,
+                    imagewidth,
                     imageheight,
                     margin,
                     name,

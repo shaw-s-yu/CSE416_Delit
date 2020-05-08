@@ -12,13 +12,20 @@ class TilesetManager extends React.Component {
             callback({
                 variables: {
                     name: t.name,
-                    imageId: t.imageId,
                     owner: t.owner,
                     editors: t.editors,
-                    width: t.width,
-                    height: t.height,
-                    tileWidth: t.tileWidth,
-                    tileHeight: t.tileHeight
+                    image: t.image,
+                    margin: t.margin,
+                    spacing: t.spacing,
+                    imagewidth: t.imagewidth,
+                    imageheight: t.imageheight,
+
+                    tilewidth: t.tilewidth,
+                    tileheight: t.tileheight,
+                    tilecount: t.tilecount,
+                    projectName: t.projectName,
+                    columns: t.columns,
+                    firstgid: t.firstgid,
                 }
             })
         })

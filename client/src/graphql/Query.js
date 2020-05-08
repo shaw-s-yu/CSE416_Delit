@@ -106,12 +106,18 @@ export default {
         tilesets{
             _id
             name
+            projectName
             owner
-            imageId
-            width
-            height
-            tileWidth
-            tileHeight
+            image
+            imagewidth
+            imageheight
+            tilewidth
+            tileheight
+            columns
+            firstgid
+            margin
+            spacing
+            tilecount
         }
     }
     `,
@@ -130,7 +136,7 @@ export default {
             ){
                 name
                 _id
-                imageId
+                image
                 ownerInfo{
                     username
                 }
@@ -156,11 +162,17 @@ export default {
                 _id
                 username
             }
-            imageId
-            width
-            height
-            tileWidth
-            tileHeight
+            image
+            imagewidth
+            imageheight
+            tilewidth
+            tileheight
+            columns
+            firstgid
+            margin
+            spacing
+            tilecount
+
         }
     }
     `,
@@ -179,7 +191,7 @@ export default {
                 ){
                 name
                 _id
-                imageId
+                image
                 ownerInfo{
                     username
                 }
@@ -207,7 +219,7 @@ export default {
                 ){
                 name
                 _id
-                imageId
+                image
                 ownerInfo{
                     username
                 }
@@ -245,13 +257,13 @@ export default {
                 orientation
                 renderorder
                 tiledversion
-                tileWidth
+                tilewidth
                 tilesheight
                 tilesets{
                     columns
                     firstgid
                     image
-                    imageWidth
+                    imagewidth
                     imageheight
                     margin
                     name

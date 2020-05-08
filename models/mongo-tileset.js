@@ -4,13 +4,29 @@ var tilesetSchema = new Schema({
     name: String,
     owner: String,
     editors: [String],
-    imageId: String,
-    tileWidth: Number,
-    tileHeight: Number,
-    width: Number,
-    height: Number,
+    
+    projectName: String,
+
+    // imageId: String,
+    // tileWidth: Number,
+    // tileHeight: Number,
+    // width: Number,
+    // height: Number,
+    
+    columns: Number,
+    firstgid: Number,
+    image: String,
+    imagewidth: Number,
+    imageheight: Number,
+    margin: Number,
+    spacing: Number,
+    tilecount: Number,
+    tileheight: Number,
+    tilewidth: Number,
+
     lastUpdate: { type: Date, default: Date.now },
 })
 
 
 module.exports = mongoose.model('tileset', tilesetSchema);
+
