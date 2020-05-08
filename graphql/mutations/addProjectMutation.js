@@ -30,6 +30,7 @@ module.exports = {
         // }
     },
     resolve: (root, params) => {
+        params.name_lower = params.name.toLowerCase();
         const projectModel = new ProjectModel(params);
         const newProject = projectModel.save();
         if (!newProject) {

@@ -12,6 +12,9 @@ module.exports = new GraphQLObjectType({
             name: {
                 type: GraphQLString
             },
+            name_lower: {
+                type: GraphQLString
+            },
             imageId: {
                 type: GraphQLString
             },
