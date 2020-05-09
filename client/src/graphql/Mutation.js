@@ -114,6 +114,7 @@ export default {
         $margin:Int
         $spacing:Int
         $tilecount:Int
+        $published: Boolean
     ){
         addTileset(
             _id:$id
@@ -129,7 +130,8 @@ export default {
             columns:$columns
             margin:$margin
             spacing:$spacing
-            tilecount:$tilecount   
+            tilecount:$tilecount
+            published: $published   
         ){
             _id
             name

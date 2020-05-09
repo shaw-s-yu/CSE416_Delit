@@ -152,6 +152,7 @@ export default {
             margin
             spacing
             tilecount
+            published
         }
     }
     `,
@@ -183,6 +184,7 @@ export default {
                     username
                     picture
                 }
+                published
             }
             tilesetsAmount(searchName: $search)
         }
@@ -216,6 +218,7 @@ export default {
                     username
                     picture
                 }
+                published
             }
             tilesetsOwnedAmount(searchName: $search)
         }
@@ -248,6 +251,7 @@ export default {
                     username
                     picture
                 }
+                published
             }
             tilesetsSharedAmount(searchName: $search)
         }

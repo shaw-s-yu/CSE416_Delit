@@ -1,6 +1,7 @@
 const User = require('../models/mongo-user')
 const ImageModel = require('../models/mongo-image')
 const TilesetModel = require('../models/mongo-tileset')
+const mongoose = require('mongoose');
 
 exports.Socket = function (socket, io) {
     this.socket = socket
@@ -74,6 +75,7 @@ exports.Socket = function (socket, io) {
         }).save().then(newImage => {
             if (!newImage) throw new Error('create new image error')
             new TilesetModel({
+                _id: mongoose.Types.ObjectId(),
                 name: name,
                 width: tileset.width,
                 height: tileset.height,
@@ -81,7 +83,12 @@ exports.Socket = function (socket, io) {
                 tileHeight: tileset.tileHeight,
                 owner: userId,
                 imageId: newImage._id,
-                editors: []
+                editors: [],
+                columns: Math.floor(tileset.width / tileset.tileWidth),
+                margin: 0,
+                spacing: 0,
+                tilecount: Math.floor(tileset.width / tileset.tileHeight) * Math.floor(tileset.height / tileset.tileHeight),
+                published: false,
             }).save().then(newTileset => {
                 if (!newTileset) throw new Error('create new tileset error')
                 socket.emit('duplicate-image-back', newTileset._id)

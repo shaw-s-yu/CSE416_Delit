@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLBoolean } = require('graphql');
 const UserType = require('./UserType')
 const UserModel = require('../../models/mongo-user')
 
@@ -69,6 +69,9 @@ module.exports = new GraphQLObjectType({
             },
             tileWidth: {
                 type: GraphQLInt
+            },
+            published: {
+                type: GraphQLBoolean
             }
         }
     }

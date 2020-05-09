@@ -15,6 +15,7 @@ var tilesetSchema = new Schema({
     spacing: Number,
     tilecount: Number,
     lastUpdate: { type: Date, default: Date.now },
+    published: Boolean,
 })
 
 

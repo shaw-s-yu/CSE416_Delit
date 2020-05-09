@@ -26,6 +26,7 @@ class TilesetManager extends React.Component {
                     margin: t.margin,
                     spacing: t.spacing,
                     tilecount: t.tilecount,
+                    published: t.published
                 }
             })
         })

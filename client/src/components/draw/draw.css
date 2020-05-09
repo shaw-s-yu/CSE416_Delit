@@ -76,6 +76,13 @@
     margin-top:10px;
 }
 
+.viewer-display{
+    position: relative;
+    height:calc(100% - 50px) ;
+    width: 100%;
+    margin-top:10px;
+}
+
 .display{
     background-color: transparent;
     position: absolute;

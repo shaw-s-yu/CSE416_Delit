@@ -212,7 +212,7 @@ class Draw extends React.Component {
 
     UNSAFE_componentWillMount() {
         this.props.socket.on('duplicate-image-back', res => {
-            this.props.history.push(`/tileset/${res}`)
+            this.props.history.push(`/tileseteditor/${res}`)
         })
 
         this.props.socket.on('draw-save-back', res => {

@@ -19,7 +19,7 @@ class Dialogs extends React.Component {
         const { save, start, duplicate, parent, confirmSave, saved, saveErrorMsg } = this.props
         return (
             <>
-                <Dialog
+                {save === undefined ? null : <Dialog
                     header="Save Tileset"
                     open={save}
                     actions={[
@@ -29,9 +29,9 @@ class Dialogs extends React.Component {
                     content={[
                         <h3 key='q'>Are You Sure to Save In Delit Database?</h3>,
                         <h3 key='w'>Old Version will be overwriten</h3>
-                    ]} />
+                    ]} />}
 
-                <Dialog
+                {start === undefined ? null : <Dialog
                     header="Attention!"
                     open={start}
                     actions={[
@@ -43,9 +43,9 @@ class Dialogs extends React.Component {
                         <h4 key='q'>You are not in team of this tileset</h4>,
                         <h4 key='w'>You operation will not be saved</h4>,
                         <strong key='e'>But you can still own and change it by making a copy of this tileset</strong>
-                    ]} />
+                    ]} />}
 
-                <Dialog
+                {duplicate === undefined ? null : <Dialog
                     header="Make a Copy of This Tileset"
                     open={duplicate}
                     actions={[
@@ -66,7 +66,8 @@ class Dialogs extends React.Component {
                             onChange={this.handleOnChange}
                         />
                     ]} />
-                <Dialog
+                }
+                {confirmSave === undefined ? null : <Dialog
                     header="Saving Tileset"
                     open={confirmSave}
                     actions={[
@@ -76,8 +77,9 @@ class Dialogs extends React.Component {
                     content={[
                         saved ? <h3 key='q'>Your Tileset is save successfully</h3> : <h3 key='q'>Your Tileset is being saved</h3>,
                         saveErrorMsg === '' ? null : <h3 key='w'>saveErrorMsg</h3>,
-                        saveErrorMsg === '' ? saved ? <i key='e' className="fas fa-check-circle dialog-saved-icon"></i> : <CircularProgress key='e' className="wait-saving" /> : <i class="fas fa-times-circle dialog-saved-error"></i>,
+                        saveErrorMsg === '' ? saved ? <i key='e' className="fas fa-check-circle dialog-saved-icon"></i> : <CircularProgress key='e' className="wait-saving" /> : <i key='e' class="fas fa-times-circle dialog-saved-error"></i>,
                     ]} />
+                }
             </>
         )
     }

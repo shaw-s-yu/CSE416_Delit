@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
     }
 
     handleProjectDialogClose = () => {
-        this.setState({ projectDialogOpen: false })
+        this.setState({ projectDialogOpen: false, selected: 'create' })
     }
 
     handleTilesetDialogOpen = () => {
@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
     }
 
     handleTilesetDialogClose = () => {
-        this.setState({ tilesetDialogOpen: false })
+        this.setState({ tilesetDialogOpen: false, selected: 'tilesetsOwned' })
     }
 
     handleSidebarOpen = () => {

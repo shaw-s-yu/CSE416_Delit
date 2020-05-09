@@ -15,9 +15,8 @@ module.exports = {
         }
     },
     resolve: (root, params) => {
-        ProjectModel.findOneAndDelete(params.id).then(currentProject => {
+        ProjectModel.findOneAndDelete({ _id: params.id }).then(currentProject => {
             if (!currentProject) throw new Error('Error')
-            console.log(currentProject)
             for (let i = 0; i < currentProject.layerId.length; i++) {
                 const layerToRemove = LayerModel.findByIdAndRemove(currentProject.layerId[i]).exec()
                 if (!layerToRemove) throw new Error('remove layer error')

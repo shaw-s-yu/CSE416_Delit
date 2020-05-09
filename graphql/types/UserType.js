@@ -20,7 +20,6 @@ module.exports = new GraphQLObjectType({
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
-                    console.log(args)
                     let projects = null;
                     const { sortBy, skip, sortOrder } = args;
                     projects = ProjectModel.find({
@@ -147,7 +146,10 @@ module.exports = new GraphQLObjectType({
                     let tilesets = null;
                     const { sortBy, skip, sortOrder } = args;
                     tilesets = TilesetModel.find({
-                        name: new RegExp('^.*' + args.searchName + '.*$', 'i')
+                        $and: [
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
+                            { published: true }
+                        ]
                     }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
                     if (!tilesets) {
                         throw new Error('Error');

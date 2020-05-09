@@ -8,7 +8,7 @@ import MutationList from '../../graphql/Mutation';
 class DuplicateDialog extends React.Component {
 
     state = {
-        name: ''
+        name: this.props.item.name
     };
 
     handleOnChange = (e) => {
@@ -32,7 +32,7 @@ class DuplicateDialog extends React.Component {
         const { open, item, refetch, handleClose, type } = this.props;
         if (!item) return null;
         const mutation = type === 'tileset' ? MutationList.DUPLICATE_TILESET : MutationList.DUPLICATE_PROJECT;
-        const label = type === 'tileset'? "Enter Tileset Name" :"Enter Project Name";
+        const label = type === 'tileset' ? "Enter Tileset Name" : "Enter Project Name";
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(duplicateProject, res) => (

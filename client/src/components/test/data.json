@@ -136,7 +136,8 @@
             "columns": 15,
             "margin": 0,
             "spacing": 0,
-            "tilecount": 150
+            "tilecount": 150,
+            "published": true
         },
         {
             "_id": "tileset2",
@@ -154,7 +155,8 @@
             "columns": 15,
             "margin": 0,
             "spacing": 0,
-            "tilecount": 150
+            "tilecount": 150,
+            "published": true
         },
         {
             "_id": "tileset3",
@@ -171,7 +173,8 @@
             "columns": 15,
             "margin": 0,
             "spacing": 0,
-            "tilecount": 150
+            "tilecount": 150,
+            "published": true
         }
     ],
     "layers": [

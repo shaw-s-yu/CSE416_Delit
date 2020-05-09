@@ -3,7 +3,8 @@ const {
     GraphQLNonNull,
     GraphQLList,
     GraphQLString,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLBoolean
 } = require('graphql');
 
 const TilesetType = require('../types/TilesetType')
@@ -25,7 +26,8 @@ module.exports = {
         columns: { type: GraphQLInt },
         margin: { type: GraphQLInt },
         spacing: { type: GraphQLInt },
-        tilecount: { type: GraphQLInt }
+        tilecount: { type: GraphQLInt },
+        published: { type: GraphQLBoolean }
     },
     resolve: (root, params) => {
         const newTileset = new TilesetModel({
@@ -34,7 +36,8 @@ module.exports = {
             columns: params.columns ? params.columns : Math.floor(params.width / params.tileWidth),
             margin: params.margin ? params.margin : 0,
             spacing: params.spacing ? params.spacing : 0,
-            tilecount: params.tilecount ? params.tilecount : Math.floor(params.width / params.tileHeight) * Math.floor(params.height / params.tileHeight)
+            tilecount: params.tilecount ? params.tilecount : Math.floor(params.width / params.tileHeight) * Math.floor(params.height / params.tileHeight),
+            published: params.published ? params.published : false,
         }).save();
         if (!newTileset) {
             throw new Error('Error');
