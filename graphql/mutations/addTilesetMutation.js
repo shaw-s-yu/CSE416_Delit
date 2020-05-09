@@ -23,7 +23,6 @@ module.exports = {
         width: { type: new GraphQLNonNull(GraphQLInt) },
         height: { type: new GraphQLNonNull(GraphQLInt) },
         columns: { type: GraphQLInt },
-        firstgid: { type: GraphQLInt },
         margin: { type: GraphQLInt },
         spacing: { type: GraphQLInt },
         tilecount: { type: GraphQLInt }
@@ -33,7 +32,6 @@ module.exports = {
             ...params,
             _id: params._id ? params._id : mongoose.Types.ObjectId(),
             columns: params.columns ? params.columns : Math.floor(params.width / params.tileWidth),
-            firstgid: params.firstgid ? params.firstgid : 1,
             margin: params.margin ? params.margin : 0,
             spacing: params.spacing ? params.spacing : 0,
             tilecount: params.tilecount ? params.tilecount : Math.floor(params.width / params.tileHeight) * Math.floor(params.height / params.tileHeight)

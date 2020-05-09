@@ -3,6 +3,7 @@ const {
     GraphQLList,
     GraphQLNonNull,
     GraphQLString,
+    GraphQLInt
 } = require('graphql');
 
 const ProjectType = require('../types/ProjectType')
@@ -27,6 +28,9 @@ module.exports = {
         },
         tilesetId: {
             type: new GraphQLList(GraphQLString)
+        },
+        tilesetFirstgid: {
+            type: new GraphQLList(GraphQLInt)
         },
         layerId: {
             type: new GraphQLList(GraphQLString)

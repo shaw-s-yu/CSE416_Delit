@@ -7,6 +7,7 @@ var ProjectSchema = new Schema({
     editors: [String],
     mapId: String,
     tilesetId: [String],
+    tilesetFirstgid: [Number],
     layerId: [String],
     imageId: String,
     lastUpdate: { type: Date, default: Date.now },

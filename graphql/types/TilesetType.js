@@ -45,9 +45,7 @@ module.exports = new GraphQLObjectType({
             columns: {
                 type: GraphQLInt
             },
-            firstgid: {
-                type: GraphQLInt
-            },
+
             imageId: {
                 type: GraphQLString
             },

@@ -157,7 +157,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page, search, projectDialogOpen, tilesetDialogOpen, sortBy, name, lastUpdate } = this.state;
+        const { showSidebar, selected, user, page, search, projectDialogOpen, tilesetDialogOpen, sortBy } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -204,7 +204,7 @@ class Dashboard extends React.Component {
                             const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                             const refetch = {
                                 query: query,
-                                variables: { userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy }
+                                variables: { userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }
                             };
                             return (
                                 <>

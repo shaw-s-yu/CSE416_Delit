@@ -125,7 +125,6 @@ export default {
             tileWidth
             tileHeight
             columns
-            firstgid
             margin
             spacing
             tilecount
@@ -150,7 +149,6 @@ export default {
             tileWidth
             tileHeight
             columns
-            firstgid
             margin
             spacing
             tilecount

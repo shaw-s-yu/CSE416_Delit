@@ -25,15 +25,15 @@ class DeleteDialog extends React.Component {
     render() {
         const { open, item, user, refetch, type } = this.props;
         if (!item) return null;
-        const mutation = type === 'tileset' ? MutationList.REMOVE_TILESET : MutationList.REMOVE_PROJECT;
-        const header = type === 'tileset'? "Delete Tileset" :"Delete Project";
-        const name = type === 'tileset'? "Tileset" :"Project";
+        const mutation = type === 'tileset' ? MutationList.REMOVE_TILESET : MutationList.REMOVE_PROJECT_PACK;
+        const header = type === 'tileset' ? "Delete Tileset" : "Delete Project";
+        const name = type === 'tileset' ? "Tileset" : "Project";
         const disabled = item.ownerInfo.username !== user.username
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(removeItem, res) => (
                     <Dialog
-                        header= {header}
+                        header={header}
                         open={open}
                         actions={[
                             <Button key='1' disabled={disabled} onClick={this.handleSubmit.bind(this, removeItem)}>Confirm</Button>,

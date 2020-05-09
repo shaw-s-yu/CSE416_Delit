@@ -34,14 +34,17 @@ class AddDialog extends React.Component {
     };
 
     handleAddProject = (callback) => {
-        const { userId, type } = this.props
+        const { userId } = this.props
         const { itemName, width, height, tileWidth, tileHeight } = this.state
-
         callback({
             variables: {
                 name: itemName,
                 owner: userId,
-                imageId: '5eacb076d0ed064dec138c41'
+                imageId: '5eacb076d0ed064dec138c41',
+                width: width,
+                height: height,
+                tileWidth: tileWidth,
+                tileHeight: tileHeight
             }
         })
         this.props.handleClose()
@@ -50,7 +53,7 @@ class AddDialog extends React.Component {
     render() {
         const { open, handleClose, refetch } = this.props;
         const { itemName, width, height, tileWidth, tileHeight, disableBt } = this.state
-        const mutation = MutationList.ADD_PROJECT
+        const mutation = MutationList.CREATE_PROJECT_PACK
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(addItem, res) => (

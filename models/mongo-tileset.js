@@ -11,7 +11,6 @@ var tilesetSchema = new Schema({
     width: Number,
     height: Number,
     columns: Number,
-    firstgid: Number,
     margin: Number,
     spacing: Number,
     tilecount: Number,

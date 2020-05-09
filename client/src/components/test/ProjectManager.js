@@ -19,7 +19,8 @@ class ProjectManager extends React.Component {
                     imageId: p.imageId,
                     mapId: p.mapId,
                     tilesetId: p.tilesetId,
-                    layerId: p.layerId
+                    tilesetFirstgid: p.tilesetFirstgid,
+                    layerId: p.layerId,
                 }
             })
         })

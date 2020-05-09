@@ -9,6 +9,7 @@ export default {
             $imageId: String!,
             $mapId:String!,
             $tilesetId:[String],
+            $tilesetFirstgid:[Int],
             $layerId:[String]
         ){
             addProject(
@@ -18,6 +19,7 @@ export default {
                 imageId: $imageId
                 mapId:$mapId
                 tilesetId:$tilesetId
+                tilesetFirstgid:$tilesetFirstgid
                 layerId:$layerId
                 ){
                 name
@@ -26,9 +28,6 @@ export default {
             }
         }
     `,
-    // CREATE_PROJECT: gql`
-    // mutation
-    // `,
     REMOVE_PROJECT: gql`
     mutation removeProject(
             $id: String!
@@ -112,7 +111,6 @@ export default {
         $height:Int!
         
         $columns:Int
-        $firstgid:Int
         $margin:Int
         $spacing:Int
         $tilecount:Int
@@ -129,7 +127,6 @@ export default {
             height:$height
             
             columns:$columns
-            firstgid:$firstgid
             margin:$margin
             spacing:$spacing
             tilecount:$tilecount   
@@ -303,5 +300,44 @@ export default {
     mutation clearLayers{
         clearLayers
     }
-    `
+    `,
+
+    CREATE_PROJECT_PACK: gql`
+    mutation createProjectPack(
+        $name: String!
+        $owner: String!
+        $editors: [String]
+        $imageId: String!
+        $width: Int!
+        $height: Int!
+        $tileWidth: Int!
+        $tileHeight: Int!
+    ){
+        createProjectPack(
+            name:$name
+            owner:$owner
+            editors:$editors
+            imageId:$imageId
+            width:$width
+            height:$height
+            tileWidth:$tileWidth
+            tileHeight:$tileHeight
+        ){
+            name
+            ownerInfo{
+                username
+            }
+        }
+    }
+    `,
+
+    REMOVE_PROJECT_PACK: gql`
+    mutation removeProjectPack(
+        $id:String!
+    ){
+        removeProjectPack(
+            id:$id
+        )
+    }
+    `,
 }

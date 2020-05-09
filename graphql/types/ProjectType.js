@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList, GraphQLInt } = require('graphql');
 const UserModel = require('../../models/mongo-user')
 var GraphQLDate = require('graphql-date');
 
@@ -26,6 +26,9 @@ module.exports = new GraphQLObjectType({
             },
             tilesetId: {
                 type: new GraphQLList(GraphQLString)
+            },
+            tilesetFirstgid: {
+                type: new GraphQLList(GraphQLInt)
             },
             layerId: {
                 type: new GraphQLList(GraphQLString)

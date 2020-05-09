@@ -31,6 +31,8 @@ const addLayerMutation = require('../mutations/addLayerMutation')
 const clearLayersMutation = require('../mutations/clearLayersMutation')
 
 const createProjectPackMutation = require('../mutations/createProjectPack')
+const removeProjectPackMutation = require('../mutations/removeProjectPack')
+
 
 const {
     GraphQLSchema,
@@ -86,7 +88,8 @@ const mutation = new GraphQLObjectType({
             addLayer: addLayerMutation,
             clearLayers: clearLayersMutation,
 
-            createProjectPack: createProjectPackMutation
+            createProjectPack: createProjectPackMutation,
+            removeProjectPack: removeProjectPackMutation
         }
     }
 });
