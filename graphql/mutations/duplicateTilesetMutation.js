@@ -1,11 +1,10 @@
-const TilesetModel = require('../../models/mongo-tileset')
+const TilesetModel = require('../../models/mongo-tileset');
 const {
-    GraphQLList,
     GraphQLNonNull,
     GraphQLString,
 } = require('graphql');
 
-const TilesetType = require('../types/TilesetType')
+const TilesetType = require('../types/TilesetType');
 
 module.exports = {
     type: TilesetType,
@@ -21,24 +20,24 @@ module.exports = {
         }
     },
     resolve: (root, params) => {
-        console.log(params.name)
         TilesetModel.findOne({ _id: params.id }).then(currentTileset => {
-            if (!currentTileset) throw new Error('error')
+            if (!currentTileset) throw new Error('error');
             else {
                 let { width, height, editors, imageId, tileWidth, 
-                    tileHeight, owner, spacing, margin, tilecount, firstgid } = currentTileset
-                const index = editors.indexOf(params.owner)
+                    tileHeight, owner, spacing, margin, tilecount, firstgid } = currentTileset;
+                const index = editors.indexOf(params.owner);
                 if (index !== -1) {
                     editors.splice(index, 1)
                 }
-                editors.push(owner)
+                editors.push(owner);
                 const newTileset = new TilesetModel({
                     name: params.name,
+                    name_lower: params.name.toLowerCase(),
                     owner: params.owner,
                     width, height, imageId, tileWidth, tileHeight, editors,
                     spacing, margin, tilecount, firstgid
-                }).save()
-                if (!newTileset) throw new Error('Error')
+                }).save();
+                if (!newTileset) throw new Error('Error');
                 return newTileset
             }
         })
