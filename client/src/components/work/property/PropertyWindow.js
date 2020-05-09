@@ -64,7 +64,8 @@ class PropertyWindow extends React.Component {
                 minWidth={202}
                 minHeight={391}
                 id='property'
-                 onDragStop={(e,d)=>this.props.handleOnDragStop(e,d,'property')}
+                onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'property')}
+                style={{ zIndex: dimension.zIndex }}
             >
                 <Titlebar title="Property Window" />
                 <Collapsible data={
@@ -111,7 +112,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     handleUnselect: () => dispatch(handler.unselectPropertyHandler()),
     handleDelete: () => dispatch(handler.deletePropertyHandler()),
-    handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 
 

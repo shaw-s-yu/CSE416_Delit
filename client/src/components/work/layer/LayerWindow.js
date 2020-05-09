@@ -3,7 +3,6 @@ import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
 import LayerList from './LayerList'
-import * as handler from '../../../store/database/WorkScreenHandler';
 import Slider from '@material-ui/core/Slider';
 
 
@@ -37,7 +36,8 @@ class LayerWindow extends React.Component {
                 onResizeStop={this.handleOnResize}
                 onResizeStart={() => this.props.handleToTop('layer')}
                 id='layer'
-                 onDragStop={(e,d)=>this.props.handleOnDragStop(e,d,'layer')}
+                onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'layer')}
+                style={{ zIndex: dimension.zIndex }}
             >
                 <Titlebar title="Layer Window" />
                 <LayerList maxWidth={maxWidth} />
@@ -68,7 +68,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

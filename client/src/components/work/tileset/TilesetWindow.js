@@ -59,7 +59,8 @@ class TilesetWindow extends React.Component {
                 onResize={this.handleOnResize}
                 onResizeStop={this.handleStopResize}
                 id='tileset'
-                onDragStop={(e,d)=>this.props.handleOnDragStop(e,d,'tileset')}
+                onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'tileset')}
+                style={{ zIndex: dimension.zIndex }}
             >
                 <Titlebar title="Tileset Window" />
 

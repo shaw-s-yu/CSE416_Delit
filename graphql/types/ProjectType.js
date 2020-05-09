@@ -1,5 +1,7 @@
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList, GraphQLInt } = require('graphql');
 const UserModel = require('../../models/mongo-user')
+const LayerModel = require('../../models/mongo-layer')
+const TilesetModel = require('../../models/mongo-tileset')
 var GraphQLDate = require('graphql-date');
 
 module.exports = new GraphQLObjectType({
@@ -62,8 +64,34 @@ module.exports = new GraphQLObjectType({
                     return users
                 }
             },
+            LayersInfo: {
+                type: new GraphQLList(LayerType),
+                resolve: (parent, args) => {
+                    let layers = []
+                    parent.layerId.forEach(e => {
+                        let layer = LayerModel.findById(e)
+                        if (!layer) throw new Error('project get layers failed')
+                        else layers.push(layer)
+                    })
+                    return layers
+                }
+            },
+            tilesetsInfo: {
+                type: new GraphQLList(TilesetType),
+                resolve: (parent, args) => {
+                    let tilesets = []
+                    parent.tilesetId.forEach(e => {
+                        let tileset = TilesetModel.findById(e)
+                        if (!tileset) throw new Error('project get tilesets failed')
+                        else tilesets.push(tileset)
+                    })
+                    return tilesets
+                }
+            }
         }
     }
 });
 
 const UserType = require('./UserType')
+const LayerType = require('./LayerType')
+const TilesetType = require('./TilesetType')

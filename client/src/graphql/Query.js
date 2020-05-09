@@ -327,4 +327,66 @@ export default {
         }
     }
     `,
+    GET_PROJECT: graphql`
+    query project($id: String!){
+        project(id:$id){
+            _id
+            name
+            owner
+            editors
+            imageId
+            mapId
+            tilesetId
+            tilesetFirstgid
+            layerId
+            editors
+            lastUpdate
+            ownerInfo{
+                username
+                _id
+            }
+            teamInfo{
+                username
+                _id
+            }
+            LayersInfo{
+                _id
+                data
+                width
+                height
+                id
+                name
+                opacity
+                type
+                visible
+                x
+                y
+            }
+            tilesetsInfo{
+                _id
+                name
+                owner
+                editors
+                ownerInfo{
+                    username
+                    _id
+                }
+                teamInfo{
+                    username
+                    _id
+                }
+                columns
+                imageId
+                width
+                height
+                margin
+                spacing
+                tilecount
+                tileHeight
+                tileWidth
+                published
+            }
+        }
+    }
+    `,
 }

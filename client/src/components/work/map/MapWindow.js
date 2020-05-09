@@ -39,7 +39,8 @@ class MapWindow extends React.Component {
                 onResizeStart={() => this.props.handleToTop('map')}
                 onResize={this.handleOnResize}
                 onResizeStop={this.handleOnResize}
-                 onDragStop={(e,d)=>this.props.handleOnDragStop(e,d,'map')}
+                onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'map')}
+                style={{ zIndex: dimension.zIndex }}
             >
                 <Titlebar title="Map Window" />
                 <Toolbar
