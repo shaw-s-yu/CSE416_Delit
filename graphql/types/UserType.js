@@ -28,7 +28,7 @@ module.exports = new GraphQLObjectType({
                                 {owner: parent._id},
                                 {name_lower: {$regex: `.*${searchName}.*`}}
                             ],
-                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                        }).sort({"name_lower": -1}).skip(skip).limit(6).exec();
                     }else if(sortBt === "date") {
                         projects = ProjectModel.find({
                             $and: [
@@ -61,11 +61,13 @@ module.exports = new GraphQLObjectType({
                     searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt },
                     sortBt: { type: GraphQLString},
+                    nameBtSort: { type: GraphQLInt },
+                    dateBtSort: { type: GraphQLInt },
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
                     let projects = null;
-                    const { sortBt, skip} = args;
+                    const { sortBt, skip, nameBtSort, dateBtSort} = args;
                     const searchName = args.searchName.toLowerCase();
                     if (sortBt === "name") {
                         projects = ProjectModel.find({
@@ -78,7 +80,7 @@ module.exports = new GraphQLObjectType({
                                     ]
                                 }]
 
-                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                        }).sort({"name_lower": nameBtSort}).skip(skip).limit(6).exec();
                     } else if (sortBt === "date") {
                         projects = ProjectModel.find({
                             $and: [
@@ -90,7 +92,7 @@ module.exports = new GraphQLObjectType({
                                     ]
                                 }]
 
-                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
+                        }).sort({"lastUpdate": dateBtSort}).skip(skip).limit(6).exec();
                     }
                     if (!projects) throw new Error('Error');
                     return projects
@@ -132,7 +134,7 @@ module.exports = new GraphQLObjectType({
                                 {editors: parent._id},
                                 {name_lower: {$regex: `.*${searchName}.*`}}
                             ]
-                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                        }).sort({"name_lower": -1}).skip(skip).limit(6).exec();
                     } else if (sortBt === "date") {
                         projects = ProjectModel.find({
                             $and: [
@@ -263,7 +265,7 @@ module.exports = new GraphQLObjectType({
                                     ]
                                 }]
 
-                        }).sort({"name-lower": 1}).skip(skip).limit(6).exec();
+                        }).sort({"name-lower": -1}).skip(skip).limit(6).exec();
                     } else if (sortBt === "date") {
                         tilesets = TilesetModel.find({
                             $and: [
@@ -317,7 +319,7 @@ module.exports = new GraphQLObjectType({
                                 {editors: parent._id},
                                 {name_lower: {$regex: `.*${searchName}.*`}}
                             ]
-                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
+                        }).sort({"name_lower": -1}).skip(skip).limit(6).exec();
                     } else if (sortBt === "date") {
                         tilesets = TilesetModel.find({
                             $and: [
