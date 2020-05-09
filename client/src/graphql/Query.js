@@ -302,6 +302,7 @@ export default {
             data
             height
             name
+            opacity
             type
             visible
             width
@@ -349,7 +350,7 @@ export default {
                 username
                 _id
             }
-            LayersInfo{
+            layersInfo{
                 _id
                 data
                 width
@@ -389,4 +390,34 @@ export default {
         }
     }
     `,
+
+
+    GET_LAYER_FROM_PROJECT: graphql`
+    query project(
+        $id: String!
+        $searchId: String!
+    ){
+        project(
+            id:$id
+            ){
+            getLayer(
+                searchId: $searchId
+            ){
+                _id
+                idNumber
+                data
+                height
+                name
+                opacity
+                type
+                visible
+                width
+                x
+                y
+            }
+        }
+    }
+    `,
+
+
 }

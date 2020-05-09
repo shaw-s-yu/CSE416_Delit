@@ -64,7 +64,7 @@ module.exports = new GraphQLObjectType({
                     return users
                 }
             },
-            LayersInfo: {
+            layersInfo: {
                 type: new GraphQLList(LayerType),
                 resolve: (parent, args) => {
                     let layers = []
@@ -86,6 +86,29 @@ module.exports = new GraphQLObjectType({
                         else tilesets.push(tileset)
                     })
                     return tilesets
+                }
+            },
+            getLayer: {
+                args:{
+                    // id: {
+                    //     type: GraphQLString
+                    // },
+                    searchId: {
+                        type: GraphQLString
+                    },
+                },
+                type: LayerType,
+                resolve: (parent, args) => {
+                    let layer = LayerModel.find({
+                        $and: [
+                            {
+                                id: new RegExp('^.*' + args.searchName + '.*$', 'i')
+                            }
+                        ]
+                    }).exec();
+
+                    if (!layer) throw new Error('cannot find layer')
+                    return layer
                 }
             }
         }
