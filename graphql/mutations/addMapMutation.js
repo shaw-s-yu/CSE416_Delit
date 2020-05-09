@@ -23,8 +23,8 @@ module.exports = {
         orientation: { type: GraphQLString },
         renderorder: { type: GraphQLString },
         tiledversion: { type: GraphQLString },
-        tileheight: { type: new GraphQLNonNull(GraphQLInt) },
-        tilewidth: { type: new GraphQLNonNull(GraphQLInt) },
+        tileHeight: { type: new GraphQLNonNull(GraphQLInt) },
+        tileWidth: { type: new GraphQLNonNull(GraphQLInt) },
         type: { type: GraphQLString },
         version: { type: GraphQLFloat }
     },

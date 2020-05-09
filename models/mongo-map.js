@@ -11,8 +11,8 @@ var mapSchema = new Schema({
     orientation: String,
     renderorder: String,
     tiledversion: String,
-    tilewidth: Number,
-    tileheight: Number,
+    tileWidth: Number,
+    tileHeight: Number,
     type: String,
     version: Number
 });

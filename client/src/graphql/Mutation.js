@@ -222,8 +222,8 @@ export default {
         $orientation: String
         $renderorder: String
         $tiledversion: String
-        $tileheight: Int!
-        $tilewidth: Int!
+        $tileHeight: Int!
+        $tileWidth: Int!
         $type: String
         $version: Float
     ){
@@ -237,16 +237,16 @@ export default {
             orientation: $orientation
             renderorder: $renderorder
             tiledversion: $tiledversion
-            tileheight: $tileheight
-            tilewidth: $tilewidth
+            tileHeight: $tileHeight
+            tileWidth: $tileWidth
             type: $type
             version: $version
         ){
             _id
             width
             height
-            tilewidth
-            tileheight
+            tileWidth
+            tileHeight
         }
     }`
     ,

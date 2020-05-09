@@ -261,15 +261,13 @@ export default {
             width
             height
             infinite
-            layers
             nextlayerid
             nextobjectid
             orientation
             renderorder
             tiledversion
-            tileheight
-            tilewidth
-            tilesets
+            tileHeight
+            tileWidth
             type
             version
         }
@@ -281,15 +279,13 @@ export default {
             width
             height
             infinite
-            layers
             nextlayerid
             nextobjectid
             orientation
             renderorder
             tiledversion
-            tileheight
-            tilewidth
-            tilesets
+            tileHeight
+            tileWidth
             type
             version
         }

@@ -21,8 +21,8 @@ class MapManager extends React.Component {
                     orientation: m.orientation,
                     renderorder: m.renderorder,
                     tiledversion: m.tiledversion,
-                    tileheight: m.tileheight,
-                    tilewidth: m.tilewidth,
+                    tileHeight: m.tileHeight,
+                    tileWidth: m.tileWidth,
                     type: m.type,
                     version: m.version
                 }

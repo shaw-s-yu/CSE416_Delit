@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList } = require('graphql');
 const UserModel = require('../../models/mongo-user')
 var GraphQLDate = require('graphql-date');
 
@@ -10,19 +10,31 @@ module.exports = new GraphQLObjectType({
                 type: GraphQLString
             },
             name: {
-                type: GraphQLString
-            },
-            name_lower: {
-                type: GraphQLString
-            },
-            imageId: {
-                type: GraphQLString
+                type: new GraphQLNonNull(GraphQLString)
             },
             owner: {
-                type: GraphQLString,
+                type: new GraphQLNonNull(GraphQLString)
             },
             editors: {
                 type: new GraphQLList(GraphQLString)
+            },
+            imageId: {
+                type: new GraphQLNonNull(GraphQLString)
+            },
+            mapId: {
+                type: new GraphQLNonNull(GraphQLString)
+            },
+            tilesetId: {
+                type: new GraphQLList(GraphQLString)
+            },
+            layerId: {
+                type: new GraphQLList(GraphQLString)
+            },
+            editors: {
+                type: new GraphQLList(GraphQLString)
+            },
+            lastUpdate: {
+                type: new GraphQLNonNull(GraphQLDate)
             },
             ownerInfo: {
                 type: UserType,
@@ -47,13 +59,6 @@ module.exports = new GraphQLObjectType({
                     return users
                 }
             },
-            // lastUpdate: {
-            //     type: GraphQLDate
-            // },
-            // mapId:{
-            //     type: GraphQLString
-            // }
-
         }
     }
 });
