@@ -3,8 +3,8 @@ export default class MapjsonController {
         this.mapjson = JSON.parse(JSON.stringify(mapjson))
         this.tilesets = []
         this.layers = []
-        this.map = new Object()
-        this.propertys = new Object()
+        this.map = {}
+        this.propertys = {}
 
         this.buildTilesets()
         this.buildLayers()

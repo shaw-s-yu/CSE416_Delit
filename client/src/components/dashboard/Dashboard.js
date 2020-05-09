@@ -6,7 +6,8 @@ import './dashboard.css'
 import Pagination from '../tools/Pagination'
 import { connect } from 'react-redux';
 import Sidebar from "./Sidebar";
-import AddDialog from "./AddDialog";
+import AddProjectDialog from "./AddProjectDialog";
+import AddTilesetDialog from "./AddTilesetDialog";
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios'
@@ -17,8 +18,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class Dashboard extends React.Component {
     state = {
         showSidebar: true,
-        dialogOpen: false,
-        dialogType: 'project',
+        projectDialogOpen: false,
+        tilesetDialogOpen: false,
         selected: 'all',
         page: 1,
         search: '',
@@ -30,30 +31,32 @@ class Dashboard extends React.Component {
     };
 
     handleSortByName = () => {
-        this.setState({sortBt: 'name'});
+        this.setState({ sortBt: 'name' });
     };
 
     handleSortByDate = () => {
-        this.setState({sortBt: 'date'});
+        this.setState({ sortBt: 'date' });
     };
 
     handleSelectSide = (type) => {
         this.setState({ selected: type })
     };
 
-    handleDialogOpen = (dialogType) => {
-        this.setState({ dialogOpen: true, dialogType });
-    };
+    handleProjectDialogOpen = () => {
+        this.setState({ projectDialogOpen: true })
+    }
 
-    handleDialogClose = (type) => {
-        const { dialogType, selected } = this.state;
-        this.setState({
-            dialogOpen: false,
-            selected: type === 'cancel' ?
-                selected : dialogType === 'project' ?
-                    'create' : 'tilesets'
-        })
-    };
+    handleProjectDialogClose = () => {
+        this.setState({ projectDialogOpen: false })
+    }
+
+    handleTilesetDialogOpen = () => {
+        this.setState({ tilesetDialogOpen: true })
+    }
+
+    handleTilesetDialogClose = () => {
+        this.setState({ tilesetDialogOpen: false })
+    }
 
     handleSidebarOpen = () => {
         let { showSidebar } = this.state;
@@ -143,7 +146,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page, search, dialogOpen, dialogType, sortBt } = this.state;
+        const { showSidebar, selected, user, page, search, projectDialogOpen, tilesetDialogOpen, dialogType, sortBt } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -163,7 +166,8 @@ class Dashboard extends React.Component {
                 <TopNavbar handleSidebarOpen={this.handleSidebarOpen} site='dashboard' history={history} />
                 <Sidebar
                     showSidebar={showSidebar}
-                    handleOpen={this.handleDialogOpen}
+                    handleProjectDialogOpen={this.handleProjectDialogOpen}
+                    handleTilesetDialogOpen={this.handleTilesetDialogOpen}
                     handleSelect={this.handleSelectSide}
                     selected={selected}
                 />
@@ -171,8 +175,8 @@ class Dashboard extends React.Component {
                 <div className="dashboard-display" style={displayStyle}>
                     <Searchbar value={search} onChange={this.handleSearchChange} />
                     <div className="dashboard-sort-btn-group">
-                        <button className="dashboard-sort-btn" onClick={this.handleSortByName}>Name <i className="fa fa-arrow-down dashboard-sort-icon"/></button>
-                        <button className="dashboard-sort-btn" onClick={this.handleSortByDate}>Last Modified <i className="fa fa-arrow-down dashboard-sort-icon"/></button>
+                        <button className="dashboard-sort-btn" onClick={this.handleSortByName}>Name <i className="fa fa-arrow-down dashboard-sort-icon" /></button>
+                        <button className="dashboard-sort-btn" onClick={this.handleSortByDate}>Last Modified <i className="fa fa-arrow-down dashboard-sort-icon" /></button>
                     </div>
                     <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBt: sortBt }} fetchPolicy={'network-only'}>
                         {({ loading, error, data }) => {
@@ -187,7 +191,7 @@ class Dashboard extends React.Component {
                             const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                             const refetch = {
                                 query: query,
-                                variables: { userId: user._id, pageSkip: pageSkip, search: search, sortBt: sortBt}
+                                variables: { userId: user._id, pageSkip: pageSkip, search: search, sortBt: sortBt }
                             };
                             return (
                                 <>
@@ -205,10 +209,15 @@ class Dashboard extends React.Component {
                                         handlePagination={this.handlePagination}
                                         defaultPage={page}
                                     />
-                                    <AddDialog
-                                        type={dialogType}
-                                        open={dialogOpen}
-                                        handleClose={this.handleDialogClose}
+                                    <AddProjectDialog
+                                        open={projectDialogOpen}
+                                        handleClose={this.handleProjectDialogClose}
+                                        refetch={refetch}
+                                        userId={user._id}
+                                    />
+                                    <AddTilesetDialog
+                                        open={tilesetDialogOpen}
+                                        handleClose={this.handleTilesetDialogClose}
                                         refetch={refetch}
                                         userId={user._id}
                                     />

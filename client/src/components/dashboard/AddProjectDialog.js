@@ -36,35 +36,21 @@ class AddDialog extends React.Component {
     handleAddProject = (callback) => {
         const { userId, type } = this.props
         const { itemName, width, height, tileWidth, tileHeight } = this.state
-        if (type === 'tileset')
-            callback({
-                variables: {
-                    name: itemName,
-                    owner: userId,
-                    width: parseInt(width),
-                    height: parseInt(height),
-                    tileWidth: parseInt(tileWidth),
-                    tileHeight: parseInt(tileHeight),
-                    imageId: '5eacb076d0ed064dec138c41'
-                }
-            })
-        else
-            callback({
-                variables: {
-                    name: itemName,
-                    owner: userId,
-                    imageId: '5eacb076d0ed064dec138c41'
-                }
-            })
-        this.props.handleClose('project')
+
+        callback({
+            variables: {
+                name: itemName,
+                owner: userId,
+                imageId: '5eacb076d0ed064dec138c41'
+            }
+        })
+        this.props.handleClose()
     }
 
     render() {
-        const { open, handleClose, refetch, type } = this.props;
+        const { open, handleClose, refetch } = this.props;
         const { itemName, width, height, tileWidth, tileHeight, disableBt } = this.state
-        const name = type === 'tileset' ? 'tileset' : 'Map'
-        const title = type === 'tileset' ? 'tileset' : 'Project'
-        const mutation = type === 'tileset' ? MutationList.ADD_TILESET : MutationList.ADD_PROJECT
+        const mutation = MutationList.ADD_PROJECT
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(addItem, res) => (
@@ -81,7 +67,7 @@ class AddDialog extends React.Component {
                             <>
                                 <TextField
                                     className="add-project-dialog-input"
-                                    label={`Enter New ${title} Name`}
+                                    label={`Enter New Project Name`}
                                     name="itemName"
                                     variant="outlined"
                                     size="small"
@@ -113,24 +99,26 @@ class AddDialog extends React.Component {
                                 <div className='br'></div>
                                 <TextField
                                     className="project-property-input"
-                                    label={`Enter ${name} Width`}
+                                    label={`Enter Map Width (tiles)`}
                                     name="width"
                                     type="number"
                                     variant="outlined"
                                     size="small"
                                     value={width.toString()}
                                     onChange={this.handleOnChange}
+                                    helperText={`${width * tileWidth} x ${width * tileWidth} px`}
                                 />
 
                                 <TextField
                                     className="project-property-input"
-                                    label={`Enter ${name} Height`}
+                                    label={`Enter Map Height (tiles)`}
                                     name="height"
                                     type="number"
                                     variant="outlined"
                                     size="small"
                                     value={height.toString()}
                                     onChange={this.handleOnChange}
+                                    helperText={`${height * tileHeight} x ${height * tileHeight} px`}
                                 />
                                 {
                                     res.loading ? 'loading' : res.error ? res.error.message : null

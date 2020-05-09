@@ -6,13 +6,19 @@ export default {
             $name: String!,
             $owner: String!,
             $editors: [String],
-            $imageId: String!
+            $imageId: String!,
+            $mapId:String!,
+            $tilesetId:[String],
+            $layerId:[String]
         ){
             addProject(
                 name: $name,
                 owner: $owner,
                 editors: $editors
                 imageId: $imageId
+                mapId:$mapId
+                tilesetId:$tilesetId
+                layerId:$layerId
                 ){
                 name
                 owner
@@ -92,48 +98,42 @@ export default {
 
     ADD_TILESET: gql`
     mutation addTileset(
+        $id:String
         $name:String!
-        $projectName:String
         $owner:String!
         $editors:[String]
         $imageId:String!
-        $tileWidth:Int
-        $tileHeight:Int
+        $tileWidth:Int!
+        $tileHeight:Int!
         $width: Int!
         $height:Int!
-
+        
+        $columns:Int
+        $firstgid:Int
         $margin:Int
         $spacing:Int
         $tilecount:Int
-        $firstgid:Int
-        $columns:Int
     ){
         addTileset(
+            _id:$id
             name:$name
-            projectName:$projectName
             owner:$owner
             editors:$editors
             imageId:$imageId
-            width:$width
-            height:$height
             tileWidth:$tileWidth
             tileHeight:$tileHeight
+            width:$width
+            height:$height
+            
+            columns:$columns
+            firstgid:$firstgid
             margin:$margin
             spacing:$spacing
-            tilecount:$tilecount
-            firstgid:$firstgid
-            columns:$columns
+            tilecount:$tilecount   
         ){
-            imageId
-            width
-            height
-            tileWidth
-            tileHeight
-            margin
-            spacing
-            tilecount
-            firstgid
-            columns
+            _id
+            name
+            owner
         }
     }`,
 
@@ -208,119 +208,27 @@ export default {
     }
     `,
 
-
-    // ADD_MAP: gql`
-    // mutation addMap(
-    //         $width: Number!,
-    //         $height: Number,
-    //         $infinite: Boolean,
-    //         $layers: [String],
-    //         $nextLayerid: Number,
-    //         $nextObjectid: Number,
-    //         $orientation: String,
-    //         $renderorder: String,
-    //         $tiledversion: String,
-    //         $tilewidth: Number,
-    //         $tilesheight: Number,
-    //         $tilesets: [String],
-    //         $type: String,
-    //         $version: Number
-    // ){
-    //     addMap(
-    //             width: $width,
-    //             height: $height,
-    //             infinite: $infinite,
-    //                 data: $data,
-    //                 width: $width,
-    //                 height: $height,
-    //                 id: $id,
-    //                 name: $name,
-    //                 opacity: $opacity,
-    //                 type: $type,
-    //                 visible: $visible,
-    //                 x: $x,
-    //                 y: $y,
-    //             nextLayerid: $nextLayerid,
-    //             nextObjectid: $nextObjectid,
-    //             orientation: $orientation,
-    //             renderorder: $renderorder,
-    //             tiledversion: $tiledversion,
-    //             tilewidth: $tilewidth,
-    //             tilesheight: $tilesheight,
-    //                 columns: $columns,
-    //                 firstgid: $firstgid,
-    //                 imageId: $imageId,
-    //                 width: $width,
-    //                 height: $height,
-    //                 margin: $margin,
-    //                 name: $name,
-    //                 spacing: $spacing,
-    //                 tilecount: $tilecount,
-    //                 tileHeight: $tileHeight,
-    //                 tileWidth: $tileWidth
-    //             type: $type,
-    //             version: $version,
-    //         ){
-    //                 width,
-    //                 height,
-    //                 infinite,
-    //                 layers
-    //                     data,
-    //                     width,
-    //                     height,
-    //                     id,
-    //                     name,
-    //                     opacity,
-    //                     type,
-    //                     visible,
-    //                     x,
-    //                     y,
-    //             nextLayerid,
-    //             nextObjectid,
-    //             orientation,
-    //             renderorder,
-    //             tiledversion,
-    //             tilewidth,
-    //             tilesheight,
-    //                 columns,
-    //                 firstgid,
-    //                 imageId,
-    //                 width,
-    //                 height,
-    //                 margin,
-    //                 name,
-    //                 spacing,
-    //                 tilecount,
-    //                 tileHeight,
-    //                 tileWidth
-    //             type,
-    //             version,
-    //     }
-    // }
-    // `,
-
     ADD_MAP: gql`
     mutation addMap(
-        $width: Int!,
-        $height: Int!,
-        $infinite: Boolean,
-        $layers: [String],
-        $nextlayerid: Int!,
-        $nextobjectid: Int!,
-        $orientation: String!,
-        $renderorder: String!,
-        $tiledversion: String!,
-        $tileheight: Int!,
-        $tilewidth: Int!,
-        $tilesets: [String],
-        $type: String!,
-        $version: Float!
+        $id: String
+        $width: Int!
+        $height: Int!
+        $infinite: Boolean
+        $nextlayerid: Int
+        $nextobjectid: Int
+        $orientation: String
+        $renderorder: String
+        $tiledversion: String
+        $tileheight: Int!
+        $tilewidth: Int!
+        $type: String
+        $version: Float
     ){
         addMap(
+            _id:$id
             width: $width
             height: $height
             infinite: $infinite
-            layers: $layers
             nextlayerid: $nextlayerid
             nextobjectid: $nextobjectid
             orientation: $orientation
@@ -328,24 +236,14 @@ export default {
             tiledversion: $tiledversion
             tileheight: $tileheight
             tilewidth: $tilewidth
-            tilesets: $tilesets
             type: $type
             version: $version
         ){
+            _id
             width
             height
-            infinite
-            layers
-            nextlayerid
-            nextobjectid
-            orientation
-            renderorder
-            tiledversion
-            tileheight
             tilewidth
-            tilesets
-            type
-            version
+            tileheight
         }
     }`
     ,
@@ -359,32 +257,35 @@ export default {
 
     ADD_LAYER: gql`
     mutation addLayer(
-        $data: [Int],
-        $width: Int!,
-        $height: Int!,
-        $idNumber: Int,
+        $_id: String
+        $data: [Int]
+        $width: Int!
+        $height: Int!
+        $id: Int,
         $name: String,
-        $opacity: Int!,
+        $opacity: Int,
         $type: String,
         $visible: Boolean,
-        $x: Int!,
-        $y: Int!,
+        $x: Int,
+        $y: Int,
     ){
         addLayer(
+            _id:$_id
             data: $data
+            width: $width
             height: $height
-            idNumber: $idNumber
+            id: $id
             name: $name
             opacity: $opacity
             type: $type
             visible: $visible
-            width: $width
             x: $x
             y: $y
         ){
+            _id
             data
             height
-            idNumber
+            id
             name
             opacity
             type

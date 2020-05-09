@@ -17,7 +17,7 @@ class TestScreen extends React.Component {
             projectsInJson: projects,
             mapsInJson: maps,
             tilesetsInJson: tilesets,
-            layersInJson: layers
+            layersInJson: layers,
         }
         this.projectToReduer = { projects, maps, tilesets, layers }
     }
@@ -30,13 +30,10 @@ class TestScreen extends React.Component {
                 <TopNavbar side='test' history={history} />
                 <div className="test-wrapper">
                     <div className="test-title">Controll of mongoDB</div>
-                    {console.log(this.projectToReduer)}
                     <ProjectManager dataToAdd={this.projectToReduer.projects} />
                     <TilesetManager dataToAdd={this.projectToReduer.tilesets} />
                     <MapManager dataToAdd={this.projectToReduer.maps} />
                     <LayerManager dataToAdd={this.projectToReduer.layers} />
-                    {console.log("this is layers")}
-                    {console.log(this.projectToReduer.layers)}
                 </div>
             </>
         )

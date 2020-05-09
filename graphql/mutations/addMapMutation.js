@@ -9,60 +9,38 @@ const {
 } = require('graphql');
 
 const MapType = require('../types/MapType')
+const mongoose = require('mongoose');
 
 module.exports = {
     type: MapType,
     args: {
-        id:{
-            type: GraphQLString
-        },
-        width: {
-            type: GraphQLInt
-        },
-        height: {
-            type: GraphQLInt
-        },
-        infinite: {
-            type: GraphQLBoolean
-        },
-        nextlayerid: {
-            type: new GraphQLNonNull(GraphQLInt)
-        },
-        nextobjectid: {
-            type: new GraphQLNonNull(GraphQLInt)
-        },
-        orientation: {
-            type: new GraphQLNonNull(GraphQLString)
-        },
-        renderorder: {
-            type: new GraphQLNonNull(GraphQLString)
-        },
-        tiledversion: {
-            type: new GraphQLNonNull(GraphQLString)
-        },
-        tilewidth: {
-            type: new GraphQLNonNull(GraphQLInt)
-        },
-        tileheight: {
-            type: new GraphQLNonNull(GraphQLInt)
-        },
-        type: {
-            type: new GraphQLNonNull(GraphQLString)
-        },
-        version: {
-            type: new GraphQLNonNull(GraphQLFloat)
-        },
-        layers: {
-            type: new GraphQLList(GraphQLString)
-        },
-
-        tilesets: {
-            type: new GraphQLList(GraphQLString)
-        },
+        _id: { type: GraphQLString },
+        width: { type: new GraphQLNonNull(GraphQLInt) },
+        height: { type: new GraphQLNonNull(GraphQLInt) },
+        infinite: { type: GraphQLBoolean },
+        nextlayerid: { type: GraphQLInt },
+        nextobjectid: { type: GraphQLInt },
+        orientation: { type: GraphQLString },
+        renderorder: { type: GraphQLString },
+        tiledversion: { type: GraphQLString },
+        tileheight: { type: new GraphQLNonNull(GraphQLInt) },
+        tilewidth: { type: new GraphQLNonNull(GraphQLInt) },
+        type: { type: GraphQLString },
+        version: { type: GraphQLFloat }
     },
     resolve: (root, params) => {
-        const mapModel = new MapModel(params);
-        const newMap = mapModel.save();
+        const newMap = new MapModel({
+            ...params,
+            _id: params._id ? params._id : mongoose.Types.ObjectId(),
+            infinite: params.infinite ? params.infinite : false,
+            nextlayerid: params.nextlayerid ? params.nextlayerid : 2,
+            nextobjectid: params.nextobjectid ? params.nextobjectid : 1,
+            orientation: params.orientation ? params.orientation : 'orthogonal',
+            tiledversion: params.tiledversion ? params.tiledversion : `${new Date().getFullYear()}.${new Date().getMonth()}.${new Date().getDate()}`,
+            type: params.type ? params.type : 'map',
+            version: params.version ? params.version : 1.1
+
+        }).save()
         if (!newMap) {
             throw new Error('Error');
         }

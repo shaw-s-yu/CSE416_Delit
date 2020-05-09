@@ -112,7 +112,6 @@ export default {
         tilesets{
             _id
             name
-            projectName
             owner
             imageId
             width
@@ -183,32 +182,6 @@ export default {
         }
     }
     `,
-    // GET_TILESET: graphql`
-    // query tileset($id: String!){
-    //     tileset(id:$id){
-    //         _id
-    //         name
-    //         ownerInfo{
-    //             username
-    //         }
-    //         teamInfo{
-    //             _id
-    //             username
-    //         }
-    //         imageId
-    //         width
-    //         height
-    //         tilewidth
-    //         tileheight
-    //         columns
-    //         firstgid
-    //         margin
-    //         spacing
-    //         tilecount
-
-    //     }
-    // }
-    // `,
     GET_MY_OWNED_TILESETS: graphql`
     query user(
         $userId: String!
@@ -315,11 +288,10 @@ export default {
     {
         layers{
             _id
-            idNumber
+            id
             data
             height
             name
-            opacity
             type
             visible
             width

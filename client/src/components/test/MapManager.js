@@ -3,6 +3,7 @@ import QueryList from '../../graphql/Query'
 import { Mutation, Query } from 'react-apollo'
 import { v1 } from 'uuid'
 import MutationList from '../../graphql/Mutation'
+import { Button } from "react-bootstrap";
 
 class MapManager extends React.Component {
 
@@ -11,11 +12,10 @@ class MapManager extends React.Component {
         dataToAdd.forEach(m => {
             callback({
                 variables: {
-                    id: m.id,
+                    id: m._id,
                     width: m.width,
                     height: m.height,
                     infinite: m.infinite,
-                    layers: m.layers,
                     nextlayerid: m.nextlayerid,
                     nextobjectid: m.nextobjectid,
                     orientation: m.orientation,
@@ -23,7 +23,6 @@ class MapManager extends React.Component {
                     tiledversion: m.tiledversion,
                     tileheight: m.tileheight,
                     tilewidth: m.tilewidth,
-                    tilesets: m.tilesets,
                     type: m.type,
                     version: m.version
                 }
@@ -44,14 +43,10 @@ class MapManager extends React.Component {
         return (
             <Query query={QueryList.GET_ALL_MAPS}>
                 {(mapsRes) => {
-                    console.log(mapsRes.data)
-
-                    if (mapsRes.data)
-                        console.log(mapsRes.data)
-                    console.log("4444444444444444444444444")
                     if (mapsRes.loading) return 'loading'
                     if (mapsRes.error) return 'error'
                     const { maps } = mapsRes.data
+                    const btn_disable = maps.length === 0 ? false : true
                     return (
                         <Mutation mutation={MutationList.ADD_MAP} refetchQueries={[refetch]}>
                             {(addMaps, addProjectRes) => (
@@ -60,8 +55,8 @@ class MapManager extends React.Component {
                                         <div className='test-manager-wrapper'>
                                             maps
                                             <div className="test-btn-box">
-                                                <button className='test-btn' onClick={() => this.handleAddMap(addMaps)}>ADD</button>
-                                                <button className='test-btn' onClick={() => this.handleClear(clearMaps)}>CLEAR</button>
+                                                <Button className='test-btn' disabled={btn_disable} onClick={() => this.handleAddMap(addMaps)}>ADD</Button>
+                                                <Button className='test-btn' onClick={() => this.handleClear(clearMaps)}>CLEAR</Button>
                                             </div>
                                             {maps.map(p => <div key={v1()} className="test-context">{JSON.stringify(p)}</div>)}
                                         </div>

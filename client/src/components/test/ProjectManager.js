@@ -3,10 +3,10 @@ import QueryList from '../../graphql/Query'
 import { Mutation, Query } from 'react-apollo'
 import { v1 } from 'uuid'
 import MutationList from '../../graphql/Mutation'
+import { Button } from "react-bootstrap";
 
 
 class ProjectManager extends React.Component {
-
 
     handleAddProject = (callback) => {
         const { dataToAdd } = this.props
@@ -16,7 +16,10 @@ class ProjectManager extends React.Component {
                     name: p.name,
                     owner: p.owner,
                     editors: p.editors,
-                    imageId: p.imageId
+                    imageId: p.imageId,
+                    mapId: p.mapId,
+                    tilesetId: p.tilesetId,
+                    layerId: p.layerId
                 }
             })
         })
@@ -35,9 +38,6 @@ class ProjectManager extends React.Component {
         return (
             <Query query={QueryList.GET_PROJECTS}>
                 {(projectsRes) => {
-                    if (projectsRes.data)
-                        console.log(projectsRes.data.projects)
-                        console.log("1111111111111111111111111")
                     if (projectsRes.loading) return 'loading'
                     if (projectsRes.error) return 'error'
                     const { projects } = projectsRes.data
@@ -49,12 +49,10 @@ class ProjectManager extends React.Component {
                                         <div className='test-manager-wrapper'>
                                             projects
                                             <div className="test-btn-box">
-                                                <button className='test-btn' onClick={() => this.handleAddProject(addProjects)}>ADD</button>
-                                                <button className='test-btn' onClick={() => this.handleClear(clearProjects)}>CLEAR</button>
+                                                <Button className='test-btn' onClick={() => this.handleAddProject(addProjects)}>ADD</Button>
+                                                <Button className='test-btn' onClick={() => this.handleClear(clearProjects)}>CLEAR</Button>
                                             </div>
-                                            {
-                                                console.log(projects)
-                                            }
+
                                             {projects.map(p => <div key={v1()} className="test-context">{JSON.stringify(p)}</div>)}
                                         </div>
                                     )}

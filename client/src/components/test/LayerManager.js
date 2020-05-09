@@ -3,24 +3,26 @@ import QueryList from '../../graphql/Query'
 import { Mutation, Query } from 'react-apollo'
 import { v1 } from 'uuid'
 import MutationList from '../../graphql/Mutation'
+import { Button } from "react-bootstrap";
 
-class LayerManager extends React.Component {
+class MapManager extends React.Component {
 
-    handleAddLayer = (callback) => {
+    handleAddMap = (callback) => {
         const { dataToAdd } = this.props
-        dataToAdd.forEach(l => {
+        dataToAdd.forEach(m => {
             callback({
                 variables: {
-                    data: l.data,
-                    height: l.height,
-                    idNumber: l.idNumber,
-                    name: l.name,
-                    opacity: l.opacity,
-                    type: l.type,
-                    visible: l.visible,
-                    width: l.width,
-                    x: l.x,
-                    y: l.y
+                    _id: m._id,
+                    data: m.data,
+                    height: m.height,
+                    width: m.width,
+                    id: m.id,
+                    name: m.name,
+                    opacity: m.opacity,
+                    type: m.type,
+                    visible: m.visible,
+                    x: m.x,
+                    y: m.y
                 }
             })
         })
@@ -35,17 +37,14 @@ class LayerManager extends React.Component {
         const refetch = {
             query: QueryList.GET_ALL_LAYERS
         }
+
         return (
             <Query query={QueryList.GET_ALL_LAYERS}>
                 {(layersRes) => {
-                    
-                    console.log(layersRes.data)
-                    if (layersRes.data)
-                        {/* console.log(layersRes.data) */}
-                        console.log("3333333333333333333333333")
                     if (layersRes.loading) return 'loading'
                     if (layersRes.error) return 'error'
                     const { layers } = layersRes.data
+                    const btn_disable = layers.length === 0 ? false : true
                     return (
                         <Mutation mutation={MutationList.ADD_LAYER} refetchQueries={[refetch]}>
                             {(addLayers, addProjectRes) => (
@@ -54,12 +53,9 @@ class LayerManager extends React.Component {
                                         <div className='test-manager-wrapper'>
                                             layers
                                             <div className="test-btn-box">
-                                                <button className='test-btn' onClick={() => this.handleAddLayer(addLayers)}>ADD</button>
-                                                <button className='test-btn' onClick={() => this.handleClear(clearLayers)}>CLEAR</button>
+                                                <Button className='test-btn' disabled={btn_disable} onClick={() => this.handleAddMap(addLayers)}>ADD</Button>
+                                                <Button className='test-btn' onClick={() => this.handleClear(clearLayers)}>CLEAR</Button>
                                             </div>
-                                            {
-                                                console.log(layers)
-                                            }
                                             {layers.map(p => <div key={v1()} className="test-context">{JSON.stringify(p)}</div>)}
                                         </div>
                                     )}
@@ -74,4 +70,4 @@ class LayerManager extends React.Component {
     }
 }
 
-export default LayerManager
+export default MapManager

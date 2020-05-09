@@ -1,14 +1,14 @@
-const { GraphQLObjectType, 
-    GraphQLString, 
-    GraphQLNonNull, 
+const { GraphQLObjectType,
+    GraphQLString,
+    GraphQLNonNull,
     GraphQLInt,
     GraphQLBoolean,
     GraphQLList, } = require('graphql');
 
 module.exports = new GraphQLObjectType({
     name: "layers",
-    fields:{
-        _id:{
+    fields: {
+        _id: {
             type: GraphQLString
         },
         data: {
@@ -20,14 +20,14 @@ module.exports = new GraphQLObjectType({
         height: {
             type: new GraphQLNonNull(GraphQLInt)
         },
-        idNumber: {
+        id: {
             type: GraphQLInt
         },
         name: {
             type: GraphQLString
         },
         opacity: {
-            type: new GraphQLNonNull(GraphQLInt)
+            type: GraphQLInt
         },
         type: {
             type: GraphQLString
@@ -36,10 +36,10 @@ module.exports = new GraphQLObjectType({
             type: GraphQLBoolean
         },
         x: {
-            type: new GraphQLNonNull(GraphQLInt)
+            type: GraphQLInt
         },
         y: {
-            type: new GraphQLNonNull(GraphQLInt)
+            type: GraphQLInt
         }
     }
 })

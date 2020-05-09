@@ -3,6 +3,7 @@ import QueryList from '../../graphql/Query'
 import { Mutation, Query } from 'react-apollo'
 import { v1 } from 'uuid'
 import MutationList from '../../graphql/Mutation'
+import { Button } from "react-bootstrap";
 
 class TilesetManager extends React.Component {
 
@@ -11,21 +12,23 @@ class TilesetManager extends React.Component {
         dataToAdd.forEach(t => {
             callback({
                 variables: {
+                    id: t._id,
                     name: t.name,
                     owner: t.owner,
                     editors: t.editors,
                     imageId: t.imageId,
-                    margin: t.margin,
-                    spacing: t.spacing,
+                    tileWidth: t.tileWidth,
+                    tileHeight: t.tileHeight,
                     width: t.width,
                     height: t.height,
 
-                    tileWidth: t.tileWidth,
-                    tileHeight: t.tileHeight,
-                    tilecount: t.tilecount,
-                    projectName: t.projectName,
+
+
                     columns: t.columns,
                     firstgid: t.firstgid,
+                    margin: t.margin,
+                    spacing: t.spacing,
+                    tilecount: t.tilecount,
                 }
             })
         })
@@ -44,12 +47,10 @@ class TilesetManager extends React.Component {
         return (
             <Query query={QueryList.GET_ALL_TILESETS}>
                 {(tilesetsRes) => {
-                    if (tilesetsRes.data)
-                        console.log(tilesetsRes.data)
-                        console.log("2222222222222222222222222")
                     if (tilesetsRes.loading) return 'loading'
                     if (tilesetsRes.error) return 'error'
                     const { tilesets } = tilesetsRes.data
+                    const btn_disable = tilesets.length === 0 ? false : true
                     return (
                         <Mutation mutation={MutationList.ADD_TILESET} refetchQueries={[refetch]}>
                             {(addTilesets, addProjectRes) => (
@@ -58,8 +59,8 @@ class TilesetManager extends React.Component {
                                         <div className='test-manager-wrapper'>
                                             tilesets
                                             <div className="test-btn-box">
-                                                <button className='test-btn' onClick={() => this.handleAddProject(addTilesets)}>ADD</button>
-                                                <button className='test-btn' onClick={() => this.handleClear(clearTilesets)}>CLEAR</button>
+                                                <Button className='test-btn' disabled={btn_disable} onClick={() => this.handleAddProject(addTilesets)}>Add</Button>
+                                                <Button className='test-btn' onClick={() => this.handleClear(clearTilesets)}>CLEAR</Button>
                                             </div>
                                             {tilesets.map(p => <div key={v1()} className="test-context">{JSON.stringify(p)}</div>)}
                                         </div>

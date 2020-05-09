@@ -19,12 +19,12 @@
                 "5ea262a9e4a7b520c829163b",
                 "5ea33ec1a8a9b4504485aa28"
             ],
-            "lastModifiedBy": "5ea0e25872182f00242b848a",
-            "mapId": "1",
-            "tiledSetId": [
-                "1",
-                "2",
-                "3"
+            "mapId": "map1",
+            "tilesetId": [
+                "tileset1"
+            ],
+            "layerId": [
+                "layer1"
             ],
             "imageId": "5eabe075e9da110b6896405a"
         },
@@ -36,31 +36,14 @@
                 "5ea262a9e4a7b520c829163b",
                 "5ea33ec1a8a9b4504485aa28"
             ],
-            "lastModifiedBy": "5ea0e25872182f00242b848a",
-            "mapId": "1",
-            "tiledSetId": [
-                "1",
-                "2",
-                "3"
+            "mapId": "map2",
+            "tilesetId": [
+                "tileset2"
+            ],
+            "layerId": [
+                "layer2"
             ],
             "imageId": "5eabde4998bf8c7fc8ef0307"
-        },
-        {
-            "name": "Shot in the Hate",
-            "owner": "5ea262a9e4a7b520c829163b",
-            "editors": [
-                "5e9fa3908dead93aa46f6a6d",
-                "5ea0e25872182f00242b848a",
-                "5ea33ec1a8a9b4504485aa28"
-            ],
-            "lastModifiedBy": "5ea0e25872182f00242b848a",
-            "mapId": "1",
-            "tiledSetId": [
-                "1",
-                "2",
-                "3"
-            ],
-            "imageId": "5eabde7398bf8c7fc8ef0308"
         },
         {
             "name": "Pain in Brain",
@@ -70,148 +53,66 @@
                 "5ea0e25872182f00242b848a",
                 "5ea262a9e4a7b520c829163b"
             ],
-            "lastModifiedBy": "5ea0e25872182f00242b848a",
-            "mapId": "1",
-            "tiledSetId": [
-                "1",
-                "2",
-                "3"
+            "mapId": "map3",
+            "tilesetId": [
+                "tileset3"
+            ],
+            "layerId": [
+                "layer3"
             ],
             "imageId": "5eabe0b7e9da110b6896405b"
-        },
-        {
-            "name": "New Horse Shoe",
-            "owner": "5ea0e25872182f00242b848a",
-            "editors": [
-                "5e9fa3908dead93aa46f6a6d",
-                "5ea262a9e4a7b520c829163b",
-                "5ea33ec1a8a9b4504485aa28"
-            ],
-            "lastModifiedBy": "5ea0e25872182f00242b848a",
-            "mapId": "1",
-            "tiledSetId": [
-                "1",
-                "2",
-                "3"
-            ],
-            "imageId": "5eabdf04f064a7553cb9dd41"
         }
     ],
     "maps": [
         {
-            "id": "1",
-            "width": 100,
-            "height": 100,
+            "_id": "map1",
+            "width": 5,
+            "height": 5,
             "infinite": false,
-            "layers": [
-                "1",
-                "2"
-            ],
-            "nextlayerid": 3,
+            "nextlayerid": 2,
             "nextobjectid": 1,
             "orientation": "orthogonal",
             "renderorder": "right-down",
-            "tiledversion": "2019.03.13",
-            "tileheight": 150,
-            "tilesets": [
-                "beeeeeeee"
-            ],
-            "tilewidth": 150,
+            "tiledversion": "2020.05.08",
+            "tileheight": 40,
+            "tilewidth": 40,
             "type": "map",
             "version": 1.2
         },
         {
-            "id": "2",
-            "width": 100,
-            "height": 100,
+            "_id": "map2",
+            "width": 4,
+            "height": 4,
             "infinite": false,
-            "layers": [
-                "1",
-                "3"
-            ],
-            "nextlayerid": 3,
+            "nextlayerid": 2,
             "nextobjectid": 1,
             "orientation": "orthogonal",
             "renderorder": "right-down",
-            "tiledversion": "2019.03.13",
-            "tileheight": 150,
-            "tilesets": [
-                "High Sky"
-            ],
-            "tilewidth": 150,
+            "tiledversion": "2020.05.08",
+            "tileheight": 40,
+            "tilewidth": 40,
             "type": "map",
             "version": 1.2
         },
         {
-            "id": "3",
-            "width": 100,
-            "height": 100,
+            "_id": "map3",
+            "width": 3,
+            "height": 3,
             "infinite": false,
-            "layers": [
-                "1",
-                "3"
-            ],
-            "nextlayerid": 3,
+            "nextlayerid": 2,
             "nextobjectid": 1,
             "orientation": "orthogonal",
             "renderorder": "right-down",
-            "tiledversion": "2019.03.13",
-            "tileheight": 150,
-            "tilesets": [
-                "simple"
-            ],
-            "tilewidth": 150,
-            "type": "map",
-            "version": 1.2
-        },
-        {
-            "id": "4",
-            "width": 100,
-            "height": 100,
-            "infinite": false,
-            "layers": [
-                "1",
-                "3"
-            ],
-            "nextlayerid": 3,
-            "nextobjectid": 1,
-            "orientation": "orthogonal",
-            "renderorder": "right-down",
-            "tiledversion": "2019.03.13",
-            "tileheight": 150,
-            "tilesets": [
-                "sample"
-            ],
-            "tilewidth": 150,
-            "type": "map",
-            "version": 1.2
-        },
-        {
-            "id": "5",
-            "width": 100,
-            "height": 100,
-            "infinite": false,
-            "layers": [
-                "1",
-                "3"
-            ],
-            "nextlayerid": 3,
-            "nextobjectid": 1,
-            "orientation": "orthogonal",
-            "renderorder": "right-down",
-            "tiledversion": "2019.03.13",
-            "tileheight": 150,
-            "tilesets": [
-                "Fair Bear",
-                "Simon Demon"
-            ],
-            "tilewidth": 150,
+            "tiledversion": "2020.05.08",
+            "tileheight": 40,
+            "tilewidth": 40,
             "type": "map",
             "version": 1.2
         }
     ],
     "tilesets": [
         {
+            "_id": "tileset1",
             "name": "Fair Bear",
             "owner": "5e9fa3908dead93aa46f6a6d",
             "editors": [
@@ -219,18 +120,18 @@
                 "5ea262a9e4a7b520c829163b"
             ],
             "imageId": "5eabdf04f064a7553cb9dd41",
-            "width": 600,
-            "height": 400,
             "tileWidth": 40,
             "tileHeight": 40,
+            "width": 600,
+            "height": 400,
             "columns": 15,
             "firstgid": 1,
             "margin": 0,
             "spacing": 0,
-            "tilecount": 150,
-            "projectName": "diu lei"
+            "tilecount": 150
         },
         {
+            "_id": "tileset2",
             "name": "Simon Demon",
             "owner": "5ea0e25872182f00242b848a",
             "editors": [
@@ -238,43 +139,69 @@
                 "5ea33ec1a8a9b4504485aa28"
             ],
             "imageId": "5eabe0b7e9da110b6896405b",
-            "width": 600,
-            "height": 600,
             "tileWidth": 40,
             "tileHeight": 40,
+            "width": 600,
+            "height": 600,
             "columns": 15,
             "firstgid": 1,
             "margin": 0,
             "spacing": 0,
-            "tilecount": 225,
-            "projectName": "lou mou"
+            "tilecount": 150
         },
         {
+            "_id": "tileset3",
             "name": "High Sky",
             "owner": "5ea262a9e4a7b520c829163b",
             "editors": [
                 "5ea33ec1a8a9b4504485aa28"
             ],
             "imageId": "5eabde7398bf8c7fc8ef0308",
-            "width": 600,
-            "height": 600,
             "tileWidth": 40,
             "tileHeight": 40,
+            "width": 600,
+            "height": 600,
             "columns": 15,
             "firstgid": 1,
             "margin": 0,
             "spacing": 0,
-            "tilecount": 225,
-            "projectName": "got hai"
+            "tilecount": 150
         }
     ],
     "layers": [
         {
-            "data": [],
-            "width": 100,
-            "height": 100,
-            "idNumber": 1,
-            "name": "backgroundLayer",
+            "_id": "layer1",
+            "data": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "height": 5,
+            "width": 5,
+            "id": 1,
+            "name": "backgroudLayer",
             "opacity": 1,
             "type": "tilelayer",
             "visible": true,
@@ -282,11 +209,29 @@
             "y": 0
         },
         {
-            "data": [],
-            "width": 100,
-            "height": 100,
-            "idNumber": 2,
-            "name": "blockedLayer",
+            "_id": "layer2",
+            "data": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "height": 4,
+            "width": 4,
+            "id": 1,
+            "name": "backgroudLayer",
             "opacity": 1,
             "type": "tilelayer",
             "visible": true,
@@ -294,11 +239,22 @@
             "y": 0
         },
         {
-            "data": [],
-            "width": 100,
-            "height": 100,
-            "idNumber": 3,
-            "name": "blockedLayer",
+            "_id": "layer3",
+            "data": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "height": 3,
+            "width": 3,
+            "id": 1,
+            "name": "backgroudLayer",
             "opacity": 1,
             "type": "tilelayer",
             "visible": true,

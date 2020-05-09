@@ -1,4 +1,4 @@
-const LayerModel = require('../../models/mongo-map');
+const LayerModel = require('../../models/mongo-layer');
 const LayerType = require('../types/LayerType')
 
 const {

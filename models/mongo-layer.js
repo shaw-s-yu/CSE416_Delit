@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var LayerSchema = new Schema({
+    _id: String,
     data: [Number],
     width: Number,
     height: Number,
-    idNumber: Number,
+    id: Number,
     name: String,
     opacity: Number,
     type: String,

@@ -1,30 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var tilesetSchema = new Schema({
+    _id: String,
     name: String,
-    name_lower: String,
     owner: String,
     editors: [String],
-    
-    projectName: String,
-
-    // imageId: String,
-    // tileWidth: Number,
-    // tileHeight: Number,
-    // width: Number,
-    // height: Number,
-    
-    columns: Number,
-    firstgid: Number,
     imageId: String,
+    tileHeight: Number,
+    tileWidth: Number,
     width: Number,
     height: Number,
+    columns: Number,
+    firstgid: Number,
     margin: Number,
     spacing: Number,
     tilecount: Number,
-    tileHeight: Number,
-    tileWidth: Number,
-
     lastUpdate: { type: Date, default: Date.now },
 })
 

@@ -16,8 +16,7 @@
 
 .test-manager-wrapper{
     display: inline-block;
-    width: 33%;
-    margin-left: 0.25%;
+    width: 25%;
     height:calc(100% - 32px);
     border:1px solid black;
     overflow: auto;
@@ -29,7 +28,7 @@
 }
 
 .test-btn{
-    width: 50%;
+    width: 40%;
 }
 
 .test-display{
@@ -56,4 +55,8 @@
 .test-context{
     margin-left: 24px;
     border:1px solid black;
+}
+
+.btn-disable{
+    cursor: auto;
 }

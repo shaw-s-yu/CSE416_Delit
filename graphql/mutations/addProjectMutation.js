@@ -22,15 +22,17 @@ module.exports = {
         imageId: {
             type: new GraphQLNonNull(GraphQLString)
         },
-        // mapId: {
-        //     type: new GraphQLNonNull(GraphQLString)
-        // },
-        // lastUpdate: {
-        //     type: Date
-        // }
+        mapId: {
+            type: new GraphQLNonNull(GraphQLString)
+        },
+        tilesetId: {
+            type: new GraphQLList(GraphQLString)
+        },
+        layerId: {
+            type: new GraphQLList(GraphQLString)
+        },
     },
     resolve: (root, params) => {
-        params.name_lower = params.name.toLowerCase();
         const projectModel = new ProjectModel(params);
         const newProject = projectModel.save();
         if (!newProject) {
