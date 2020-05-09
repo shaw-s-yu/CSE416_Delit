@@ -3,6 +3,8 @@ import React from 'react'
 import { Button } from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Mutation } from 'react-apollo';
+import MutationList from '../../graphql/Mutation';
 
 class Dialogs extends React.Component {
 
@@ -16,7 +18,7 @@ class Dialogs extends React.Component {
 
     render() {
         const { name } = this.state
-        const { save, start, duplicate, parent, confirmSave, saved, saveErrorMsg } = this.props
+        const { save, start, duplicate, parent, confirmSave, publish, saved, saveErrorMsg } = this.props
         return (
             <>
                 {save === undefined ? null : <Dialog
@@ -79,6 +81,29 @@ class Dialogs extends React.Component {
                         saveErrorMsg === '' ? null : <h3 key='w'>saveErrorMsg</h3>,
                         saveErrorMsg === '' ? saved ? <i key='e' className="fas fa-check-circle dialog-saved-icon"></i> : <CircularProgress key='e' className="wait-saving" /> : <i key='e' class="fas fa-times-circle dialog-saved-error"></i>,
                     ]} />
+                }
+
+                {publish === undefined ? null :
+
+                    <Mutation mutation={MutationList.PUBLISH_TILESET} onCompleted={() => { parent.handleRefreshAfterPublished() }}>
+                        {(updateTileset, res) => {
+                            return (
+                                <Dialog
+                                    header="Saving Tileset"
+                                    open={publish}
+                                    actions={[
+                                        <Button key='1' onClick={() => { updateTileset({ variables: { id: parent.display.getTilesetId() } }) }}>Confirm</Button>,
+                                        <Button key='2' onClick={parent.handlePublishDialogClose}>Cancel</Button>
+                                    ]}
+                                    content={[
+                                        <h3 key='1'>Are You Sure to Publish This Tileset</h3>,
+                                        <h3 key='2'>By Publishing it, you will be able to use it in your map</h3>,
+                                        <h3 key='3'>But You wont be able to edit this one again</h3>,
+                                    ]} />
+                            )
+                        }}
+
+                    </Mutation>
                 }
             </>
         )

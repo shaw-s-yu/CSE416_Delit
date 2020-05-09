@@ -156,3 +156,11 @@
     font-size: 40px;
     color:red;
 }
+
+.publish-btn{
+    position: absolute;
+}
+
+.publish-btn:hover{
+    background-color: salmon;
+}

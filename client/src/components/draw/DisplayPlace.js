@@ -317,6 +317,11 @@ class DisplayPlace extends React.Component {
         return this.props.tileset
     }
 
+    getTilesetId = () => {
+        const { tileset } = this.props
+        return tileset._id
+    }
+
 
     pasteCopiedGrid = () => {
         const { copying, selectedGrid } = this.state

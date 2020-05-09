@@ -20,7 +20,6 @@ module.exports = {
         }
     },
     resolve: (root, params) => {
-        console.log(params)
         TilesetModel.findOne({ _id: params.id }).then(currentTileset => {
             if (!currentTileset) throw new Error('error')
             else {

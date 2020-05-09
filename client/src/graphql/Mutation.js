@@ -342,4 +342,14 @@ export default {
         )
     }
     `,
+
+    PUBLISH_TILESET: gql`
+    mutation publishTileset(
+        $id:String!
+    ){
+        publishTileset(
+            id:$id
+        )
+    }
+    `,
 }

@@ -13,6 +13,7 @@ import Dialogs from './Dialogs'
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios';
+import { Button } from "react-bootstrap";
 
 
 class Draw extends React.Component {
@@ -26,6 +27,7 @@ class Draw extends React.Component {
         duplicaOpen: false,
         startAuthOpen: false,
         confirmSaveOpen: false,
+        publishOpen: false,
         saved: false,
         username: null,
         saveErrorMsg: ''
@@ -62,12 +64,25 @@ class Draw extends React.Component {
         this.setState({ startAuthOpen: false })
     }
 
+    handlePublishDialogOpen = () => {
+        this.setState({ publishOpen: true })
+    }
+
+    handlePublishDialogClose = () => {
+        this.setState({ publishOpen: false })
+    }
+
     handleDuplicateDialogOpen = () => {
         this.setState({ duplicaOpen: true })
     }
 
     handleDuplicateDialogClose = () => {
         this.setState({ duplicaOpen: false })
+    }
+
+    handleRefreshAfterPublished = () => {
+        const { key } = this.props.match.params
+        this.props.history.push(`/tilesetviewer/${key}`)
     }
 
     handleDuplicate = (name) => {
@@ -228,7 +243,7 @@ class Draw extends React.Component {
     render() {
         const { key } = this.props.match.params
         const { history } = this.props;
-        const { sliderValue, saved, borderColor, fillColor, scale, saveOpen, startAuthOpen, duplicaOpen, username, confirmSaveOpen, saveErrorMsg } = this.state;
+        const { sliderValue, saved, borderColor, fillColor, scale, saveOpen, startAuthOpen, duplicaOpen, username, confirmSaveOpen, saveErrorMsg, publishOpen } = this.state;
 
         return (
 
@@ -243,6 +258,7 @@ class Draw extends React.Component {
                     handleCopy={this.handleCopy}
                     handlePaste={this.handlePaste}
                 />
+                <Button className='publish-btn' onClick={this.handlePublishDialogOpen}>Publish</Button>
                 <div className="painter-wrapper">
                     <Toolbar
                         selectCallback={this.handleClearNoneToolOperation}
@@ -316,6 +332,7 @@ class Draw extends React.Component {
                     start={startAuthOpen}
                     duplicate={duplicaOpen}
                     confirmSave={confirmSaveOpen}
+                    publish={publishOpen}
                     saved={saved}
                     saveErrorMsg={saveErrorMsg}
                 />

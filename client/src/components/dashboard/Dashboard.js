@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
     }
 
     handleProjectDialogClose = () => {
-        this.setState({ projectDialogOpen: false, selected: 'create' })
+        this.setState({ projectDialogOpen: false })
     }
 
     handleTilesetDialogOpen = () => {
@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
     }
 
     handleTilesetDialogClose = () => {
-        this.setState({ tilesetDialogOpen: false, selected: 'tilesetsOwned' })
+        this.setState({ tilesetDialogOpen: false })
     }
 
     handleSidebarOpen = () => {
@@ -227,12 +227,14 @@ class Dashboard extends React.Component {
                                         handleClose={this.handleProjectDialogClose}
                                         refetch={refetch}
                                         userId={user._id}
+                                        handleSelectSide={this.handleSelectSide}
                                     />
                                     <AddTilesetDialog
                                         open={tilesetDialogOpen}
                                         handleClose={this.handleTilesetDialogClose}
                                         refetch={refetch}
                                         userId={user._id}
+                                        handleSelectSide={this.handleSelectSide}
                                     />
                                 </>
                             )

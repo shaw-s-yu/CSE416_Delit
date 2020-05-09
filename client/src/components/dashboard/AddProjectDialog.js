@@ -47,6 +47,7 @@ class AddDialog extends React.Component {
                 tileHeight: tileHeight
             }
         })
+        this.props.handleSelectSide('create')
         this.props.handleClose()
     }
 
