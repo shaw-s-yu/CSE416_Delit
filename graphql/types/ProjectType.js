@@ -64,7 +64,7 @@ module.exports = new GraphQLObjectType({
                     return users
                 }
             },
-            layersInfo: {
+            LayersInfo: {
                 type: new GraphQLList(LayerType),
                 resolve: (parent, args) => {
                     let layers = []

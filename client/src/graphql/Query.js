@@ -350,7 +350,7 @@ export default {
                 username
                 _id
             }
-            layersInfo{
+            LayersInfo{
                 _id
                 data
                 width
