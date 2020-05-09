@@ -23,20 +23,23 @@ class Dashboard extends React.Component {
         selected: 'all',
         page: 1,
         search: '',
-        sortBt: 'date',
+        sortBy: 'lastUpdate',
+        lastUpdate: -1,
+        name: -1,
     };
 
     handleSearchChange = (e) => {
         this.setState({ search: e.target.value });
     };
 
-    handleSortByName = () => {
-        this.setState({ sortBt: 'name' });
-    };
+    handleSortBy = (e, type) => {
+        this.setState({ sortBy: type })
+    }
 
-    handleSortByDate = () => {
-        this.setState({ sortBt: 'date' });
-    };
+    handleSortOrder = (e, type) => {
+        const order = this.state[type]
+        this.setState({ [type]: order === 1 ? -1 : 1 })
+    }
 
     handleSelectSide = (type) => {
         this.setState({ selected: type })
@@ -133,6 +136,14 @@ class Dashboard extends React.Component {
         this.setState({ page: value })
     };
 
+    getSelected = (type) => {
+        const { sortBy } = this.state
+        return sortBy === type ? 'dashboard-sort-btn-selected' : ''
+    }
+
+    getSortOrder = (type) => {
+        return this.state[type] === -1 ? 'fa-arrow-down' : 'fa-arrow-up'
+    }
 
     componentDidMount() {
         axios.get('/auth/current').then(res => {
@@ -146,7 +157,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { showSidebar, selected, user, page, search, projectDialogOpen, tilesetDialogOpen, dialogType, sortBt } = this.state;
+        const { showSidebar, selected, user, page, search, projectDialogOpen, tilesetDialogOpen, sortBy, name, lastUpdate } = this.state;
         const { history } = this.props;
         const left = showSidebar ? 19 : 0;
         const width = showSidebar ? 81 : 100;
@@ -159,7 +170,7 @@ class Dashboard extends React.Component {
         };
 
         const pageSkip = (page - 1) * 6;
-
+        const sortOrder = this.state[sortBy]
         return (
 
             <div>
@@ -175,10 +186,12 @@ class Dashboard extends React.Component {
                 <div className="dashboard-display" style={displayStyle}>
                     <Searchbar value={search} onChange={this.handleSearchChange} />
                     <div className="dashboard-sort-btn-group">
-                        <button className="dashboard-sort-btn" onClick={this.handleSortByName}>Name <i className="fa fa-arrow-down dashboard-sort-icon" /></button>
-                        <button className="dashboard-sort-btn" onClick={this.handleSortByDate}>Last Modified <i className="fa fa-arrow-down dashboard-sort-icon" /></button>
+                        <button className={"dashboard-sort-btn " + this.getSelected('name')} onClick={e => this.handleSortBy(e, 'name')}>Name </button>
+                        <i className={"fa dashboard-sort-icon " + this.getSortOrder('name')} onClick={e => this.handleSortOrder(e, 'name')} />
+                        <button className={"dashboard-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
+                        <i className={"fa dashboard-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
                     </div>
-                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBt: sortBt }} fetchPolicy={'network-only'}>
+                    <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={'network-only'}>
                         {({ loading, error, data }) => {
                             if (loading)
                                 return <CircularProgress className="dashboard-loading" />;
@@ -191,7 +204,7 @@ class Dashboard extends React.Component {
                             const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                             const refetch = {
                                 query: query,
-                                variables: { userId: user._id, pageSkip: pageSkip, search: search, sortBt: sortBt }
+                                variables: { userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy }
                             };
                             return (
                                 <>

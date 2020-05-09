@@ -21,7 +21,8 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
-        $sortBt: String!
+        $sortBy: String!
+        $sortOrder: Int!
     ){
         user(
             id:$userId
@@ -29,7 +30,8 @@ export default {
             projectsOwned(
                 searchName: $search
                 skip: $pageSkip
-                sortBt: $sortBt
+                sortBy: $sortBy
+                sortOrder: $sortOrder
                 ){
                 name
                 _id
@@ -51,7 +53,8 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
-        $sortBt: String!
+        $sortBy: String!
+        $sortOrder: Int!
     ){
         user(
             id:$userId
@@ -59,7 +62,8 @@ export default {
             projectsRelated(
                 searchName: $search
                 skip: $pageSkip
-                sortBt: $sortBt
+                sortBy: $sortBy
+                sortOrder: $sortOrder
                 ){
                 name
                 _id
@@ -81,7 +85,8 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
-        $sortBt: String!
+        $sortBy: String!
+        $sortOrder: Int!
     ){
         user(
             id:$userId
@@ -89,7 +94,8 @@ export default {
             projectsShared(
                 searchName: $search
                 skip: $pageSkip
-                sortBt: $sortBt
+                sortBy: $sortBy
+                sortOrder: $sortOrder
                 ){
                 name
                 _id
@@ -156,7 +162,8 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
-        $sortBt: String!
+        $sortBy: String!
+        $sortOrder: Int!
     ){
         user(
             id:$userId
@@ -164,7 +171,8 @@ export default {
             tilesets(
                 searchName: $search
                 skip: $pageSkip
-                sortBt: $sortBt
+                sortBy: $sortBy
+                sortOrder: $sortOrder
             ){
                 name
                 _id
@@ -187,7 +195,8 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
-        $sortBt: String!
+        $sortBy: String!
+        $sortOrder: Int!
     ){
         user(
             id:$userId
@@ -195,7 +204,8 @@ export default {
             tilesetsOwned(
                 searchName: $search
                 skip: $pageSkip
-                sortBt: $sortBt
+                sortBy: $sortBy
+                sortOrder: $sortOrder
                 ){
                 name
                 _id
@@ -217,7 +227,8 @@ export default {
         $userId: String!
         $pageSkip: Int!
         $search: String!
-        $sortBt: String!
+        $sortBy: String!
+        $sortOrder: Int!
     ){
         user(
             id:$userId
@@ -225,7 +236,8 @@ export default {
             tilesetsShared(
                 searchName: $search
                 skip: $pageSkip
-                sortBt: $sortBt
+                sortBy: $sortBy
+                sortOrder: $sortOrder
                 ){
                 name
                 _id

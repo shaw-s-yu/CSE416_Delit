@@ -26,6 +26,9 @@ export default {
             }
         }
     `,
+    // CREATE_PROJECT: gql`
+    // mutation
+    // `,
     REMOVE_PROJECT: gql`
     mutation removeProject(
             $id: String!

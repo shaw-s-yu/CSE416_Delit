@@ -40,14 +40,21 @@
     right: 30px;
 }
 
+
 .dashboard-sort-btn {
     background-color: aliceblue;
     border: none;
     color: gray;
-    padding: 15px 32px;
     font-size: 16px;
     margin-left: 10px;
 }
+
+.dashboard-sort-btn-selected{
+    border-radius: 50px;
+    background-color: lightblue;
+    color: black;
+}
+
 
 .dashboard-sort-btn:hover {
     color: black;
@@ -106,6 +113,7 @@
 .sidebar-add:hover{
     background-color: blue;
 }
+
 
 .item-text {
     position: absolute;

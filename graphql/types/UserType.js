@@ -12,31 +12,24 @@ module.exports = new GraphQLObjectType({
             picture: { type: GraphQLString },
             provider: { type: GraphQLString },
             projectsOwned: {
-            args: {
+                args: {
                     skip: { type: GraphQLInt },
                     searchName: { type: GraphQLString },
-                     sortBt: { type: GraphQLString},
+                    sortBy: { type: GraphQLString },
+                    sortOrder: { type: GraphQLInt }
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
+                    console.log(args)
                     let projects = null;
-                    const { sortBt, skip} = args;
-                    const searchName = args.searchName.toLowerCase();
-                    if (sortBt === "name") {
-                        projects = ProjectModel.find({
-                            $and: [
-                                {owner: parent._id},
-                                {name_lower: {$regex: `.*${searchName}.*`}}
-                            ],
-                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
-                    }else if(sortBt === "date") {
-                        projects = ProjectModel.find({
-                            $and: [
-                                {owner: parent._id},
-                                {name_lower: {$regex: `.*${searchName}.*`}}
-                            ],
-                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
-                    }
+                    const { sortBy, skip, sortOrder } = args;
+                    projects = ProjectModel.find({
+                        $and: [
+                            { owner: parent._id },
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') }
+                        ],
+                    }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
+
                     if (!projects) throw new Error('Error');
                     return projects
                 }
@@ -45,10 +38,9 @@ module.exports = new GraphQLObjectType({
                 args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    const searchName = args.searchName.toLowerCase();
                     const projectsAmount = ProjectModel.find({
                         $and: [
-                            { name_lower: { $regex: `.*${searchName}.*` } },
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
                             { owner: parent._id }
                         ]
                     }).countDocuments();
@@ -60,38 +52,27 @@ module.exports = new GraphQLObjectType({
                 args: {
                     searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt },
-                    sortBt: { type: GraphQLString},
+                    sortBy: { type: GraphQLString },
+                    sortOrder: { type: GraphQLInt }
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
+
                     let projects = null;
-                    const { sortBt, skip} = args;
-                    const searchName = args.searchName.toLowerCase();
-                    if (sortBt === "name") {
-                        projects = ProjectModel.find({
-                            $and: [
-                                {name_lower: {$regex: `.*${searchName}.*`}},
-                                {
-                                    $or: [
-                                        {owner: parent._id},
-                                        {editors: parent._id}
-                                    ]
-                                }]
+                    const { sortBy, skip, sortOrder } = args;
 
-                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
-                    } else if (sortBt === "date") {
-                        projects = ProjectModel.find({
-                            $and: [
-                                {name_lower: {$regex: `.*${searchName}.*`}},
-                                {
-                                    $or: [
-                                        {owner: parent._id},
-                                        {editors: parent._id}
-                                    ]
-                                }]
+                    projects = ProjectModel.find({
+                        $and: [
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
+                            {
+                                $or: [
+                                    { owner: parent._id },
+                                    { editors: parent._id }
+                                ]
+                            }]
 
-                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
-                    }
+                    }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
+
                     if (!projects) throw new Error('Error');
                     return projects
                 }
@@ -100,10 +81,9 @@ module.exports = new GraphQLObjectType({
                 args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    const searchName = args.searchName.toLowerCase();
                     const projectsAmount = ProjectModel.find({
                         $and: [
-                            { name_lower: { $regex: `.*${searchName}.*` } },
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
                             {
                                 $or: [
                                     { owner: parent._id },
@@ -119,41 +99,32 @@ module.exports = new GraphQLObjectType({
                 args: {
                     searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt },
-                    sortBt: { type: GraphQLString},
+                    sortBy: { type: GraphQLString },
+                    sortOrder: { type: GraphQLInt }
                 },
                 type: new GraphQLList(ProjectType),
                 resolve: (parent, args) => {
                     let projects = null;
-                    const { sortBt, skip} = args;
-                    const searchName = args.searchName.toLowerCase();
-                    if (sortBt === "name") {
-                        projects = ProjectModel.find({
-                            $and: [
-                                {editors: parent._id},
-                                {name_lower: {$regex: `.*${searchName}.*`}}
-                            ]
-                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
-                    } else if (sortBt === "date") {
-                        projects = ProjectModel.find({
-                            $and: [
-                                {editors: parent._id},
-                                {name_lower: {$regex: `.*${searchName}.*`}}
-                            ]
-                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
-                    }
+                    const { sortBy, skip, sortOrder } = args;
+                    projects = ProjectModel.find({
+                        $and: [
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
+                            { editors: parent._id }
+                        ]
+
+                    }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
                     if (!projects) throw new Error('Error');
                     return projects
                 }
             },
             projectsSharedAmount: {
-                args: { searchName: { type: GraphQLString }},
+                args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    const searchName = args.searchName.toLowerCase();
                     const projectsAmount = ProjectModel.find({
                         $and: [
                             { editors: parent._id },
-                            { name_lower: { $regex: `.*${searchName}.*` }}
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') }
                         ]
                     }).countDocuments();
                     if (!projectsAmount) throw new Error('Error');
@@ -168,18 +139,16 @@ module.exports = new GraphQLObjectType({
                 args: {
                     skip: { type: GraphQLInt },
                     searchName: { type: GraphQLString },
-                    sortBt: { type: GraphQLString},
+                    sortBy: { type: GraphQLString },
+                    sortOrder: { type: GraphQLInt }
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
                     let tilesets = null;
-                    const { sortBt, skip} = args;
-                    const searchName = args.searchName.toLowerCase();
-                    if (sortBt === "name") {
-                        tilesets = TilesetModel.find({name_lower: {$regex: `.*${searchName}.*`}}).sort({"name_lower": 1}).skip(skip).limit(6).exec();
-                    } else if (sortBt === "date") {
-                        tilesets = TilesetModel.find({name_lower: {$regex: `.*${searchName}.*`}}).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
-                    }
+                    const { sortBy, skip, sortOrder } = args;
+                    tilesets = TilesetModel.find({
+                        name: new RegExp('^.*' + args.searchName + '.*$', 'i')
+                    }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
                     if (!tilesets) {
                         throw new Error('Error');
                     }
@@ -190,8 +159,9 @@ module.exports = new GraphQLObjectType({
                 args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    const searchName = args.searchName.toLowerCase();
-                    const tilesetsAmount = TilesetModel.find({ name_lower: { $regex: `.*${searchName}.*` } }).countDocuments();
+                    const tilesetsAmount = TilesetModel.find({
+                        name: new RegExp('^.*' + args.searchName + '.*$', 'i')
+                    }).countDocuments();
                     if (!tilesetsAmount) throw new Error('Error');
                     return tilesetsAmount
                 }
@@ -200,28 +170,20 @@ module.exports = new GraphQLObjectType({
                 args: {
                     skip: { type: GraphQLInt },
                     searchName: { type: GraphQLString },
-                    sortBt: { type: GraphQLString},
+                    sortBy: { type: GraphQLString },
+                    sortOrder: { type: GraphQLInt }
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
                     let tilesets = null;
-                    const { sortBt, skip} = args;
-                    const searchName = args.searchName.toLowerCase();
-                    if (sortBt === "name") {
-                        tilesets = TilesetModel.find({
-                            $and: [
-                                {owner: parent._id},
-                                {name_lower: {$regex: `.*${searchName}.*`}}
-                            ]
-                        }).sort({"lastUpdate": -1}).sort({"name_lower": 1}).skip(skip).limit(6).exec();
-                    } else if (sortBt === "date") {
-                        tilesets = TilesetModel.find({
-                            $and: [
-                                {owner: parent._id},
-                                {name_lower: {$regex: `.*${searchName}.*`}}
-                            ]
-                        }).sort({"lastUpdate": -1}).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
-                    }
+                    const { sortBy, skip, sortOrder } = args;
+                    tilesets = TilesetModel.find({
+                        $and: [
+                            { owner: parent._id },
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') }
+                        ]
+                    }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
+
                     if (!tilesets) throw new Error('Error');
                     return tilesets
                 }
@@ -230,10 +192,9 @@ module.exports = new GraphQLObjectType({
                 args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    const searchName = args.searchName.toLowerCase();
                     const tilesetsAmount = TilesetModel.find({
                         $and: [
-                            { name_lower: { $regex: `.*${searchName}.*` } },
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
                             { owner: parent._id }
                         ]
                     }).countDocuments();
@@ -245,38 +206,25 @@ module.exports = new GraphQLObjectType({
                 args: {
                     searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt },
-                    sortBt: { type: GraphQLString},
+                    sortBy: { type: GraphQLString },
+                    sortOrder: { type: GraphQLInt }
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
                     let tilesets = null;
-                    const { sortBt, skip} = args;
-                    const searchName = args.searchName.toLowerCase();
-                    if (sortBt === "name") {
-                        tilesets = TilesetModel.find({
-                            $and: [
-                                {name_lower: {$regex: `.*${searchName}.*`}},
-                                {
-                                    $or: [
-                                        {owner: parent._id},
-                                        {editors: parent._id}
-                                    ]
-                                }]
+                    const { sortBy, skip, sortOrder } = args;
+                    tilesets = TilesetModel.find({
+                        $and: [
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
+                            {
+                                $or: [
+                                    { owner: parent._id },
+                                    { editors: parent._id }
+                                ]
+                            }]
 
-                        }).sort({"name-lower": 1}).skip(skip).limit(6).exec();
-                    } else if (sortBt === "date") {
-                        tilesets = TilesetModel.find({
-                            $and: [
-                                {name_lower: {$regex: `.*${searchName}.*`}},
-                                {
-                                    $or: [
-                                        {owner: parent._id},
-                                        {editors: parent._id}
-                                    ]
-                                }]
+                    }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
 
-                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
-                    }
                     if (!tilesets) throw new Error('Error');
                     return tilesets
                 }
@@ -285,10 +233,9 @@ module.exports = new GraphQLObjectType({
                 args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    const searchName = args.searchName.toLowerCase();
                     let tilesetsAmount = TilesetModel.find({
                         $and: [
-                            { name_lower: { $regex: `.*${searchName}.*` } },
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
                             {
                                 $or: [
                                     { owner: parent._id },
@@ -304,28 +251,20 @@ module.exports = new GraphQLObjectType({
                 args: {
                     searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt },
-                    sortBt: { type: GraphQLString},
+                    sortBy: { type: GraphQLString },
+                    sortOrder: { type: GraphQLInt }
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
                     let tilesets = null;
-                    const { sortBt, skip} = args;
-                    const searchName = args.searchName.toLowerCase();
-                    if (sortBt === "name") {
-                        tilesets = TilesetModel.find({
-                            $and: [
-                                {editors: parent._id},
-                                {name_lower: {$regex: `.*${searchName}.*`}}
-                            ]
-                        }).sort({"name_lower": 1}).skip(skip).limit(6).exec();
-                    } else if (sortBt === "date") {
-                        tilesets = TilesetModel.find({
-                            $and: [
-                                {editors: parent._id},
-                                {name_lower: {$regex: `.*${searchName}.*`}}
-                            ]
-                        }).sort({"lastUpdate": -1}).skip(skip).limit(6).exec();
-                    }
+                    const { sortBy, skip, sortOrder } = args;
+                    tilesets = TilesetModel.find({
+                        $and: [
+                            { editors: parent._id },
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') }
+                        ]
+                    }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
+
                     if (!tilesets) throw new Error('Error');
                     return tilesets
                 }
@@ -334,11 +273,10 @@ module.exports = new GraphQLObjectType({
                 args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
-                    const searchName = args.searchName.toLowerCase();
                     let tilesetsAmount = TilesetModel.find({
                         $and: [
                             { editors: parent._id },
-                            { name_lower: { $regex: `.*${searchName}.*` } }
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') }
                         ]
                     }).countDocuments();
                     if (!tilesetsAmount) throw new Error('Error');
