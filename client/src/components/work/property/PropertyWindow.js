@@ -18,7 +18,7 @@ class PropertyWindow extends React.Component {
 
     handleOnResize = (e, direction, ref, delta, position) => {
         this.setState({ resizing: true }, () => {
-            this.props.handleOnResize(ref, 'property')
+            this.props.handleOnResize(ref, position, 'property')
         })
     }
 
@@ -69,7 +69,7 @@ class PropertyWindow extends React.Component {
                 <Collapsible data={
                     [
                         { title: 'Property', content: <PropertyList data={display} window='layer' width={width} />, open: true },
-                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} />, open: false },
+                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} resizing={resizing} />, open: false },
                     ]
                 }
                     maxHeight={style.maxHeight}

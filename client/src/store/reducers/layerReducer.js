@@ -33,7 +33,7 @@ const layerReducer = (state = initState, action) => {
             layerList
         }
     } else if (action.type === actionCreators.LAYER_DELETE) {
-        let { layerList } = state
+        let layerList = state.layerList.map(e => e)
         for (let i = 0; i < layerList.length; i++)
             if (layerList[i]._id === action.id) {
                 layerList.splice(i, 1)
@@ -76,13 +76,18 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
-        let { target } = action;
-        if (target.classList.contains('fa-eye')) {
-            target.classList.remove('fa-eye');
-            target.classList.add('fa-eye-slash');
-        } else {
-            target.classList.remove('fa-eye-slash');
-            target.classList.add('fa-eye');
+        let layerList = state.layerList.map(e => {
+            if (e._id === action.id) {
+                e.visible = !e.visible
+                return e
+            } else {
+                return e
+            }
+        })
+        return {
+            ...state,
+            layerList,
+            selected: null
         }
     } else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
         let { target } = action;

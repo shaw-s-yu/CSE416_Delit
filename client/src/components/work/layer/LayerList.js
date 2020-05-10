@@ -7,23 +7,21 @@ class LayerWindow extends React.Component {
 
     handleRename = (id, e) => {
         this.props.handleRename(id, e.target.value)
-        this.setState({ nothing: 'nothing' })
     };
 
     handleSelect = (id, e) => {
         e.stopPropagation()
         this.props.handleSelect(id)
-        this.setState({ nothing: 'nothing' })
     }
 
     handleDelete = (id, e) => {
         e.stopPropagation()
         this.props.handleDelete(id)
-        this.setState({ nothing: 'nothing' })
     }
 
-    handleVisibilityClick = e => {
-        this.props.handleVisibilityClick(e.target);
+    handleVisibilityClick = (id, e) => {
+        e.stopPropagation()
+        this.props.handleVisibilityClick(id);
     }
 
     handleLockClick = e => {
@@ -33,13 +31,11 @@ class LayerWindow extends React.Component {
     handleMoveUp = (id, e) => {
         e.stopPropagation()
         this.props.handleMoveUp(id);
-        this.setState({ nothing: 'nothing' });
     }
 
     handleMoveDown = (id, e) => {
         e.stopPropagation();
         this.props.handleMoveDown(id);
-        this.setState({ nothing: 'nothing' });
     }
 
     handleOnMouseDown = (e, index) => {
@@ -80,8 +76,8 @@ class LayerWindow extends React.Component {
 
                             </div>
                             <div className="layer-item-btn-fixedbox">
-                                <i className="fas fa-eye better-btn layer-item-btn-eye" onClick={this.handleVisibilityClick} />
-                                <i className="fas fa-unlock better-btn layer-item-btn" onClick={this.handleLockClick} />
+                                <i className={"fas fa-eye better-btn layer-item-btn-eye " + (layer.visible ? 'fa-eye' : 'fa-eye-slash')} onClick={this.handleVisibilityClick.bind(this, layer._id)} />
+                                <i className="fas fa-unlock better-btn layer-item-btn " onClick={this.handleLockClick} />
                             </div>
                             <div className="layer-item-btn-box">
                                 <i className="fas fa-edit better-btn layer-item-btn" />
@@ -117,7 +113,7 @@ const mapDispatchToProps = (dispatch) => ({
     handleMoveUp: (id) => dispatch(handler.layerMoveUpHandler(id)),
     handleMoveDown: (id) => dispatch(handler.layerMoveDownHandler(id)),
     handleSelectProperty: (window, index) => dispatch(handler.propertySelectDisplay(window, index)),
-    handleVisibilityClick: (target) => dispatch(handler.layerVisibilityClick(target)),
+    handleVisibilityClick: (id) => dispatch(handler.layerVisibilityClick(id)),
     handleLockClick: (target) => dispatch(handler.layerLockClick(target)),
 });
 
