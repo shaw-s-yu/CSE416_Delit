@@ -285,7 +285,7 @@ module.exports = new GraphQLObjectType({
                     return tilesetsAmount
                 }
             },
-            tilesetsPublished: {
+            tilesetsSelectable: {
                 args: {
                     searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt },
@@ -294,9 +294,8 @@ module.exports = new GraphQLObjectType({
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
-                    let tilesets = null;
                     const { sortBy, skip, sortOrder } = args;
-                    tilesets = TilesetModel.find({
+                    let tilesets = TilesetModel.find({
                         $and: [
                             { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
                             { $or: [ {editors: parent._id}, { owner: parent._id }, {published: true} ] },
@@ -307,7 +306,7 @@ module.exports = new GraphQLObjectType({
                     return tilesets
                 }
             },
-            tilesetsPublishedAmount: {
+            tilesetsSelectableAmount: {
                 args: { searchName: { type: GraphQLString } },
                 type: GraphQLInt,
                 resolve: (parent, args) => {

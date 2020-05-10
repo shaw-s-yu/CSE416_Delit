@@ -256,6 +256,39 @@ export default {
             tilesetsSharedAmount(searchName: $search)
         }
     }`,
+    GET_SELECTABLE_TILESETS: graphql`
+    query user(
+        $userId: String!
+        $pageSkip: Int!
+        $search: String!
+        $sortBy: String!
+        $sortOrder: Int!
+    ){
+        user(
+            id:$userId
+        ){
+            tilesetsSelectable(
+                searchName: $search
+                skip: $pageSkip
+                sortBy: $sortBy
+                sortOrder: $sortOrder
+                ){
+                _id
+                name
+                imageId
+                ownerInfo{
+                    username
+                }
+                teamInfo{
+                    _id
+                    username
+                    picture
+                }
+                published
+            }
+            tilesetsSelectableAmount(searchName: $search)
+        }
+    }`,
     GET_ALL_MAPS: graphql`
     {
         maps{
