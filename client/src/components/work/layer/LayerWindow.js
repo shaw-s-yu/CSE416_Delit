@@ -2,24 +2,28 @@ import React from 'react';
 import { Rnd } from 'react-rnd';
 import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
-import LayerList from './LayerList'
+import LayerList from './LayerList';
 import Slider from '@material-ui/core/Slider';
-
+import * as handler from '../../../store/database/WorkScreenHandler';
 
 class LayerWindow extends React.Component {
 
 
     handleOnResize = (e, direction, ref, delta, position) => {
         this.props.handleOnResize(ref, position, 'layer')
-    }
+    };
 
     handleChange = (e) => {
 
-    }
+    };
 
+    handleOpacityOnChange = (e, value) => {
+
+        this.props.handlePassOpacity(value);
+    };
 
     render() {
-        const { open, dimension } = this.props
+        const { open, dimension, selected } = this.props
         const { width } = dimension.size
         const maxWidth = width - 142;
 
@@ -42,7 +46,7 @@ class LayerWindow extends React.Component {
                 <span className="opacity-text">OPACITY:</span>
                 <div className="layer-range">
                     <Slider
-                        defaultValue={30}
+                        defaultValue={0}
                         getAriaValueText={value => value + "%"}
                         aria-labelledby="discrete-slider"
                         valueLabelDisplay="auto"
@@ -50,6 +54,8 @@ class LayerWindow extends React.Component {
                         min={0}
                         max={100}
                         onMouseDown={e => e.stopPropagation()}
+                        onChange={this.handleOpacityOnChange}
+                        disabled={!selected}
                     />
                 </div>
             </Rnd>
@@ -60,11 +66,15 @@ class LayerWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const { layerList, selected } = state.layer;
     return {
+        layerList,
+        selected
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    handlePassOpacity: (value) => dispatch(handler.passOpacityHandler(value)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)
