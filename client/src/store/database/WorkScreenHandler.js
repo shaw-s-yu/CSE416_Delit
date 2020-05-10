@@ -44,26 +44,6 @@ export const handleSelectTool = (tool) => (dispatch, getState) => {
     dispatch({ type: actionCreators.MAP_SELECT_TOOL, tool: tool });
 };
 
-
-export const handleToTop = (window, callback) => (dispatch, getState) => {
-    let target = document.getElementById(window)
-    if (target.style.zIndex === "4") {
-        return
-    }
-    let map = document.getElementById('map');
-    let property = document.getElementById('property');
-    let layer = document.getElementById('layer');
-    let tileset = document.getElementById('tileset');
-    map.style.zIndex -= map.style.zIndex === "1" ? 0 : 1;
-    property.style.zIndex -= property.style.zIndex === "1" ? 0 : 1;
-    layer.style.zIndex -= layer.style.zIndex === "1" ? 0 : 1;
-    tileset.style.zIndex -= tileset.style.zIndex === "1" ? 0 : 1;
-
-    target.style.zIndex = 4;
-
-}
-
-
 export const layerSelectHandler = (id) => (dispatch, getState) => {
     dispatch({ type: actionCreators.LAYER_SELECT, id });
 };
@@ -94,4 +74,8 @@ export const toolbarSelectHandler = (name) => (dispatch, getState) => {
 
 export const toolbarUnselectHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.TOOLBAR_UNSELECT });
+};
+
+export const formatProjectPack = (project) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.FORMAT_PROJECT, project });
 };

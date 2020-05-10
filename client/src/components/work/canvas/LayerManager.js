@@ -144,7 +144,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handleImgInit: (name, img) => dispatch(handler.tilsetImgInitHandler(name, img)),
-    handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 
 

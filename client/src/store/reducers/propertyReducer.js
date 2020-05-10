@@ -1,8 +1,21 @@
 import * as actionCreators from '../actions/actionCreators'
-import React from 'react';
 
 const propertyReducer = (state = initState, action) => {
-    if (action.type === actionCreators.PROPERTY_SELECT) {
+
+    if (action.type === actionCreators.FORMAT_PROJECT) {
+        const { mapInfo, tilesetsInfo, layersInfo } = action.project
+        const map = formateMap(mapInfo)
+        const tilesets = formateTilesets(tilesetsInfo)
+        const layers = formateLayers(layersInfo)
+        console.log(map, tilesets, layers)
+        return {
+            ...state,
+            map, tilesets, layers,
+            display: map,
+        }
+    }
+
+    else if (action.type === actionCreators.PROPERTY_SELECT) {
         return {
             ...state,
             selected: {
@@ -39,20 +52,38 @@ const propertyReducer = (state = initState, action) => {
 
 export default propertyReducer;
 
-const map = [
-    { name: 'Width boxes', value: '1000', nref: React.createRef(), vref: React.createRef() },
-    { name: 'Height boxes', value: '1000', nref: React.createRef(), vref: React.createRef() },
-    { name: 'Box size', value: '50', nref: React.createRef(), vref: React.createRef() },
-]
-
-const layer = [
-    { name: 'name4', value: 'value4', nref: React.createRef(), vref: React.createRef() },
-    { name: 'name5', value: 'value5', nref: React.createRef(), vref: React.createRef() },
-    { name: 'name6', value: 'value6', nref: React.createRef(), vref: React.createRef() },
-]
-
 
 const initState = {
-    map: map,
-    layer: layer,
+    map: [],
+    layer: [],
+    tilesets: [],
 };
+
+
+const formateMap = (mapInfo) => {
+    const { width, height, tileWidth, tileHeight } = mapInfo
+    return { width, height, tileWidth, tileHeight }
+}
+
+const formateTilesets = (tilesetsInfo) => {
+    let tilesets = []
+    for (let i = 0; i < tilesetsInfo.length; i++) {
+        const { width, height } = tilesetsInfo[i]
+        tilesets.push({
+            width, height
+        })
+    }
+
+    return tilesets
+}
+
+const formateLayers = (layersInfo) => {
+    let layers = []
+    for (let i = 0; i < layersInfo.length; i++) {
+        const { opacity, visible, name } = layersInfo[i]
+        layers.push({
+            opacity, visible, name
+        })
+    }
+    return layers
+}

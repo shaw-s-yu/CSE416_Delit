@@ -39,6 +39,18 @@ class PropertyList extends React.Component {
             return 'table-row table-row-selected'
     }
 
+    getRows = () => {
+        const { data } = this.props
+        const names = Object.keys(data)
+        let toReturn = []
+        for (let i = 0; i < names.length; i++) {
+            toReturn.push({
+                name: names[i],
+                value: data[names[i]]
+            })
+        }
+        return toReturn
+    }
 
     render() {
         let { width } = this.props;
@@ -47,8 +59,8 @@ class PropertyList extends React.Component {
             width: width / 2 - 10,
             flexShrink: 0,
         }
+        const data = this.getRows()
 
-        const { data } = this.props
         return (
             <>
                 <Table striped bordered hover size="sm" className="property-table">
@@ -65,26 +77,10 @@ class PropertyList extends React.Component {
                                 return (
                                     <tr key={index} onClick={() => this.handleSelect(index)} className={this.getClassName(index)}>
                                         <td style={style}>
-                                            <ContentEditable
-                                                innerRef={property.nref}
-                                                onChange={this.handleChange.bind(this, index, 'name')}
-                                                onMouseDown={e => e.stopPropagation()}
-                                                html={property.name}
-                                                disabled={false}
-                                                className="property-input"
-                                                style={style}
-                                            />
+                                            <div className="property-input" style={style}>{property.name}</div>
                                         </td>
                                         <td style={style}>
-                                            <ContentEditable
-                                                innerRef={property.vref}
-                                                onChange={this.handleChange.bind(this, index, 'value')}
-                                                onMouseDown={e => e.stopPropagation()}
-                                                html={property.value}
-                                                disabled={false}
-                                                className="property-input"
-                                                style={style}
-                                            />
+                                            <div className="property-input" style={style}>{property.value}</div>
                                         </td>
                                     </tr>
                                 )

@@ -46,3 +46,4 @@ export const TEST_CLEAR = 'TEST_CLEAR';
 
 export const TEST_LAYER_ADD = 'TEST_LAYER_ADD';
 
+export const FORMAT_PROJECT = 'FORMAT_PROJECT'

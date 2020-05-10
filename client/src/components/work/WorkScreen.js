@@ -8,6 +8,7 @@ import './workscreen.css'
 import { connect } from 'react-redux';
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
+import * as handler from '../../store/database/WorkScreenHandler'
 
 class WorkScreen extends React.Component {
 
@@ -113,7 +114,7 @@ class WorkScreen extends React.Component {
                 {(res) => {
                     if (res.loading) return 'loading'
                     if (res.error) return 'error'
-                    console.log(res.data)
+                    this.props.formatProjectPack(res.data.project)
                     return (
                         <div>
                             <TopNavbar site='workspace' handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} history={history} />
@@ -143,7 +144,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-
+    formatProjectPack: (project) => dispatch(handler.formatProjectPack(project)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkScreen)

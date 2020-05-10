@@ -43,7 +43,7 @@ class PropertyWindow extends React.Component {
 
 
     render() {
-        const { layer, map, selected, open, dimension } = this.props
+        const { display, selected, open, dimension } = this.props
         const { width, height } = dimension.size;
         const style = {
             maxWidth: width,
@@ -70,12 +70,7 @@ class PropertyWindow extends React.Component {
                 <Titlebar title="Property Window" />
                 <Collapsible data={
                     [
-                        { title: 'Layer Property', content: <PropertyList data={layer} window='layer' width={width} />, open: false },
-                        {
-                            title: 'Map Property', content: <PropertyList data={map} window='map' width={width} onKeyUp="this.value=this.value.replace(/[^\.\d]/g,'');
-if(this.value.split('.').length>2){
-this.value=this.value.split('.')[0]+'.'+this.value.split('.')[1]}"/>, open: true
-                        },
+                        { title: 'Property', content: <PropertyList data={display} window='layer' width={width} />, open: true },
                         { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} />, open: false },
                     ]
                 }
@@ -94,18 +89,10 @@ this.value=this.value.split('.')[0]+'.'+this.value.split('.')[1]}"/>, open: true
 
 }
 
-// var mapProperty = [
-//     { name: 'Width boxes', value: '', nref: React.createRef(), vref: React.createRef() },
-//     { name: 'Height boxes', value: '', nref: React.createRef(), vref: React.createRef() },
-//     { name: 'Box size', value: '', nref: React.createRef(), vref: React.createRef() },
-// ]
-
 const mapStateToProps = (state) => {
-    const { layer, map, selected } = state.property
+    const { display } = state.property
     return {
-        layer,
-        map,
-        selected,
+        display,
     }
 };
 

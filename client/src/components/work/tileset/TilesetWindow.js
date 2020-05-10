@@ -93,7 +93,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handleUnselect: () => dispatch(handler.unselectTilesetHandler()),
-    handleToTop: (window) => dispatch(handler.handleToTop(window)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TilesetWindow)

@@ -2,6 +2,7 @@ const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList, GraphQLIn
 const UserModel = require('../../models/mongo-user')
 const LayerModel = require('../../models/mongo-layer')
 const TilesetModel = require('../../models/mongo-tileset')
+const MapModel = require('../../models/mongo-map')
 var GraphQLDate = require('graphql-date');
 
 module.exports = new GraphQLObjectType({
@@ -64,7 +65,7 @@ module.exports = new GraphQLObjectType({
                     return users
                 }
             },
-            LayersInfo: {
+            layersInfo: {
                 type: new GraphQLList(LayerType),
                 resolve: (parent, args) => {
                     let layers = []
@@ -88,8 +89,16 @@ module.exports = new GraphQLObjectType({
                     return tilesets
                 }
             },
+            mapInfo: {
+                type: MapType,
+                resolve: (parent, args) => {
+                    let map = MapModel.findById(parent.mapId)
+                    if (!map) throw new Error('project get map failed')
+                    return map
+                }
+            },
             getLayer: {
-                args:{
+                args: {
                     // id: {
                     //     type: GraphQLString
                     // },
@@ -118,3 +127,4 @@ module.exports = new GraphQLObjectType({
 const UserType = require('./UserType')
 const LayerType = require('./LayerType')
 const TilesetType = require('./TilesetType')
+const MapType = require('./MapType')

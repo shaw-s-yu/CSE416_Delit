@@ -23,7 +23,6 @@ class TopClickableLayer extends React.Component {
         }
         return <div style={style} key={'x:' + col + ",y:" + row} onClick={this.handleSelect.bind(this, col, row)} onMouseDown={e => {
             e.stopPropagation()
-            this.props.handleToTop(this.props.window)
         }}></div>
     }
 
@@ -71,7 +70,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleToTop: (window) => dispatch(handler.handleToTop(window)),
     handleSelect: (selected) => dispatch(handler.selectTilesetHandler(selected)),
 })
 

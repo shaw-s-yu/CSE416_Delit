@@ -350,7 +350,7 @@ export default {
                 username
                 _id
             }
-            LayersInfo{
+            layersInfo{
                 _id
                 data
                 width
@@ -386,6 +386,21 @@ export default {
                 tileHeight
                 tileWidth
                 published
+            }
+            mapInfo{
+                _id
+                width
+                height
+                infinite
+                nextlayerid
+                nextobjectid
+                orientation
+                renderorder
+                tiledversion
+                tileHeight
+                tileWidth
+                type
+                version
             }
         }
     }
