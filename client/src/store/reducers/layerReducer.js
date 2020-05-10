@@ -68,6 +68,49 @@ const layerReducer = (state = initState, action) => {
             layerList,
             selected: null
         }
+<<<<<<< Updated upstream
+=======
+    }else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
+        let { id } = action;
+        let { layerList, selected } = state;
+        const layers = layerList.map((layer) => {
+            if (layer._id === id) {
+                layer.visible = !layer.visible;
+            }
+            return layer;
+        })
+        return {
+            ...state,
+            layerList: layers,
+        }
+    }
+    else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
+        let { id } = action;
+        let { layerList } = state;
+        const layers = layerList.map((layer) => {
+            if (layer._id === id) {
+                layer.lock = !layer.lock;
+            }
+            return layer;
+        })
+        return {
+            ...state,
+            layerList: layers,
+        }
+    }
+    else if (action.type === actionCreators.LAYER_PASS_OPACITY) {
+        let { value } = action;
+        let { selected, layerList } = state;
+        for (let i = 0; i < layerList.length; i++) {
+            if (layerList[i]._id === selected) {
+                layerList[i].opacity = value;
+            }
+        }
+        return {
+            ...state,
+            layerList,
+        }
+>>>>>>> Stashed changes
     }
 
     return state;

@@ -94,4 +94,27 @@ export const toolbarSelectHandler = (name) => (dispatch, getState) => {
 
 export const toolbarUnselectHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.TOOLBAR_UNSELECT });
+<<<<<<< Updated upstream
+=======
+};
+
+export const formatProjectPack = (project) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.FORMAT_PROJECT, project });
+};
+
+export const propertySelectDisplay = (window, index) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.SELECT_PROPERTY_WINDOW, window, index });
+};
+
+export const layerVisibilityClick = (id) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_VISIBILITY_TOGGLE, id });
+};
+
+export const layerLockClick = (id) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_LOCK_TOGGLE, id });
+};
+
+export const passOpacityHandler = (value) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_PASS_OPACITY, value });
+>>>>>>> Stashed changes
 };

@@ -7,20 +7,29 @@ import Slider from '@material-ui/core/Slider';
 import QueryList from '../../../graphql/Query';
 import { Query} from "@apollo/react-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import * as handler from "../../../store/database/WorkScreenHandler";
+
 
 class LayerWindow extends React.Component {
 
 
     handleOnResize = (e, direction, ref, delta, position) => {
-        let { width, height } = ref.style
-        width = parseInt(width)
-        height = parseInt(height)
-        this.setState({ size: { width, height } })
+        this.props.handleOnResize(ref, position, 'layer')
     }
 
-    handleChange = (e) => {
-
-    }
+    handleOpacityOnChange = (e, value) => {
+        this.props.handlePassOpacity(value);
+    };
+    handleOpacityValue = () => {
+        // const { layerList, selected } = this.props.layerList;
+        // const value = layerList.map( layer =>{
+        //     if(layer._id === selected) {
+        //         return layer.opacity;
+        //     }
+        // });
+        // console.log(value);
+        // return value;
+    };
 
 
     render() {
@@ -29,59 +38,54 @@ class LayerWindow extends React.Component {
         const maxWidth = width - 142;
 
         return (
-                        <Rnd
-                            className={"workscreen-window " + (open ? '' : 'invisible')}
-                            size={dimension.size}
-                            position={dimension.position}
-                            onMouseDown={() => { this.props.handleToTop('layer') }}
-                            onResize={this.handleOnResize}
-                            onResizeStop={this.handleOnResize}
-                            onResizeStart={() => this.props.handleToTop('layer')}
-                            id='layer'
-                            onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'layer')}
-                            style={{ zIndex: dimension.zIndex }}
-                        >
-                            <Titlebar title="Layer Window" />
-                            <Query query={QueryList.GET_LAYERS_FROM_PROJECT} variables={{projectId: projectId}} >
-                                {(res) => {
-                                    console.log(res)
-                                    console.log(projectId)
-                                    // if (loading)
-                                    //     return <CircularProgress className="dashboard-loading" />;
-                                    // if (error) return 'error';
-                                    // return(
-                                    //     <LayerList maxWidth={maxWidth} layerList={data.getLayers}/>
-                                    // )}
-                                    return <div></div>
-                                }}
-                            </Query>
-
-                            <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} />
-                            <span className="opacity-text">OPACITY:</span>
-                            <div className="layer-range">
-                                <Slider
-                                    defaultValue={30}
-                                    getAriaValueText={value => value + "%"}
-                                    aria-labelledby="discrete-slider"
-                                    valueLabelDisplay="auto"
-                                    marks
-                                    min={0}
-                                    max={100}
-                                    onMouseDown={e => e.stopPropagation()}
-                                />
-                            </div>
-                        </Rnd>
+            <Rnd
+                className={"workscreen-window " + (open ? '' : 'invisible')}
+                size={dimension.size}
+                position={dimension.position}
+                onMouseDown={() => { this.props.handleToTop('layer') }}
+                onResize={this.handleOnResize}
+                onResizeStop={this.handleOnResize}
+                onResizeStart={() => this.props.handleToTop('layer')}
+                id='layer'
+                onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'layer')}
+                style={{ zIndex: dimension.zIndex }}
+            >
+                <Titlebar title="Layer Window" />
+                <LayerList maxWidth={maxWidth} />
+                <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} />
+                <span className="opacity-text">OPACITY:</span>
+                <div className="layer-range">
+                    <Slider
+                        defaultValue={0}
+                        getAriaValueText={value => value + "%"}
+                        aria-labelledby="discrete-slider"
+                        valueLabelDisplay="auto"
+                        marks
+                        min={0}
+                        max={100}
+                        onMouseDown={e => e.stopPropagation()}
+                        onChange={this.handleOpacityOnChange}
+                        disabled={!selected}
+                        // value={this.handleOpacityValue}
+                    />
+                </div>
+            </Rnd>
         )
     }
 
 }
 
 const mapStateToProps = (state) => {
+    const { layerList, selected } = state.layer
     return {
+        layerList,
+        selected
     }
+
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    handlePassOpacity: (value) => dispatch(handler.passOpacityHandler(value)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

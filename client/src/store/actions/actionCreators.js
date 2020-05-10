@@ -32,6 +32,12 @@ export const LAYER_RENAME = 'LAYER_RENAME';
 export const LAYER_DELETE = 'LAYER_DELETE';
 export const LAYER_MOVE_UP = 'LAYER_MOVE_UP';
 export const LAYER_MOVE_DOWN = 'LAYER_MOVE_DOWN';
+<<<<<<< Updated upstream
+=======
+export const LAYER_VISIBILITY_TOGGLE = 'LAYER_VISIBILITY_TOGGLE';
+export const LAYER_LOCK_TOGGLE = 'LAYER_LOCK_TOGGLE';
+export const LAYER_PASS_OPACITY = 'LAYER_PASS_OPACITY';
+>>>>>>> Stashed changes
 export const TOOLBAR_SELECT = 'TOOLBAR_SELECT';
 export const TOOLBAR_UNSELECT = 'TOOLBAR_UNSELECT';
 
