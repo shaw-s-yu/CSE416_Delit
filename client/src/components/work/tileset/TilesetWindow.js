@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
 import Collapsible from '../../tools/Collapsible'
 import TilesetDisplay from './TilesetDisplay'
+import SelectTilesetDialog from "./SelectTilesetDialog";
 
 class TilesetWindow extends React.Component {
 
@@ -16,10 +17,18 @@ class TilesetWindow extends React.Component {
 
         this.state = {
             resizing: false,
-            loaded: loaded
+            loaded: loaded,
+            selectTilesetDialogOpen: false,
         }
     }
 
+    handleOpenSelectTilesetDialog = () => {
+        this.setState({selectTilesetDialogOpen: true});
+    };
+
+    handleCloseSelectTilesetDialog = () => {
+        this.setState({selectTilesetDialogOpen: false});
+    };
 
     tileMap = React.createRef()
 
@@ -61,9 +70,9 @@ class TilesetWindow extends React.Component {
         })
     }
 
-    handleGoPaint = () => {
-        this.props.history.push('/tileseteditor/ffe')
-    }
+    // handleGoPaint = () => {
+    //     this.props.history.push('/tileseteditor/ffe')
+    // }
 
     getCollapsibleList = () => {
         const { dimension, tilesets } = this.props
@@ -93,9 +102,8 @@ class TilesetWindow extends React.Component {
         return li
     }
 
-
     render() {
-        const { resizing } = this.state;
+        const { resizing, selectTilesetDialogOpen } = this.state;
         const { open, dimension, tilesets } = this.props
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - (110 - 24 * tilesets.length);
@@ -104,34 +112,39 @@ class TilesetWindow extends React.Component {
             maxHeight: CollapsibleHeight,
         }
         return (
-            <Rnd
-                className={"workscreen-window " + (open ? '' : 'invisible')}
-                position={dimension.position}
-                size={dimension.size}
-                onMouseDown={this.handleSelect}
-                onResizeStart={() => this.props.handleToTop('tileset')}
-                onResize={this.handleOnResize}
-                onResizeStop={this.handleStopResize}
-                id='tileset'
-                onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'tileset')}
-                style={{ zIndex: dimension.zIndex }}
-            >
-                <Titlebar title="Tileset Window" />
+            <>
+                <Rnd
+                    className={"workscreen-window " + (open ? '' : 'invisible')}
+                    position={dimension.position}
+                    size={dimension.size}
+                    onMouseDown={this.handleSelect}
+                    onResizeStart={() => this.props.handleToTop('tileset')}
+                    onResize={this.handleOnResize}
+                    onResizeStop={this.handleStopResize}
+                    id='tileset'
+                    onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'tileset')}
+                    style={{ zIndex: dimension.zIndex }}
+                >
+                    <Titlebar title="Tileset Window" />
 
-                <Collapsible data={
-                    this.getCollapsibleList()
-                }
-                    maxHeight={style.maxHeight}
-                    resizing={resizing}
+                    <Collapsible data={
+                        this.getCollapsibleList()
+                    }
+                        maxHeight={style.maxHeight}
+                        resizing={resizing}
+                    />
+
+                    <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={e => e.stopPropagation()} onClick={this.handleOpenSelectTilesetDialog} />
+                    <i className="fas fa-search-plus tileset-zoomin-btn better-btn " onMouseDown={e => e.stopPropagation()} />
+                    <i className="fas fa-search-minus tileset-zoomout-btn better-btn " onMouseDown={e => e.stopPropagation()} />
+                    <i className="fas fa-trash-alt tileset-delete-btn better-btn " onMouseDown={e => e.stopPropagation()} />
+
+                </Rnd>
+                <SelectTilesetDialog
+                    open={selectTilesetDialogOpen}
+                    close={this.handleCloseSelectTilesetDialog}
                 />
-
-                <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={e => e.stopPropagation()} onClick={this.handleGoPaint} />
-                <i className="fas fa-search-plus tileset-zoomin-btn better-btn " onMouseDown={e => e.stopPropagation()} />
-                <i className="fas fa-search-minus tileset-zoomout-btn better-btn " onMouseDown={e => e.stopPropagation()} />
-                <i className="fas fa-trash-alt tileset-delete-btn better-btn " onMouseDown={e => e.stopPropagation()} />
-
-            </Rnd>
-
+            </>
         )
     }
 
