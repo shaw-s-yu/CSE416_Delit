@@ -8,11 +8,40 @@ import TilesetDisplay from './TilesetDisplay'
 
 class TilesetWindow extends React.Component {
 
-    state = {
-        resizing: false,
+    constructor(props) {
+        super(props);
+        let loaded = []
+        for (let i = 0; i < this.props.tilesets.length; i++)
+            loaded.push(false)
+
+        this.state = {
+            resizing: false,
+            loaded: loaded
+        }
     }
 
+
     tileMap = React.createRef()
+
+    handleTilesetLoaded = (index) => {
+        let loaded = [...this.state.loaded]
+        loaded[index] = true
+        this.setState({ loaded }, () => {
+            this.handleCheckAllTilesetLoaded()
+        })
+    }
+
+    handleCheckAllTilesetLoaded = () => {
+        const { loaded } = this.state
+        let allLoaded = true
+        loaded.forEach(e => {
+            if (!e) {
+                allLoaded = false
+            }
+        })
+        if (allLoaded)
+            this.props.handleTilesetLoaded()
+    }
 
     handleSelect = () => {
         this.props.handleUnselect()
@@ -39,18 +68,28 @@ class TilesetWindow extends React.Component {
     getCollapsibleList = () => {
         const { dimension, tilesets } = this.props
         const { width, height } = dimension.size;
-        const CollapsibleHeight = height - (110 - 24 * tilesets.length);
+        const CollapsibleHeight = height - 86 - 24 * tilesets.length;
         const style = {
             maxWidth: width,
             maxHeight: CollapsibleHeight,
         }
         let li = []
         for (let i = 0; i < tilesets.length; i++) {
-            li.push({ title: tilesets[i].name, content: <TilesetDisplay style={style} width={width} tileset={tilesets[i]} height={CollapsibleHeight} window="tileset" childRef={ref => this.tileMap = ref} />, open: i === 0 ? true : false })
+            li.push({
+                title: tilesets[i].name,
+                content: <TilesetDisplay
+                    handleTilesetLoaded={() => this.handleTilesetLoaded(i)}
+                    style={style}
+                    width={width}
+                    tileset={tilesets[i]}
+                    height={CollapsibleHeight}
+                    window="tileset"
+                    childRef={ref => this.tileMap = ref} />,
+                open: i === 0 ? true : false
+            })
         }
         return li
     }
-
 
 
     render() {

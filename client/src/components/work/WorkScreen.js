@@ -21,6 +21,11 @@ class WorkScreen extends React.Component {
         map: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 2 },
         tileset: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 3 },
         layer: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 4 },
+        tilesetLoaded: false,
+    }
+
+    handleTilesetLoaded = () => {
+        this.setState({ tilesetLoaded: true })
     }
 
     handleToTop = (window) => {
@@ -55,14 +60,14 @@ class WorkScreen extends React.Component {
     }
 
     getScreen = () => {
-        const { propertyOpen, layerOpen, tilesetOpen, property, map, layer, tileset } = this.state;
+        const { propertyOpen, layerOpen, tilesetOpen, property, map, layer, tileset, tilesetLoaded } = this.state;
         const { history } = this.props
         return (
             <>
-                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
+                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} tilesetLoaded={tilesetLoaded} />
                 <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
                 <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
-                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
+                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} handleTilesetLoaded={this.handleTilesetLoaded} />
             </>
         )
     }
