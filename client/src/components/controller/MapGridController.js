@@ -1,6 +1,6 @@
 export default class MapGridController {
     constructor(map) {
-        console.log(map)
+        this.map = map
     }
 
     buildTilesets = () => {

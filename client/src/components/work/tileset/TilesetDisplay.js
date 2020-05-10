@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars'
-import MapGridController from '../../controller/MapGridController'
-import MapImageController from '../../controller/MapImageController'
+import TilesetImageController from '../../controller/TilesetImageController'
 
 const TOOLS = {
     ZOOM_IN: "ZOOM_IN",
     ZOOM_OUT: "ZOOM_OUT"
 }
 
-class ImageWrapper extends React.Component {
+class TilesetDisplay extends React.Component {
 
     state = {
         scale: 1,
@@ -56,10 +55,10 @@ class ImageWrapper extends React.Component {
     }
 
     componentDidMount() {
-        const { map } = this.props
+        const { tileset } = this.props
         const canvas = this.refs.backgroundCanvas
-        this.gridController = new MapGridController(map)
-        this.imageController = new MapImageController(canvas, map)
+        // this.mapGridController = new MapGridController(map)
+        this.imageController = new TilesetImageController(tileset, canvas)
 
         const { canvasWidth, canvasHeight } = this.imageController.getCanvasDimension()
         this.setState({ canvasWidth, canvasHeight }, () => {
@@ -71,18 +70,18 @@ class ImageWrapper extends React.Component {
     render() {
         const { style, width, height } = this.props;
         const { scale, canvasWidth, canvasHeight } = this.state;
-        const totalStyle = {
-            ...style,
-            marginLeft: canvasWidth ? canvasWidth * scale >= width ? "auto" : (width - canvasWidth * scale) / 2 : "auto",
-            marginTop: canvasHeight ? canvasHeight * scale >= height ? "auto" : (height - canvasHeight * scale) / 2 : "auto",
-        }
+        // const totalStyle = {
+        //     ...style,
+        //     marginLeft: canvasWidth ? canvasWidth * scale >= width ? "auto" : (width - canvasWidth * scale) / 2 : "auto",
+        //     marginTop: canvasHeight ? canvasHeight * scale >= height ? "auto" : (height - canvasHeight * scale) / 2 : "auto",
+        // }
         return (
 
             <Scrollbars style={{ ...style, width, height }} ref="scrollbar"
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
-                <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
+                <div id="map-display" className={"display-place " + this.getSelectedTools()} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
                     <canvas ref='backgroundCanvas' width={canvasWidth} height={canvasHeight}></canvas>
                 </div>
             </Scrollbars>
@@ -93,15 +92,11 @@ class ImageWrapper extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { selected } = state.toolbar
-    const { map } = state.map
     return {
-        selectedTool: selected,
-        map
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImageWrapper)
+export default connect(mapStateToProps, mapDispatchToProps)(TilesetDisplay)

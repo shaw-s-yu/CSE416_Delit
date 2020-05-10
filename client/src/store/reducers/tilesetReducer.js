@@ -5,7 +5,15 @@ const initState = {
 };
 
 const tilesetReducer = (state = initState, action) => {
-    if (action.type === actionCreators.TILESET_UNSELECT) {
+
+    if (action.type === actionCreators.FORMAT_PROJECT) {
+        let { tilesetsInfo } = action.project
+        return {
+            ...state,
+            tilesets: tilesetsInfo
+        }
+    }
+    else if (action.type === actionCreators.TILESET_UNSELECT) {
         return {
             ...state,
             selected: null,

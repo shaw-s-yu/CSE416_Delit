@@ -1,11 +1,10 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import ImageWrapper from '../canvas/ImageWrapper'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
 import Collapsible from '../../tools/Collapsible'
-
+import TilesetDisplay from './TilesetDisplay'
 
 class TilesetWindow extends React.Component {
 
@@ -39,15 +38,31 @@ class TilesetWindow extends React.Component {
         this.props.history.push('/tileset/ffe')
     }
 
+    getCollapsibleList = () => {
+        const { dimension, tilesets } = this.props
+        const { width, height } = dimension.size;
+        const CollapsibleHeight = height - (110 - 24 * tilesets.length);
+        const style = {
+            maxWidth: width,
+            maxHeight: CollapsibleHeight,
+        }
+        let li = []
+        for (let i = 0; i < tilesets.length; i++) {
+            li.push({ title: tilesets[i].name, content: <TilesetDisplay style={style} width={width} tileset={tilesets[i]} height={CollapsibleHeight} window="tileset" childRef={ref => this.tileMap = ref} />, open: i === 0 ? true : false })
+        }
+        return li
+    }
+
 
 
     render() {
         const { resizing } = this.state;
-        const { open, dimension } = this.props
+        const { open, dimension, tilesets } = this.props
         const { width, height } = dimension.size;
+        const CollapsibleHeight = height - (110 - 24 * tilesets.length);
         const style = {
             maxWidth: width,
-            maxHeight: height - 110,
+            maxHeight: CollapsibleHeight,
         }
         return (
             <Rnd
@@ -65,10 +80,7 @@ class TilesetWindow extends React.Component {
                 <Titlebar title="Tileset Window" />
 
                 <Collapsible data={
-                    [
-                        { title: 'Tileset 1', content: <ImageWrapper style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: false },
-                        { title: 'Tileset 2', content: <ImageWrapper style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: true },
-                    ]
+                    this.getCollapsibleList()
                 }
                     maxHeight={style.maxHeight}
                     resizing={resizing}
@@ -87,7 +99,9 @@ class TilesetWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const { tilesets } = state.tileset
     return {
+        tilesets
     }
 };
 
