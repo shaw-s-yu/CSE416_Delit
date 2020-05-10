@@ -83,3 +83,11 @@ export const formatProjectPack = (project) => (dispatch, getState) => {
 export const propertySelectDisplay = (window, index) => (dispatch, getState) => {
     dispatch({ type: actionCreators.SELECT_PROPERTY_WINDOW, window, index });
 };
+
+export const handleTilesetLoaded = () => (dispatch, getState) => {
+    dispatch({ type: actionCreators.TILESET_LOADED });
+};
+
+export const tilesetIdApplier = (id, index) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.TILESET_ID_APPLIER, id, index });
+};

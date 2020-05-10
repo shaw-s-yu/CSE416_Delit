@@ -62,7 +62,7 @@ class TilesetWindow extends React.Component {
     }
 
     handleGoPaint = () => {
-        this.props.history.push('/tileset/ffe')
+        this.props.history.push('/tileseteditor/ffe')
     }
 
     getCollapsibleList = () => {
@@ -79,6 +79,8 @@ class TilesetWindow extends React.Component {
                 title: tilesets[i].name,
                 content: <TilesetDisplay
                     handleTilesetLoaded={() => this.handleTilesetLoaded(i)}
+                    tilesetIdApplier={(id) => this.props.tilesetIdApplier(id, i)}
+                    index={i}
                     style={style}
                     width={width}
                     tileset={tilesets[i]}
@@ -144,6 +146,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handleUnselect: () => dispatch(handler.unselectTilesetHandler()),
+    handleTilesetLoaded: () => dispatch(handler.handleTilesetLoaded()),
+    tilesetIdApplier: (id, index) => dispatch(handler.tilesetIdApplier(id, index)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TilesetWindow)

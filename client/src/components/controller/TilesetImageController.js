@@ -1,6 +1,5 @@
 export default class TilesetImageController {
     constructor(tileset, canvas) {
-        console.log(tileset)
         this.canvas = canvas
         this.tileset = tileset
         this.ctx = canvas.getContext('2d')
@@ -95,8 +94,10 @@ export default class TilesetImageController {
                     index,
                     x: this.gridThickness + i * (this.tileWidth + this.gridThickness),
                     y: this.gridThickness + o * (this.tileHeight * this.gridThickness),
+                    //dx dy is the position difference between image and tiledImage(with and without grid)
                     dx: this.gridThickness + i * (this.tileWidth + this.gridThickness) - i * this.tileWidth,
                     dy: this.gridThickness + o * (this.tileHeight + this.gridThickness) - o * this.tileHeight,
+
                     sx: i * this.tileWidth,
                     sy: o * this.tileHeight
                 })
@@ -104,4 +105,41 @@ export default class TilesetImageController {
                 index += 1
             }
     }
+
+    getGridPositionByGridIndex = (index) => {
+        for (let i = 0; i < this.gridPositions.length; i++) {
+            if (this.gridPositions[i].index === index) {
+                return this.gridPositions[i]
+            }
+        }
+    }
+
+    getGridIndexByGridId = (id) => {
+        return id - this.tileset.firstgid
+    }
+
+    getTileDataByGridId = (id) => {
+
+        //the index of the grid in tileset === index in gridpositions
+        const index = this.getGridIndexByGridId(id)
+
+        //find the grid with this index
+        const gridPosition = this.getGridPositionByGridIndex(index)
+
+        //draw the grid in a tile sized canvas by helper 
+        this.initHelper(this.tileWidth, this.tileHeight)
+        //1, get the whole image data
+        const imgData = this.ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight)
+        //2. draw to helper
+        this.helperctx.putImageData(imgData, -gridPosition.x, -gridPosition.y, gridPosition.x, gridPosition.y, this.tileWidth, this.tileHeight)
+        //3.get helper imageData
+        const returnImgData = this.helperctx.getImageData(0, 0, this.tileWidth, this.tileHeight)
+
+        return {
+            imageData: returnImgData,
+            width: this.tileWidth,
+            height: this.tileHeight
+        }
+    }
+
 }

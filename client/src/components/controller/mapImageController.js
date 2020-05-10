@@ -1,5 +1,6 @@
 export default class MapImageController {
     constructor(canvas, map) {
+        this.map = map
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
         this.numColumn = map.width
@@ -12,8 +13,11 @@ export default class MapImageController {
         this.gridColor = '#000000'
         this.backgroundColor = 'rgba(211,211,211,1)'
         this.gridPositions = []
-
         this.buildGridPositions()
+    }
+
+    setTilesets = (tilesets) => {
+        this.tilesets = tilesets
     }
 
     getMapNumGrids = () => {
@@ -60,5 +64,51 @@ export default class MapImageController {
                 })
                 index += 1
             }
+    }
+
+    getGridPositions = () => {
+        return this.gridPositions
+    }
+
+    setBackgroundColor = color => {
+        this.backgroundColor = color
+    }
+
+
+    getTilesetByGridId = id => {
+        for (let i = 0; i < this.tilesets.length; i++) {
+            if (id >= this.tilesets[i].firstgid && id < this.tilesets[i].firstgid + this.tilesets[i].tilecount) {
+                return this.tilesets[i]
+            }
+        }
+    }
+
+    getTilesetIdByGridId = id => {
+        for (let i = 0; i < this.tilesets.length; i++) {
+            if (id >= this.tilesets[i].firstgid && id < this.tilesets[i].firstgid + this.tilesets[i].tilecount) {
+                return this.tilesets[i].canvasId
+            }
+        }
+    }
+
+    getTilesetIndexByGridId = id => {
+        for (let i = 0; i < this.tilesets.length; i++) {
+            if (id >= this.tilesets[i].firstgid && id < this.tilesets[i].firstgid + this.tilesets[i].tilecount) {
+                return id - this.tilesets[i].firstgid + 1
+            }
+        }
+    }
+
+    getGridPositionByGridIndex = index => {
+        for (let i = 0; i < this.gridPositions.length; i++) {
+            if (this.gridPositions[i].index === index) {
+                return this.gridPositions[i]
+            }
+        }
+    }
+    drawLayerGridByGridIndex = (index, tileData, canvas) => {
+        const gridPosition = this.getGridPositionByGridIndex(index)
+        const ctx = canvas.getContext('2d')
+        ctx.putImageData(tileData.imageData, gridPosition.x, gridPosition.y, 0, 0, tileData.width, tileData.height)
     }
 }

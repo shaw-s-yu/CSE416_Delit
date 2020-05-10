@@ -21,12 +21,8 @@ class WorkScreen extends React.Component {
         map: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 2 },
         tileset: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 3 },
         layer: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 4 },
-        tilesetLoaded: false,
     }
 
-    handleTilesetLoaded = () => {
-        this.setState({ tilesetLoaded: true })
-    }
 
     handleToTop = (window) => {
 
@@ -60,14 +56,14 @@ class WorkScreen extends React.Component {
     }
 
     getScreen = () => {
-        const { propertyOpen, layerOpen, tilesetOpen, property, map, layer, tileset, tilesetLoaded } = this.state;
+        const { propertyOpen, layerOpen, tilesetOpen, property, map, layer, tileset } = this.state;
         const { history } = this.props
         return (
             <>
-                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} tilesetLoaded={tilesetLoaded} />
+                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
                 <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
                 <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
-                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} handleTilesetLoaded={this.handleTilesetLoaded} />
+                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
             </>
         )
     }
@@ -131,24 +127,26 @@ class WorkScreen extends React.Component {
         const { history, loaded } = this.props
         const { key } = this.props.match.params
         return (
-            <Query query={QueryList.GET_PROJECT} variables={{ id: key }}>
-                {(res) => {
-                    if (res.loading) return 'loading'
-                    if (res.error) return 'error'
-                    if (!loaded)
-                        this.props.formatProjectPack(res.data.project)
-                    return (
-                        <div>
-                            <TopNavbar site='workspace' handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} history={history} />
-                            <div>
-                                {
-                                    this.getScreen()
-                                }
-                            </div>
-                        </div >
-                    )
-                }}
-            </Query>
+            <>
+
+                <div>
+                    <TopNavbar site='workspace' handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} history={history} />
+                    <div>
+                        {
+                            <Query query={QueryList.GET_PROJECT} variables={{ id: key }}>
+                                {(res) => {
+                                    if (res.loading) return 'loading'
+                                    if (res.error) return 'error'
+                                    if (!loaded) {
+                                        this.props.formatProjectPack(res.data.project)
+                                    }
+                                    return this.getScreen()
+                                }}
+                            </Query>
+                        }
+                    </div>
+                </div >
+            </>
 
 
         )

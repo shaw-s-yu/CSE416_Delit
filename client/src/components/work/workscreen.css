@@ -458,3 +458,10 @@ nav {
     height:100%;
     background-size:32px 32px;
 }
+
+
+.layer-canvas{
+    position: absolute;
+    left: 0;
+    top:0;
+}

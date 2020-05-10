@@ -63,9 +63,9 @@ class TilesetDisplay extends React.Component {
     componentDidMount() {
         const { tileset } = this.props
         const canvas = this.refs.backgroundCanvas
-        // this.mapGridController = new MapGridController(map)
+        console.log(document.getElementById(canvas.id))
+        this.props.tilesetIdApplier(canvas.id)
         this.imageController = new TilesetImageController(tileset, canvas)
-
         const { canvasWidth, canvasHeight } = this.imageController.getCanvasDimension()
         this.setState({ canvasWidth, canvasHeight }, () => {
             this.imageController.drawBackGround()
@@ -87,7 +87,7 @@ class TilesetDisplay extends React.Component {
 
 
     render() {
-        const { style, width, height } = this.props;
+        const { style, width, height, index } = this.props;
         const { scale, canvasWidth, canvasHeight } = this.state;
         const totalStyle = {
             ...style,
@@ -101,7 +101,7 @@ class TilesetDisplay extends React.Component {
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
                 <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
-                    <canvas ref='backgroundCanvas' width={canvasWidth} height={canvasHeight}></canvas>
+                    <canvas ref='backgroundCanvas' id={'tileset' + index} width={canvasWidth} height={canvasHeight}></canvas>
                 </div>
             </Scrollbars>
 
