@@ -17,17 +17,15 @@ class PropertyWindow extends React.Component {
     }
 
     handleOnResize = (e, direction, ref, delta, position) => {
-        let { width, height } = ref.style
-        width = parseInt(width)
-        height = parseInt(height)
-        this.setState({ resizing: true, size: { width, height } })
+        this.setState({ resizing: true }, () => {
+            this.props.handleOnResize(ref, 'property')
+        })
     }
 
     handleStopResize = (e, direction, ref, delta, position) => {
-        let { width, height } = ref.style
-        width = parseInt(width)
-        height = parseInt(height)
-        this.setState({ resizing: false, size: { width, height } })
+        this.setState({ resizing: false }, () => {
+            this.props.handleOnResize(ref, position, 'property')
+        })
     }
 
     handleDelete = (e) => {

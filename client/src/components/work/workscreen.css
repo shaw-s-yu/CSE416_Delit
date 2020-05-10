@@ -226,7 +226,7 @@ li.active{
     height: 20px;
     text-align: center;
     background-color: rosybrown;
-    transition: ease-in 0.2s;
+    /* transition: ease-in 0.2s; */
     display: inline-block;
 }
 
@@ -237,7 +237,6 @@ li.active{
 
 .collapsible-content{
     max-height: 0px;
-    transition: ease-out 0.5s;
     overflow: hidden;
 }
 

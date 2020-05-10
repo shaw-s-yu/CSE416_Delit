@@ -61,10 +61,14 @@
             ],
             "mapId": "map3",
             "tilesetId": [
-                "tileset3"
+                "tileset2",
+                "tileset3",
+                "tileset1"
             ],
             "tilesetFirstgid": [
-                1
+                1,
+                151,
+                301
             ],
             "layerId": [
                 "layer3"

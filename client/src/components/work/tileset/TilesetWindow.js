@@ -1,19 +1,47 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import ImageWrapper from '../canvas/ImageWrapper'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
 import Collapsible from '../../tools/Collapsible'
-
+import TilesetDisplay from './TilesetDisplay'
 
 class TilesetWindow extends React.Component {
 
-    state = {
-        resizing: false,
+    constructor(props) {
+        super(props);
+        let loaded = []
+        for (let i = 0; i < this.props.tilesets.length; i++)
+            loaded.push(false)
+
+        this.state = {
+            resizing: false,
+            loaded: loaded
+        }
     }
 
+
     tileMap = React.createRef()
+
+    handleTilesetLoaded = (index) => {
+        let loaded = [...this.state.loaded]
+        loaded[index] = true
+        this.setState({ loaded }, () => {
+            this.handleCheckAllTilesetLoaded()
+        })
+    }
+
+    handleCheckAllTilesetLoaded = () => {
+        const { loaded } = this.state
+        let allLoaded = true
+        loaded.forEach(e => {
+            if (!e) {
+                allLoaded = false
+            }
+        })
+        if (allLoaded)
+            this.props.handleTilesetLoaded()
+    }
 
     handleSelect = () => {
         this.props.handleUnselect()
@@ -22,32 +50,56 @@ class TilesetWindow extends React.Component {
 
 
     handleOnResize = (e, direction, ref, delta, position) => {
-        let { width, height } = ref.style
-        width = parseInt(width)
-        height = parseInt(height)
-        this.setState({ resizing: true, size: { width, height } })
+        this.setState({ resizing: true }, () => {
+            this.props.handleOnResize(ref, position, 'tileset')
+        })
     }
 
     handleStopResize = (e, direction, ref, delta, position) => {
-        let { width, height } = ref.style
-        width = parseInt(width)
-        height = parseInt(height)
-        this.setState({ resizing: false, size: { width, height } })
+        this.setState({ resizing: false }, () => {
+            this.props.handleOnResize(ref, 'tileset')
+        })
     }
 
     handleGoPaint = () => {
         this.props.history.push('/tileset/ffe')
     }
 
+    getCollapsibleList = () => {
+        const { dimension, tilesets } = this.props
+        const { width, height } = dimension.size;
+        const CollapsibleHeight = height - 86 - 24 * tilesets.length;
+        const style = {
+            maxWidth: width,
+            maxHeight: CollapsibleHeight,
+        }
+        let li = []
+        for (let i = 0; i < tilesets.length; i++) {
+            li.push({
+                title: tilesets[i].name,
+                content: <TilesetDisplay
+                    handleTilesetLoaded={() => this.handleTilesetLoaded(i)}
+                    style={style}
+                    width={width}
+                    tileset={tilesets[i]}
+                    height={CollapsibleHeight}
+                    window="tileset"
+                    childRef={ref => this.tileMap = ref} />,
+                open: i === 0 ? true : false
+            })
+        }
+        return li
+    }
 
 
     render() {
         const { resizing } = this.state;
-        const { open, dimension } = this.props
+        const { open, dimension, tilesets } = this.props
         const { width, height } = dimension.size;
+        const CollapsibleHeight = height - (110 - 24 * tilesets.length);
         const style = {
             maxWidth: width,
-            maxHeight: height - 110,
+            maxHeight: CollapsibleHeight,
         }
         return (
             <Rnd
@@ -65,10 +117,7 @@ class TilesetWindow extends React.Component {
                 <Titlebar title="Tileset Window" />
 
                 <Collapsible data={
-                    [
-                        { title: 'Tileset 1', content: <ImageWrapper style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: false },
-                        { title: 'Tileset 2', content: <ImageWrapper style={style} width={width} height={height - 110} window="tileset" childRef={ref => this.tileMap = ref} />, open: true },
-                    ]
+                    this.getCollapsibleList()
                 }
                     maxHeight={style.maxHeight}
                     resizing={resizing}
@@ -87,7 +136,9 @@ class TilesetWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const { tilesets } = state.tileset
     return {
+        tilesets
     }
 };
 

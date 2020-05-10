@@ -3,7 +3,6 @@ import ImageLayer from './ImageLayer'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
 import TopClickableLayer from './TopClickableLayer'
-import MapjsonController from '../../controller/MapjsonController'
 
 class LayerManager extends React.Component {
 
@@ -58,8 +57,7 @@ class LayerManager extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-        const { map } = this.props
-        this.mapjsonController = new MapjsonController(map)
+
     }
 
     render = () => {

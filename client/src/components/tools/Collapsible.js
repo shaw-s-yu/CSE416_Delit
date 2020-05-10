@@ -2,8 +2,12 @@ import React from 'react';
 
 class Titlebar extends React.Component {
 
+    state = {
+        open: []
+    }
 
-    UNSAFE_componentWillMount() {
+
+    componentDidMount() {
         const { data } = this.props;
         let open = []
         for (let i = 0; i < data.length; i++)
@@ -32,7 +36,7 @@ class Titlebar extends React.Component {
                     data && data.map((d, index) => {
                         const style = {
                             maxHeight: open[index] ? maxHeight : '0px',
-                            transition: resizing ? 'none' : 'ease-out 0.5s',
+                            transition: resizing ? 'none' : !open[index] ? 'ease-in-out 0.3s' : 'ease-in-out 0.4s',
                         }
                         return (
                             <div key={index} >

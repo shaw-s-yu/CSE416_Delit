@@ -4,24 +4,19 @@ import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import Toolbar from '../../tools/Toolbar'
-import ImageWrapper from '../canvas/ImageWrapper'
+import MapDisplay from './MapDisplay'
 import TOOLS from '../../tools/ToolbarTools'
 
 
 class MapWindow extends React.Component {
 
-    tileMap = React.createRef()
-
     handleOnResize = (e, direction, ref, delta, position) => {
-        let { width, height } = ref.style
-        width = parseInt(width)
-        height = parseInt(height)
-        this.setState({ size: { width, height } })
+        this.props.handleOnResize(ref, position, 'map')
     }
 
 
     render() {
-        const { dimension, selectedTool } = this.props
+        const { dimension, selectedTool, tilesetLoaded } = this.props
         const { width, height } = dimension.size
         const style = {
             maxWidth: width,
@@ -33,7 +28,7 @@ class MapWindow extends React.Component {
                 className="workscreen-window "
                 id="map"
                 size={dimension.size}
-                position={dimension.position}
+                default={dimension.position}
                 onMouseDown={() => { this.props.handleToTop('map') }}
                 onClick={this.props.handleUnselect}
                 onResizeStart={() => this.props.handleToTop('map')}
@@ -64,7 +59,7 @@ class MapWindow extends React.Component {
                         { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} /> },
                     ]}
                 />
-                <ImageWrapper style={style} width={width} height={height - 70} window="map" childRef={ref => this.tileMap = ref} />
+                <MapDisplay style={style} width={width} height={height - 70} window="map" tilesetLoaded={tilesetLoaded} />
             </Rnd>
 
         )
@@ -73,8 +68,7 @@ class MapWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-    }
+    return {}
 };
 
 const mapDispatchToProps = (dispatch) => ({

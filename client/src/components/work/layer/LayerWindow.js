@@ -10,10 +10,7 @@ class LayerWindow extends React.Component {
 
 
     handleOnResize = (e, direction, ref, delta, position) => {
-        let { width, height } = ref.style
-        width = parseInt(width)
-        height = parseInt(height)
-        this.setState({ size: { width, height } })
+        this.props.handleOnResize(ref, position, 'layer')
     }
 
     handleChange = (e) => {
