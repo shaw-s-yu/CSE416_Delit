@@ -7,11 +7,21 @@ const propertyReducer = (state = initState, action) => {
         const map = formateMap(mapInfo)
         const tilesets = formateTilesets(tilesetsInfo)
         const layers = formateLayers(layersInfo)
-        console.log(map, tilesets, layers)
         return {
             ...state,
             map, tilesets, layers,
             display: map,
+        }
+    }
+
+    else if (action.type === actionCreators.SELECT_PROPERTY_WINDOW) {
+        let display = state.map
+        if (action.window === 'layers' || action.window === 'tilesets') {
+            display = state[action.window][action.index]
+        }
+        return {
+            ...state,
+            display
         }
     }
 

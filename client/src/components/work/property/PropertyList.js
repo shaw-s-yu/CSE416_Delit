@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table } from 'react-bootstrap'
-import ContentEditable from 'react-contenteditable'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
 import Pagination from '../../tools/Pagination'
@@ -43,7 +42,7 @@ class PropertyList extends React.Component {
         const { data } = this.props
         const names = Object.keys(data)
         let toReturn = []
-        for (let i = 0; i < names.length; i++) {
+        for (let i = names.length - 1; i >= 0; i--) {
             toReturn.push({
                 name: names[i],
                 value: data[names[i]]

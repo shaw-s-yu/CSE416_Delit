@@ -79,3 +79,7 @@ export const toolbarUnselectHandler = () => (dispatch, getState) => {
 export const formatProjectPack = (project) => (dispatch, getState) => {
     dispatch({ type: actionCreators.FORMAT_PROJECT, project });
 };
+
+export const propertySelectDisplay = (window, index) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.SELECT_PROPERTY_WINDOW, window, index });
+};

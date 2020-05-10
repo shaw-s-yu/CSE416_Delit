@@ -28,7 +28,7 @@ class LayerWindow extends React.Component {
             target.classList.remove('fa-eye');
             target.classList.add('fa-eye-slash');
         } else {
-            target.classList.remove( 'fa-eye-slash');
+            target.classList.remove('fa-eye-slash');
             target.classList.add('fa-eye');
         }
     }
@@ -56,6 +56,12 @@ class LayerWindow extends React.Component {
         this.setState({ nothing: 'nothing' });
     }
 
+    handleOnMouseDown = (e, index) => {
+        e.stopPropagation()
+        this.props.handleSelectProperty('layers', index)
+    }
+
+
     getClassName = (id) => {
         const { selected } = this.props;
         if (selected === null)
@@ -78,7 +84,7 @@ class LayerWindow extends React.Component {
                                 <ContentEditable
                                     innerRef={layer.ref}
                                     onChange={this.handleRename.bind(this, layer._id)}
-                                    onMouseDown={e => e.stopPropagation()}
+                                    onMouseDown={e => this.handleOnMouseDown(e, index)}
                                     html={layer.name}
                                     disabled={false}
                                     className="layer-input"
@@ -88,14 +94,14 @@ class LayerWindow extends React.Component {
 
                             </div>
                             <div className="layer-item-btn-fixedbox">
-                                <i className="fas fa-eye better-btn layer-item-btn-eye" onClick={this.handleVisibilityClick}/>
-                                <i className="fas fa-unlock better-btn layer-item-btn" onClick={this.handleLockClick}/>
+                                <i className="fas fa-eye better-btn layer-item-btn-eye" onClick={this.handleVisibilityClick} />
+                                <i className="fas fa-unlock better-btn layer-item-btn" onClick={this.handleLockClick} />
                             </div>
                             <div className="layer-item-btn-box">
                                 <i className="fas fa-edit better-btn layer-item-btn" />
                                 <i className="fas fa-trash-alt better-btn layer-item-btn" onClick={this.handleDelete.bind(this, layer._id)} />
-                                <i className="fas fa-arrow-down better-btn layer-item-btn" onClick={this.handleMoveDown.bind(this, layer._id)}/>
-                                <i className="fas fa-arrow-up better-btn layer-item-btn" onClick={this.handleMoveUp.bind(this, layer._id)}/>
+                                <i className="fas fa-arrow-down better-btn layer-item-btn" onClick={this.handleMoveDown.bind(this, layer._id)} />
+                                <i className="fas fa-arrow-up better-btn layer-item-btn" onClick={this.handleMoveUp.bind(this, layer._id)} />
                             </div>
 
                         </div>
@@ -124,6 +130,7 @@ const mapDispatchToProps = (dispatch) => ({
     handleDelete: (id) => dispatch(handler.layerDeleteHandler(id)),
     handleMoveUp: (id) => dispatch(handler.layerMoveUpHandler(id)),
     handleMoveDown: (id) => dispatch(handler.layerMoveDownHandler(id)),
+    handleSelectProperty: (window, index) => dispatch(handler.propertySelectDisplay(window, index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

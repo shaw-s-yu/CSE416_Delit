@@ -1,24 +1,15 @@
 import * as actionCreators from '../actions/actionCreators'
 
 const initState = {
-    projects: [],
-    maps: [],
-    tilesets: [],
-    layers: [],
-    projectId: null,
+
 };
 
 const projectReducer = (state = initState, action) => {
-    if (action.type === actionCreators.TEST_PROJECT_ADD) {
-        let { projects } = state
-        let toAdd = []
-        for (let i in projects)
-            toAdd.push(projects[i])
-        for (let i in action.item)
-            toAdd.push(action.item[i])
+    if (action.type === actionCreators.FORMAT_PROJECT) {
+        let { project } = action
         return {
             ...state,
-            projects: toAdd,
+            ...project
         }
     }
     return state;

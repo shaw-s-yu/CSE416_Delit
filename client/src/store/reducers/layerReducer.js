@@ -2,7 +2,7 @@ import * as actionCreators from '../actions/actionCreators'
 
 const layerReducer = (state = initState, action) => {
     if (action.type === actionCreators.FORMAT_PROJECT) {
-        const { layersInfo } = action.project
+        let { layersInfo } = action.project
         return {
             ...state,
             layerList: layersInfo
