@@ -22,13 +22,35 @@ class LayerWindow extends React.Component {
         this.setState({ nothing: 'nothing' })
     }
 
-    handleVisibilityClick = e => {
-        this.props.handleVisibilityClick(e.target);
-    }
+    handleVisibilityClick = (id, e) => {
+        let { target } = e;
+        let value = null;
+        if (target.classList.contains('fa-eye-slash')) {
+            target.classList.remove('fa-eye-slash');
+            target.classList.add('fa-eye');
+            value = true;
+        } else {
+            target.classList.remove('fa-eye');
+            target.classList.add('fa-eye-slash');
+            value = false;
+        }
+        this.props.handleVisibilityClick(id, value);
+    };
 
-    handleLockClick = e => {
-        this.props.handleLockClick(e.target);
-    }
+    handleLockClick = (id, e) => {
+        let { target } = e;
+        let value = null;
+        if (target.classList.contains('fa-unlock')) {
+            target.classList.remove('fa-unlock');
+            target.classList.add('fa-lock');
+            value = true;
+        } else {
+            target.classList.remove('fa-lock');
+            target.classList.add('fa-unlock');
+            value = false;
+        }
+        this.props.handleLockClick(id, value);
+    };
 
     handleMoveUp = (id, e) => {
         e.stopPropagation()
@@ -80,8 +102,8 @@ class LayerWindow extends React.Component {
 
                             </div>
                             <div className="layer-item-btn-fixedbox">
-                                <i className="fas fa-eye better-btn layer-item-btn-eye" onClick={this.handleVisibilityClick} />
-                                <i className="fas fa-unlock better-btn layer-item-btn" onClick={this.handleLockClick} />
+                                <i className="fas fa-eye better-btn layer-item-btn-eye" onClick={this.handleVisibilityClick.bind(this, layer._id)} />
+                                <i className="fas fa-unlock better-btn layer-item-btn" onClick={this.handleLockClick.bind(this, layer._id)} />
                             </div>
                             <div className="layer-item-btn-box">
                                 <i className="fas fa-edit better-btn layer-item-btn" />
@@ -102,7 +124,7 @@ class LayerWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { layerList, selected } = state.layer
+    const { layerList, selected } = state.layer;
     return {
         layerList,
         selected
@@ -117,8 +139,8 @@ const mapDispatchToProps = (dispatch) => ({
     handleMoveUp: (id) => dispatch(handler.layerMoveUpHandler(id)),
     handleMoveDown: (id) => dispatch(handler.layerMoveDownHandler(id)),
     handleSelectProperty: (window, index) => dispatch(handler.propertySelectDisplay(window, index)),
-    handleVisibilityClick: (target) => dispatch(handler.layerVisibilityClick(target)),
-    handleLockClick: (target) => dispatch(handler.layerLockClick(target)),
+    handleVisibilityClick: (id, value) => dispatch(handler.layerVisibilityClick(id, value)),
+    handleLockClick: (id, value) => dispatch(handler.layerLockClick(id, value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

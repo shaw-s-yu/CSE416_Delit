@@ -62,7 +62,7 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_MOVE_DOWN) {
-        let layerList = state.layerList.map(e => e)
+        let layerList = state.layerList.map(e => e);
         for (let i = 0; i < layerList.length - 1; i++)
             if (layerList[i]._id === action.id) {
                 let layer = layerList[i];
@@ -76,22 +76,30 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
-        let { target } = action;
-        if (target.classList.contains('fa-eye')) {
-            target.classList.remove('fa-eye');
-            target.classList.add('fa-eye-slash');
-        } else {
-            target.classList.remove('fa-eye-slash');
-            target.classList.add('fa-eye');
+        let { id, isVisible } = action;
+        let { layerList } = state;
+        const layers = layerList.map((layer) => {
+            if (layer._id === id) {
+                layer.visible = isVisible;
+            }
+            return layer;
+        });
+        return {
+            ...state,
+            layerList: layers,
         }
     } else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
-        let { target } = action;
-        if (target.classList.contains('fa-unlock')) {
-            target.classList.remove('fa-unlock');
-            target.classList.add('fa-lock');
-        } else {
-            target.classList.remove('fa-lock');
-            target.classList.add('fa-unlock');
+        let { id, isLock } = action;
+        let { layerList } = state;
+        const layers = layerList.map((layer) => {
+            if (layer._id === id) {
+                layer.lock = isLock;
+            }
+            return layer;
+        });
+        return {
+            ...state,
+            layerList: layers,
         }
     }else if (action.type === actionCreators.LAYER_PASS_OPACITY) {
         let {value} = action;
