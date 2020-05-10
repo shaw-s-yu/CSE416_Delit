@@ -93,9 +93,9 @@ class LayerWindow extends React.Component {
                             </div>
                             <div className="layer-item-btn-box">
                                 <i className="fas fa-edit better-btn layer-item-btn" />
-                                <i className="fas fa-trash-alt better-btn layer-item-btn" onClick={this.handleDelete.bind(this, layer._id)} />
-                                <i className="fas fa-arrow-down better-btn layer-item-btn" onClick={this.handleMoveDown.bind(this, layer._id)} />
-                                <i className="fas fa-arrow-up better-btn layer-item-btn" onClick={this.handleMoveUp.bind(this, layer._id)} />
+                                <i className={"fas fa-trash-alt better-btn layer-item-btn"} onClick={this.handleDelete.bind(this, layer._id)} />
+                                <i className={"fas fa-arrow-down better-btn layer-item-btn " + (index === layerList.length - 1 ? 'layer-btn-disabled' : '')} onClick={this.handleMoveDown.bind(this, layer._id)} />
+                                <i className={"fas fa-arrow-up better-btn layer-item-btn " + (index === 0 ? 'layer-btn-disabled' : '')} onClick={this.handleMoveUp.bind(this, layer._id)} />
                             </div>
 
                         </div>

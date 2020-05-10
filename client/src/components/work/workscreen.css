@@ -470,3 +470,9 @@ nav {
 .layer-invisible{
     display: none;
 }
+
+.layer-btn-disabled{
+    color:gray;
+    cursor: auto;
+    pointer-events: none;
+}

@@ -104,3 +104,7 @@ export const layerLockClick = (id) => (dispatch, getState) => {
 export const passOpacityHandler = (value) => (dispatch, getState) => {
     dispatch({ type: actionCreators.LAYER_PASS_OPACITY, value });
 }
+
+export const layerAddHandler = () => (dispatch, getState) => {
+    dispatch({ type: actionCreators.ADD_LAYER });
+}

@@ -1,4 +1,5 @@
 import * as actionCreators from '../actions/actionCreators'
+import { v1 } from 'uuid'
 
 const layerReducer = (state = initState, action) => {
 
@@ -81,8 +82,8 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
-        let { id, isVisible } = action;
-        let { layerList } = state;
+        const { id, isVisible } = action;
+        const { layerList } = state;
         const layers = layerList.map((layer) => {
             if (layer._id === id) {
                 layer.visible = isVisible;
@@ -94,7 +95,7 @@ const layerReducer = (state = initState, action) => {
             layerList: layers,
         }
     } else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
-        let layerList = state.layerList.map(e => {
+        const layerList = state.layerList.map(e => {
             if (e._id === action.id) {
                 e.locked = !e.locked
                 return e
@@ -108,9 +109,9 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_PASS_OPACITY) {
-        let { value } = action;
-        let { selected } = state;
-        let layerList = state.layerList.map(e => {
+        const { value } = action;
+        const { selected } = state;
+        const layerList = state.layerList.map(e => {
             if (e._id === selected) {
                 e.opacity = value / 100
                 return e
@@ -121,6 +122,20 @@ const layerReducer = (state = initState, action) => {
         return {
             ...state,
             layerList
+        }
+    } else if (action.type === actionCreators.ADD_LAYER) {
+        let layerList = state.layerList.map(e => e)
+        let layerToAdd = { ...layerList[0] }
+        layerToAdd._id = v1()
+        layerToAdd.opacity = 1
+        layerToAdd.name = 'New Layer Click to Rename'
+        layerToAdd.locked = false
+        layerToAdd.visible = true
+        layerToAdd.data = layerToAdd.data.map(e => 0)
+        layerList.push(layerToAdd)
+        return {
+            ...state,
+            layerList,
         }
     }
     return state;

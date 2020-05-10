@@ -17,6 +17,11 @@ class LayerWindow extends React.Component {
 
     };
 
+    handleAddLayer = e => {
+        e.stopPropagation()
+        this.props.handleAddLayer()
+    }
+
     handleOpacityOnChange = (e, value) => {
 
         this.props.handlePassOpacity(value);
@@ -48,7 +53,7 @@ class LayerWindow extends React.Component {
             >
                 <Titlebar title="Layer Window" />
                 <LayerList maxWidth={maxWidth} />
-                <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} />
+                <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} onClick={this.handleAddLayer} />
                 <span className="opacity-text">OPACITY:</span>
                 <div className="layer-range">
                     <Slider
@@ -82,6 +87,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handlePassOpacity: (value) => dispatch(handler.passOpacityHandler(value)),
+    handleAddLayer: () => dispatch(handler.layerAddHandler())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)
