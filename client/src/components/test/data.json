@@ -27,7 +27,7 @@
                 1
             ],
             "layerId": [
-                "layer1111111"
+                "layer1"
             ],
             "imageId": "5eabe075e9da110b6896405a"
         },
@@ -47,8 +47,8 @@
                 1
             ],
             "layerId": [
-                "2222222222layer2",
-                "22222layer3"
+                "layer2",
+                "layer3"
             ],
             "imageId": "5eabde4998bf8c7fc8ef0307"
         },
@@ -72,8 +72,7 @@
                 301
             ],
             "layerId": [
-                "22222layer3",
-                "layer1111111"
+                "layer3"
             ],
             "imageId": "5eabe0b7e9da110b6896405b"
         }
@@ -185,7 +184,7 @@
     ],
     "layers": [
         {
-            "_id": "layer1111111",
+            "_id": "layer1",
             "data": [
                 6,
                 0,
@@ -223,7 +222,7 @@
             "y": 0
         },
         {
-            "_id": "2222222222layer2",
+            "_id": "layer2",
             "data": [
                 1,
                 2,
@@ -252,15 +251,15 @@
             "y": 0
         },
         {
-            "_id": "22222layer3",
+            "_id": "layer3",
             "data": [
                 0,
                 7,
                 0,
                 0,
+                2,
                 0,
-                0,
-                0,
+                5,
                 0,
                 0
             ],

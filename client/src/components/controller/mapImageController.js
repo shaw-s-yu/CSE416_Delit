@@ -108,6 +108,7 @@ export default class MapImageController {
         }
     }
     drawLayerGridByGridIndex = (index, tileData, canvas) => {
+        console.log(this.gridPositions)
         const gridPosition = this.getGridPositionByGridIndex(index)
         const ctx = canvas.getContext('2d')
         ctx.putImageData(tileData.imageData, gridPosition.x, gridPosition.y, 0, 0, tileData.width, tileData.height)
