@@ -90,10 +90,12 @@ export const handleTilesetLoaded = () => (dispatch, getState) => {
 
 export const tilesetIdApplier = (id, index) => (dispatch, getState) => {
     dispatch({ type: actionCreators.TILESET_ID_APPLIER, id, index });
-    export const layerVisibilityClick = (target) => (dispatch, getState) => {
-        dispatch({ type: actionCreators.LAYER_VISIBILITY_TOGGLE, target });
-    };
+}
 
-    export const layerLockClick = (target) => (dispatch, getState) => {
-        dispatch({ type: actionCreators.LAYER_LOCK_TOGGLE, target });
-    };
+export const layerVisibilityClick = (target) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_VISIBILITY_TOGGLE, target });
+};
+
+export const layerLockClick = (target) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_LOCK_TOGGLE, target });
+};
