@@ -11,10 +11,7 @@ import TOOLS from '../../tools/ToolbarTools'
 class MapWindow extends React.Component {
 
     handleOnResize = (e, direction, ref, delta, position) => {
-        let { width, height } = ref.style
-        width = parseInt(width)
-        height = parseInt(height)
-        this.setState({ size: { width, height } })
+        this.props.handleOnResize(ref, position, 'map')
     }
 
 

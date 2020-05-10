@@ -59,10 +59,10 @@ class WorkScreen extends React.Component {
         const { history } = this.props
         return (
             <>
-                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} />
-                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} />
-                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} />
-                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} />
+                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
+                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
+                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
+                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
             </>
         )
     }
@@ -80,6 +80,22 @@ class WorkScreen extends React.Component {
 
     handleOnDragStop = (e, d, type) => {
         this.setState({ [type]: { ...this.state[type], position: { x: d.x, y: d.y } } })
+    }
+
+    handleOnResize = (ref, position, type) => {
+        this.setState({
+            [type]: {
+                ...this.state[type],
+                size: {
+                    width: parseInt(ref.style.width),
+                    height: parseInt(ref.style.height)
+                },
+                position: {
+                    x: parseInt(position.x),
+                    y: parseInt(position.y)
+                }
+            }
+        })
     }
 
     componentDidMount() {
