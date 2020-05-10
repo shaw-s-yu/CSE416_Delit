@@ -33,7 +33,7 @@ const layerReducer = (state = initState, action) => {
             layerList
         }
     } else if (action.type === actionCreators.LAYER_DELETE) {
-        let { layerList } = state
+        let layerList = state.layerList.map(e => e)
         for (let i = 0; i < layerList.length; i++)
             if (layerList[i]._id === action.id) {
                 layerList.splice(i, 1)

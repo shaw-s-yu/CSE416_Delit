@@ -7,19 +7,16 @@ class LayerWindow extends React.Component {
 
     handleRename = (id, e) => {
         this.props.handleRename(id, e.target.value)
-        this.setState({ nothing: 'nothing' })
     };
 
     handleSelect = (id, e) => {
         e.stopPropagation()
         this.props.handleSelect(id)
-        this.setState({ nothing: 'nothing' })
     }
 
     handleDelete = (id, e) => {
         e.stopPropagation()
         this.props.handleDelete(id)
-        this.setState({ nothing: 'nothing' })
     }
 
     handleVisibilityClick = (id, e) => {
@@ -33,9 +30,11 @@ class LayerWindow extends React.Component {
             target.classList.remove('fa-eye');
             target.classList.add('fa-eye-slash');
             value = false;
-        }
+        };
+        e.stopPropagation()
         this.props.handleVisibilityClick(id, value);
     };
+
 
     handleLockClick = (id, e) => {
         let { target } = e;
@@ -55,13 +54,11 @@ class LayerWindow extends React.Component {
     handleMoveUp = (id, e) => {
         e.stopPropagation()
         this.props.handleMoveUp(id);
-        this.setState({ nothing: 'nothing' });
     }
 
     handleMoveDown = (id, e) => {
         e.stopPropagation();
         this.props.handleMoveDown(id);
-        this.setState({ nothing: 'nothing' });
     }
 
     handleOnMouseDown = (e, index) => {
@@ -104,6 +101,7 @@ class LayerWindow extends React.Component {
                             <div className="layer-item-btn-fixedbox">
                                 <i className="fas fa-eye better-btn layer-item-btn-eye" onClick={this.handleVisibilityClick.bind(this, layer._id)} />
                                 <i className="fas fa-unlock better-btn layer-item-btn" onClick={this.handleLockClick.bind(this, layer._id)} />
+
                             </div>
                             <div className="layer-item-btn-box">
                                 <i className="fas fa-edit better-btn layer-item-btn" />
@@ -141,6 +139,7 @@ const mapDispatchToProps = (dispatch) => ({
     handleSelectProperty: (window, index) => dispatch(handler.propertySelectDisplay(window, index)),
     handleVisibilityClick: (id, value) => dispatch(handler.layerVisibilityClick(id, value)),
     handleLockClick: (id, value) => dispatch(handler.layerLockClick(id, value)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

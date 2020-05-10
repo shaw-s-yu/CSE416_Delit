@@ -125,7 +125,7 @@ class ImageWrapper extends React.Component {
                 <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
                     <canvas ref='backgroundCanvas' width={canvasWidth} height={canvasHeight}></canvas>
                     {layerList.map(e => (
-                        <canvas ref={'layer' + e._id} width={canvasWidth} height={canvasHeight} className="layer-canvas"></canvas>
+                        <canvas ref={'layer' + e._id} width={canvasWidth} height={canvasHeight} className={"layer-canvas " + (e.visible ? '' : 'layer-invisible')}></canvas>
                     ))}
                 </div>
             </Scrollbars>
