@@ -1,11 +1,9 @@
 import React from 'react'
 import { Button } from "react-bootstrap";
-
 import Dialog from '../../tools/Dialog'
-
 import { connect } from 'react-redux';
-
-
+import { Query } from 'react-apollo';
+import QueryList from '../../../graphql/Query';
 class SelectTilesetDialog extends React.Component {
     constructor(props) {
         super(props);

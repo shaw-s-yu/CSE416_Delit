@@ -181,6 +181,25 @@
             "spacing": 0,
             "tilecount": 150,
             "published": true
+        },
+        {
+            "_id": "tileset4",
+            "name": "Long Island Story",
+            "owner": "5e9fa3908dead93aa46f6a6d",
+            "editors": [
+                "5ea0e25872182f00242b848a",
+                "5ea33ec1a8a9b4504485aa28"
+            ],
+            "imageId": "5eabdf04f064a7553cb9dd41",
+            "tileWidth": 40,
+            "tileHeight": 40,
+            "width": 600,
+            "height": 400,
+            "columns": 15,
+            "margin": 0,
+            "spacing": 0,
+            "tilecount": 150,
+            "published": false
         }
     ],
     "layers": [
