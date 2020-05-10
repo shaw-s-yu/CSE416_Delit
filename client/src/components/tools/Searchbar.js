@@ -12,7 +12,7 @@ class Searchbar extends React.Component {
                     <TextField
                         id="outlined-basic"
                         className="dashboard-input"
-                        label="Enter Project Name to Search"
+                        label="Enter Item Name to Search"
                         variant="outlined"
                         size="small"
                         value={value}

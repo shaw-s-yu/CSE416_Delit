@@ -4,7 +4,7 @@ import Dialog from '../../tools/Dialog'
 import { connect } from 'react-redux';
 import { Query } from 'react-apollo';
 import QueryList from '../../../graphql/Query';
-import Searchbar from "../../dashboard/Searchbar";
+import Searchbar from "../../tools/Searchbar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "../../tools/Pagination";
 import TilesetList from "./TilesetList";

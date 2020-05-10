@@ -1,6 +1,6 @@
 import React from 'react';
 import TopNavbar from '../tools/TopNavbar'
-import Searchbar from './Searchbar'
+import Searchbar from '../tools/Searchbar'
 import ItemList from './ItemList'
 import './dashboard.css'
 import Pagination from '../tools/Pagination'
@@ -184,7 +184,7 @@ class Dashboard extends React.Component {
                 />
 
                 <div className="dashboard-display" style={displayStyle}>
-                    <Searchbar value={search} onChange={this.handleSearchChange} />
+                    <Searchbar value={search} onChange={this.handleSearchChange}/>
                     <div className="dashboard-sort-btn-group">
                         <button className={"dashboard-sort-btn " + this.getSelected('name')} onClick={e => this.handleSortBy(e, 'name')}>Name </button>
                         <i className={"fa dashboard-sort-icon " + this.getSortOrder('name')} onClick={e => this.handleSortOrder(e, 'name')} />
@@ -197,7 +197,7 @@ class Dashboard extends React.Component {
                                 return <CircularProgress className="dashboard-loading" />;
                             if (error) return 'error';
                             if (query === QueryList.EMPTY_QUERY)
-                                return 'Wrong Sidebar Selection or needs to be developped';
+                                return 'Wrong Sidebar Selection or needs to be developed';
                             if (!data) return 'error';
 
                             const { items, amount, type } = this.getProjects(data);
