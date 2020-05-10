@@ -96,8 +96,8 @@ export const layerVisibilityClick = (id) => (dispatch, getState) => {
     dispatch({ type: actionCreators.LAYER_VISIBILITY_TOGGLE, id });
 };
 
-export const layerLockClick = (target) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.LAYER_LOCK_TOGGLE, target });
+export const layerLockClick = (id) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_LOCK_TOGGLE, id });
 };
 
 export const passOpacityHandler = (value) => (dispatch, getState) => {

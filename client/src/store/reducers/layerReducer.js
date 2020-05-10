@@ -1,11 +1,16 @@
 import * as actionCreators from '../actions/actionCreators'
 
 const layerReducer = (state = initState, action) => {
+
     if (action.type === actionCreators.FORMAT_PROJECT) {
-        let { layersInfo } = action.project
+        let layerList = action.project.layersInfo.map(e => {
+            e.locked = false
+            return e
+        })
+
         return {
             ...state,
-            layerList: layersInfo
+            layerList
         }
     }
 
@@ -90,31 +95,33 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
-        let { target } = action;
-        if (target.classList.contains('fa-unlock')) {
-            target.classList.remove('fa-unlock');
-            target.classList.add('fa-lock');
-        } else {
-            target.classList.remove('fa-lock');
-            target.classList.add('fa-unlock');
-        }
-    }else if (action.type === actionCreators.LAYER_PASS_OPACITY) {
-        let {value} = action;
-        let {selected, layerList} = state;
-        for (let i = 0; i < layerList.length; i++) {
-            if (layerList[i]._id === selected) {
-                layerList[i].opacity = value;
+        let layerList = state.layerList.map(e => {
+            if (e._id === action.id) {
+                e.locked = !e.locked
+                return e
+            } else {
+                return e
             }
-        }
-        const layers = layerList.map( (layer) => {
-           if (layer._id === selected) {
-               layer.opacity = value
-           }
-           return layer;
-        });
+        })
         return {
             ...state,
-            layerList: layers,
+            layerList,
+            selected: null
+        }
+    } else if (action.type === actionCreators.LAYER_PASS_OPACITY) {
+        let { value } = action;
+        let { selected } = state;
+        let layerList = state.layerList.map(e => {
+            if (e._id === selected) {
+                e.opacity = value / 100
+                return e
+            } else {
+                return e
+            }
+        })
+        return {
+            ...state,
+            layerList
         }
     }
     return state;

@@ -24,8 +24,9 @@ class LayerWindow extends React.Component {
         this.props.handleVisibilityClick(id);
     }
 
-    handleLockClick = e => {
-        this.props.handleLockClick(e.target);
+    handleLockClick = (id, e) => {
+        e.stopPropagation()
+        this.props.handleLockClick(id);
     }
 
     handleMoveUp = (id, e) => {
@@ -76,8 +77,8 @@ class LayerWindow extends React.Component {
 
                             </div>
                             <div className="layer-item-btn-fixedbox">
-                                <i className={"fas fa-eye better-btn layer-item-btn-eye " + (layer.visible ? 'fa-eye' : 'fa-eye-slash')} onClick={this.handleVisibilityClick.bind(this, layer._id)} />
-                                <i className="fas fa-unlock better-btn layer-item-btn " onClick={this.handleLockClick} />
+                                <i className={"fas better-btn layer-item-btn-eye " + (layer.visible ? 'fa-eye' : 'fa-eye-slash')} onClick={this.handleVisibilityClick.bind(this, layer._id)} />
+                                <i className={"fas better-btn layer-item-btn " + (layer.locked ? 'fa-lock' : 'fa-unlock')} onClick={this.handleLockClick.bind(this, layer._id)} />
                             </div>
                             <div className="layer-item-btn-box">
                                 <i className="fas fa-edit better-btn layer-item-btn" />
@@ -114,7 +115,7 @@ const mapDispatchToProps = (dispatch) => ({
     handleMoveDown: (id) => dispatch(handler.layerMoveDownHandler(id)),
     handleSelectProperty: (window, index) => dispatch(handler.propertySelectDisplay(window, index)),
     handleVisibilityClick: (id) => dispatch(handler.layerVisibilityClick(id)),
-    handleLockClick: (target) => dispatch(handler.layerLockClick(target)),
+    handleLockClick: (id) => dispatch(handler.layerLockClick(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

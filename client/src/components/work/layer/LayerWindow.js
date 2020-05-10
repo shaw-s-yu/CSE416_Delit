@@ -26,7 +26,7 @@ class LayerWindow extends React.Component {
         const { open, dimension, selected } = this.props
         const { width } = dimension.size
         const maxWidth = width - 142;
-
+        console.log(selected)
         return (
             <Rnd
                 className={"workscreen-window " + (open ? '' : 'invisible')}
@@ -47,6 +47,7 @@ class LayerWindow extends React.Component {
                 <div className="layer-range">
                     <Slider
                         defaultValue={0}
+                        value={4}
                         getAriaValueText={value => value + "%"}
                         aria-labelledby="discrete-slider"
                         valueLabelDisplay="auto"
