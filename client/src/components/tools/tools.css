@@ -173,6 +173,24 @@ nav i{
     background-color: salmon;
 }
 
+.card-check-box-group{
+    position: absolute;
+    margin-top:200px;
+    margin-left:135px;
+    height:16px;
+    width: 48px;
+    transition: ease-in 0.2s;
+}
+
+.card-check-box{
+    position:absolute;
+    border-radius: 5px;
+    font-size: x-small;
+    cursor: pointer;
+    height: 25px;
+    width: 55px;
+    text-align: center;
+}
 
 .map-toolbar{
     height: 40px;

@@ -33,7 +33,7 @@ class Card extends React.Component {
 
     render() {
         const { imageData } = this.state;
-        const { className, style, onClick, item, refetch, showEditeBts } = this.props;
+        const { className, style, onClick, item, refetch, showEditeBts, handleCheckboxClick } = this.props;
         const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
         return (
@@ -51,8 +51,8 @@ class Card extends React.Component {
                 </div>
                 {
                     showEditeBts ?
-                        <div className="card-info-btn-box" style={style}>
-                            <div className="card-info-btn-center card-info-btn" onClick={onClick.bind(this, item)}>View</div>
+                       <div className="card-check-box-group" style={style}>
+                            <input type="checkbox" className={"card-check-box"} id={item._id} onChange={handleCheckboxClick.bind(this, item)}/>
                         </div>
                         :
                         <div className="card-info-btn-box" style={style}>

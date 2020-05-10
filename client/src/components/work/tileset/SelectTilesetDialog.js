@@ -17,6 +17,7 @@ class SelectTilesetDialog extends React.Component {
             sortBy: 'lastUpdate',
             lastUpdate: -1,
             name: -1,
+            selectedTilesets:[],
         }
     }
 
@@ -44,12 +45,30 @@ class SelectTilesetDialog extends React.Component {
     getSortOrder = (type) => {
         return this.state[type] === -1 ? 'fa-arrow-down' : 'fa-arrow-up'
     };
+
+    handleCheckboxClick = (item, e) => {
+        const {target} = e;
+        let {selectedTilesets} = this.state;
+        if (target.checked)
+            selectedTilesets.push(item._id);
+        else
+            selectedTilesets = selectedTilesets.filter((id) => id !== item._id);
+        this.setState({selectedTilesets});
+
+        console.log(selectedTilesets);
+    };
+
+    handleSubmitButton = () => {
+        console.log(this.state.selectedTilesets);
+        this.props.close();
+    }
     render() {
         const { open, close, user, history } = this.props;
         const { page, search, sortBy } = this.state;
         const query = QueryList.GET_SELECTABLE_TILESETS;
         const pageSkip = (page - 1) * 6;
         const sortOrder = this.state[sortBy];
+        const disable = this.state.selectedTilesets.length === 0;
         return (
             <>
                 <Dialog
@@ -58,7 +77,7 @@ class SelectTilesetDialog extends React.Component {
                     fullWidth={true}
                     maxWidth="lg"
                     actions={[
-                        <Button variant="primary" size="sm"  key='1' >Confirm</Button>,
+                        <Button variant="primary" size="sm"  key='1' disabled={disable} onClick={this.handleSubmitButton}>Confirm</Button>,
                         <Button variant="primary" size="sm" key='2' onClick={close}>Cancel</Button>
                     ]}
                     content={
@@ -86,6 +105,7 @@ class SelectTilesetDialog extends React.Component {
                                             <TilesetList
                                                 items={items}
                                                 history={history}
+                                                handleCheckboxClick={this.handleCheckboxClick}
                                             />
                                             <Pagination
                                                 className="tileset-pagination center"
