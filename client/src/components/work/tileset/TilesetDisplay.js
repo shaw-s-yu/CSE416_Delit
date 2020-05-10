@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars'
 import TilesetImageController from '../../controller/TilesetImageController'
+import { arrayBufferToBase64 } from '../../controller/ImageController'
+import axios from 'axios'
 
 const TOOLS = {
     ZOOM_IN: "ZOOM_IN",
@@ -54,6 +56,10 @@ class TilesetDisplay extends React.Component {
         return selectedTool === TOOLS.ZOOM_IN ? "display-zoom-in" : selectedTool === TOOLS.ZOOM_OUT ? "display-zoom-out" : ""
     }
 
+    handleDrawImgToGrid = (src, callback) => {
+        this.imageController.drawImage(src, callback)
+    }
+
     componentDidMount() {
         const { tileset } = this.props
         const canvas = this.refs.backgroundCanvas
@@ -63,6 +69,17 @@ class TilesetDisplay extends React.Component {
         const { canvasWidth, canvasHeight } = this.imageController.getCanvasDimension()
         this.setState({ canvasWidth, canvasHeight }, () => {
             this.imageController.drawBackGround()
+            const { imageId } = tileset
+            axios.get(`/data/image?imageId=${imageId}`).then(res => {
+                const { err, msg, data } = res
+                if (err)
+                    console.log(msg)
+                else {
+                    const base64Flag = 'data:image/jpeg;base64,';
+                    const imageStr = arrayBufferToBase64(data.data.data)
+                    this.handleDrawImgToGrid(base64Flag + imageStr)
+                }
+            })
         })
     }
 
@@ -70,18 +87,18 @@ class TilesetDisplay extends React.Component {
     render() {
         const { style, width, height } = this.props;
         const { scale, canvasWidth, canvasHeight } = this.state;
-        // const totalStyle = {
-        //     ...style,
-        //     marginLeft: canvasWidth ? canvasWidth * scale >= width ? "auto" : (width - canvasWidth * scale) / 2 : "auto",
-        //     marginTop: canvasHeight ? canvasHeight * scale >= height ? "auto" : (height - canvasHeight * scale) / 2 : "auto",
-        // }
+        const totalStyle = {
+            ...style,
+            marginLeft: canvasWidth ? canvasWidth * scale >= width ? "auto" : (width - canvasWidth * scale) / 2 : "auto",
+            marginTop: canvasHeight ? canvasHeight * scale >= height ? "auto" : (height - canvasHeight * scale) / 2 : "auto",
+        }
         return (
 
             <Scrollbars style={{ ...style, width, height }} ref="scrollbar"
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
-                <div id="map-display" className={"display-place " + this.getSelectedTools()} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
+                <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
                     <canvas ref='backgroundCanvas' width={canvasWidth} height={canvasHeight}></canvas>
                 </div>
             </Scrollbars>
@@ -93,6 +110,7 @@ class TilesetDisplay extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        socket: state.backend.socket,
     }
 };
 

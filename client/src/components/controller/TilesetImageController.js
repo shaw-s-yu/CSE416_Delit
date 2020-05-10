@@ -17,8 +17,46 @@ export default class TilesetImageController {
         this.backgroundColor = 'rgba(211,211,211,1)'
         this.gridPositions = []
         this.buildGridPositions()
+
+        this.helper = document.createElement('CANVAS')
+        this.initHelper(this.imageWidth, this.imageHeight)
     }
 
+    initHelper = (width, height) => {
+        this.helper.width = width
+        this.helper.height = height
+        this.helperctx = this.helper.getContext('2d')
+    }
+
+    drawImage = (src, callback) => {
+        this.drawImageHelper(src, () => {
+            const imageData = this.getImageDataFromHelper()
+            for (let i = 0; i < this.gridPositions.length; i++)
+                this.ctx.putImageData(
+                    imageData,
+                    this.gridPositions[i].dx,
+                    this.gridPositions[i].dy,
+                    this.gridPositions[i].sx,
+                    this.gridPositions[i].sy,
+                    this.tileWidth,
+                    this.tileHeight
+                )
+            if (callback) callback()
+        })
+    }
+
+    drawImageHelper = (src, callback) => {
+        let img = new Image()
+        img.src = src
+        img.onload = () => {
+            this.helperctx.drawImage(img, 0, 0)
+            this.helperImageData = this.helperctx.getImageData(0, 0, img.width, img.height)
+            if (callback) callback()
+        }
+    }
+    getImageDataFromHelper = () => {
+        return this.helperImageData
+    }
 
     drawBackGround = () => {
         this.ctx.save()
@@ -56,7 +94,11 @@ export default class TilesetImageController {
                 this.gridPositions.push({
                     index,
                     x: this.gridThickness + i * (this.tileWidth + this.gridThickness),
-                    y: this.gridThickness + o * (this.tileHeight * this.gridThickness)
+                    y: this.gridThickness + o * (this.tileHeight * this.gridThickness),
+                    dx: this.gridThickness + i * (this.tileWidth + this.gridThickness) - i * this.tileWidth,
+                    dy: this.gridThickness + o * (this.tileHeight + this.gridThickness) - o * this.tileHeight,
+                    sx: i * this.tileWidth,
+                    sy: o * this.tileHeight
                 })
 
                 index += 1

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import * as handler from '../../store/database/WorkScreenHandler'
+import { compose } from 'redux';
 
 class WorkScreen extends React.Component {
 
@@ -105,16 +106,16 @@ class WorkScreen extends React.Component {
     }
 
     render = () => {
-
         const { propertyOpen, layerOpen, tilesetOpen } = this.state
-        const { history } = this.props
+        const { history, loaded } = this.props
         const { key } = this.props.match.params
         return (
             <Query query={QueryList.GET_PROJECT} variables={{ id: key }}>
                 {(res) => {
                     if (res.loading) return 'loading'
                     if (res.error) return 'error'
-                    this.props.formatProjectPack(res.data.project)
+                    if (!loaded)
+                        this.props.formatProjectPack(res.data.project)
                     return (
                         <div>
                             <TopNavbar site='workspace' handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} history={history} />
@@ -137,9 +138,9 @@ class WorkScreen extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-    const { history } = ownProps
+    const { loaded } = state.project
     return {
-        history
+        loaded
     }
 };
 
@@ -147,4 +148,10 @@ const mapDispatchToProps = (dispatch) => ({
     formatProjectPack: (project) => dispatch(handler.formatProjectPack(project)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkScreen)
+// export default connect(mapStateToProps, mapDispatchToProps)(graphql(QueryList.GET_PROJECT, {
+//     options: { errorPolicy: 'all' },
+// })(WorkScreen))
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+)(WorkScreen);

@@ -31,7 +31,7 @@ class MapWindow extends React.Component {
                 className="workscreen-window "
                 id="map"
                 size={dimension.size}
-                position={dimension.position}
+                default={dimension.position}
                 onMouseDown={() => { this.props.handleToTop('map') }}
                 onClick={this.props.handleUnselect}
                 onResizeStart={() => this.props.handleToTop('map')}
@@ -71,7 +71,7 @@ class MapWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
+    return {}
 };
 
 const mapDispatchToProps = (dispatch) => ({

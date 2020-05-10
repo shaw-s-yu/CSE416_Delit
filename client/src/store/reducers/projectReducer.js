@@ -1,7 +1,7 @@
 import * as actionCreators from '../actions/actionCreators'
 
 const initState = {
-
+    loaded: false
 };
 
 const projectReducer = (state = initState, action) => {
@@ -9,7 +9,8 @@ const projectReducer = (state = initState, action) => {
         let { project } = action
         return {
             ...state,
-            ...project
+            ...project,
+            loaded: true
         }
     }
     return state;
