@@ -67,11 +67,13 @@ class ImageWrapper extends React.Component {
         let layersRefName = []
         this.layerRefs = {}
         for (let i = 0; i < layerList.length; i++) {
-            const layerRefName = 'layer' + layerList[i].id
+            const layerRefName = 'layer' + layerList[i]._id
             this.layerRefs[layerRefName] = this.refs[layerRefName]
             layersRefName.push(layerRefName)
             this.handleDrawLayerByLayerData(layerList[i].data, this.layerRefs[layerRefName])
         }
+        console.log(this.layerRefs)
+        this.setState({ mapLoaded: true })
     }
 
     handleDrawLayerByLayerData = (data, layerCanvas) => {
@@ -82,6 +84,7 @@ class ImageWrapper extends React.Component {
                 continue
             else {
                 const tileset = this.imageController.getTilesetByGridId(data[i])
+                console.log(tileset)
                 const srcCanvas = document.getElementById(tileset.canvasId)
 
                 const tilesetImageController = new TilesetImageController(tileset, srcCanvas)
@@ -129,7 +132,7 @@ class ImageWrapper extends React.Component {
                 <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
                     <canvas ref='backgroundCanvas' width={canvasWidth} height={canvasHeight}></canvas>
                     {layerList.map(e => (
-                        <canvas ref={'layer' + e.id} width={canvasWidth} height={canvasHeight} className="layer-canvas"></canvas>
+                        <canvas ref={'layer' + e._id} width={canvasWidth} height={canvasHeight} className="layer-canvas"></canvas>
                     ))}
                 </div>
             </Scrollbars>

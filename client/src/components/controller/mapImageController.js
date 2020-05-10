@@ -76,6 +76,7 @@ export default class MapImageController {
 
 
     getTilesetByGridId = id => {
+        console.log(this.tilesets, id)
         for (let i = 0; i < this.tilesets.length; i++) {
             if (id >= this.tilesets[i].firstgid && id < this.tilesets[i].firstgid + this.tilesets[i].tilecount) {
                 return this.tilesets[i]
