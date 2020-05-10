@@ -52,37 +52,37 @@ class SelectTilesetDialog extends React.Component {
         const sortOrder = this.state[sortBy];
         return (
             <>
-                <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
-                    {({ loading, error, data }) => {
-                        if (loading)
-                            return <CircularProgress className="tileset-loading" />;
-                        if (error) return 'error';
-                        if (query === QueryList.EMPTY_QUERY)
-                            return 'Empty';
-                        if (!data) return 'error';
-                        const items = data.user.tilesetsSelectable;
-                        const amount = data.user.tilesetsSelectableAmount;
-                        const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
-                        return(
-                            <Dialog
-                                header='Select Your Tileset'
-                                open={open}
-                                fullWidth={true}
-                                maxWidth="lg"
-                                actions={[
-                                    <Button variant="primary" size="sm"  key='1' >Confirm</Button>,
-                                    <Button variant="primary" size="sm" key='2' onClick={close}>Cancel</Button>
-                                ]}
-                                content={
-                                    <>
+                <Dialog
+                    header='Select Your Tileset'
+                    open={open}
+                    fullWidth={true}
+                    maxWidth="lg"
+                    actions={[
+                        <Button variant="primary" size="sm"  key='1' >Confirm</Button>,
+                        <Button variant="primary" size="sm" key='2' onClick={close}>Cancel</Button>
+                    ]}
+                    content={
+                        <>
+                            <Searchbar value={search} onChange={this.handleSearchChange} />
+                            <div className="tileset-sort-btn-group">
+                                <button className={"tileset-sort-btn " + this.getSelected('name')} onClick={e => this.handleSortBy(e, 'name')}>Name </button>
+                                <i className={"fa tileset-sort-icon " + this.getSortOrder('name')} onClick={e => this.handleSortOrder(e, 'name')} />
+                                <button className={"tileset-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
+                                <i className={"fa tileset-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
+                            </div>
+                            <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
+                                {({ loading, error, data }) => {
+                                    if (loading)
+                                        return <CircularProgress className="tileset-loading" />;
+                                    if (error) return 'error';
+                                    if (query === QueryList.EMPTY_QUERY)
+                                        return 'Empty';
+                                    if (!data) return 'error';
+                                    const items = data.user.tilesetsSelectable;
+                                    const amount = data.user.tilesetsSelectableAmount;
+                                    const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
+                                    return(
                                         <div>
-                                            <Searchbar value={search} onChange={this.handleSearchChange} />
-                                            <div className="tileset-sort-btn-group">
-                                                <button className={"tileset-sort-btn " + this.getSelected('name')} onClick={e => this.handleSortBy(e, 'name')}>Name </button>
-                                                <i className={"fa tileset-sort-icon " + this.getSortOrder('name')} onClick={e => this.handleSortOrder(e, 'name')} />
-                                                <button className={"tileset-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
-                                                <i className={"fa tileset-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
-                                            </div>
                                             <TilesetList
                                                 items={items}
                                             />
@@ -95,11 +95,12 @@ class SelectTilesetDialog extends React.Component {
                                                 defaultPage={page}
                                             />
                                         </div>
-                                    </>}
-                            />
-                        )
-                    }}
-                </Query>
+                                    )}
+                                }
+                            </Query>
+                        </>
+                    }
+                />
             </>
         )
     }

@@ -33,7 +33,7 @@ class Card extends React.Component {
 
     render() {
         const { imageData } = this.state;
-        const { className, style, onClick, item, refetch } = this.props;
+        const { className, style, onClick, item, refetch, showEditeBts } = this.props;
         const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
         console.log("item: ", item);
@@ -50,14 +50,20 @@ class Card extends React.Component {
                         <span className="card-owner"><b>Owner:</b> {owner}</span>
                     </div>
                 </div>
-
-                <div className="card-info-btn-box" style={style}>
-                    <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', item, refetch)}>Rename</div>
-                    <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Dupliate</div>
-                    <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
-                    <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
-                    <div className="card-info-btn-center card-info-btn" >Edit</div>
-                </div>
+                {
+                    showEditeBts ?
+                        <div className="card-info-btn-box" style={style}>
+                            <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', item, refetch)}>Rename</div>
+                            <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Dupliate</div>
+                            <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
+                            <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
+                            <div className="card-info-btn-center card-info-btn" >Edit</div>
+                        </div>
+                        :
+                        <div className="card-info-btn-box" style={style}>
+                            <div className="card-info-btn-center card-info-btn" >View</div>
+                        </div>
+                }
             </div>
         )
     }

@@ -45,6 +45,7 @@ class TilesetList extends React.Component {
                                     key={_id}
                                     onClick={this.handleGoView}
                                     handleSetItem={this.handleSetItem}
+                                    showEditeBts={false}
                                 />
 
                             );
