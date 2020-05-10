@@ -67,7 +67,7 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_MOVE_DOWN) {
-        let layerList = state.layerList.map(e => e)
+        let layerList = state.layerList.map(e => e);
         for (let i = 0; i < layerList.length - 1; i++)
             if (layerList[i]._id === action.id) {
                 let layer = layerList[i];
@@ -81,18 +81,17 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
-        let layerList = state.layerList.map(e => {
-            if (e._id === action.id) {
-                e.visible = !e.visible
-                return e
-            } else {
-                return e
+        let { id, isVisible } = action;
+        let { layerList } = state;
+        const layers = layerList.map((layer) => {
+            if (layer._id === id) {
+                layer.visible = isVisible;
             }
-        })
+            return layer;
+        });
         return {
             ...state,
-            layerList,
-            selected: null
+            layerList: layers,
         }
     } else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
         let layerList = state.layerList.map(e => {

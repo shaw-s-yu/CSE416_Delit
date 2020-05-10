@@ -92,8 +92,9 @@ export const tilesetIdApplier = (id, index) => (dispatch, getState) => {
     dispatch({ type: actionCreators.TILESET_ID_APPLIER, id, index });
 }
 
-export const layerVisibilityClick = (id) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.LAYER_VISIBILITY_TOGGLE, id });
+export const layerVisibilityClick = (id, isVisible) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_VISIBILITY_TOGGLE, id, isVisible });
+
 };
 
 export const layerLockClick = (id) => (dispatch, getState) => {
