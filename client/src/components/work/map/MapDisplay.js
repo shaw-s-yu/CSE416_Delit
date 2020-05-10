@@ -16,7 +16,6 @@ class ImageWrapper extends React.Component {
         scale: 1,
         canvasWidth: 0,
         canvasHeight: 0,
-        mapLoaded: false,
     }
 
     scrollbar = React.createRef();
@@ -58,7 +57,6 @@ class ImageWrapper extends React.Component {
     }
 
     handleDrawLayers = () => {
-        console.log('draw layers')
 
 
         const { layerList, tilesets } = this.props
@@ -72,8 +70,6 @@ class ImageWrapper extends React.Component {
             layersRefName.push(layerRefName)
             this.handleDrawLayerByLayerData(layerList[i].data, this.layerRefs[layerRefName])
         }
-        console.log(this.layerRefs)
-        this.setState({ mapLoaded: true })
     }
 
     handleDrawLayerByLayerData = (data, layerCanvas) => {
@@ -84,7 +80,6 @@ class ImageWrapper extends React.Component {
                 continue
             else {
                 const tileset = this.imageController.getTilesetByGridId(data[i])
-                console.log(tileset)
                 const srcCanvas = document.getElementById(tileset.canvasId)
 
                 const tilesetImageController = new TilesetImageController(tileset, srcCanvas)
@@ -107,9 +102,8 @@ class ImageWrapper extends React.Component {
     }
 
     componentDidUpdate() {
-        const { tilesetLoaded } = this.props
-        const { mapLoaded } = this.state
-        if (tilesetLoaded && !mapLoaded)
+        const { tilesetLoaded, resizing } = this.props
+        if (tilesetLoaded && !resizing)
             this.handleDrawLayers()
     }
 
@@ -122,7 +116,6 @@ class ImageWrapper extends React.Component {
             marginLeft: canvasWidth ? canvasWidth * scale >= width ? "auto" : (width - canvasWidth * scale) / 2 : "auto",
             marginTop: canvasHeight ? canvasHeight * scale >= height ? "auto" : (height - canvasHeight * scale) / 2 : "auto",
         }
-
         return (
 
             <Scrollbars style={{ ...style, width, height }} ref="scrollbar"

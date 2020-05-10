@@ -76,7 +76,6 @@ export default class MapImageController {
 
 
     getTilesetByGridId = id => {
-        console.log(this.tilesets, id)
         for (let i = 0; i < this.tilesets.length; i++) {
             if (id >= this.tilesets[i].firstgid && id < this.tilesets[i].firstgid + this.tilesets[i].tilecount) {
                 return this.tilesets[i]
@@ -108,7 +107,6 @@ export default class MapImageController {
         }
     }
     drawLayerGridByGridIndex = (index, tileData, canvas) => {
-        console.log(this.gridPositions)
         const gridPosition = this.getGridPositionByGridIndex(index)
         const ctx = canvas.getContext('2d')
         ctx.putImageData(tileData.imageData, gridPosition.x, gridPosition.y, 0, 0, tileData.width, tileData.height)

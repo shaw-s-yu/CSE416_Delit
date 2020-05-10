@@ -27,7 +27,8 @@
                 1
             ],
             "layerId": [
-                "layer1"
+                "layer1",
+                "layer11"
             ],
             "imageId": "5eabe075e9da110b6896405a"
         },
@@ -266,6 +267,44 @@
             "height": 3,
             "width": 3,
             "name": "backgroudLayer",
+            "opacity": 1,
+            "type": "tilelayer",
+            "visible": true,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "_id": "layer11",
+            "data": [
+                6,
+                0,
+                3,
+                34,
+                34,
+                34,
+                34,
+                34,
+                34,
+                34,
+                34,
+                34,
+                34,
+                34,
+                53,
+                0,
+                34,
+                12,
+                0,
+                34,
+                5,
+                34,
+                3,
+                0,
+                1
+            ],
+            "height": 5,
+            "width": 5,
+            "name": "another layer",
             "opacity": 1,
             "type": "tilelayer",
             "visible": true,

@@ -63,7 +63,6 @@ class TilesetDisplay extends React.Component {
     componentDidMount() {
         const { tileset } = this.props
         const canvas = this.refs.backgroundCanvas
-        console.log(document.getElementById(canvas.id))
         this.props.tilesetIdApplier(canvas.id)
         this.imageController = new TilesetImageController(tileset, canvas)
         const { canvasWidth, canvasHeight } = this.imageController.getCanvasDimension()

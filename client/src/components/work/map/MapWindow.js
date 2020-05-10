@@ -10,12 +10,24 @@ import TOOLS from '../../tools/ToolbarTools'
 
 class MapWindow extends React.Component {
 
-    handleOnResize = (e, direction, ref, delta, position) => {
-        this.props.handleOnResize(ref, position, 'map')
+    state = {
+        resizing: false
     }
 
+    handleOnResize = (e, direction, ref, delta, position) => {
+        this.setState({ resizing: true }, () => {
+            this.props.handleOnResize(ref, position, 'map')
+        })
+    }
+
+    handleOnResizeStop = (e, direction, ref, delta, position) => {
+        this.setState({ resizing: false }, () => {
+            this.props.handleOnResize(ref, position, 'map')
+        })
+    }
 
     render() {
+        const { resizing } = this.state
         const { dimension, selectedTool } = this.props
         const { width, height } = dimension.size
         const style = {
@@ -33,7 +45,7 @@ class MapWindow extends React.Component {
                 onClick={this.props.handleUnselect}
                 onResizeStart={() => this.props.handleToTop('map')}
                 onResize={this.handleOnResize}
-                onResizeStop={this.handleOnResize}
+                onResizeStop={this.handleOnResizeStop}
                 onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'map')}
                 style={{ zIndex: dimension.zIndex }}
             >
@@ -59,7 +71,7 @@ class MapWindow extends React.Component {
                         { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} /> },
                     ]}
                 />
-                <MapDisplay style={style} width={width} height={height - 70} window="map" />
+                <MapDisplay style={style} width={width} height={height - 70} window="map" resizing={resizing} />
             </Rnd>
 
         )

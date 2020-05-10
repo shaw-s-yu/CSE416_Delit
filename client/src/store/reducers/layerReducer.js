@@ -45,7 +45,7 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_MOVE_UP) {
-        let { layerList } = state
+        let layerList = state.layerList.map(e => e)
         for (let i = 0; i < layerList.length; i++)
             if (layerList[i]._id === action.id) {
                 if (i === 0) {
@@ -58,11 +58,11 @@ const layerReducer = (state = initState, action) => {
             }
         return {
             ...state,
-            layerList,
+            layerList: layerList,
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_MOVE_DOWN) {
-        let { layerList } = state;
+        let layerList = state.layerList.map(e => e)
         for (let i = 0; i < layerList.length - 1; i++)
             if (layerList[i]._id === action.id) {
                 let layer = layerList[i];
