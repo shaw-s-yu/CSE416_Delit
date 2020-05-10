@@ -6,6 +6,8 @@ import { Query } from 'react-apollo';
 import QueryList from '../../../graphql/Query';
 import Searchbar from "../../dashboard/Searchbar";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Pagination from "../../tools/Pagination";
+import TilesetList from "./TilesetList";
 class SelectTilesetDialog extends React.Component {
     constructor(props) {
         super(props);
@@ -50,19 +52,20 @@ class SelectTilesetDialog extends React.Component {
         const sortOrder = this.state[sortBy];
         return (
             <>
-
                 <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
                     {({ loading, error, data }) => {
                         if (loading)
-                            return <CircularProgress className="workscreen-loading" />;
+                            return <CircularProgress className="tileset-loading" />;
                         if (error) return 'error';
                         if (query === QueryList.EMPTY_QUERY)
                             return 'Empty';
                         if (!data) return 'error';
-                        console.log("data: ", data);
+                        const items = data.user.tilesetsSelectable;
+                        const amount = data.user.tilesetsSelectableAmount;
+                        const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                         return(
                             <Dialog
-                                header='Select Tileset'
+                                header='Select Your Tileset'
                                 open={open}
                                 fullWidth={true}
                                 maxWidth="lg"
@@ -74,12 +77,23 @@ class SelectTilesetDialog extends React.Component {
                                     <>
                                         <div>
                                             <Searchbar value={search} onChange={this.handleSearchChange} />
-                                            <div className="workscreen-sort-btn-group">
-                                                <button className={"workscreen-sort-btn " + this.getSelected('name')} onClick={e => this.handleSortBy(e, 'name')}>Name </button>
-                                                <i className={"fa workscreen-sort-icon " + this.getSortOrder('name')} onClick={e => this.handleSortOrder(e, 'name')} />
-                                                <button className={"workscreen-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
-                                                <i className={"fa workscreen-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
+                                            <div className="tileset-sort-btn-group">
+                                                <button className={"tileset-sort-btn " + this.getSelected('name')} onClick={e => this.handleSortBy(e, 'name')}>Name </button>
+                                                <i className={"fa tileset-sort-icon " + this.getSortOrder('name')} onClick={e => this.handleSortOrder(e, 'name')} />
+                                                <button className={"tileset-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
+                                                <i className={"fa tileset-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
                                             </div>
+                                            <TilesetList
+                                                items={items}
+                                            />
+                                            <Pagination
+                                                className="tileset-pagination center"
+                                                size="large"
+                                                color="secondary"
+                                                count={pageAmount}
+                                                handlePagination={this.handlePagination}
+                                                defaultPage={page}
+                                            />
                                         </div>
                                     </>}
                             />

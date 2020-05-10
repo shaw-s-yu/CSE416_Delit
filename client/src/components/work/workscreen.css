@@ -217,6 +217,64 @@
     height: 100%;
 }
 
+.tileset-sort-btn-group {
+    margin-top: 10px;
+    position: absolute;
+    right: 30px;
+}
+
+.tileset-sort-btn {
+    background-color: aliceblue;
+    border: none;
+    color: gray;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.tileset-sort-btn-selected{
+    border-radius: 50px;
+    background-color: lightblue;
+    color: black;
+}
+
+.tileset-sort-btn:hover {
+    color: black;
+}
+
+.tileset-sort-btn:focus {
+    outline: none;
+}
+
+.tileset-sort-icon {
+    padding: 6px 6px 6px 6px;
+    border-radius: 50px;
+}
+
+.tileset-sort-icon:hover {
+    background-color: lightgray;
+}
+
+.tileset-loading{
+    margin-left:calc(50% - 20px);
+    margin-top:15%
+}
+
+.workscreen-tilesetList{
+    width:88%;
+    height: calc(100% - 124px);
+    left:6%;
+    top:64px;
+    position: absolute;
+    overflow: auto;
+    margin: 50px;
+}
+
+.workscreen-tilesetList{
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+}
+
 li.active{
     height:70%;
 }

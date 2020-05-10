@@ -36,7 +36,7 @@ class Card extends React.Component {
         const { className, style, onClick, item, refetch } = this.props;
         const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
-
+        console.log("item: ", item);
         return (
             <div>
                 <div className={className} style={style} onClick={onClick.bind(this, item)}>
