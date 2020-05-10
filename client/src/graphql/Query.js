@@ -390,8 +390,6 @@ export default {
         }
     }
     `,
-
-
     GET_LAYER_FROM_PROJECT: graphql`
     query project(
         $id: String!
@@ -405,6 +403,28 @@ export default {
             ){
                 _id
                 idNumber
+                data
+                height
+                name
+                opacity
+                type
+                visible
+                width
+                x
+                y
+            }
+        }
+    }
+    `,
+    GET_LAYERS_FROM_PROJECT: graphql`
+    query project(
+        $projectId: String!
+    ){
+        project(
+            id:$projectId
+            ){
+            getLayers{
+                _id
                 data
                 height
                 name

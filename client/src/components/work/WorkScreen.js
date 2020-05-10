@@ -52,15 +52,17 @@ class WorkScreen extends React.Component {
         })
     }
 
-    getScreen = () => {
+    getScreen = (data) => {
         const { propertyOpen, layerOpen, tilesetOpen, property, map, layer, tileset } = this.state;
-        const { history } = this.props
+        const { history } = this.props;
+        const projectId = data.project._id;
+
         return (
             <>
                 <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} />
                 <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} />
-                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} />
-                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} />
+                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} projectId={ projectId }/>
+                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop}/>
             </>
         )
     }
@@ -113,13 +115,12 @@ class WorkScreen extends React.Component {
                 {(res) => {
                     if (res.loading) return 'loading'
                     if (res.error) return 'error'
-                    console.log(res.data)
                     return (
                         <div>
                             <TopNavbar site='workspace' handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} history={history} />
                             <div>
                                 {
-                                    this.getScreen()
+                                    this.getScreen(res.data)
                                 }
                             </div>
                         </div >

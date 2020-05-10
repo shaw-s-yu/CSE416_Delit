@@ -90,9 +90,6 @@ module.exports = new GraphQLObjectType({
             },
             getLayer: {
                 args:{
-                    // id: {
-                    //     type: GraphQLString
-                    // },
                     searchId: {
                         type: GraphQLString
                     },
@@ -109,6 +106,19 @@ module.exports = new GraphQLObjectType({
 
                     if (!layer) throw new Error('cannot find layer')
                     return layer
+                }
+            },
+            getLayers: {
+                type: new GraphQLList(LayerType),
+                resolve: (parent, args) => {
+                    let layers = [];
+                    parent.layerId.forEach(e => {
+                        let layer = LayerModel.findById(e);
+                        if (!layer) throw new Error('project get layers failed');
+                        else layers.push(layer)
+                    });
+                    if (!layers) throw new Error('cannot find layers');
+                    return layers;
                 }
             }
         }

@@ -110,9 +110,8 @@ class LayerWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { layerList, selected } = state.layer
+    const { selected } = state.layer
     return {
-        layerList,
         selected
     }
 };
