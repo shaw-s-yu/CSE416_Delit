@@ -86,7 +86,6 @@ class ImageWrapper extends React.Component {
 
                 const tilesetImageController = new TilesetImageController(tileset, srcCanvas)
                 const tileData = tilesetImageController.getTileDataByGridId(data[i])
-                console.log(tileData)
                 this.imageController.drawLayerGridByGridIndex(i, tileData, layerCanvas)
             }
         }

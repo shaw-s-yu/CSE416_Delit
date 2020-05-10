@@ -27,7 +27,7 @@
                 1
             ],
             "layerId": [
-                "layer1"
+                "layer1111111"
             ],
             "imageId": "5eabe075e9da110b6896405a"
         },
@@ -47,7 +47,8 @@
                 1
             ],
             "layerId": [
-                "layer2"
+                "2222222222layer2",
+                "22222layer3"
             ],
             "imageId": "5eabde4998bf8c7fc8ef0307"
         },
@@ -71,7 +72,8 @@
                 301
             ],
             "layerId": [
-                "layer3"
+                "22222layer3",
+                "layer1111111"
             ],
             "imageId": "5eabe0b7e9da110b6896405b"
         }
@@ -183,7 +185,7 @@
     ],
     "layers": [
         {
-            "_id": "layer1",
+            "_id": "layer1111111",
             "data": [
                 1,
                 2,
@@ -213,7 +215,6 @@
             ],
             "height": 5,
             "width": 5,
-            "id": 1,
             "name": "backgroudLayer",
             "opacity": 1,
             "type": "tilelayer",
@@ -222,7 +223,7 @@
             "y": 0
         },
         {
-            "_id": "layer2",
+            "_id": "2222222222layer2",
             "data": [
                 1,
                 2,
@@ -243,7 +244,6 @@
             ],
             "height": 4,
             "width": 4,
-            "id": 1,
             "name": "backgroudLayer",
             "opacity": 1,
             "type": "tilelayer",
@@ -252,21 +252,20 @@
             "y": 0
         },
         {
-            "_id": "layer3",
+            "_id": "22222layer3",
             "data": [
-                1,
+                0,
                 2,
                 3,
-                4,
+                0,
                 5,
                 6,
                 7,
-                8,
-                9
+                0,
+                0
             ],
             "height": 3,
             "width": 3,
-            "id": 1,
             "name": "backgroudLayer",
             "opacity": 1,
             "type": "tilelayer",

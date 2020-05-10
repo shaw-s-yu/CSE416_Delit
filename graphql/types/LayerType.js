@@ -8,28 +8,13 @@ const { GraphQLObjectType,
 module.exports = new GraphQLObjectType({
     name: "layers",
     fields: () => {
-        return{
-            _id: {
-                type: GraphQLString
-            },
-            data: {
-                type: new GraphQLList(GraphQLInt)
-            },
-            width: {
-                type: new GraphQLNonNull(GraphQLInt)
-            },
-            height: {
-                type: new GraphQLNonNull(GraphQLInt)
-            },
-            id: {
-                type: GraphQLInt
-            },
-            name: {
-                type: GraphQLString
-            },
-            opacity: {
-                type: GraphQLInt
-            },
+        return {
+            _id: { type: GraphQLString },
+            data: { type: new GraphQLList(GraphQLInt) },
+            width: { type: new GraphQLNonNull(GraphQLInt) },
+            height: { type: new GraphQLNonNull(GraphQLInt) },
+            name: { type: new GraphQLNonNull(GraphQLString) },
+            opacity: { type: new GraphQLNonNull(GraphQLInt) },
             type: {
                 type: GraphQLString
             },

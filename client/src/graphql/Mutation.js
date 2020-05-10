@@ -263,9 +263,8 @@ export default {
         $data: [Int]
         $width: Int!
         $height: Int!
-        $id: Int,
-        $name: String,
-        $opacity: Int,
+        $name: String!,
+        $opacity: Int!,
         $type: String,
         $visible: Boolean,
         $x: Int,
@@ -276,7 +275,6 @@ export default {
             data: $data
             width: $width
             height: $height
-            id: $id
             name: $name
             opacity: $opacity
             type: $type
@@ -287,7 +285,6 @@ export default {
             _id
             data
             height
-            id
             name
             opacity
             type

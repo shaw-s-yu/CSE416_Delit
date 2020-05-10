@@ -298,7 +298,6 @@ export default {
     {
         layers{
             _id
-            id
             data
             height
             name
@@ -355,7 +354,6 @@ export default {
                 data
                 width
                 height
-                id
                 name
                 opacity
                 type

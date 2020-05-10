@@ -138,6 +138,7 @@ class WorkScreen extends React.Component {
                                     if (res.loading) return 'loading'
                                     if (res.error) return 'error'
                                     if (!loaded) {
+                                        console.log(res.data.project)
                                         this.props.formatProjectPack(res.data.project)
                                     }
                                     return this.getScreen()
