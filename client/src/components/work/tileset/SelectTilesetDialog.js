@@ -29,7 +29,7 @@ class SelectTilesetDialog extends React.Component {
     };
 
     handleSortOrder = (e, type) => {
-        const order = this.state[type]
+        const order = this.state[type];
         this.setState({ [type]: order === 1 ? -1 : 1 })
     };
     handlePagination = (e, value) => {
@@ -37,7 +37,7 @@ class SelectTilesetDialog extends React.Component {
     };
 
     getSelected = (type) => {
-        const { sortBy } = this.state
+        const { sortBy } = this.state;
         return sortBy === type ? 'dashboard-sort-btn-selected' : ''
     };
 
@@ -45,7 +45,7 @@ class SelectTilesetDialog extends React.Component {
         return this.state[type] === -1 ? 'fa-arrow-down' : 'fa-arrow-up'
     };
     render() {
-        const { open, close, user } = this.props;
+        const { open, close, user, history } = this.props;
         const { page, search, sortBy } = this.state;
         const query = QueryList.GET_SELECTABLE_TILESETS;
         const pageSkip = (page - 1) * 6;
@@ -82,9 +82,10 @@ class SelectTilesetDialog extends React.Component {
                                     const amount = data.user.tilesetsSelectableAmount;
                                     const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                                     return(
-                                        <div>
+                                        <div className="tileset-container">
                                             <TilesetList
                                                 items={items}
+                                                history={history}
                                             />
                                             <Pagination
                                                 className="tileset-pagination center"

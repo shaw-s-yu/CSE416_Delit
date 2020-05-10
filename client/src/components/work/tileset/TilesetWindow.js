@@ -70,10 +70,6 @@ class TilesetWindow extends React.Component {
         })
     }
 
-    // handleGoPaint = () => {
-    //     this.props.history.push('/tileseteditor/ffe')
-    // }
-
     getCollapsibleList = () => {
         const { dimension, tilesets } = this.props
         const { width, height } = dimension.size;
@@ -102,9 +98,16 @@ class TilesetWindow extends React.Component {
         return li
     }
 
+    handleGoView = (item) => {
+        if (!item) return;
+        const { _id } = item;
+        const type = 'tilesetviewer';
+        this.props.history.push(`/${type}/${_id}`);
+    };
+
     render() {
         const { resizing, selectTilesetDialogOpen } = this.state;
-        const { open, dimension, tilesets } = this.props
+        const { open, dimension, tilesets, history  } = this.props
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - (110 - 24 * tilesets.length);
         const style = {
@@ -143,6 +146,7 @@ class TilesetWindow extends React.Component {
                 <SelectTilesetDialog
                     open={selectTilesetDialogOpen}
                     close={this.handleCloseSelectTilesetDialog}
+                    history={history}
                 />
             </>
         )

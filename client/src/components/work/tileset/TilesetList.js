@@ -2,19 +2,17 @@ import React from 'react';
 import {connect} from "react-redux";
 import Card from "../../tools/Card";
 class TilesetList extends React.Component {
-    state = {
-
-    };
-
     handleGoView = (item) => {
-        if (!item || !this.props.type) return;
+        if (!item) return;
         const { _id } = item;
         const type = 'tilesetviewer';
         this.props.history.push(`/${type}/${_id}`);
+        window.location.reload(false);
     };
     render() {
         const { items } = this.props;
         const numItem = items.length;
+
         const style = {
             height: numItem > 3 ? 600 : 300
         };
@@ -45,7 +43,7 @@ class TilesetList extends React.Component {
                                     key={_id}
                                     onClick={this.handleGoView}
                                     handleSetItem={this.handleSetItem}
-                                    showEditeBts={false}
+                                    showEditeBts={true}
                                 />
 
                             );
