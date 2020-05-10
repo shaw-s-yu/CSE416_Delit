@@ -75,6 +75,24 @@ const layerReducer = (state = initState, action) => {
             layerList,
             selected: null
         }
+    } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
+        let { target } = action;
+        if (target.classList.contains('fa-eye')) {
+            target.classList.remove('fa-eye');
+            target.classList.add('fa-eye-slash');
+        } else {
+            target.classList.remove('fa-eye-slash');
+            target.classList.add('fa-eye');
+        }
+    } else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
+        let { target } = action;
+        if (target.classList.contains('fa-unlock')) {
+            target.classList.remove('fa-unlock');
+            target.classList.add('fa-lock');
+        } else {
+            target.classList.remove('fa-lock');
+            target.classList.add('fa-unlock');
+        }
     }
 
     return state;

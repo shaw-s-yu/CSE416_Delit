@@ -23,25 +23,11 @@ class LayerWindow extends React.Component {
     }
 
     handleVisibilityClick = e => {
-        let { target } = e;
-        if (target.classList.contains('fa-eye')) {
-            target.classList.remove('fa-eye');
-            target.classList.add('fa-eye-slash');
-        } else {
-            target.classList.remove('fa-eye-slash');
-            target.classList.add('fa-eye');
-        }
+        this.props.handleVisibilityClick(e.target);
     }
 
     handleLockClick = e => {
-        let { target } = e;
-        if (target.classList.contains('fa-unlock')) {
-            target.classList.remove('fa-unlock');
-            target.classList.add('fa-lock');
-        } else {
-            target.classList.remove('fa-lock');
-            target.classList.add('fa-unlock');
-        }
+        this.props.handleLockClick(e.target);
     }
 
     handleMoveUp = (id, e) => {
@@ -131,6 +117,8 @@ const mapDispatchToProps = (dispatch) => ({
     handleMoveUp: (id) => dispatch(handler.layerMoveUpHandler(id)),
     handleMoveDown: (id) => dispatch(handler.layerMoveDownHandler(id)),
     handleSelectProperty: (window, index) => dispatch(handler.propertySelectDisplay(window, index)),
+    handleVisibilityClick: (target) => dispatch(handler.layerVisibilityClick(target)),
+    handleLockClick: (target) => dispatch(handler.layerLockClick(target)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

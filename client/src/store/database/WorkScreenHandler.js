@@ -83,3 +83,11 @@ export const formatProjectPack = (project) => (dispatch, getState) => {
 export const propertySelectDisplay = (window, index) => (dispatch, getState) => {
     dispatch({ type: actionCreators.SELECT_PROPERTY_WINDOW, window, index });
 };
+
+export const layerVisibilityClick = (target) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_VISIBILITY_TOGGLE, target });
+};
+
+export const layerLockClick = (target) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_LOCK_TOGGLE, target });
+};
