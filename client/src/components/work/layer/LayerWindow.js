@@ -23,10 +23,16 @@ class LayerWindow extends React.Component {
     };
 
     render() {
-        const { open, dimension, selected } = this.props
+        const { open, dimension, selected, layerList } = this.props
         const { width } = dimension.size
         const maxWidth = width - 142;
-        console.log(selected)
+        let opacity = 0
+        if (selected) {
+            for (let i = 0; i < layerList.length; i++) {
+                if (layerList[i]._id === selected)
+                    opacity = layerList[i].opacity * 100
+            }
+        }
         return (
             <Rnd
                 className={"workscreen-window " + (open ? '' : 'invisible')}
@@ -47,7 +53,7 @@ class LayerWindow extends React.Component {
                 <div className="layer-range">
                     <Slider
                         defaultValue={0}
-                        value={4}
+                        value={opacity}
                         getAriaValueText={value => value + "%"}
                         aria-labelledby="discrete-slider"
                         valueLabelDisplay="auto"
