@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 import Titlebar from '../../tools/Titlebar'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import Toolbar from '../../tools/Toolbar'
-import ImageWrapper from '../canvas/ImageWrapper'
+import MapDisplay from './MapDisplay'
 import TOOLS from '../../tools/ToolbarTools'
 
 
 class MapWindow extends React.Component {
-
-    tileMap = React.createRef()
 
     handleOnResize = (e, direction, ref, delta, position) => {
         let { width, height } = ref.style
@@ -64,7 +62,7 @@ class MapWindow extends React.Component {
                         { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} /> },
                     ]}
                 />
-                <ImageWrapper style={style} width={width} height={height - 70} window="map" childRef={ref => this.tileMap = ref} />
+                <MapDisplay style={style} width={width} height={height - 70} window="map" />
             </Rnd>
 
         )
@@ -73,8 +71,7 @@ class MapWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-    }
+
 };
 
 const mapDispatchToProps = (dispatch) => ({
