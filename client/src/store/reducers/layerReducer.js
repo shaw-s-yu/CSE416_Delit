@@ -98,8 +98,25 @@ const layerReducer = (state = initState, action) => {
             target.classList.remove('fa-lock');
             target.classList.add('fa-unlock');
         }
+    }else if (action.type === actionCreators.LAYER_PASS_OPACITY) {
+        let {value} = action;
+        let {selected, layerList} = state;
+        for (let i = 0; i < layerList.length; i++) {
+            if (layerList[i]._id === selected) {
+                layerList[i].opacity = value;
+            }
+        }
+        const layers = layerList.map( (layer) => {
+           if (layer._id === selected) {
+               layer.opacity = value
+           }
+           return layer;
+        });
+        return {
+            ...state,
+            layerList: layers,
+        }
     }
-
     return state;
 }
 
