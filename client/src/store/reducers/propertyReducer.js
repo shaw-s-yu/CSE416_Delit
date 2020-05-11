@@ -63,12 +63,6 @@ const propertyReducer = (state = initState, action) => {
             [window]: properties,
             selected: null
         }
-    } else if (action.type === actionCreators.UPDATE_TILESETS) {
-        console.log("backend: ", action.tilesets);
-        return{
-            ...state,
-            tilesets: action.tilesets
-        }
     }
 
     return state;

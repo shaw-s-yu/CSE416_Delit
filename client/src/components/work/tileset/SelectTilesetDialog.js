@@ -51,17 +51,11 @@ class SelectTilesetDialog extends React.Component {
         const {target} = e;
         let {selectedTilesets} = this.state;
         const checked = target.checked;
-        if (checked) {
+        if (checked)
             selectedTilesets.push(item);
-            console.log("add: ", item.name)
-        }
-        else {
+        else
             selectedTilesets = selectedTilesets.filter((i) => i._id !== item._id);
-            console.log("remove: ", item.name)
-        }
         this.setState({selectedTilesets});
-
-        console.log(selectedTilesets);
     };
 
     handleSubmitButton = () => {

@@ -15,6 +15,12 @@ class Card extends React.Component {
         this.props.handleOpen(name);
     };
 
+    handleCheckBox =() => {
+        const { selectedTilesets, item } = this.props;
+        if (selectedTilesets)
+            return !!selectedTilesets.find((tileset) => tileset._id === item._id);
+        return false;
+    }
     componentDidMount() {
         const { imageId } = this.props.item;
         if (imageId !== '')
@@ -33,10 +39,10 @@ class Card extends React.Component {
 
     render() {
         const { imageData } = this.state;
-        const { className, style, onClick, item, refetch, showEditeBts, handleCheckboxClick, selectedTilesets} = this.props;
+        const { className, style, onClick, item, refetch, showEditeBts, handleCheckboxClick} = this.props;
         const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
-        const checked = !!selectedTilesets.find((tileset) => tileset._id === item._id);
+        const checked = this.handleCheckBox();
         return (
             <div>
                 <div className={className} style={style} onClick={onClick.bind(this, item)}>

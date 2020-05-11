@@ -73,6 +73,14 @@ const tilesetReducer = (state = initState, action) => {
         }
     }
 
+    else if (action.type === actionCreators.UPDATE_TILESETS) {
+        let newTilesets = [];
+        newTilesets.push(...action.tilesets);
+        return{
+            ...state,
+            tilesets: newTilesets
+        }
+    }
     return state;
 }
 
