@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentEditable from 'react-contenteditable'
 import * as handler from '../../../store/database/WorkScreenHandler';
-import LayerTransaction from '../../controller/LayerTransaction'
 import LayerDeleteTransaction from '../../controller/LayerDeleteTransaction'
 
 
