@@ -14,7 +14,7 @@ import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios';
 import { Button } from "react-bootstrap";
-
+// import icons from "glyphicons";
 
 class Draw extends React.Component {
 
@@ -274,6 +274,7 @@ class Draw extends React.Component {
                             },
                             { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} onClick={this.handleExport} /> },
                             { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} onClick={this.handleSaveDialogOpen} /> },
+                            { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{fontSize: '24px'}} />},
                             { name: TOOLS.COPY, item: <i className={"fas fa-copy"} style={{ fontSize: '24px' }} onClick={this.handleCopy} /> },
                             { name: TOOLS.PASTE, item: <i className={"fas fa-paste"} style={{ fontSize: '24px' }} onClick={this.handlePaste} /> },
                         ]}
