@@ -1,8 +1,9 @@
-export default class LayerTransaction {
-    constructor(id, doCallback, undoCallback) {
+export default class LayerDeleteTransaction {
+    constructor(id, layerList, doCallback, undoCallback) {
         this.id = id
         this.doCallback = doCallback
         this.undoCallback = undoCallback
+        this.layerList = [...layerList]
     }
 
     doTransaction = () => {
@@ -10,6 +11,6 @@ export default class LayerTransaction {
     }
 
     undoTransaction = () => {
-        this.undoCallback(this.id)
+        this.undoCallback(this.layerList)
     }
 }

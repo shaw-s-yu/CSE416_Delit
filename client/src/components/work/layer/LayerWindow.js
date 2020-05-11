@@ -5,12 +5,9 @@ import Titlebar from '../../tools/Titlebar'
 import LayerList from './LayerList';
 import Slider from '@material-ui/core/Slider';
 import * as handler from '../../../store/database/WorkScreenHandler';
-import LayerTransaction from '../../controller/LayerTransaction'
-
 
 class LayerWindow extends React.Component {
 
-    layerList = []
 
     handleOnResize = (e, direction, ref, delta, position) => {
         this.props.handleOnResize(ref, position, 'layer')
@@ -22,34 +19,12 @@ class LayerWindow extends React.Component {
 
     handleAddLayer = e => {
         e.stopPropagation()
-        // this.props.handleAddLayer()
-        this.props.transactions.addTransaction(
-            new LayerTransaction(null, this.props.layerList, this.props.handleAddLayer, this.props.restoreLayers)
-        )
-    }
-
-    handleMouseDown = e => {
-        e.stopPropagation()
-
-        this.layerList = []
-        const { layerList } = this.props
-        for (let i in layerList) {
-            this.layerList.push({
-                ...layerList[i]
-            })
-        }
-    }
-
-    handleOnMouseUp = (e, value) => {
-        e.stopPropagation()
-        this.props.transactions.addTransaction(
-            new LayerTransaction(value, this.layerList, this.props.handlePassOpacity, this.props.restoreLayers)
-        )
-        this.layerList = []
+        this.props.handleAddLayer()
     }
 
     handleOpacityOnChange = (e, value) => {
-        this.props.handlePassOpacity(value)
+
+        this.props.handlePassOpacity(value);
     };
 
     render() {
@@ -90,9 +65,8 @@ class LayerWindow extends React.Component {
                         marks
                         min={0}
                         max={100}
-                        onMouseDown={this.handleMouseDown}
+                        onMouseDown={e => e.stopPropagation()}
                         onChange={this.handleOpacityOnChange}
-                        onChangeCommitted={this.handleOnMouseUp}
                         disabled={!selected}
                     />
                 </div>
@@ -113,8 +87,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handlePassOpacity: (value) => dispatch(handler.passOpacityHandler(value)),
-    handleAddLayer: () => dispatch(handler.layerAddHandler()),
-    restoreLayers: (layerList) => dispatch(handler.restoreLayers(layerList)),
+    handleAddLayer: () => dispatch(handler.layerAddHandler())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)

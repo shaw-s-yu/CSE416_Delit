@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import ContentEditable from 'react-contenteditable'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import LayerTransaction from '../../controller/LayerTransaction'
+import LayerDeleteTransaction from '../../controller/LayerDeleteTransaction'
 
 
 class LayerWindow extends React.Component {
 
-    handleRename = (e) => {
-        this.props.transactions.addTransaction(
-            new LayerTransaction(e.target.value, this.props.layerList, this.props.handleRename, this.props.restoreLayers)
-        )
+    handleRename = (id, e) => {
+        this.props.handleRename(id, e.target.value)
     };
 
     handleSelect = (id, e) => {
@@ -21,37 +20,28 @@ class LayerWindow extends React.Component {
     handleDelete = (id, e) => {
         e.stopPropagation()
         this.props.transactions.addTransaction(
-            new LayerTransaction(id, this.props.layerList, this.props.handleDelete, this.props.restoreLayers)
+            new LayerDeleteTransaction(id, this.props.layerList, this.props.handleDelete, this.props.restoreLayers)
         )
     }
 
     handleVisibilityClick = (id, e) => {
         e.stopPropagation()
-
-        this.props.transactions.addTransaction(
-            new LayerTransaction(id, this.props.layerList, this.props.handleVisibilityClick, this.props.restoreLayers)
-        )
+        this.props.handleVisibilityClick(id);
     };
 
     handleLockClick = (id, e) => {
         e.stopPropagation()
-        this.props.transactions.addTransaction(
-            new LayerTransaction(id, this.props.layerList, this.props.handleLockClick, this.props.restoreLayers)
-        )
+        this.props.handleLockClick(id);
     }
 
     handleMoveUp = (id, e) => {
         e.stopPropagation()
-        this.props.transactions.addTransaction(
-            new LayerTransaction(id, this.props.layerList, this.props.handleMoveUp, this.props.restoreLayers)
-        )
+        this.props.handleMoveUp(id);
     }
 
     handleMoveDown = (id, e) => {
         e.stopPropagation();
-        this.props.transactions.addTransaction(
-            new LayerTransaction(id, this.props.layerList, this.props.handleMoveDown, this.props.restoreLayers)
-        )
+        this.props.handleMoveDown(id);
     }
 
     handleOnMouseDown = (e, index) => {
@@ -85,7 +75,7 @@ class LayerWindow extends React.Component {
                             <div className={this.getClassName(layer._id)} onMouseDown={e => e.stopPropagation()} onClick={this.handleSelect.bind(this, layer._id)}>
                                 <ContentEditable
                                     innerRef={layer.ref}
-                                    onChange={this.handleRename}
+                                    onChange={this.handleRename.bind(this, layer._id)}
                                     onMouseDown={e => this.handleOnMouseDown(e, index)}
                                     html={layer.name}
                                     disabled={false}
@@ -126,7 +116,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleRename: (name) => dispatch(handler.layerRenameHandler(name)),
+    handleRename: (id, name) => dispatch(handler.layerRenameHandler(id, name)),
     handleSelect: (id) => dispatch(handler.layerSelectHandler(id)),
     handleUnselect: () => dispatch(handler.layerUnselectHandler()),
     handleDelete: (id) => dispatch(handler.layerDeleteHandler(id)),
