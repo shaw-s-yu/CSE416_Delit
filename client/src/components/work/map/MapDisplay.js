@@ -5,11 +5,8 @@ import MapGridController from '../../controller/MapGridController'
 import MapImageController from '../../controller/MapImageController'
 import TilesetImageController from '../../controller/TilesetImageController'
 import { v1 } from 'uuid';
+import TOOLS from '../../tools/ToolbarTools'
 
-const TOOLS = {
-    ZOOM_IN: "ZOOM_IN",
-    ZOOM_OUT: "ZOOM_OUT"
-}
 
 class ImageWrapper extends React.Component {
 
@@ -92,15 +89,15 @@ class ImageWrapper extends React.Component {
         const layer = this.layerList[layerRefName]
 
         if (!this.mouseGridPosition) {
-            this.imageController.storeLayerState(layerRef, layer)
+            this.imageController.storeLayerState(layerRef)
             this.handleMouseMoveDrawLayer(layerRef, layer, selectedGrids, newMouseGridPosition)
             return
         }
 
 
-
-        if (this.mouseGridPosition.index === newMouseGridPosition.index)
+        if (this.mouseGridPosition.index === newMouseGridPosition.index) {
             return
+        }
 
         this.imageController.restoreLayerState(layerRef)
         this.handleMouseMoveDrawLayer(layerRef, layer, selectedGrids, newMouseGridPosition)
@@ -108,19 +105,26 @@ class ImageWrapper extends React.Component {
     }
 
     handleMouseMoveDrawLayer = (layerRef, layer, selectedGrids, gridPosition) => {
-        this.mouseGridPosition = gridPosition
 
-        const data = this.imageController.getMoveSelectedTileData(layerRef, layer, selectedGrids, gridPosition)
-        this.handleDrawLayerByLayerData(data, layerRef)
+        const { selectedTool } = this.props
+        this.mouseGridPosition = gridPosition
+        if (selectedTool === TOOLS.STAMP) {
+            const data = this.imageController.getMoveSelectedTileData(selectedGrids, gridPosition)
+            this.handleDrawLayerByLayerData(data, layerRef)
+        }
+        else if (selectedTool === TOOLS.FILL) {
+            const data = this.imageController.getMoveFillData(selectedGrids, gridPosition, layer.data)
+            this.handleDrawLayerByLayerData(data, layerRef)
+        }
     }
 
     handleMouseLeave = () => {
         const { selectedLayer, selectedGrids } = this.props
+        this.mouseGridPosition = null
         if (selectedLayer === null || selectedGrids.length === 0)
             return
         const layerRefName = 'layer' + selectedLayer
         const layerRef = this.layerRefs[layerRefName]
-        this.mouseGridPosition = null
         this.imageController.restoreLayerState(layerRef)
     }
 

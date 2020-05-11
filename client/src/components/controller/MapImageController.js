@@ -131,7 +131,7 @@ export default class MapImageController {
         return null
     }
 
-    getMoveSelectedTileData = (layerCanvas, layer, selectedGrids, gridPosition) => {
+    getMoveSelectedTileData = (selectedGrids, gridPosition) => {
         if (gridPosition === null) return
         //sort selected grids by gid, small infront
         let grids = [...selectedGrids]
@@ -170,12 +170,51 @@ export default class MapImageController {
 
     }
 
-    storeLayerState = (layerCanvas, layer) => {
+    storeLayerState = (layerCanvas) => {
         const ctx = layerCanvas.getContext('2d')
         this.storedImageData = ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight)
     }
     restoreLayerState = (layerCanvas) => {
         const ctx = layerCanvas.getContext('2d')
         ctx.putImageData(this.storedImageData, 0, 0)
+    }
+
+
+    getIndexByColRow = (col, row) => {
+        for (let i in this.gridPositions) {
+            if (this.gridPositions[i].col === col && this.gridPositions[i].row === row) {
+                return this.gridPositions[i].index
+            }
+        }
+    }
+
+    changeSameAdjacentData = (data, index, old_value) => {
+        if (data[index] === old_value) {
+            data[index] = 'to be changed'
+            const { col, row } = this.gridPositions[index]
+            this.changeSameAdjacentData(data, this.getIndexByColRow(col - 1, row), old_value)
+            this.changeSameAdjacentData(data, this.getIndexByColRow(col - 1, row - 1), old_value)
+            this.changeSameAdjacentData(data, this.getIndexByColRow(col + 1, row), old_value)
+            this.changeSameAdjacentData(data, this.getIndexByColRow(col + 1, row + 1), old_value)
+            return data
+        }
+    }
+
+
+
+    getMoveFillData = (grids, gridPosition, data) => {
+        //get grid indexes with same adjacent data
+
+        //grids: to draw
+        //gridposition: mouse position
+        //data: the layer data needs to change by fill
+        let returnData = [...data]
+        const old_value = returnData[gridPosition.index]
+        returnData = this.changeSameAdjacentData(returnData, gridPosition.index, old_value)
+        for (let i in returnData) {
+            if (returnData[i] === 'to be changed')
+                returnData[i] = grids[0].gid
+        }
+        return returnData
     }
 }
