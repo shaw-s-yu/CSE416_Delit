@@ -9,9 +9,12 @@ const layerReducer = (state = initState, action) => {
             return e
         })
 
+        let layerFormat = { ...action.project.layersInfo[0] }
+
         return {
             ...state,
-            layerList
+            layerList,
+            layerFormat
         }
     }
 
@@ -30,7 +33,7 @@ const layerReducer = (state = initState, action) => {
     } else if (action.type === actionCreators.LAYER_RENAME) {
         let { layerList } = state
         for (let i = 0; i < layerList.length; i++)
-            if (layerList[i]._id === action.id) {
+            if (layerList[i]._id === state.selected.id) {
                 layerList[i].name = action.name
                 break;
             }
@@ -80,49 +83,44 @@ const layerReducer = (state = initState, action) => {
             layerList,
         }
     } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
-        const layerList = state.layerList.map(e => {
-            if (e._id === action.id) {
-                e.visible = !e.visible
-                return e
-            } else {
-                return e
-            }
-        })
+        let layerList = []
+        for (let i in state.layerList) {
+            layerList.push({
+                ...state.layerList[i],
+                visible: state.layerList[i]._id === action.id ? !state.layerList[i].visible : state.layerList[i].visible
+            })
+        }
         return {
             ...state,
             layerList,
         }
     } else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
-        const layerList = state.layerList.map(e => {
-            if (e._id === action.id) {
-                e.locked = !e.locked
-                return e
-            } else {
-                return e
-            }
-        })
+        let layerList = []
+        for (let i in state.layerList) {
+            layerList.push({
+                ...state.layerList[i],
+                locked: state.layerList[i]._id === action.id ? !state.layerList[i].locked : state.layerList[i].locked
+            })
+        }
         return {
             ...state,
             layerList,
         }
     } else if (action.type === actionCreators.LAYER_PASS_OPACITY) {
-        const { value } = action;
-        const { selected } = state;
-        const layerList = state.layerList.map(e => {
-            if (e._id === selected) {
-                e.opacity = value / 100
-                return e
-            } else {
-                return e
-            }
-        })
+        let layerList = []
+        for (let i in state.layerList) {
+            layerList.push({
+                ...state.layerList[i],
+                opacity: state.layerList[i]._id === state.selected ? (action.value / 100) : state.layerList[i].opacity
+            })
+        }
         return {
             ...state,
-            layerList
+            layerList,
         }
     } else if (action.type === actionCreators.ADD_LAYER) {
         let layerList = state.layerList.map(e => e)
-        let layerToAdd = { ...layerList[0] }
+        let layerToAdd = { ...state.layerFormat }
         layerToAdd._id = v1()
         layerToAdd.opacity = 1
         layerToAdd.name = 'New Layer Click to Rename'

@@ -27,10 +27,12 @@ class MapWindow extends React.Component {
     }
 
     doTransaction = e => {
+        console.log(this.props.transactions.toString())
         this.props.transactions.doTransaction()
     }
 
     undoTransaction = e => {
+        console.log(this.props.transactions.toString())
         this.props.transactions.undoTransaction()
     }
 
