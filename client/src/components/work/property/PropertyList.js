@@ -3,6 +3,7 @@ import { Table } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
 import Pagination from '../../tools/Pagination'
+import '../workscreen.css'
 
 
 class PropertyList extends React.Component {
@@ -89,6 +90,9 @@ class PropertyList extends React.Component {
 
                 </Table>
                 <Pagination className="property-list-pagination" size="small" color="secondary" />
+                <div className="text-right">
+                    <button className="reset-property-btn"  >Reset</button>
+                </div>
             </>
         )
     }
