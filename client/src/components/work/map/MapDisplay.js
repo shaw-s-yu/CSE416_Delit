@@ -7,7 +7,6 @@ import TilesetImageController from '../../controller/TilesetImageController'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import { v1 } from 'uuid';
 import TOOLS from '../../tools/ToolbarTools'
-import MapTransaction from '../../controller/LayerTransaction'
 
 
 class ImageWrapper extends React.Component {
@@ -128,15 +127,13 @@ class ImageWrapper extends React.Component {
         const layer = this.layerList[layerRefName]
         if (layer.locked) return
 
-        // if (selectedTool === TOOLS.ERASER && this.mouseDown) {
-        //     const data = this.imageController.getMoveEraserData(newMouseGridPosition, layer.data)
-        //     this.props.transactions.addTransaction(
-        //         new MapTransaction(data, this.props.layerList, this.props.mapFillClick, this.props.restoreLayers)
-        //     )
-        //     return
-        // }
+        if (selectedTool === TOOLS.ERASER && this.mouseDown) {
+            const data = this.imageController.getMoveEraserData(newMouseGridPosition, layer.data)
+            this.props.mapFillClick(data)
+            return
+        }
 
-
+        if (selectedGrids.length === 0) return
 
         if (!this.mouseGridPosition) {
             this.imageController.storeLayerState(layerRef)
@@ -149,7 +146,7 @@ class ImageWrapper extends React.Component {
             return
         }
 
-        if (!this.mouseDown) this.imageController.restoreLayerState(layerRef)
+        this.imageController.restoreLayerState(layerRef)
         this.handleMouseMoveDrawLayer(layerRef, layer, selectedGrids, newMouseGridPosition)
 
     }
@@ -159,19 +156,22 @@ class ImageWrapper extends React.Component {
         const { selectedTool } = this.props
         this.mouseGridPosition = gridPosition
 
-        if (selectedTool === TOOLS.ERASER) {
-            const data = this.imageController.getMoveEraserData(gridPosition, layer.data)
-            this.handleDrawLayerByLayerData(data, layerRef)
-        }
-
-        if (selectedGrids.length === 0) return
-
         if (selectedTool === TOOLS.STAMP) {
             const data = this.imageController.getMoveSelectedTileData(selectedGrids, gridPosition)
+            if (this.mouseDown) {
+                this.imageController.storeLayerState(layerRef)
+                if (data) this.props.mapStampClick(data)
+                return
+            }
             this.handleDrawLayerByLayerData(data, layerRef)
         }
         else if (selectedTool === TOOLS.FILL) {
             const data = this.imageController.getMoveFillData(selectedGrids, gridPosition, layer.data)
+            if (this.mouseDown) {
+                this.imageController.storeLayerState(layerRef)
+                if (data) this.props.mapFillClick(data)
+                return
+            }
             this.handleDrawLayerByLayerData(data, layerRef)
         }
     }
@@ -222,23 +222,17 @@ class ImageWrapper extends React.Component {
 
         if (selectedTool === TOOLS.ERASER) {
             const data = this.imageController.getMoveEraserData(gridPosition, layer.data)
-            this.props.transactions.addTransaction(
-                new MapTransaction(data, this.props.layerList, this.props.mapFillClick, this.props.restoreLayers)
-            )
+            this.props.mapFillClick(data)
         }
 
         if (selectedGrids.length === 0) return
 
         if (selectedTool === TOOLS.STAMP) {
             const data = this.imageController.getMoveSelectedTileData(selectedGrids, gridPosition)
-            this.props.transactions.addTransaction(
-                new MapTransaction(data, this.props.layerList, this.props.mapStampClick, this.props.restoreLayers)
-            )
+            this.props.mapStampClick(data)
         } else if (selectedTool === TOOLS.FILL) {
             const data = this.imageController.getMoveFillData(selectedGrids, gridPosition, layer.data)
-            this.props.transactions.addTransaction(
-                new MapTransaction(data, this.props.layerList, this.props.mapFillClick, this.props.restoreLayers)
-            )
+            this.props.mapFillClick(data)
         }
     }
 
@@ -312,7 +306,6 @@ class ImageWrapper extends React.Component {
                     onMouseDown={this.handleMouseDown}
                     onMouseMove={this.handleMouseMove}
                     onMouseLeave={this.handleMouseLeave}
-                    onMouseUp={this.handleMouseClick}
                 >
                     <canvas ref='backgroundCanvas' width={canvasWidth} height={canvasHeight}></canvas>
                     {layerList.map(e => (
@@ -347,7 +340,6 @@ const mapDispatchToProps = (dispatch) => ({
     mapStampClick: (data) => dispatch(handler.mapStampClick(data)),
     mapFillClick: (data) => dispatch(handler.mapFillClick(data)),
     propertySelectDisplay: (window) => dispatch(handler.propertySelectDisplay(window)),
-    restoreLayers: (layerList) => dispatch(handler.restoreLayers(layerList)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageWrapper)
