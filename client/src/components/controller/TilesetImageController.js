@@ -93,7 +93,7 @@ export default class TilesetImageController {
                 this.gridPositions.push({
                     index,
                     x: this.gridThickness + i * (this.tileWidth + this.gridThickness),
-                    y: this.gridThickness + o * (this.tileHeight * this.gridThickness),
+                    y: this.gridThickness + o * (this.tileHeight + this.gridThickness),
                     //dx dy is the position difference between image and tiledImage(with and without grid)
                     dx: this.gridThickness + i * (this.tileWidth + this.gridThickness) - i * this.tileWidth,
                     dy: this.gridThickness + o * (this.tileHeight + this.gridThickness) - o * this.tileHeight,
@@ -140,6 +140,53 @@ export default class TilesetImageController {
             width: this.tileWidth,
             height: this.tileHeight
         }
+    }
+
+    getGridPositionFromMouseXY = (x, y) => {
+        for (let i in this.gridPositions) {
+            if (x >= this.gridPositions[i].x &&
+                x < this.gridPositions[i].x + this.tileWidth + this.gridThickness &&
+                y >= this.gridPositions[i].y &&
+                y < this.gridPositions[i].y + this.tileHeight + this.gridThickness)
+                return {
+                    x: this.gridPositions[i].x,
+                    y: this.gridPositions[i].y,
+                    index: this.gridPositions[i].index
+                }
+        }
+        return null
+    }
+
+    getMinMaxGridPositionsFromGridPositions = (grids) => {
+
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
+        for (let i in grids) {
+            minX = Math.min(minX, grids[i].x)
+            minY = Math.min(minY, grids[i].y)
+            maxX = Math.max(maxX, grids[i].x)
+            maxY = Math.max(maxY, grids[i].y)
+        }
+        return {
+            minX, minY, maxX, maxY
+        }
+    }
+
+    getBoxedGridPositionsFromGridPositions = (grids, grid) => {
+        let { minX, minY, maxX, maxY } = this.getMinMaxGridPositionsFromGridPositions(grids)
+        minX = Math.min(minX, grid.x)
+        minY = Math.min(minY, grid.y)
+        maxX = Math.max(maxX + this.tileWidth + this.gridThickness, grid.x + this.tileWidth + this.gridThickness)
+        maxY = Math.max(maxY + this.tileWidth + this.gridThickness, grid.y + this.tileHeight + this.gridThickness)
+
+        let returnGrids = []
+        for (let i in this.gridPositions) {
+            if (this.gridPositions[i].x >= minX &&
+                this.gridPositions[i].x < maxX &&
+                this.gridPositions[i].y >= minY &&
+                this.gridPositions[i].y < maxY)
+                returnGrids.push(this.gridPositions[i])
+        }
+        return returnGrids
     }
 
 }

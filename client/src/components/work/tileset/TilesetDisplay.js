@@ -4,18 +4,19 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import TilesetImageController from '../../controller/TilesetImageController'
 import { arrayBufferToBase64 } from '../../controller/ImageController'
 import axios from 'axios'
-
-const TOOLS = {
-    ZOOM_IN: "ZOOM_IN",
-    ZOOM_OUT: "ZOOM_OUT"
-}
+import TOOLS from '../../tools/ToolbarTools'
+import SelectedBoxes from './SelectedBoxes'
+import Keyboard from '../../controller/KeyboardController'
 
 class TilesetDisplay extends React.Component {
 
     state = {
         scale: 1,
         canvasWidth: 0,
-        canvasHeight: 0
+        canvasHeight: 0,
+        selectedGrids: [],
+        shiftSelecting: false,
+        ctrlSelecting: false,
     }
 
     scrollbar = React.createRef();
@@ -60,6 +61,61 @@ class TilesetDisplay extends React.Component {
         this.imageController.drawImage(src, callback)
     }
 
+    handleOnClick = e => {
+        const { selectedTool } = this.props
+        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT)
+            this.handleZoomEffect(e)
+
+        const { clientX, clientY } = e
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+        const gridPosition = this.imageController.getGridPositionFromMouseXY(x, y)
+        console.log(gridPosition)
+        this.handleSelectGrid(gridPosition)
+    }
+
+    handleSelectGrid = gridPosition => {
+        const { ctrlSelecting, shiftSelecting } = this.state
+        let { selectedGrids } = this.state
+        //single selecting
+        if (!ctrlSelecting && !shiftSelecting) {
+            selectedGrids = []
+            selectedGrids.push(gridPosition)
+            this.setState({ selectedGrids })
+            return
+        }
+        else if (ctrlSelecting) {
+            selectedGrids.push(gridPosition)
+            this.setState({ selectedGrids })
+            return
+        }
+        else if (shiftSelecting) {
+            selectedGrids = this.imageController.getBoxedGridPositionsFromGridPositions(selectedGrids, gridPosition)
+            this.setState({ selectedGrids })
+            return
+        }
+        return
+
+    }
+
+    handleClearGrid = () => {
+        this.setState({ selectedGrids: [] })
+    }
+
+    handleFixPosition = (clientX, clientY) => {
+        const windowScrollX = window.scrollX
+        const windowScrollY = window.scrollY
+        let x = windowScrollX + clientX
+        let y = windowScrollY + clientY
+        const canvasX = this.refs.backgroundCanvas.getBoundingClientRect().left
+        const canvasY = this.refs.backgroundCanvas.getBoundingClientRect().top
+        x -= canvasX
+        y -= canvasY
+        const { scale } = this.state
+        x /= scale
+        y /= scale
+        return { x, y }
+    }
+
     componentDidMount() {
         const { tileset } = this.props
         const canvas = this.refs.backgroundCanvas
@@ -82,12 +138,27 @@ class TilesetDisplay extends React.Component {
                 }
             })
         })
+
+        window.onkeydown = e => {
+            if (Keyboard.triggerLeftControll(e))
+                this.setState({ ctrlSelecting: true })
+            else if (Keyboard.triggerLeftShift(e))
+                this.setState({ shiftSelecting: true })
+        }
+        window.onkeyup = e => {
+            if (Keyboard.triggerLeftControll(e))
+                this.setState({ ctrlSelecting: false })
+            else if (Keyboard.triggerLeftShift(e))
+                this.setState({ shiftSelecting: false })
+
+        }
     }
 
 
     render() {
-        const { style, width, height, index } = this.props;
-        const { scale, canvasWidth, canvasHeight } = this.state;
+        const { style, width, height, index, tileset } = this.props;
+        const { tileWidth, tileHeight } = tileset
+        const { scale, canvasWidth, canvasHeight, selectedGrids } = this.state;
         const totalStyle = {
             ...style,
             marginLeft: canvasWidth ? canvasWidth * scale >= width ? "auto" : (width - canvasWidth * scale) / 2 : "auto",
@@ -99,8 +170,19 @@ class TilesetDisplay extends React.Component {
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
-                <div ref='display' className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
+                <div ref='display'
+                    className={"display-place " + this.getSelectedTools()}
+                    style={totalStyle}
+                    onClick={this.handleOnClick}
+                    onMouseDown={e => e.stopPropagation()}
+                >
                     <canvas ref='backgroundCanvas' id={'tileset' + index} width={canvasWidth} height={canvasHeight}></canvas>
+                    <SelectedBoxes
+                        selectedGrids={selectedGrids}
+                        width={tileWidth}
+                        height={tileHeight}
+                        parent={this}
+                    />
                 </div>
             </Scrollbars>
 
