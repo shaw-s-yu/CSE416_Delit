@@ -23,7 +23,6 @@ class ImageWrapper extends React.Component {
 
     getToolName = () => {
         const { selectedTool } = this.props
-        console.log('hi')
         if (selectedTool === TOOLS.ZOOM_IN)
             return 'display-zoom-in'
         if (selectedTool === TOOLS.ZOOM_OUT)
@@ -95,16 +94,27 @@ class ImageWrapper extends React.Component {
 
     handleMouseDown = e => {
         e.stopPropagation()
-        const { selectedGrids, selectedLayer } = this.props
+        const { selectedGrids, selectedLayer, selectedTool } = this.props
+        if (selectedTool === TOOLS.ERASER) {
+            if (selectedLayer === null) return
+            const layerRefName = 'layer' + selectedLayer
+            const layerRef = this.layerRefs[layerRefName]
+            const layer = this.layerList[layerRefName]
+            if (layer.locked) return
+            this.imageController.storeLayerState(layerRef)
+            this.mouseDown = true
+        }
         if (selectedLayer === null || selectedGrids.length === 0)
             return
         this.mouseDown = true
     }
 
     handleMouseMove = e => {
-        const { selectedGrids, selectedLayer } = this.props
-        if (selectedLayer === null || selectedGrids.length === 0)
+        const { selectedGrids, selectedLayer, selectedTool } = this.props
+        if (selectedLayer === null)
             return
+
+
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
 
@@ -116,6 +126,14 @@ class ImageWrapper extends React.Component {
         const layerRef = this.layerRefs[layerRefName]
         const layer = this.layerList[layerRefName]
         if (layer.locked) return
+
+        if (selectedTool === TOOLS.ERASER && this.mouseDown) {
+            const data = this.imageController.getMoveEraserData(newMouseGridPosition, layer.data)
+            this.props.mapFillClick(data)
+            return
+        }
+
+        if (selectedGrids.length === 0) return
 
         if (!this.mouseGridPosition) {
             this.imageController.storeLayerState(layerRef)
@@ -180,7 +198,7 @@ class ImageWrapper extends React.Component {
             this.handleZoomEffect(e)
             return
         }
-        if (selectedLayer === null || selectedGrids.length === 0) {
+        if (selectedLayer === null) {
             this.props.propertySelectDisplay('map')
             return
         }
@@ -199,7 +217,15 @@ class ImageWrapper extends React.Component {
         const layerRefName = 'layer' + selectedLayer
         const layerRef = this.layerRefs[layerRefName]
         const layer = this.layerList[layerRefName]
+        if (layer.locked) return
         this.imageController.storeLayerState(layerRef)
+
+        if (selectedTool === TOOLS.ERASER) {
+            const data = this.imageController.getMoveEraserData(gridPosition, layer.data)
+            this.props.mapFillClick(data)
+        }
+
+        if (selectedGrids.length === 0) return
 
         if (selectedTool === TOOLS.STAMP) {
             const data = this.imageController.getMoveSelectedTileData(selectedGrids, gridPosition)

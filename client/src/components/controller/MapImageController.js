@@ -219,4 +219,11 @@ export default class MapImageController {
         }
         return returnData
     }
+
+    getMoveEraserData = (gridPosition, data) => {
+        let returnData = [...data]
+        if (!gridPosition) return
+        returnData[gridPosition.index] = 0
+        return returnData
+    }
 }

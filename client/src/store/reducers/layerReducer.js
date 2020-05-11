@@ -137,6 +137,7 @@ const layerReducer = (state = initState, action) => {
     }
 
     else if (action.type === actionCreators.MAP_STAMP_CLICK) {
+        if (!action.data) return { ...state }
         let layerList = state.layerList.map(e => {
             if (e._id === state.selected) {
                 for (let i in e.data) {
@@ -156,6 +157,7 @@ const layerReducer = (state = initState, action) => {
     }
 
     else if (action.type === actionCreators.MAP_FILL_CLICK) {
+        if (!action.data) return { ...state }
         let layerList = state.layerList.map(e => {
             if (e._id === state.selected) {
                 e.data = action.data
