@@ -2,11 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentEditable from 'react-contenteditable'
 import * as handler from '../../../store/database/WorkScreenHandler';
-<<<<<<< HEAD
-import LayerDeleteTransaction from '../../controller/LayerDeleteTransaction'
-=======
 import LayerTransaction from '../../controller/LayerTransaction'
->>>>>>> parent of b378957... Revert " all layer transactions"
 
 
 class LayerWindow extends React.Component {

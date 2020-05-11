@@ -193,6 +193,7 @@ export default class MapImageController {
     changeSameAdjacentData = (data, index, old_value) => {
         if (data[index] === old_value) {
             data[index] = 'to be changed'
+            if (!this.gridPositions[index]) return
             const { col, row } = this.gridPositions[index]
             this.changeSameAdjacentData(data, this.getIndexByColRow(col - 1, row), old_value)
             this.changeSameAdjacentData(data, this.getIndexByColRow(col - 1, row - 1), old_value)
