@@ -136,17 +136,13 @@ const layerReducer = (state = initState, action) => {
 
     else if (action.type === actionCreators.MAP_STAMP_CLICK) {
         if (!action.data) return { ...state }
-        let layerList = state.layerList.map(e => {
-            if (e._id === state.selected) {
-                for (let i in e.data) {
-                    if (action.data[i] !== 0)
-                        e.data[i] = action.data[i]
-                }
-                return e
-            } else {
-                return e
-            }
-        })
+        let layerList = []
+        for (let i in state.layerList) {
+            layerList.push({
+                ...state.layerList[i],
+                data: state.layerList[i]._id === state.selected ? reformatDate(state.layerList[i].data, action.data) : state.layerList[i].data
+            })
+        }
         return {
             ...state,
             layerList,
@@ -156,14 +152,13 @@ const layerReducer = (state = initState, action) => {
 
     else if (action.type === actionCreators.MAP_FILL_CLICK) {
         if (!action.data) return { ...state }
-        let layerList = state.layerList.map(e => {
-            if (e._id === state.selected) {
-                e.data = action.data
-                return e
-            } else {
-                return e
-            }
-        })
+        let layerList = []
+        for (let i in state.layerList) {
+            layerList.push({
+                ...state.layerList[i],
+                data: state.layerList[i]._id === state.selected ? action.data : state.layerList[i].data
+            })
+        }
         return {
             ...state,
             layerList,
@@ -192,3 +187,13 @@ const initState = {
     layerList: layers,
     selected: null
 };
+
+const reformatDate = (data1, data2) => {
+    let returnData = []
+    for (let i in data1)
+        if (data2[i] !== 0)
+            returnData.push(data2[i])
+        else
+            returnData.push(data1[i])
+    return returnData
+}
