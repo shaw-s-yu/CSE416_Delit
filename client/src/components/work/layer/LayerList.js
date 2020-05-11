@@ -20,19 +20,8 @@ class LayerWindow extends React.Component {
     }
 
     handleVisibilityClick = (id, e) => {
-        let { target } = e;
-        let value = null;
-        if (target.classList.contains('fa-eye-slash')) {
-            target.classList.remove('fa-eye-slash');
-            target.classList.add('fa-eye');
-            value = true;
-        } else {
-            target.classList.remove('fa-eye');
-            target.classList.add('fa-eye-slash');
-            value = false;
-        };
         e.stopPropagation()
-        this.props.handleVisibilityClick(id, value);
+        this.props.handleVisibilityClick(id);
     };
 
     handleLockClick = (id, e) => {

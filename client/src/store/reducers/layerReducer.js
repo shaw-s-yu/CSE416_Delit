@@ -82,17 +82,17 @@ const layerReducer = (state = initState, action) => {
             selected: null
         }
     } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
-        const { id, isVisible } = action;
-        const { layerList } = state;
-        const layers = layerList.map((layer) => {
-            if (layer._id === id) {
-                layer.visible = isVisible;
+        const layerList = state.layerList.map(e => {
+            if (e._id === action.id) {
+                e.visible = !e.visible
+                return e
+            } else {
+                return e
             }
-            return layer;
-        });
+        })
         return {
             ...state,
-            layerList: layers,
+            layerList,
         }
     } else if (action.type === actionCreators.LAYER_LOCK_TOGGLE) {
         const layerList = state.layerList.map(e => {

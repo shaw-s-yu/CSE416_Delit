@@ -111,4 +111,10 @@ export default class MapImageController {
         const ctx = canvas.getContext('2d')
         ctx.putImageData(tileData.imageData, gridPosition.x, gridPosition.y, 0, 0, tileData.width, tileData.height)
     }
+
+    clearLayerCanvas = (canvas) => {
+        const ctx = canvas.getContext('2d')
+        const { width, height } = canvas
+        ctx.clearRect(0, 0, width, height)
+    }
 }

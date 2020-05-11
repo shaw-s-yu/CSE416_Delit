@@ -68,6 +68,7 @@ class ImageWrapper extends React.Component {
             const layerRefName = 'layer' + layerList[i]._id
             this.layerRefs[layerRefName] = this.refs[layerRefName]
             layersRefName.push(layerRefName)
+            this.imageController.clearLayerCanvas(this.layerRefs[layerRefName])
             this.handleDrawLayerByLayerData(layerList[i].data, this.layerRefs[layerRefName])
         }
     }
