@@ -7,6 +7,8 @@ import axios from 'axios'
 import TOOLS from '../../tools/ToolbarTools'
 import SelectedBoxes from './SelectedBoxes'
 import Keyboard from '../../controller/KeyboardController'
+import * as handler from '../../../store/database/WorkScreenHandler';
+
 
 class TilesetDisplay extends React.Component {
 
@@ -69,32 +71,38 @@ class TilesetDisplay extends React.Component {
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         const gridPosition = this.imageController.getGridPositionFromMouseXY(x, y)
-        console.log(gridPosition)
         this.handleSelectGrid(gridPosition)
     }
 
     handleSelectGrid = gridPosition => {
         const { ctrlSelecting, shiftSelecting } = this.state
         let { selectedGrids } = this.state
-        //single selecting
         if (!ctrlSelecting && !shiftSelecting) {
             selectedGrids = []
             selectedGrids.push(gridPosition)
-            this.setState({ selectedGrids })
+            this.handleGridStateChange(selectedGrids)
             return
         }
         else if (ctrlSelecting) {
             selectedGrids.push(gridPosition)
-            this.setState({ selectedGrids })
+            this.handleGridStateChange(selectedGrids)
             return
         }
         else if (shiftSelecting) {
             selectedGrids = this.imageController.getBoxedGridPositionsFromGridPositions(selectedGrids, gridPosition)
-            this.setState({ selectedGrids })
+            this.handleGridStateChange(selectedGrids)
             return
         }
         return
+    }
 
+    handleGridStateChange = selectedGrids => {
+        this.setState({ selectedGrids }, () => {
+            const { index } = this.props
+            const returnGrids = this.imageController.handleConvertIndexToGID(selectedGrids)
+            this.props.tilesetSelectGrids(returnGrids)
+            this.props.propertySelectTile('tilesets', returnGrids[0].index, index)
+        })
     }
 
     handleClearGrid = () => {
@@ -158,7 +166,7 @@ class TilesetDisplay extends React.Component {
     render() {
         const { style, width, height, index, tileset } = this.props;
         const { tileWidth, tileHeight } = tileset
-        const { scale, canvasWidth, canvasHeight, selectedGrids } = this.state;
+        const { scale, canvasWidth, canvasHeight, selectedGrids, shiftSelecting } = this.state;
         const totalStyle = {
             ...style,
             marginLeft: canvasWidth ? canvasWidth * scale >= width ? "auto" : (width - canvasWidth * scale) / 2 : "auto",
@@ -182,6 +190,7 @@ class TilesetDisplay extends React.Component {
                         width={tileWidth}
                         height={tileHeight}
                         parent={this}
+                        shiftSelecting={shiftSelecting}
                     />
                 </div>
             </Scrollbars>
@@ -198,6 +207,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    tilesetSelectGrids: (selectedGrids) => dispatch(handler.tilesetSelectGrids(selectedGrids)),
+    propertySelectTile: (window, id, index) => dispatch(handler.propertySelectTile(window, id, index)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TilesetDisplay)

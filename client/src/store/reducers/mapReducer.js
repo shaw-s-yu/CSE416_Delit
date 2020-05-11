@@ -16,11 +16,19 @@ const mapReducer = (state = initState, action) => {
 
         }
     }
+
+    else if (action.type === actionCreators.SELECT_TILESET_GRIDS) {
+        console.log(action.selectedGrids)
+        return {
+            ...state,
+            selectedGrids: action.selectedGrids
+        }
+    }
     return state;
 }
 
 export default mapReducer;
 
 const initState = {
-
+    selectedGrids: []
 };

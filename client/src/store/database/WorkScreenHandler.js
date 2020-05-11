@@ -84,6 +84,10 @@ export const propertySelectDisplay = (window, index) => (dispatch, getState) => 
     dispatch({ type: actionCreators.SELECT_PROPERTY_WINDOW, window, index });
 };
 
+export const propertySelectTile = (window, id, index) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.SELECT_PROPERTY_TILE, window, id, index });
+};
+
 export const handleTilesetLoaded = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.TILESET_LOADED });
 };
@@ -107,4 +111,8 @@ export const passOpacityHandler = (value) => (dispatch, getState) => {
 
 export const layerAddHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.ADD_LAYER });
+}
+
+export const tilesetSelectGrids = (selectedGrids) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.SELECT_TILESET_GRIDS, selectedGrids });
 }

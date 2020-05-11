@@ -2,13 +2,18 @@ import React from 'react'
 class selectedBoxes extends React.Component {
 
 
+    handleOnClick = e => {
+        const { shiftSelecting } = this.props
+        if (!shiftSelecting)
+            e.stopPropagation()
+    }
+
     render() {
         const { selectedGrids, width, height } = this.props
         return (
             <>
                 {
                     selectedGrids && selectedGrids.map((grid, index) => {
-                        console.log(grid)
                         const style = {
                             left: grid.x - 1,
                             top: grid.y - 1,
@@ -17,7 +22,7 @@ class selectedBoxes extends React.Component {
                         }
                         return (
                             <div
-                                onClick={e => e.stopPropagation()}
+                                onClick={this.handleOnClick}
                                 key={index}
                                 style={style}
                                 className='selected-grids'

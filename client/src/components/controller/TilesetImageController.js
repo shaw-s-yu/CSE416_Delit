@@ -175,8 +175,8 @@ export default class TilesetImageController {
         let { minX, minY, maxX, maxY } = this.getMinMaxGridPositionsFromGridPositions(grids)
         minX = Math.min(minX, grid.x)
         minY = Math.min(minY, grid.y)
-        maxX = Math.max(maxX + this.tileWidth + this.gridThickness, grid.x + this.tileWidth + this.gridThickness)
-        maxY = Math.max(maxY + this.tileWidth + this.gridThickness, grid.y + this.tileHeight + this.gridThickness)
+        maxX = Math.max(minX, grid.x + this.tileWidth + this.gridThickness)
+        maxY = Math.max(minY, grid.y + this.tileHeight + this.gridThickness)
 
         let returnGrids = []
         for (let i in this.gridPositions) {
@@ -187,6 +187,13 @@ export default class TilesetImageController {
                 returnGrids.push(this.gridPositions[i])
         }
         return returnGrids
+    }
+
+    handleConvertIndexToGID = grids => {
+        return grids.map(e => {
+            e.firstgid = e.index + this.tileset.firstgid
+            return e
+        })
     }
 
 }

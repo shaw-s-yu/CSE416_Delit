@@ -16,9 +16,17 @@ const propertyReducer = (state = initState, action) => {
 
     else if (action.type === actionCreators.SELECT_PROPERTY_WINDOW) {
         let display = state.map
-        if (action.window === 'layers' || action.window === 'tilesets') {
+        if (action.window === 'layers' || action.window === 'map  ') {
             display = state[action.window][action.index]
         }
+        return {
+            ...state,
+            display
+        }
+    }
+    else if (action.type === actionCreators.SELECT_PROPERTY_TILE) {
+        let display = { ...state[action.window][action.index] }
+        display.id = action.id
         return {
             ...state,
             display
@@ -78,9 +86,9 @@ const formateMap = (mapInfo) => {
 const formateTilesets = (tilesetsInfo) => {
     let tilesets = []
     for (let i = 0; i < tilesetsInfo.length; i++) {
-        const { width, height } = tilesetsInfo[i]
+        const { width, height, tileWidth, tileHeight } = tilesetsInfo[i]
         tilesets.push({
-            width, height
+            width, height, tileWidth, tileHeight
         })
     }
 
