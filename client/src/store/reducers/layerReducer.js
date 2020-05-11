@@ -65,7 +65,6 @@ const layerReducer = (state = initState, action) => {
         return {
             ...state,
             layerList: layerList,
-            selected: null
         }
     } else if (action.type === actionCreators.LAYER_MOVE_DOWN) {
         let layerList = state.layerList.map(e => e);
@@ -79,7 +78,6 @@ const layerReducer = (state = initState, action) => {
         return {
             ...state,
             layerList,
-            selected: null
         }
     } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
         const layerList = state.layerList.map(e => {
@@ -106,7 +104,6 @@ const layerReducer = (state = initState, action) => {
         return {
             ...state,
             layerList,
-            selected: null
         }
     } else if (action.type === actionCreators.LAYER_PASS_OPACITY) {
         const { value } = action;
@@ -138,6 +135,41 @@ const layerReducer = (state = initState, action) => {
             layerList,
         }
     }
+
+    else if (action.type === actionCreators.MAP_STAMP_CLICK) {
+        let layerList = state.layerList.map(e => {
+            if (e._id === state.selected) {
+                for (let i in e.data) {
+                    if (action.data[i] !== 0)
+                        e.data[i] = action.data[i]
+                }
+                return e
+            } else {
+                return e
+            }
+        })
+        return {
+            ...state,
+            layerList,
+        }
+
+    }
+
+    else if (action.type === actionCreators.MAP_FILL_CLICK) {
+        let layerList = state.layerList.map(e => {
+            if (e._id === state.selected) {
+                e.data = action.data
+                return e
+            } else {
+                return e
+            }
+        })
+        return {
+            ...state,
+            layerList,
+        }
+    }
+
     return state;
 }
 

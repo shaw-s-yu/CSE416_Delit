@@ -44,6 +44,10 @@ class LayerWindow extends React.Component {
         this.props.handleSelectProperty('layers', index)
     }
 
+    handleUnselect = e => {
+        this.props.handleUnselect()
+    }
+
 
     getClassName = (id) => {
         const { selected } = this.props;
@@ -59,7 +63,7 @@ class LayerWindow extends React.Component {
         const { layerList, maxWidth } = this.props
         const style = { maxWidth }
         return (
-            <div className="layer-list" onClick={this.props.handleUnselect}>
+            <div className="layer-list" onClick={this.handleUnselect}>
                 {layerList && layerList.map((layer, index) => {
                     return (
                         <div key={index}>

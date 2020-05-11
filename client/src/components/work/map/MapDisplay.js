@@ -4,6 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import MapGridController from '../../controller/MapGridController'
 import MapImageController from '../../controller/MapImageController'
 import TilesetImageController from '../../controller/TilesetImageController'
+import * as handler from '../../../store/database/WorkScreenHandler';
 import { v1 } from 'uuid';
 import TOOLS from '../../tools/ToolbarTools'
 
@@ -87,6 +88,7 @@ class ImageWrapper extends React.Component {
         const layerRefName = 'layer' + selectedLayer
         const layerRef = this.layerRefs[layerRefName]
         const layer = this.layerList[layerRefName]
+        if (layer.locked) return
 
         if (!this.mouseGridPosition) {
             this.imageController.storeLayerState(layerRef)
@@ -126,6 +128,36 @@ class ImageWrapper extends React.Component {
         const layerRefName = 'layer' + selectedLayer
         const layerRef = this.layerRefs[layerRefName]
         this.imageController.restoreLayerState(layerRef)
+    }
+
+    handleMouseClick = e => {
+        const { selectedTool, selectedGrids, selectedLayer } = this.props
+        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
+            this.handleZoomEffect(e)
+            return
+        }
+
+        if (selectedTool !== TOOLS.STAMP && selectedTool !== TOOLS.ERASER && selectedTool !== TOOLS.FILL)
+            return
+        e.stopPropagation()
+
+        const { clientX, clientY } = e
+        const { x, y } = this.handleFixPosition(clientX, clientY)
+        const gridPosition = this.imageController.getGridPositionFromMouseXY(x, y)
+
+
+        const layerRefName = 'layer' + selectedLayer
+        const layerRef = this.layerRefs[layerRefName]
+        const layer = this.layerList[layerRefName]
+        this.imageController.storeLayerState(layerRef)
+
+        if (selectedTool === TOOLS.STAMP) {
+            const data = this.imageController.getMoveSelectedTileData(selectedGrids, gridPosition)
+            this.props.mapStampClick(data)
+        } else if (selectedTool === TOOLS.FILL) {
+            const data = this.imageController.getMoveFillData(selectedGrids, gridPosition, layer.data)
+            this.props.mapFillClick(data)
+        }
     }
 
 
@@ -194,7 +226,7 @@ class ImageWrapper extends React.Component {
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
                 <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle}
-                    onClick={this.handleZoomEffect}
+                    onClick={this.handleMouseClick}
                     onMouseDown={e => e.stopPropagation()}
                     onMouseMove={this.handleMouseMove}
                     onMouseLeave={this.handleMouseLeave}
@@ -229,6 +261,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    mapStampClick: (data) => dispatch(handler.mapStampClick(data)),
+    mapFillClick: (data) => dispatch(handler.mapFillClick(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageWrapper)

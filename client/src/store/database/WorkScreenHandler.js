@@ -116,3 +116,11 @@ export const layerAddHandler = () => (dispatch, getState) => {
 export const tilesetSelectGrids = (selectedGrids) => (dispatch, getState) => {
     dispatch({ type: actionCreators.SELECT_TILESET_GRIDS, selectedGrids });
 }
+
+export const mapStampClick = (data) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.MAP_STAMP_CLICK, data });
+}
+
+export const mapFillClick = (data) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.MAP_FILL_CLICK, data });
+}

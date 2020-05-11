@@ -175,7 +175,9 @@ export default class MapImageController {
         this.storedImageData = ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight)
     }
     restoreLayerState = (layerCanvas) => {
+        if (!layerCanvas) return
         const ctx = layerCanvas.getContext('2d')
+        if (!this.storedImageData) return
         ctx.putImageData(this.storedImageData, 0, 0)
     }
 
