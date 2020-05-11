@@ -2,7 +2,8 @@ import * as actionCreators from '../actions/actionCreators'
 
 const initState = {
     imgs: {},
-    loaded: false
+    loaded: false,
+    selectedGrids: []
 };
 
 const tilesetReducer = (state = initState, action) => {
@@ -49,10 +50,12 @@ const tilesetReducer = (state = initState, action) => {
         }
     }
 
-
-
-
-
+    else if (action.type === actionCreators.SELECT_TILESET_GRIDS) {
+        return {
+            ...state,
+            selectedGrids: action.selectedGrids
+        }
+    }
 
 
 

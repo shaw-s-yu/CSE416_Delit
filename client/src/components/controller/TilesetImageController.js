@@ -191,7 +191,7 @@ export default class TilesetImageController {
 
     handleConvertIndexToGID = grids => {
         return grids.map(e => {
-            e.firstgid = e.index + this.tileset.firstgid
+            e.gid = e.index + this.tileset.firstgid
             return e
         })
     }

@@ -60,7 +60,9 @@ export default class MapImageController {
                 this.gridPositions.push({
                     index: index,
                     x: this.gridThickness + i * (this.tileWidth + this.gridThickness),
-                    y: this.gridThickness + o * (this.tileHeight + this.gridThickness)
+                    y: this.gridThickness + o * (this.tileHeight + this.gridThickness),
+                    col: i,
+                    row: o
                 })
                 index += 1
             }
@@ -116,5 +118,64 @@ export default class MapImageController {
         const ctx = canvas.getContext('2d')
         const { width, height } = canvas
         ctx.clearRect(0, 0, width, height)
+    }
+
+    getGridPositionFromMouseXY = (x, y) => {
+        for (let i in this.gridPositions) {
+            if (x >= this.gridPositions[i].x &&
+                x < this.gridPositions[i].x + this.tileWidth + this.gridThickness &&
+                y >= this.gridPositions[i].y &&
+                y < this.gridPositions[i].y + this.tileHeight + this.gridThickness)
+                return this.gridPositions[i]
+        }
+        return null
+    }
+
+    getMoveSelectedTileData = (layerCanvas, layer, selectedGrids, gridPosition) => {
+        if (gridPosition === null) return
+        //sort selected grids by gid, small infront
+        let grids = [...selectedGrids]
+        grids.sort((a, b) => { return a.gid - b.gid })
+        //convert grids by tileset indexes, to (x y distance to the first element)
+        //1.get tileset
+        const tileset = this.getTilesetByGridId(grids[0].gid)
+        //2.get numRow numColumn
+        const { columns } = tileset
+        //3.get row column indexes
+        const gridIndexes = grids.map(e => {
+            return {
+                col: e.index % columns,
+                row: Math.floor(e.index / columns)
+            }
+        })
+        //4.get diff from first element
+        const gridDiff = gridIndexes.map(e => {
+            return {
+                col: e.col - gridIndexes[0].col + gridPosition.col,
+                row: e.row - gridIndexes[0].row + gridPosition.row
+            }
+        })
+
+
+        // use diff format a new data
+        const data = this.gridPositions.map(e => {
+            for (let i in gridDiff) {
+                if (gridDiff[i].col === e.col && gridDiff[i].row === e.row)
+                    return grids[i].gid
+            }
+            return 0
+        })
+
+        return data
+
+    }
+
+    storeLayerState = (layerCanvas, layer) => {
+        const ctx = layerCanvas.getContext('2d')
+        this.storedImageData = ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight)
+    }
+    restoreLayerState = (layerCanvas) => {
+        const ctx = layerCanvas.getContext('2d')
+        ctx.putImageData(this.storedImageData, 0, 0)
     }
 }

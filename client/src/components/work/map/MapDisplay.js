@@ -4,6 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import MapGridController from '../../controller/MapGridController'
 import MapImageController from '../../controller/MapImageController'
 import TilesetImageController from '../../controller/TilesetImageController'
+import { v1 } from 'uuid';
 
 const TOOLS = {
     ZOOM_IN: "ZOOM_IN",
@@ -19,6 +20,7 @@ class ImageWrapper extends React.Component {
     }
 
     scrollbar = React.createRef();
+    mouseGridPosition = null
 
     handleZoomEffect = (e) => {
         e.stopPropagation();
@@ -58,23 +60,72 @@ class ImageWrapper extends React.Component {
 
     handleDrawLayers = () => {
 
-
         const { layerList, tilesets } = this.props
         this.imageController.setTilesets(tilesets)
 
         let layersRefName = []
         this.layerRefs = {}
+        this.layerList = {}
         for (let i = 0; i < layerList.length; i++) {
             const layerRefName = 'layer' + layerList[i]._id
             this.layerRefs[layerRefName] = this.refs[layerRefName]
+            this.layerList[layerRefName] = layerList[i]
             layersRefName.push(layerRefName)
             this.imageController.clearLayerCanvas(this.layerRefs[layerRefName])
             this.handleDrawLayerByLayerData(layerList[i].data, this.layerRefs[layerRefName])
         }
     }
 
-    handleDrawLayerByLayerData = (data, layerCanvas) => {
+    handleMouseMove = e => {
+        const { selectedGrids, selectedLayer } = this.props
+        if (selectedLayer === null || selectedGrids.length === 0)
+            return
+        const { clientX, clientY } = e
+        const { x, y } = this.handleFixPosition(clientX, clientY)
 
+
+        const newMouseGridPosition = this.imageController.getGridPositionFromMouseXY(x, y)
+        if (newMouseGridPosition === null) return
+
+        const layerRefName = 'layer' + selectedLayer
+        const layerRef = this.layerRefs[layerRefName]
+        const layer = this.layerList[layerRefName]
+
+        if (!this.mouseGridPosition) {
+            this.imageController.storeLayerState(layerRef, layer)
+            this.handleMouseMoveDrawLayer(layerRef, layer, selectedGrids, newMouseGridPosition)
+            return
+        }
+
+
+
+        if (this.mouseGridPosition.index === newMouseGridPosition.index)
+            return
+
+        this.imageController.restoreLayerState(layerRef)
+        this.handleMouseMoveDrawLayer(layerRef, layer, selectedGrids, newMouseGridPosition)
+
+    }
+
+    handleMouseMoveDrawLayer = (layerRef, layer, selectedGrids, gridPosition) => {
+        this.mouseGridPosition = gridPosition
+
+        const data = this.imageController.getMoveSelectedTileData(layerRef, layer, selectedGrids, gridPosition)
+        this.handleDrawLayerByLayerData(data, layerRef)
+    }
+
+    handleMouseLeave = () => {
+        const { selectedLayer, selectedGrids } = this.props
+        if (selectedLayer === null || selectedGrids.length === 0)
+            return
+        const layerRefName = 'layer' + selectedLayer
+        const layerRef = this.layerRefs[layerRefName]
+        this.mouseGridPosition = null
+        this.imageController.restoreLayerState(layerRef)
+    }
+
+
+    handleDrawLayerByLayerData = (data, layerCanvas) => {
         //data[i] is the gridid of tilesets, i is the grid index of a layer
         for (let i = 0; i < data.length; i++) {
             if (data[i] === 0)
@@ -88,6 +139,21 @@ class ImageWrapper extends React.Component {
                 this.imageController.drawLayerGridByGridIndex(i, tileData, layerCanvas)
             }
         }
+    }
+
+    handleFixPosition = (clientX, clientY) => {
+        const windowScrollX = window.scrollX
+        const windowScrollY = window.scrollY
+        let x = windowScrollX + clientX
+        let y = windowScrollY + clientY
+        const canvasX = this.refs.backgroundCanvas.getBoundingClientRect().left
+        const canvasY = this.refs.backgroundCanvas.getBoundingClientRect().top
+        x -= canvasX
+        y -= canvasY
+        const { scale } = this.state
+        x /= scale
+        y /= scale
+        return { x, y }
     }
 
     componentDidMount() {
@@ -123,12 +189,17 @@ class ImageWrapper extends React.Component {
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
-                <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
+                <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle}
+                    onClick={this.handleZoomEffect}
+                    onMouseDown={e => e.stopPropagation()}
+                    onMouseMove={this.handleMouseMove}
+                    onMouseLeave={this.handleMouseLeave}
+                >
                     <canvas ref='backgroundCanvas' width={canvasWidth} height={canvasHeight}></canvas>
                     {layerList.map(e => (
                         <canvas ref={'layer' + e._id} width={canvasWidth} height={canvasHeight}
                             className={"layer-canvas " + (e.visible ? '' : 'layer-invisible')}
-                            style={{ opacity: e.opacity }}
+                            style={{ opacity: e.opacity }} key={v1()}
                         ></canvas>
                     ))}
                 </div>
@@ -142,12 +213,14 @@ class ImageWrapper extends React.Component {
 const mapStateToProps = (state) => {
     const { selected } = state.toolbar
     const { map } = state.map
-    const { tilesets, loaded } = state.tileset
+    const { tilesets, loaded, selectedGrids } = state.tileset
     const { layerList } = state.layer
     return {
         selectedTool: selected,
         map, tilesets, layerList,
-        tilesetLoaded: loaded
+        tilesetLoaded: loaded,
+        selectedGrids,
+        selectedLayer: state.layer.selected
     }
 };
 
