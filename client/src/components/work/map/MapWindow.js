@@ -36,7 +36,7 @@ class MapWindow extends React.Component {
 
     render() {
         const { resizing } = this.state
-        const { dimension, selectedTool } = this.props
+        const { dimension, selectedTool, transactions } = this.props
         const { width, height } = dimension.size
         const style = {
             maxWidth: width,
@@ -79,7 +79,7 @@ class MapWindow extends React.Component {
                         { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} /> },
                     ]}
                 />
-                <MapDisplay style={style} width={width} height={height - 70} window="map" resizing={resizing} />
+                <MapDisplay style={style} width={width} height={height - 70} window="map" resizing={resizing} transactions={transactions} />
             </Rnd>
 
         )
