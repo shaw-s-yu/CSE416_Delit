@@ -545,3 +545,27 @@ nav {
     background-color: rgb(255, 119, 7);
     box-shadow: 0 0 3pt 2pt red
 }
+.reset-property-btn {
+    background-color: white;
+    border: none;
+    color: gray;
+    font-size: 16px;
+    margin-left: 10px;
+    margin: center;
+    text-align: center;
+}
+
+.reset-property-btn-selected{
+    border-radius: 50px;
+    background-color: lightblue;
+    color: black;
+}
+
+
+.reset-property-btn:hover {
+    color: black;
+}
+
+.reset-property-btn:focus {
+    outline: none;
+}

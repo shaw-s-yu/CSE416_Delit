@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Card from "../../tools/Card";
+import '../workscreen.css'
+
 class TilesetList extends React.Component {
     handleGoView = (item) => {
         if (!item) return;
