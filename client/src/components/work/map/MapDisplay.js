@@ -340,7 +340,6 @@ const mapDispatchToProps = (dispatch) => ({
     mapStampClick: (data) => dispatch(handler.mapStampClick(data)),
     mapFillClick: (data) => dispatch(handler.mapFillClick(data)),
     propertySelectDisplay: (window) => dispatch(handler.propertySelectDisplay(window)),
-    restoreLayers: (layerList) => dispatch(handler.restoreLayers(layerList)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageWrapper)
