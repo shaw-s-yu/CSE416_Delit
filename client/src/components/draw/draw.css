@@ -103,15 +103,15 @@
 }
 
 .display-pencil{
-    cursor: url(./img/pencil\ \(4\).cur), auto;
+    cursor: url(../../img/pencil\ \(4\).cur), auto;
 }
 
 .display-eraser{
-    cursor: url(./img/eraser\ \(2\).cur), auto;
+    cursor: url(../../img/eraser\ \(2\).cur), auto;
 }
 
 .display-fill{
-    cursor: url(./img/fill_rollover.svg) 20 20, auto;
+    cursor: url(../../img/fill_rollover.svg) 20 20, auto;
 }
 
 .display-cross-cursor{

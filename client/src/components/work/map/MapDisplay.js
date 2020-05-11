@@ -19,6 +19,25 @@ class ImageWrapper extends React.Component {
 
     scrollbar = React.createRef();
     mouseGridPosition = null
+    mouseDown = false
+
+    getToolName = () => {
+        const { selectedTool } = this.props
+        console.log('hi')
+        if (selectedTool === TOOLS.ZOOM_IN)
+            return 'display-zoom-in'
+        if (selectedTool === TOOLS.ZOOM_OUT)
+            return 'display-zoom-out'
+        if (selectedTool === TOOLS.PENCIL)
+            return 'display-pencil'
+        if (selectedTool === TOOLS.ERASER)
+            return 'display-eraser'
+        if (selectedTool === TOOLS.FILL)
+            return 'display-fill'
+        if (selectedTool)
+            return 'display-cross-cursor'
+        return ''
+    }
 
     handleZoomEffect = (e) => {
         e.stopPropagation();
@@ -74,6 +93,14 @@ class ImageWrapper extends React.Component {
         }
     }
 
+    handleMouseDown = e => {
+        e.stopPropagation()
+        const { selectedGrids, selectedLayer } = this.props
+        if (selectedLayer === null || selectedGrids.length === 0)
+            return
+        this.mouseDown = true
+    }
+
     handleMouseMove = e => {
         const { selectedGrids, selectedLayer } = this.props
         if (selectedLayer === null || selectedGrids.length === 0)
@@ -110,12 +137,23 @@ class ImageWrapper extends React.Component {
 
         const { selectedTool } = this.props
         this.mouseGridPosition = gridPosition
+
         if (selectedTool === TOOLS.STAMP) {
             const data = this.imageController.getMoveSelectedTileData(selectedGrids, gridPosition)
+            if (this.mouseDown) {
+                this.imageController.storeLayerState(layerRef)
+                if (data) this.props.mapStampClick(data)
+                return
+            }
             this.handleDrawLayerByLayerData(data, layerRef)
         }
         else if (selectedTool === TOOLS.FILL) {
             const data = this.imageController.getMoveFillData(selectedGrids, gridPosition, layer.data)
+            if (this.mouseDown) {
+                this.imageController.storeLayerState(layerRef)
+                if (data) this.props.mapFillClick(data)
+                return
+            }
             this.handleDrawLayerByLayerData(data, layerRef)
         }
     }
@@ -123,6 +161,11 @@ class ImageWrapper extends React.Component {
     handleMouseLeave = () => {
         const { selectedLayer, selectedGrids } = this.props
         this.mouseGridPosition = null
+        if (this.mouseDown) {
+            this.mouseDown = false
+            return
+        }
+        this.mouseDown = false
         if (selectedLayer === null || selectedGrids.length === 0)
             return
         const layerRefName = 'layer' + selectedLayer
@@ -131,14 +174,21 @@ class ImageWrapper extends React.Component {
     }
 
     handleMouseClick = e => {
+        this.mouseDown = false
         const { selectedTool, selectedGrids, selectedLayer } = this.props
         if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
             this.handleZoomEffect(e)
             return
         }
-
-        if (selectedTool !== TOOLS.STAMP && selectedTool !== TOOLS.ERASER && selectedTool !== TOOLS.FILL)
+        if (selectedLayer === null || selectedGrids.length === 0) {
+            this.props.propertySelectDisplay('map')
             return
+        }
+
+        if (selectedTool !== TOOLS.STAMP && selectedTool !== TOOLS.ERASER && selectedTool !== TOOLS.FILL) {
+            this.props.propertySelectDisplay('map')
+            return
+        }
         e.stopPropagation()
 
         const { clientX, clientY } = e
@@ -225,9 +275,9 @@ class ImageWrapper extends React.Component {
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
-                <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle}
+                <div id="map-display" className={"display-place " + this.getToolName()} style={totalStyle}
                     onClick={this.handleMouseClick}
-                    onMouseDown={e => e.stopPropagation()}
+                    onMouseDown={this.handleMouseDown}
                     onMouseMove={this.handleMouseMove}
                     onMouseLeave={this.handleMouseLeave}
                 >
@@ -263,6 +313,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     mapStampClick: (data) => dispatch(handler.mapStampClick(data)),
     mapFillClick: (data) => dispatch(handler.mapFillClick(data)),
+    propertySelectDisplay: (window) => dispatch(handler.propertySelectDisplay(window)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageWrapper)
