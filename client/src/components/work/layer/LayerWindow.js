@@ -28,7 +28,7 @@ class LayerWindow extends React.Component {
     };
 
     render() {
-        const { open, dimension, selected, layerList } = this.props
+        const { open, dimension, selected, layerList, transactions } = this.props
         const { width } = dimension.size
         const maxWidth = width - 142;
         let opacity = 0
@@ -52,7 +52,7 @@ class LayerWindow extends React.Component {
                 style={{ zIndex: dimension.zIndex }}
             >
                 <Titlebar title="Layer Window" />
-                <LayerList maxWidth={maxWidth} />
+                <LayerList maxWidth={maxWidth} transactions={transactions} />
                 <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} onClick={this.handleAddLayer} />
                 <span className="opacity-text">OPACITY:</span>
                 <div className="layer-range">

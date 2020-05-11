@@ -172,6 +172,15 @@ const layerReducer = (state = initState, action) => {
         }
     }
 
+    else if (action.type === actionCreators.LAYER_RESTORE) {
+        const layerList = action.layerList.map(e => e)
+        if (!layerList) return { ...state }
+        return {
+            ...state,
+            layerList
+        }
+    }
+
     return state;
 }
 

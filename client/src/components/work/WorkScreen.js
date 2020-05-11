@@ -10,6 +10,8 @@ import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import * as handler from '../../store/database/WorkScreenHandler'
 import { compose } from 'redux';
+import Transactions from '../controller/JSTPS'
+
 
 class WorkScreen extends React.Component {
 
@@ -23,6 +25,7 @@ class WorkScreen extends React.Component {
         layer: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 4 },
     }
 
+    transactions = new Transactions()
 
     handleToTop = (window) => {
 
@@ -60,10 +63,10 @@ class WorkScreen extends React.Component {
         const { history } = this.props
         return (
             <>
-                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
-                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
-                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
-                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} />
+                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
+                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
+                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
+                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
             </>
         )
     }

@@ -7,7 +7,7 @@ import DisplayPlace from "./DisplayPlace";
 import * as handler from '../../store/database/WorkScreenHandler';
 import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
-import Transactions from './JSTPS'
+import Transactions from '../controller/JSTPS'
 import ReactFileReader from 'react-file-reader';
 import Dialogs from './Dialogs'
 import QueryList from '../../graphql/Query'

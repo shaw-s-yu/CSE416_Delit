@@ -124,3 +124,7 @@ export const mapStampClick = (data) => (dispatch, getState) => {
 export const mapFillClick = (data) => (dispatch, getState) => {
     dispatch({ type: actionCreators.MAP_FILL_CLICK, data });
 }
+
+export const restoreLayers = (layerList) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_RESTORE, layerList });
+}

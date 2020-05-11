@@ -3,7 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { connect } from 'react-redux';
 import TOOLS from '../tools/ToolbarTools'
 import CanvasController from './CanvasController'
-import DrawTransaction from "./DrawTransaction"
+import DrawTransaction from "../controller/DrawTransaction"
 import GridController from '../controller/GridController'
 import ImageController, { arrayBufferToBase64 } from '../controller/ImageController'
 import CopyController from '../controller/CopyController'

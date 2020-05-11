@@ -26,6 +26,14 @@ class MapWindow extends React.Component {
         })
     }
 
+    doTransaction = e => {
+        this.props.transactions.doTransaction()
+    }
+
+    undoTransaction = e => {
+        this.props.transactions.undoTransaction()
+    }
+
     render() {
         const { resizing } = this.state
         const { dimension, selectedTool } = this.props
@@ -54,8 +62,8 @@ class MapWindow extends React.Component {
                     className="map-toolbar"
                     selected={selectedTool}
                     content={[
-                        { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} /> },
-                        { name: TOOLS.REDO, item: <i className={"fas fa-redo"} style={{ fontSize: '24px' }} /> },
+                        { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
+                        { name: TOOLS.REDO, item: <i className={"fas fa-redo"} style={{ fontSize: '24px' }} onClick={this.doTransaction} /> },
                         { name: TOOLS.UPLOAD, item: <i className={"fas fa-upload"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
@@ -64,7 +72,7 @@ class MapWindow extends React.Component {
                         { name: TOOLS.STAMP, item: <i className={"fas fa-stamp"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.ERASER, item: <i className={"fas fa-eraser"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.FILL, item: <i className={"fas fa-fill"} style={{ fontSize: '24px' }} onClick={() => this.props.handleTest()} /> },
-                        { name: TOOLS.CROP, item: <i className={"fas fa-crop-alt"} style={{ fontSize: '24px' }} /> },
+                        // { name: TOOLS.CROP, item: <i className={"fas fa-crop-alt"} style={{ fontSize: '24px' }} /> },
                     ]}
                     rightContent={[
                         { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} /> },

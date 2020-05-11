@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ContentEditable from 'react-contenteditable'
 import * as handler from '../../../store/database/WorkScreenHandler';
+import LayerTransaction from '../../controller/LayerTransaction'
+import LayerDeleteTransaction from '../../controller/LayerDeleteTransaction'
+
 
 class LayerWindow extends React.Component {
 
@@ -16,7 +19,9 @@ class LayerWindow extends React.Component {
 
     handleDelete = (id, e) => {
         e.stopPropagation()
-        this.props.handleDelete(id)
+        this.props.transactions.addTransaction(
+            new LayerDeleteTransaction(id, this.props.layerList, this.props.handleDelete, this.props.restoreLayers)
+        )
     }
 
     handleVisibilityClick = (id, e) => {
@@ -120,6 +125,7 @@ const mapDispatchToProps = (dispatch) => ({
     handleSelectProperty: (window, index) => dispatch(handler.propertySelectDisplay(window, index)),
     handleVisibilityClick: (id) => dispatch(handler.layerVisibilityClick(id)),
     handleLockClick: (id) => dispatch(handler.layerLockClick(id)),
+    restoreLayers: (layerList) => dispatch(handler.restoreLayers(layerList)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerWindow)
