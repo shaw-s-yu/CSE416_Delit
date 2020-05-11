@@ -90,9 +90,9 @@ class PropertyList extends React.Component {
 
                 </Table>
                 <Pagination className="property-list-pagination" size="small" color="secondary" />
-                <div className="text-right">
-                    <button className="reset-property-btn"  >Reset</button>
-                </div>
+                {/* <div className="text-right">
+                    <button className="reset-property-btn">Reset</button>
+                </div> */}
             </>
         )
     }

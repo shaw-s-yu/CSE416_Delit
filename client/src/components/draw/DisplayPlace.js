@@ -322,6 +322,22 @@ class DisplayPlace extends React.Component {
         return tileset._id
     }
 
+    getTilesetJson =() =>{
+        const{ tileset } = this.props
+        const dataJson = {}
+        dataJson.firstgid = 1
+        dataJson.image = "./tileset@DELIT.jpeg"
+        dataJson.imageheight = tileset.height
+        dataJson.imagewidth = tileset.width
+        dataJson.margin = tileset.margin
+        dataJson.name = tileset.name
+        dataJson.properties = {}
+        dataJson.spacing = tileset.spacing
+        dataJson.tileheight = tileset.tileHeight
+        dataJson.tilewidth = tileset.tileWidth
+        // console.log(JSON.stringify(dataJson))
+        return JSON.stringify(dataJson)
+    }
 
     pasteCopiedGrid = () => {
         const { copying, selectedGrid } = this.state

@@ -3,6 +3,7 @@ module.exports = {
     REDO: "REDO",
     UPLOAD: "UPLOAD",
     DOWNLOAD: "DOWNLOAD",
+    EXPORT_JSON:"EXPORT_JSON",
     SAVE: "SAVE",
     COPY: "COPY",
     PASTE: "PASTE",
