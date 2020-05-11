@@ -6,6 +6,8 @@ import Titlebar from '../../tools/Titlebar'
 import Collapsible from '../../tools/Collapsible'
 import TilesetDisplay from './TilesetDisplay'
 import SelectTilesetDialog from "./SelectTilesetDialog";
+import TOOLS from '../../tools/ToolbarTools'
+
 
 class TilesetWindow extends React.Component {
 
@@ -19,15 +21,28 @@ class TilesetWindow extends React.Component {
             resizing: false,
             loaded: loaded,
             selectTilesetDialogOpen: false,
+            selectedTool: ''
         }
     }
 
+    handleZoomIn = () => {
+        this.setState({ selectedTool: TOOLS.ZOOM_IN })
+    }
+
+    handleZoomOut = () => {
+        this.setState({ selectedTool: TOOLS.ZOOM_OUT })
+    }
+
+    handleUnselectZoom = () => {
+        this.setState({ selectedTool: '' })
+    }
+
     handleOpenSelectTilesetDialog = () => {
-        this.setState({selectTilesetDialogOpen: true});
+        this.setState({ selectTilesetDialogOpen: true });
     };
 
     handleCloseSelectTilesetDialog = () => {
-        this.setState({selectTilesetDialogOpen: false});
+        this.setState({ selectTilesetDialogOpen: false });
     };
 
     tileMap = React.createRef()
@@ -72,6 +87,7 @@ class TilesetWindow extends React.Component {
 
     getCollapsibleList = () => {
         const { dimension, tilesets } = this.props
+        const { selectedTool } = this.state
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - 86 - 24 * tilesets.length;
         const style = {
@@ -91,16 +107,24 @@ class TilesetWindow extends React.Component {
                     tileset={tilesets[i]}
                     height={CollapsibleHeight}
                     window="tileset"
-                    childRef={ref => this.tileMap = ref} />,
+                    childRef={ref => this.tileMap = ref}
+                    selectedTool={selectedTool} />,
                 open: i === 0 ? true : false
             })
         }
         return li
     };
 
+    componentDidMount() {
+        window.onclick = e => {
+            if (e.target !== this.refs.zoom_in_btn && e.target !== this.refs.zoom_out_btn)
+                this.handleUnselectZoom()
+        }
+    }
+
     render() {
-        const { resizing, selectTilesetDialogOpen } = this.state;
-        const { open, dimension, tilesets, history  } = this.props
+        const { resizing, selectTilesetDialogOpen, selectedTool } = this.state;
+        const { open, dimension, tilesets, history } = this.props
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - (110 - 24 * tilesets.length);
         const style = {
@@ -131,8 +155,8 @@ class TilesetWindow extends React.Component {
                     />
 
                     <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={e => e.stopPropagation()} onClick={this.handleOpenSelectTilesetDialog} />
-                    <i className="fas fa-search-plus tileset-zoomin-btn better-btn " onMouseDown={e => e.stopPropagation()} />
-                    <i className="fas fa-search-minus tileset-zoomout-btn better-btn " onMouseDown={e => e.stopPropagation()} />
+                    <i ref='zoom_in_btn' className={"fas fa-search-plus tileset-zoomin-btn better-btn " + (selectedTool === TOOLS.ZOOM_IN ? 'tool-selected' : '')} onMouseDown={e => e.stopPropagation()} onClick={this.handleZoomIn} />
+                    <i ref='zoom_out_btn' className={"fas fa-search-minus tileset-zoomout-btn better-btn " + (selectedTool === TOOLS.ZOOM_OUT ? 'tool-selected' : '')} onMouseDown={e => e.stopPropagation()} onClick={this.handleZoomOut} />
                     <i className="fas fa-trash-alt tileset-delete-btn better-btn " onMouseDown={e => e.stopPropagation()} />
 
                 </Rnd>

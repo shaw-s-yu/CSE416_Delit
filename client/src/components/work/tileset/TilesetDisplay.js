@@ -29,7 +29,7 @@ class TilesetDisplay extends React.Component {
         const nscale = scale * factor
         this.setState({ scale: nscale })
 
-        let target = document.getElementById('map-display')
+        let target = this.refs.display
         const rect = target.getBoundingClientRect()
         const { clientX, clientY } = e
         const { left, top } = rect
@@ -99,7 +99,7 @@ class TilesetDisplay extends React.Component {
                 renderThumbHorizontal={props => <div {...props} className="thumb" />}
                 renderThumbVertical={props => <div {...props} className="thumb" />}>
 
-                <div id="map-display" className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
+                <div ref='display' className={"display-place " + this.getSelectedTools()} style={totalStyle} onClick={this.handleZoomEffect} onMouseDown={e => e.stopPropagation()}>
                     <canvas ref='backgroundCanvas' id={'tileset' + index} width={canvasWidth} height={canvasHeight}></canvas>
                 </div>
             </Scrollbars>

@@ -540,3 +540,8 @@ nav {
     cursor: auto;
     pointer-events: none;
 }
+
+.tool-selected{
+    background-color: rgb(255, 119, 7);
+    box-shadow: 0 0 3pt 2pt red
+}
