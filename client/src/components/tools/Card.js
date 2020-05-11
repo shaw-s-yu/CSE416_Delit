@@ -33,9 +33,10 @@ class Card extends React.Component {
 
     render() {
         const { imageData } = this.state;
-        const { className, style, onClick, item, refetch, showEditeBts, handleCheckboxClick } = this.props;
+        const { className, style, onClick, item, refetch, showEditeBts, handleCheckboxClick, selectedTilesets} = this.props;
         const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
+        const checked = !!selectedTilesets.find((tileset) => tileset._id === item._id);
         return (
             <div>
                 <div className={className} style={style} onClick={onClick.bind(this, item)}>
@@ -52,7 +53,7 @@ class Card extends React.Component {
                 {
                     showEditeBts ?
                        <div className="card-check-box-group" style={style}>
-                            <input type="checkbox" className={"card-check-box"} id={item._id} onChange={handleCheckboxClick.bind(this, item)}/>
+                            <input type="checkbox" className={"card-check-box"} id={item._id} onChange={handleCheckboxClick.bind(this, item)} defaultChecked={checked}/>
                         </div>
                         :
                         <div className="card-info-btn-box" style={style}>

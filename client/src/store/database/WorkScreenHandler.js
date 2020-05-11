@@ -107,24 +107,28 @@ export const layerLockClick = (id) => (dispatch, getState) => {
 
 export const passOpacityHandler = (value) => (dispatch, getState) => {
     dispatch({ type: actionCreators.LAYER_PASS_OPACITY, value });
-}
+};
 
 export const layerAddHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.ADD_LAYER });
-}
+};
 
 export const tilesetSelectGrids = (selectedGrids) => (dispatch, getState) => {
     dispatch({ type: actionCreators.SELECT_TILESET_GRIDS, selectedGrids });
-}
+};
 
 export const mapStampClick = (data) => (dispatch, getState) => {
     dispatch({ type: actionCreators.MAP_STAMP_CLICK, data });
-}
+};
 
 export const mapFillClick = (data) => (dispatch, getState) => {
     dispatch({ type: actionCreators.MAP_FILL_CLICK, data });
-}
+};
 
 export const restoreLayers = (layerList) => (dispatch, getState) => {
     dispatch({ type: actionCreators.LAYER_RESTORE, layerList });
-}
+};
+
+export const updateTilesetsHandler = (tilesets) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.UPDATE_TILESETS, tilesets });
+};

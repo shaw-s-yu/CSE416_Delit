@@ -273,17 +273,27 @@ export default {
                 sortBy: $sortBy
                 sortOrder: $sortOrder
                 ){
-                _id
+               _id
                 name
-                imageId
+                owner
+                editors
                 ownerInfo{
                     username
+                    _id
                 }
                 teamInfo{
-                    _id
                     username
-                    picture
+                    _id
                 }
+                columns
+                imageId
+                width
+                height
+                margin
+                spacing
+                tilecount
+                tileHeight
+                tileWidth
                 published
             }
             tilesetsSelectableAmount(searchName: $search)

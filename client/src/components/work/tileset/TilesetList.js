@@ -4,6 +4,7 @@ import Card from "../../tools/Card";
 import '../workscreen.css'
 
 class TilesetList extends React.Component {
+
     handleGoView = (item) => {
         if (!item) return;
         const { _id } = item;
@@ -12,7 +13,7 @@ class TilesetList extends React.Component {
         window.location.reload(false);
     };
     render() {
-        const { items, handleCheckboxClick } = this.props;
+        const { items, handleCheckboxClick, selectedTilesets } = this.props;
         const numItem = items.length;
 
         const style = {
@@ -47,6 +48,7 @@ class TilesetList extends React.Component {
                                     handleCheckboxClick={handleCheckboxClick}
                                     handleSetItem={this.handleSetItem}
                                     showEditeBts={true}
+                                    selectedTilesets={selectedTilesets}
                                 />
 
                             );

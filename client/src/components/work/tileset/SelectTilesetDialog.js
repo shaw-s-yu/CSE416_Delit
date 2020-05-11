@@ -8,6 +8,7 @@ import Searchbar from "../../tools/Searchbar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "../../tools/Pagination";
 import TilesetList from "./TilesetList";
+import * as handler from "../../../store/database/WorkScreenHandler";
 class SelectTilesetDialog extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +18,7 @@ class SelectTilesetDialog extends React.Component {
             sortBy: 'lastUpdate',
             lastUpdate: -1,
             name: -1,
-            selectedTilesets:[],
+            selectedTilesets:[...this.props.tilesets],
         }
     }
 
@@ -49,10 +50,15 @@ class SelectTilesetDialog extends React.Component {
     handleCheckboxClick = (item, e) => {
         const {target} = e;
         let {selectedTilesets} = this.state;
-        if (target.checked)
-            selectedTilesets.push(item._id);
-        else
-            selectedTilesets = selectedTilesets.filter((id) => id !== item._id);
+        const checked = target.checked;
+        if (checked) {
+            selectedTilesets.push(item);
+            console.log("add: ", item.name)
+        }
+        else {
+            selectedTilesets = selectedTilesets.filter((i) => i._id !== item._id);
+            console.log("remove: ", item.name)
+        }
         this.setState({selectedTilesets});
 
         console.log(selectedTilesets);
@@ -60,15 +66,16 @@ class SelectTilesetDialog extends React.Component {
 
     handleSubmitButton = () => {
         console.log(this.state.selectedTilesets);
+        this.props.handleUpdateTilesets(this.state.selectedTilesets);
         this.props.close();
     }
     render() {
         const { open, close, user, history } = this.props;
-        const { page, search, sortBy } = this.state;
+        const { page, search, sortBy, selectedTilesets } = this.state;
         const query = QueryList.GET_SELECTABLE_TILESETS;
         const pageSkip = (page - 1) * 6;
         const sortOrder = this.state[sortBy];
-        const disable = this.state.selectedTilesets.length === 0;
+        const disable = selectedTilesets.length === 0;
         return (
             <>
                 <Dialog
@@ -89,13 +96,13 @@ class SelectTilesetDialog extends React.Component {
                                 <button className={"tileset-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
                                 <i className={"fa tileset-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
                             </div>
-                            <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
+                            <Query query={QueryList.GET_SELECTABLE_TILESETS} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
                                 {({ loading, error, data }) => {
                                     if (loading)
                                         return <CircularProgress className="tileset-loading" />;
                                     if (error) return 'error';
                                     if (query === QueryList.EMPTY_QUERY)
-                                        return 'Empty';
+                                        return;
                                     if (!data) return 'error';
                                     const items = data.user.tilesetsSelectable;
                                     const amount = data.user.tilesetsSelectableAmount;
@@ -104,6 +111,7 @@ class SelectTilesetDialog extends React.Component {
                                         <div className="tileset-container">
                                             <TilesetList
                                                 items={items}
+                                                selectedTilesets={selectedTilesets}
                                                 history={history}
                                                 handleCheckboxClick={this.handleCheckboxClick}
                                             />
@@ -132,4 +140,7 @@ const mapStateToProps = (state) => {
     return { user };
 };
 
-export default connect(mapStateToProps)(SelectTilesetDialog);
+const mapDispatchToProps = (dispatch) => ({
+    handleUpdateTilesets: (tilesets) => dispatch(handler.updateTilesetsHandler(tilesets)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(SelectTilesetDialog);
