@@ -36,6 +36,12 @@ class Draw extends React.Component {
     transactions = new Transactions();
     display = React.createRef();
 
+    handleExportJson =() =>{
+        const imgData = this.display.getTilesetJson()
+        console.log(imgData)
+        // console.log(imgData.columns)
+        require("downloadjs")(imgData, "tilesetJson@DELIT.json", "json");
+    }
 
     handleSaveDialogOpen = () => {
         if (this.display.userIsTeammember())
@@ -250,6 +256,7 @@ class Draw extends React.Component {
             <div onClick={this.handleUnselect}>
                 <TopNavbar site='tileset' history={history}
                     handleSave={this.handleSaveDialogOpen}
+                    handleExportJson={this.handleExportJson}
                     handleImport={this.handleImport}
                     handleExport={this.handleExport}
                     handleDuplicate={this.handleDuplicateDialogOpen}
@@ -274,7 +281,7 @@ class Draw extends React.Component {
                             },
                             { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} onClick={this.handleExport} /> },
                             { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} onClick={this.handleSaveDialogOpen} /> },
-                            { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{fontSize: '24px'}} />},
+                            { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{fontSize: '24px' }} onClick={this.handleExportJson} />},
                             { name: TOOLS.COPY, item: <i className={"fas fa-copy"} style={{ fontSize: '24px' }} onClick={this.handleCopy} /> },
                             { name: TOOLS.PASTE, item: <i className={"fas fa-paste"} style={{ fontSize: '24px' }} onClick={this.handlePaste} /> },
                         ]}
