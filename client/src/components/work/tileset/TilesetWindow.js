@@ -96,13 +96,6 @@ class TilesetWindow extends React.Component {
             })
         }
         return li
-    }
-
-    handleGoView = (item) => {
-        if (!item) return;
-        const { _id } = item;
-        const type = 'tilesetviewer';
-        this.props.history.push(`/${type}/${_id}`);
     };
 
     render() {
@@ -113,7 +106,7 @@ class TilesetWindow extends React.Component {
         const style = {
             maxWidth: width,
             maxHeight: CollapsibleHeight,
-        }
+        };
         return (
             <>
                 <Rnd
