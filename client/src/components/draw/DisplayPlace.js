@@ -326,7 +326,7 @@ class DisplayPlace extends React.Component {
         const{ tileset } = this.props
         const dataJson = {}
         dataJson.firstgid = 1
-        dataJson.image = ".\/tileset@DELIT.jpeg"
+        dataJson.image = "./tileset@DELIT.jpeg"
         dataJson.imageheight = tileset.height
         dataJson.imagewidth = tileset.width
         dataJson.margin = tileset.margin
