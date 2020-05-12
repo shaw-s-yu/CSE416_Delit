@@ -13,7 +13,6 @@ class TilesetWindow extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props)
         let loaded = []
         for (let i = 0; i < this.props.tilesets.length; i++)
             loaded.push(false)
@@ -176,7 +175,7 @@ class TilesetWindow extends React.Component {
 
 const mapStateToProps = (state) => {
     const { tilesets } = state.tileset
-    console.log("window:", state);
+    // console.log("window:", state);
 
     return {
         tilesets
