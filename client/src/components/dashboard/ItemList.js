@@ -15,6 +15,7 @@ class ItemList extends React.Component {
         invite: false,
         duplicate: false,
         remove: false,
+        publish: false,
         item: null,
         refetch: null,
 
@@ -53,6 +54,7 @@ class ItemList extends React.Component {
         const style = {
             height: numItem > 3 ? 600 : 300
         };
+        const showPublishBt = type === 'tileset';
         return (
             <div className="dashboard-itemlist">
                 <div className="dashboard-itemlist-wrapper" style={style}>
@@ -82,6 +84,7 @@ class ItemList extends React.Component {
                                     key={_id}
                                     handleSetItem={this.handleSetItem}
                                     refetch={refetch}
+                                    showPublishBt={showPublishBt}
                                 />
 
                             );

@@ -135,6 +135,18 @@ nav i{
     margin-left: 52px;
 }
 
+.card-info-btn-box:hover .card-info-btn-center .card-info-edit-btn-center {
+    display: none;
+}
+
+.card-info-btn-box .card-info-btn-center .card-info-publish-btn-center {
+    display: none;
+}
+
+.card-info-btn-box:hover .card-info-btn-center .card-info-publish-btn-center {
+    display: inline;
+}
+
 .card-info-btn-box:hover .card-info-btn-tl{
     margin-top:0px;
     margin-left: 0px;
