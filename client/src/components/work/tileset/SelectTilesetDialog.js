@@ -18,8 +18,8 @@ class SelectTilesetDialog extends React.Component {
             sortBy: 'lastUpdate',
             lastUpdate: -1,
             name: -1,
-            selectedTilesets:[...this.props.tilesets],
         }
+        this.selectedTilesets =[...this.props.tilesets];
     }
 
     handleSearchChange = (e) => {
@@ -49,27 +49,27 @@ class SelectTilesetDialog extends React.Component {
 
     handleCheckboxClick = (item, e) => {
         const {target} = e;
-        let {selectedTilesets} = this.state;
         const checked = target.checked;
         if (checked)
-            selectedTilesets.push(item);
+            this.selectedTilesets.push(item);
         else
-            selectedTilesets = selectedTilesets.filter((i) => i._id !== item._id);
-        this.setState({selectedTilesets});
+            this.selectedTilesets = this.selectedTilesets.filter((i) => i._id !== item._id);
     };
 
     handleSubmitButton = () => {
-        console.log(this.state.selectedTilesets);
-        this.props.handleUpdateTilesets(this.state.selectedTilesets);
+        console.log(this.selectedTilesets);
+        this.props.handleUpdateTilesets(this.selectedTilesets);
         this.props.close();
-    }
+    };
+
     render() {
         const { open, close, user, history } = this.props;
         const { page, search, sortBy, selectedTilesets } = this.state;
         const query = QueryList.GET_SELECTABLE_TILESETS;
         const pageSkip = (page - 1) * 6;
         const sortOrder = this.state[sortBy];
-        const disable = selectedTilesets.length === 0;
+        const disable = this.selectedTilesets.length === 0;
+        const tilesetIds = [...new Set(this.selectedTilesets.map((tileset) => tileset._id ))];
         return (
             <>
                 <Dialog
@@ -90,7 +90,7 @@ class SelectTilesetDialog extends React.Component {
                                 <button className={"tileset-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
                                 <i className={"fa tileset-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
                             </div>
-                            <Query query={QueryList.GET_SELECTABLE_TILESETS} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
+                            <Query query={QueryList.GET_SELECTABLE_TILESETS} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder, tilesetIds:tilesetIds }} fetchPolicy={"no-cache"}>
                                 {({ loading, error, data }) => {
                                     if (loading)
                                         return <CircularProgress className="tileset-loading" />;
@@ -99,13 +99,12 @@ class SelectTilesetDialog extends React.Component {
                                         return;
                                     if (!data) return 'error';
                                     const items = data.user.tilesetsSelectable;
-                                    const amount = data.user.tilesetsSelectableAmount;
+                                    let amount = data.user.tilesetsSelectableAmount;
                                     const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                                     return(
                                         <div className="tileset-container">
                                             <TilesetList
                                                 items={items}
-                                                selectedTilesets={selectedTilesets}
                                                 history={history}
                                                 handleCheckboxClick={this.handleCheckboxClick}
                                             />

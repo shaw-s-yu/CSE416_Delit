@@ -13,7 +13,7 @@ class TilesetList extends React.Component {
         window.location.reload(false);
     };
     render() {
-        const { items, handleCheckboxClick, selectedTilesets } = this.props;
+        const { items, handleCheckboxClick } = this.props;
         const numItem = items.length;
 
         const style = {
@@ -48,7 +48,6 @@ class TilesetList extends React.Component {
                                     handleCheckboxClick={handleCheckboxClick}
                                     handleSetItem={this.handleSetItem}
                                     showEditeBts={true}
-                                    selectedTilesets={selectedTilesets}
                                 />
 
                             );
