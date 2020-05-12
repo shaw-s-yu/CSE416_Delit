@@ -11,6 +11,8 @@ import { Query } from 'react-apollo'
 import * as handler from '../../store/database/WorkScreenHandler'
 import { compose } from 'redux';
 import Transactions from '../controller/JSTPS'
+import SaveDialog from './SaveDialog'
+import html2canvas from 'html2canvas'
 
 class WorkScreen extends React.Component {
 
@@ -22,6 +24,10 @@ class WorkScreen extends React.Component {
         map: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 2 },
         tileset: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 3 },
         layer: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 4 },
+        saveDialogOpen: false,
+        saving: false,
+        saveConfirmed: false,
+        savemsg: ''
     }
 
     transactions = new Transactions()
@@ -62,7 +68,7 @@ class WorkScreen extends React.Component {
         const { history } = this.props
         return (
             <>
-                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
+                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} handleSave={this.handleSaveDialogOpen} handleExport={this.handleExport} />
                 <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
                 <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
                 <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
@@ -150,6 +156,29 @@ class WorkScreen extends React.Component {
         require("downloadjs")(JSON.stringify(data).toLowerCase(), `${project.name}.json`, "text/plain");
     }
 
+    handleSaveDialogOpen = () => {
+        this.setState({ saveDialogOpen: true })
+    }
+
+    handleSave = () => {
+        const { layers, map, tilesets, custom, project } = this.props
+        html2canvas(document.getElementById('map-display')).then(canvas => {
+            const imgData = canvas.toDataURL('image/jpeg', 1)
+            this.setState({ saving: true }, () => {
+                this.props.socket.emit('project-save', {
+                    layers, map, tilesets, custom, project, imgData
+                })
+            })
+
+        });
+    }
+
+
+
+    handleSaveDialogClose = () => {
+        this.setState({ saveDialogOpen: false, saving: false, saveConfirmed: false, savemsg: '' })
+    }
+
     componentDidMount() {
 
         const { width, height } = document.body.getBoundingClientRect();
@@ -173,8 +202,19 @@ class WorkScreen extends React.Component {
         }
     }
 
+    UNSAFE_componentWillMount() {
+        this.props.socket.on('project-save-back', res => {
+            const { err, msg } = res
+            if (err) {
+                this.setState({ savemsg: msg, saving: false })
+            } else {
+                this.setState({ savemsg: msg, saveConfirmed: true, saving: false })
+            }
+        })
+    }
+
     render = () => {
-        const { propertyOpen, layerOpen, tilesetOpen } = this.state
+        const { propertyOpen, layerOpen, tilesetOpen, saveDialogOpen, saving, savemsg, saveConfirmed } = this.state
         const { history, loaded } = this.props
         const { key } = this.props.match.params
         return (
@@ -189,7 +229,7 @@ class WorkScreen extends React.Component {
                         history={history}
                         handleDoTransaction={this.doTransaction}
                         handleUndoTransaction={this.undoTransaction}
-                        handleSave={this.handleFormatMapJson}
+                        handleSave={this.handleSaveDialogOpen}
                         handleExport={this.handleExport}
                     />
                     <div>
@@ -207,6 +247,13 @@ class WorkScreen extends React.Component {
                         }
                     </div>
                 </div >
+                <SaveDialog
+                    open={saveDialogOpen}
+                    parent={this}
+                    saving={saving}
+                    savemsg={savemsg}
+                    saveConfirmed={saveConfirmed}
+                />
             </>
 
 
@@ -224,7 +271,9 @@ const mapStateToProps = (state, ownProps) => {
         layers: state.layer.layerList,
         map: state.map.map,
         tilesets: state.tileset.tilesets,
-        project: state.project
+        project: state.project,
+        socket: state.backend.socket,
+        custom: state.property.custom
     }
 };
 

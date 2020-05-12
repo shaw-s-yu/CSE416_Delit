@@ -25,6 +25,7 @@
     "gh-pages": "^2.2.0",
     "graphql": "^15.0.0",
     "graphql-date": "^1.0.3",
+    "html2canvas": "^1.0.0-rc.5",
     "lodash": "^4.17.15",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.11",

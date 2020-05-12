@@ -1,5 +1,4 @@
 import * as actionCreators from '../actions/actionCreators'
-import { v1 } from 'uuid'
 
 const layerReducer = (state = initState, action) => {
 
@@ -9,7 +8,7 @@ const layerReducer = (state = initState, action) => {
             return e
         })
 
-        let layerFormat = { ...action.project.layersInfo[0] }
+        let layerFormat = { ...action.project.mapInfo }
 
         return {
             ...state,
@@ -119,15 +118,12 @@ const layerReducer = (state = initState, action) => {
             layerList,
         }
     } else if (action.type === actionCreators.ADD_LAYER) {
-        let layerList = state.layerList.map(e => e)
-        let layerToAdd = { ...state.layerFormat }
-        layerToAdd._id = v1()
-        layerToAdd.opacity = 1
-        layerToAdd.name = 'New Layer Click to Rename'
-        layerToAdd.locked = false
-        layerToAdd.visible = true
-        layerToAdd.data = layerToAdd.data.map(e => 0)
-        layerList.push(layerToAdd)
+        let layerList = []
+        for (let i in state.layerList) {
+            layerList.push({ ...state.layerList[i] })
+        }
+        layerList.push({ ...action.layer })
+
         return {
             ...state,
             layerList,

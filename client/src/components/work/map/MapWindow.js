@@ -66,8 +66,8 @@ class MapWindow extends React.Component {
                     content={[
                         { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
                         { name: TOOLS.REDO, item: <i className={"fas fa-redo"} style={{ fontSize: '24px' }} onClick={this.doTransaction} /> },
-                        { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} /> },
-                        { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
+                        { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} onClick={this.props.handleExport} /> },
+                        { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} onClick={this.props.handleSave} /> },
                         { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{ fontSize: '24px' }} onClick={this.handleExportJson} /> },
                     ]}
                     secondaryContent={[

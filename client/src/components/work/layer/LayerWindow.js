@@ -6,7 +6,7 @@ import LayerList from './LayerList';
 import Slider from '@material-ui/core/Slider';
 import * as handler from '../../../store/database/WorkScreenHandler';
 import LayerTransaction from '../../controller/LayerTransaction'
-
+import mongoose from 'mongoose'
 
 class LayerWindow extends React.Component {
 
@@ -22,9 +22,27 @@ class LayerWindow extends React.Component {
 
     handleAddLayer = e => {
         e.stopPropagation()
+        let layerToAdd = {}
+        const numRow = this.props.map.width
+        const numWidth = this.props.map.height
+        const data = []
+        for (let i = 0; i < numRow * numWidth; i++) {
+            data.push(0)
+        }
+        layerToAdd._id = mongoose.Types.ObjectId()
+        layerToAdd.opacity = 1
+        layerToAdd.name = 'New Layer Click to Rename'
+        layerToAdd.locked = false
+        layerToAdd.visible = true
+        layerToAdd.data = data
+        layerToAdd.x = 0
+        layerToAdd.y = 0
+        layerToAdd.type = 'tilelayer'
+        layerToAdd.width = numRow
+        layerToAdd.height = numWidth
         // this.props.handleAddLayer()
         this.props.transactions.addTransaction(
-            new LayerTransaction(null, this.props.layerList, this.props.handleAddLayer, this.props.restoreLayers)
+            new LayerTransaction(layerToAdd, this.props.layerList, this.props.handleAddLayer, this.props.restoreLayers)
         )
     }
 
@@ -105,15 +123,16 @@ class LayerWindow extends React.Component {
 
 const mapStateToProps = (state) => {
     const { layerList, selected } = state.layer;
+    const { map } = state.map
     return {
-        layerList,
+        layerList, map,
         selected
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     handlePassOpacity: (value) => dispatch(handler.passOpacityHandler(value)),
-    handleAddLayer: () => dispatch(handler.layerAddHandler()),
+    handleAddLayer: (layer) => dispatch(handler.layerAddHandler(layer)),
     restoreLayers: (layerList) => dispatch(handler.restoreLayers(layerList)),
 })
 

@@ -16,6 +16,16 @@ const mapReducer = (state = initState, action) => {
 
         }
     }
+
+    else if (action.type === actionCreators.ADD_LAYER) {
+        const map = {
+            ...state.map,
+            nextlayerid: state.map.nextlayerid + 1
+        }
+        return {
+            ...state, map
+        }
+    }
     return state;
 }
 

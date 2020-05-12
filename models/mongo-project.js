@@ -10,6 +10,8 @@ var ProjectSchema = new Schema({
     tilesetFirstgid: [Number],
     layerId: [String],
     imageId: String,
+    customPropertyName: [String],
+    customPropertyValue: [String],
     lastUpdate: { type: Date, default: Date.now },
 });
 

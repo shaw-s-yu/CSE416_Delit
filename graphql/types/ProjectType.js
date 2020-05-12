@@ -39,6 +39,12 @@ module.exports = new GraphQLObjectType({
             editors: {
                 type: new GraphQLList(GraphQLString)
             },
+            customPropertyName: {
+                type: new GraphQLList(GraphQLString)
+            },
+            customPropertyValue: {
+                type: new GraphQLList(GraphQLString)
+            },
             lastUpdate: {
                 type: new GraphQLNonNull(GraphQLDate)
             },

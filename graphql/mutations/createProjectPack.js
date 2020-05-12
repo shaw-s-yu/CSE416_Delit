@@ -88,6 +88,8 @@ module.exports = {
             tilesetFirstgid: [],
             mapId: mapId,
             layerId: layerId,
+            customPropertyName: [],
+            customPropertyValue: []
         }).save()
         if (!newProject) throw new Error('create project fail')
         return newProject

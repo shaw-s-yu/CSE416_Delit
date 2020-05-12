@@ -25,7 +25,6 @@ export const unselectPropertyHandler = () => (dispatch, getState) => {
 };
 
 export const changePropertyHandler = (index, type, value) => (dispatch, getState) => {
-    console.log(index, type, value)
     dispatch({ type: actionCreators.PROPERTY_CHANGE, index: index, name: type, value: value });
 };
 
@@ -110,8 +109,8 @@ export const passOpacityHandler = (value) => (dispatch, getState) => {
     dispatch({ type: actionCreators.LAYER_PASS_OPACITY, value });
 };
 
-export const layerAddHandler = () => (dispatch, getState) => {
-    dispatch({ type: actionCreators.ADD_LAYER });
+export const layerAddHandler = (layer) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.ADD_LAYER, layer });
 };
 
 export const tilesetSelectGrids = (selectedGrids) => (dispatch, getState) => {

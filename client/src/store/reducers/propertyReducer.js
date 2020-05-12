@@ -1,5 +1,6 @@
 import * as actionCreators from '../actions/actionCreators'
 
+
 const propertyReducer = (state = initState, action) => {
 
     if (action.type === actionCreators.FORMAT_PROJECT) {
@@ -11,6 +12,22 @@ const propertyReducer = (state = initState, action) => {
             ...state,
             map, tilesets, layers,
             display: map,
+        }
+    }
+    else if (action.type === actionCreators.ADD_LAYER) {
+        let layerList = []
+        for (let i in state.layers) {
+            layerList.push({ ...state.layerList[i] })
+        }
+        layerList.push({
+            name: action.layer.name,
+            visible: action.layer.visible + '',
+            opacity: action.layer.opacity
+        })
+
+        return {
+            ...state,
+            layers: layerList,
         }
     }
 
@@ -54,7 +71,6 @@ const propertyReducer = (state = initState, action) => {
                 [action.name]: i === action.index ? action.value : state.custom[i].value
             })
         }
-
         return {
             ...state,
             custom
@@ -135,7 +151,7 @@ const formateLayers = (layersInfo) => {
     for (let i = 0; i < layersInfo.length; i++) {
         const { opacity, visible, name } = layersInfo[i]
         layers.push({
-            opacity, visible, name
+            opacity, visible: visible + '', name
         })
     }
     return layers

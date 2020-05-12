@@ -383,6 +383,8 @@ export default {
             tilesetFirstgid
             layerId
             editors
+            customPropertyName
+            customPropertyValue
             lastUpdate
             ownerInfo{
                 username

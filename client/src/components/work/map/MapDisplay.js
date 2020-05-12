@@ -20,7 +20,7 @@ class ImageWrapper extends React.Component {
     scrollbar = React.createRef();
     mouseGridPosition = null
     mouseDown = false
-    
+
     getToolName = () => {
         const { selectedTool } = this.props
         if (selectedTool === TOOLS.ZOOM_IN)
@@ -120,7 +120,7 @@ class ImageWrapper extends React.Component {
 
 
         const newMouseGridPosition = this.imageController.getGridPositionFromMouseXY(x, y)
-        if (newMouseGridPosition === null) return
+        if (newMouseGridPosition === null || !this.layerRefs) return
 
         const layerRefName = 'layer' + selectedLayer
         const layerRef = this.layerRefs[layerRefName]
@@ -303,8 +303,8 @@ class ImageWrapper extends React.Component {
             this.handleDrawLayers()
     }
 
-    getTilesetJson =() =>{
-        const{ tileset } = this.props
+    getTilesetJson = () => {
+        const { tileset } = this.props
         // const dataJson = {}
         console.log(tileset)
         // dataJson.firstgid = 1

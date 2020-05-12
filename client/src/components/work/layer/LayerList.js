@@ -82,7 +82,7 @@ class LayerWindow extends React.Component {
                 {layerList && layerList.map((layer, index) => {
                     return (
                         <div key={index}>
-                            <div className={this.getClassName(layer._id)} onMouseDown={e => e.stopPropagation()} onClick={this.handleSelect.bind(this, layer._id)}>
+                            <div className={this.getClassName(layer._id)} onMouseDown={e => this.handleOnMouseDown(e, index)} onClick={this.handleSelect.bind(this, layer._id)}>
                                 <ContentEditable
                                     innerRef={layer.ref}
                                     onChange={this.handleRename}
