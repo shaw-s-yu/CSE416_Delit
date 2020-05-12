@@ -44,7 +44,7 @@ const layerReducer = (state = initState, action) => {
     } else if (action.type === actionCreators.LAYER_DELETE) {
         let layerList = state.layerList.map(e => e)
         for (let i = 0; i < layerList.length; i++)
-            if (layerList[i]._id === action.id) {
+            if (i === action.id) {
                 layerList.splice(i, 1)
                 break;
             }
@@ -84,10 +84,10 @@ const layerReducer = (state = initState, action) => {
         }
     } else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
         let layerList = []
-        for (let i in state.layerList) {
+        for (let i = 0; i < state.layerList.length; i++) {
             layerList.push({
                 ...state.layerList[i],
-                visible: state.layerList[i]._id === action.id ? !state.layerList[i].visible : state.layerList[i].visible
+                visible: i === action.id ? !state.layerList[i].visible : state.layerList[i].visible
             })
         }
         return {

@@ -78,7 +78,7 @@ class LayerWindow extends React.Component {
         if (selected) {
             for (let i = 0; i < layerList.length; i++) {
                 if (layerList[i]._id === selected)
-                    opacity = layerList[i].opacity * 100
+                    opacity = Math.floor(layerList[i].opacity * 100)
             }
         }
         return (

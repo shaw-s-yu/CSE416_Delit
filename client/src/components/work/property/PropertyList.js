@@ -51,8 +51,8 @@ class PropertyList extends React.Component {
             if (names[i] === '_id')
                 continue
             toReturn.push({
-                name: names[i],
-                value: data[names[i]]
+                name: names[i] + '',
+                value: data[names[i]] + ''
             })
         }
         return toReturn

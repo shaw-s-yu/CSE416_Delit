@@ -17,10 +17,9 @@ const propertyReducer = (state = initState, action) => {
     else if (action.type === actionCreators.ADD_LAYER) {
         let layerList = []
         for (let i in state.layers) {
-            layerList.push({ ...state.layerList[i] })
+            layerList.push({ ...state.layers[i] })
         }
         layerList.push({
-            _id: action.layer._id,
             name: action.layer.name,
             visible: action.layer.visible + '',
             opacity: action.layer.opacity
@@ -43,6 +42,21 @@ const propertyReducer = (state = initState, action) => {
             else {
                 layers.push({ ...state.layers[i] })
             }
+        }
+        return {
+            ...state,
+            layers,
+            display: layers[action.id]
+        }
+    }
+
+    else if (action.type === actionCreators.LAYER_VISIBILITY_TOGGLE) {
+        let layers = []
+        for (let i = 0; i < state.layers.length; i++) {
+            layers.push({
+                ...state.layers[i],
+                visible: i === action.id ? !state.layers[i].visible : state.layers[i].visible
+            })
         }
         return {
             ...state,
@@ -169,9 +183,9 @@ const formateTilesets = (tilesetsInfo) => {
 const formateLayers = (layersInfo) => {
     let layers = []
     for (let i = 0; i < layersInfo.length; i++) {
-        const { opacity, visible, name, _id } = layersInfo[i]
+        const { opacity, visible, name } = layersInfo[i]
         layers.push({
-            opacity, visible: visible + '', name, _id
+            opacity, visible: visible + '', name,
         })
     }
     return layers
