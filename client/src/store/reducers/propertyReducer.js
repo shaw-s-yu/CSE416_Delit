@@ -1,6 +1,5 @@
 import * as actionCreators from '../actions/actionCreators'
 
-
 const propertyReducer = (state = initState, action) => {
 
     if (action.type === actionCreators.FORMAT_PROJECT) {
@@ -62,6 +61,36 @@ const propertyReducer = (state = initState, action) => {
             ...state,
             layers,
             display: layers[action.id]
+        }
+    }
+
+    else if (action.type === actionCreators.LAYER_RESTORE) {
+        const layers = action.layerList.map(e => e)
+        if (!layers) return { ...state }
+        return {
+            ...state,
+            layers
+        }
+    }
+
+    else if (action.type === actionCreators.LAYER_SELECT) {
+        return {
+            ...state,
+            selectedLayer: action.id,
+        }
+    }
+
+    else if (action.type === actionCreators.LAYER_DELETE) {
+        let layers = state.layers.map(e => e)
+        for (let i = 0; i < layers.length; i++)
+            if (i === action.id) {
+                layers.splice(i, 1)
+                break;
+            }
+        return {
+            ...state,
+            layers,
+            selected: null
         }
     }
 
