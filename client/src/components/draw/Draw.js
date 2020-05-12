@@ -14,7 +14,6 @@ import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios';
 import { Button } from "react-bootstrap";
-// import icons from "glyphicons";
 
 class Draw extends React.Component {
 
@@ -38,9 +37,6 @@ class Draw extends React.Component {
 
     handleExportJson = () => {
         const imgData = this.display.getTilesetJson()
-        // console.log(imgData)
-        // console.log(this.props)
-        // console.log(this.display)
         require("downloadjs")(imgData, "tilesetJson@DELIT.json", "json");
     }
 

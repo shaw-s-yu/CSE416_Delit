@@ -24,8 +24,9 @@ export const unselectPropertyHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.PROPERTY_UNSELECT });
 };
 
-export const changePropertyHandler = (name, index, type, value) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.PROPERTY_CHANGE, window: name, index: index, name: type, value: value });
+export const changePropertyHandler = (index, type, value) => (dispatch, getState) => {
+    console.log(index, type, value)
+    dispatch({ type: actionCreators.PROPERTY_CHANGE, index: index, name: type, value: value });
 };
 
 export const deletePropertyHandler = () => (dispatch, getState) => {
@@ -131,4 +132,12 @@ export const restoreLayers = (layerList) => (dispatch, getState) => {
 
 export const updateTilesetsHandler = (tilesets) => (dispatch, getState) => {
     dispatch({ type: actionCreators.UPDATE_TILESETS, tilesets });
+};
+
+export const handleAddProperty = () => (dispatch, getState) => {
+    dispatch({ type: actionCreators.ADD_PROPERTY });
+};
+
+export const restoreCustomProperty = (custom) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.RESTORE_CUSTOM_PROPERTY, custom });
 };

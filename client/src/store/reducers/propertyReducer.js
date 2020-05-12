@@ -47,11 +47,17 @@ const propertyReducer = (state = initState, action) => {
             selected: null,
         }
     } else if (action.type === actionCreators.PROPERTY_CHANGE) {
-        let properties = state[action.window]
-        properties[action.index][action.name] = action.value
+        let custom = []
+        for (let i = 0; i < state.custom.length; i++) {
+            custom.push({
+                ...state.custom[i],
+                [action.name]: i === action.index ? action.value : state.custom[i].value
+            })
+        }
+
         return {
             ...state,
-            [action.name]: properties
+            custom
         }
     } else if (action.type === actionCreators.PROPERTY_DELETE) {
         if (!state.selected) return { ...state }
@@ -62,6 +68,34 @@ const propertyReducer = (state = initState, action) => {
             ...state,
             [window]: properties,
             selected: null
+        }
+    } else if (action.type === actionCreators.ADD_PROPERTY) {
+        let custom = []
+        for (let i in state.custom) {
+            custom.push({
+                ...state.custom[i]
+            })
+        }
+        custom.push({
+            name: 'Click To Enter',
+            type: 'String',
+            value: 'Click To Enter'
+        })
+        return {
+            ...state,
+            custom
+        }
+    }
+    else if (action.type === actionCreators.RESTORE_CUSTOM_PROPERTY) {
+        let custom = []
+        for (let i in action.custom) {
+            custom.push({
+                ...action.custom[i]
+            })
+        }
+        return {
+            ...state,
+            custom
         }
     }
 
@@ -75,6 +109,7 @@ const initState = {
     map: [],
     layer: [],
     tilesets: [],
+    custom: []
 };
 
 

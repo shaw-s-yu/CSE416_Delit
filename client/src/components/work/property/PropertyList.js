@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as handler from '../../../store/database/WorkScreenHandler';
 import Pagination from '../../tools/Pagination'
 import '../workscreen.css'
+import ContentEditable from 'react-contenteditable'
+import PropertyTransaction from '../../controller/PropertyTransaction'
 
 
 class PropertyList extends React.Component {
@@ -15,9 +17,10 @@ class PropertyList extends React.Component {
 
 
     handleChange = (index, name, e) => {
-        const { window } = this.props;
-        this.props.handleChange(window, index, name, e.target.value)
-        this.setState({ nothing: 'nothing' })
+        // this.props.handleChange(index, name, e.target.value)
+
+        if (this.props.data)
+            this.props.transactions.addTransaction(new PropertyTransaction(index, name, e.target.value, this.props.data, this.props.handleChange, this.props.restoreCustomProperty))
     };
 
     handleSelect = (index, e) => {
@@ -40,7 +43,8 @@ class PropertyList extends React.Component {
     }
 
     getRows = () => {
-        const { data } = this.props
+        const { data, type } = this.props
+        if (type === 'custom') return data
         const names = Object.keys(data)
         let toReturn = []
         for (let i = names.length - 1; i >= 0; i--) {
@@ -53,7 +57,7 @@ class PropertyList extends React.Component {
     }
 
     render() {
-        let { width } = this.props;
+        let { width, type } = this.props;
         const style = {
             maxWidth: width / 2 - 10,
             width: width / 2 - 10,
@@ -74,13 +78,38 @@ class PropertyList extends React.Component {
 
                         {
                             data && data.map((property, index) => {
+
                                 return (
                                     <tr key={index} onClick={() => this.handleSelect(index)} className={this.getClassName(index)}>
                                         <td style={style}>
-                                            <div className="property-input" style={style}>{property.name}</div>
+                                            {
+                                                type !== 'custom' ?
+                                                    <div className="property-input" style={style}>{property.name}</div> :
+                                                    <ContentEditable
+                                                        innerRef={property.nref}
+                                                        onChange={this.handleChange.bind(this, index, 'name')}
+                                                        onMouseDown={e => e.stopPropagation()}
+                                                        html={property.name}
+                                                        disabled={false}
+                                                        className="property-input"
+                                                        style={style}
+                                                    />
+                                            }
                                         </td>
                                         <td style={style}>
-                                            <div className="property-input" style={style}>{property.value}</div>
+                                            {
+                                                type !== 'custom' ?
+                                                    <div className="property-input" style={style}>{property.value}</div> :
+                                                    <ContentEditable
+                                                        innerRef={property.nref}
+                                                        onChange={this.handleChange.bind(this, index, 'value')}
+                                                        onMouseDown={e => e.stopPropagation()}
+                                                        html={property.value}
+                                                        disabled={false}
+                                                        className="property-input"
+                                                        style={style}
+                                                    />
+                                            }
                                         </td>
                                     </tr>
                                 )
@@ -107,7 +136,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handleSelect: (name, value) => dispatch(handler.selectPropertyHandler(name, value)),
-    handleChange: (name, index, type, value) => dispatch(handler.changePropertyHandler(name, index, type, value))
+    handleChange: (index, type, value) => dispatch(handler.changePropertyHandler(index, type, value)),
+    restoreCustomProperty: custom => dispatch(handler.restoreCustomProperty(custom)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyList)

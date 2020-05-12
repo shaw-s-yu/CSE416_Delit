@@ -7,12 +7,12 @@ export default class LayerDeleteTransaction {
     }
 
     doTransaction = () => {
-        if (this.id) this.doCallback(this.id)
+        if (this.id !== undefined) this.doCallback(this.id)
         else this.doCallback()
     }
 
     undoTransaction = () => {
-        if (this.layerList) this.undoCallback(this.layerList)
+        if (this.layerList !== undefined) this.undoCallback(this.layerList)
         else this.undoCallback()
     }
 }

@@ -14,7 +14,12 @@ class PropertyWindow extends React.Component {
 
     state = {
         resizing: false,
+        propertyOpen: true,
+        customOpen: false,
+        mapOpen: false
     }
+
+    collapsible = React.createRef()
 
     handleOnResize = (e, direction, ref, delta, position) => {
         this.setState({ resizing: true }, () => {
@@ -26,6 +31,11 @@ class PropertyWindow extends React.Component {
         this.setState({ resizing: false }, () => {
             this.props.handleOnResize(ref, position, 'property')
         })
+    }
+
+    handleAddProperty = () => {
+        this.collapsible.handleAddProperty()
+        this.props.handleAddProperty()
     }
 
     handleDelete = (e) => {
@@ -41,8 +51,9 @@ class PropertyWindow extends React.Component {
 
 
     render() {
-        const { display, selected, open, dimension } = this.props
+        const { display, selected, open, dimension, custom, transactions } = this.props
         const { width, height } = dimension.size;
+        const { propertyOpen, customOpen, mapOpen } = this.state
         const style = {
             maxWidth: width,
             maxHeight: height - 140,
@@ -68,15 +79,17 @@ class PropertyWindow extends React.Component {
                 <Titlebar title="Property Window" />
                 <Collapsible data={
                     [
-                        { title: 'Property', content: <PropertyList data={display} window='layer' width={width} />, open: true },
-                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} resizing={resizing} />, open: false },
+                        { title: 'Property', content: <PropertyList data={display} window='layer' width={width} />, open: propertyOpen },
+                        { title: 'Custom Property', content: <PropertyList data={custom} window='layer' width={width} type='custom' transactions={transactions} />, open: customOpen },
+                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} resizing={resizing} />, open: mapOpen },
                     ]
                 }
                     maxHeight={style.maxHeight}
                     resizing={resizing}
+                    childRef={ref => this.collapsible = ref}
                 />
                 <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={e => e.stopPropagation()} />
-                <i className={"fas fa-plus property-add-btn better-btn"} onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()} />
+                <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.handleAddProperty} onMouseDown={e => e.stopPropagation()} />
 
 
             </Rnd>
@@ -88,15 +101,16 @@ class PropertyWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { display } = state.property
+    const { display, custom } = state.property
     return {
-        display,
+        display, custom
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     handleUnselect: () => dispatch(handler.unselectPropertyHandler()),
     handleDelete: () => dispatch(handler.deletePropertyHandler()),
+    handleAddProperty: () => dispatch(handler.handleAddProperty()),
 })
 
 

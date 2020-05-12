@@ -16,13 +16,6 @@ class MapWindow extends React.Component {
 
     tileMap = React.createRef()
 
-    handleExportJson = () => {
-        // const imgData = this.mapDisplay.getTilesetJson()
-        console.log(this.tileMap)
-        // console.log(imgData.columns)
-        // require("downloadjs")(imgData, "tilesetJson@DELIT.json", "json");
-    }
-
     handleOnResize = (e, direction, ref, delta, position) => {
         this.setState({ resizing: true }, () => {
             this.props.handleOnResize(ref, position, 'map')
@@ -36,12 +29,10 @@ class MapWindow extends React.Component {
     }
 
     doTransaction = e => {
-        console.log(this.props.transactions.toString())
         this.props.transactions.doTransaction()
     }
 
     undoTransaction = e => {
-        console.log(this.props.transactions.toString())
         this.props.transactions.undoTransaction()
     }
 

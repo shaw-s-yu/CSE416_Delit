@@ -25,6 +25,19 @@ class Titlebar extends React.Component {
         this.setState({ open: open });
     }
 
+    handleAddProperty = () => {
+        let open = this.state.open.map((e, i) => {
+            if (i === 1) return true
+            else return false
+        })
+        this.setState({ open })
+    }
+
+    componentWillMount() {
+        if (this.props.childRef)
+            this.props.childRef(this)
+    }
+
     render() {
 
         const { data, maxHeight, resizing } = this.props;
