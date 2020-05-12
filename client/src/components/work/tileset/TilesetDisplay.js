@@ -65,9 +65,10 @@ class TilesetDisplay extends React.Component {
 
     handleOnClick = e => {
         const { selectedTool } = this.props
-        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT)
+        if (selectedTool === TOOLS.ZOOM_IN || selectedTool === TOOLS.ZOOM_OUT) {
             this.handleZoomEffect(e)
-
+            return
+        }
         const { clientX, clientY } = e
         const { x, y } = this.handleFixPosition(clientX, clientY)
         const gridPosition = this.imageController.getGridPositionFromMouseXY(x, y)
@@ -152,6 +153,12 @@ class TilesetDisplay extends React.Component {
                 this.setState({ ctrlSelecting: true })
             else if (Keyboard.triggerLeftShift(e))
                 this.setState({ shiftSelecting: true })
+            else if (Keyboard.triggerLeftCtrlZ(e)) {
+                this.props.transactions.undoTransaction()
+            }
+            else if (Keyboard.triggerLeftCtrlY(e)) {
+                this.props.transactions.doTransaction()
+            }
         }
         window.onkeyup = e => {
             if (Keyboard.triggerLeftControll(e))

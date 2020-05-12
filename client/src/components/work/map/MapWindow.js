@@ -16,7 +16,7 @@ class MapWindow extends React.Component {
 
     tileMap = React.createRef()
 
-    handleExportJson =() =>{
+    handleExportJson = () => {
         // const imgData = this.mapDisplay.getTilesetJson()
         console.log(this.tileMap)
         // console.log(imgData.columns)
@@ -75,16 +75,14 @@ class MapWindow extends React.Component {
                     content={[
                         { name: TOOLS.UNDO, item: <i className={"fas fa-undo"} style={{ fontSize: '24px' }} onClick={this.undoTransaction} /> },
                         { name: TOOLS.REDO, item: <i className={"fas fa-redo"} style={{ fontSize: '24px' }} onClick={this.doTransaction} /> },
-                        { name: TOOLS.UPLOAD, item: <i className={"fas fa-upload"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
-                        { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{fontSize: '24px' }} onClick={this.handleExportJson} />},
+                        { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{ fontSize: '24px' }} onClick={this.handleExportJson} /> },
                     ]}
                     secondaryContent={[
                         { name: TOOLS.STAMP, item: <i className={"fas fa-stamp"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.ERASER, item: <i className={"fas fa-eraser"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.FILL, item: <i className={"fas fa-fill"} style={{ fontSize: '24px' }} onClick={() => this.props.handleTest()} /> },
-                        // { name: TOOLS.CROP, item: <i className={"fas fa-crop-alt"} style={{ fontSize: '24px' }} /> },
                     ]}
                     rightContent={[
                         { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} /> },

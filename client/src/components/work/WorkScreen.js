@@ -12,7 +12,6 @@ import * as handler from '../../store/database/WorkScreenHandler'
 import { compose } from 'redux';
 import Transactions from '../controller/JSTPS'
 
-
 class WorkScreen extends React.Component {
 
     state = {
@@ -86,6 +85,14 @@ class WorkScreen extends React.Component {
         this.setState({ [type]: { ...this.state[type], position: { x: d.x, y: d.y } } })
     }
 
+    doTransaction = () => {
+        this.transactions.doTransaction()
+    };
+
+    undoTransaction = () => {
+        this.transactions.undoTransaction()
+    };
+
     handleOnResize = (ref, position, type) => {
         this.setState({
             [type]: {
@@ -100,6 +107,47 @@ class WorkScreen extends React.Component {
                 }
             }
         })
+    }
+
+
+    handleFormatMapJson = () => {
+        const { layers, map, tilesets } = this.props
+        let toReturn = {
+            ...map,
+            tiledversion: `1.3.2`,
+            compressionlevel: -1
+        }
+        delete toReturn._id
+        const layersToReturn = layers.map(e => {
+            delete e.locked
+            delete e._id
+            return e
+        })
+        toReturn.layers = layersToReturn
+        const tilesetsToReturn = tilesets.map(e => {
+            return {
+                name: e.name,
+                columns: e.columns,
+                tilewidth: e.tileWidth,
+                tileheight: e.tileHeight,
+                tilecount: e.tilecount,
+                margin: e.margin,
+                firstgid: e.firstgid,
+                image: `${e.name}.jpeg`,
+                imagewidth: e.width,
+                imageheight: e.height,
+                spacing: e.spacing,
+            }
+        })
+        toReturn.tilesets = tilesetsToReturn
+        return toReturn
+
+    }
+
+    handleExport = () => {
+        const { project } = this.props
+        const data = this.handleFormatMapJson()
+        require("downloadjs")(JSON.stringify(data).toLowerCase(), `${project.name}.json`, "text/plain");
     }
 
     componentDidMount() {
@@ -132,8 +180,18 @@ class WorkScreen extends React.Component {
         return (
             <>
 
-                <div>
-                    <TopNavbar site='workspace' handleWindowOpen={this.handleWindowOpen} propertyOpen={propertyOpen} layerOpen={layerOpen} tilesetOpen={tilesetOpen} history={history} />
+                <div onClick={this.handleUnselect}>
+                    <TopNavbar site='workspace'
+                        handleWindowOpen={this.handleWindowOpen}
+                        propertyOpen={propertyOpen}
+                        layerOpen={layerOpen}
+                        tilesetOpen={tilesetOpen}
+                        history={history}
+                        handleDoTransaction={this.doTransaction}
+                        handleUndoTransaction={this.undoTransaction}
+                        handleSave={this.handleFormatMapJson}
+                        handleExport={this.handleExport}
+                    />
                     <div>
                         {
                             <Query query={QueryList.GET_PROJECT} variables={{ id: key }}>
@@ -162,17 +220,18 @@ class WorkScreen extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     const { loaded } = state.project
     return {
-        loaded
+        loaded,
+        layers: state.layer.layerList,
+        map: state.map.map,
+        tilesets: state.tileset.tilesets,
+        project: state.project
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     formatProjectPack: (project) => dispatch(handler.formatProjectPack(project)),
+    handleUnselect: () => dispatch(handler.toolbarUnselectHandler()),
 })
-
-// export default connect(mapStateToProps, mapDispatchToProps)(graphql(QueryList.GET_PROJECT, {
-//     options: { errorPolicy: 'all' },
-// })(WorkScreen))
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),

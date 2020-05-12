@@ -86,19 +86,19 @@ class TopNavbar extends React.Component {
                     {site === 'workspace' || site === 'tileset' ? <>
                         <Dropdown title="FILE" width={96} childRef={ref => this.file = ref} open={file} handleCloseDropDown={this.handleCloseDropDown}
                             items={[
-                                <ReactFileReader key='o' ref='fileUploader' handleFiles={this.props.handleImport} base64={true}>
+                                site === 'workspace' ? null : <ReactFileReader key='o' ref='fileUploader' handleFiles={this.props.handleImport} base64={true}>
                                     <div className="better-dropdown-item">Import</div>
                                 </ReactFileReader>,
                                 <div className="better-dropdown-item" key={v1()} onClick={this.props.handleExport}>Export</div>,
                                 <div className="better-dropdown-item" key={v1()} onClick={this.props.handleSave}>Save</div>,
-                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handleDuplicate}>Duplicate</div>,
+                                site === 'workspace' ? null : <div className="better-dropdown-item" key={v1()} onClick={this.props.handleDuplicate}>Duplicate</div>,
                             ]} />
                         <Dropdown title="EDIT" width={128} childRef={ref => this.edit = ref} open={edit} handleCloseDropDown={this.handleCloseDropDown}
                             items={[
                                 <div className="better-dropdown-item" key={v1()} onClick={this.props.handleUndoTransaction}>{"Undo   CTRL+Z"}</div>,
                                 <div className="better-dropdown-item" key={v1()} onClick={this.props.handleDoTransaction}>{"Redo   CTRL+Y"}</div>,
-                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handleCopy}>{"Copy   CTRL+C"}</div>,
-                                <div className="better-dropdown-item" key={v1()} onClick={this.props.handlePaste}>{"Paste  CTRL+V"}</div>,
+                                site === 'workspace' ? null : <div className="better-dropdown-item" key={v1()} onClick={this.props.handleCopy}>{"Copy   CTRL+C"}</div>,
+                                site === 'workspace' ? null : <div className="better-dropdown-item" key={v1()} onClick={this.props.handlePaste}>{"Paste  CTRL+V"}</div>,
                             ]} />
                         {site === 'workspace' ? <Dropdown title="VIEW" width={196} childRef={ref => this.view = ref} open={view} handleCloseDropDown={this.handleCloseDropDown}
                             items={[

@@ -89,8 +89,7 @@ class TilesetViewer extends React.Component {
     };
 
     handleExport = () => {
-        const imgData = this.display.handleGetImageNoGrid();
-        require("downloadjs")(imgData, "tileset@DELIT.jpeg", "image/jpeg");
+        this.display.handleExport();
     };
 
     UNSAFE_componentWillMount() {

@@ -542,7 +542,14 @@ nav {
 }
 
 .tool-selected{
-    background-color: rgb(255, 119, 7);
+    color: white;
+    background-color: rgb(32, 7, 255);
+    box-shadow: 0 0 3pt 2pt red
+}
+
+.tool-selected:hover{
+    color: white;
+    background-color: rgb(32, 7, 255);
     box-shadow: 0 0 3pt 2pt red
 }
 .reset-property-btn {

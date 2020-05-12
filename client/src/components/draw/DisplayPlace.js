@@ -322,8 +322,8 @@ class DisplayPlace extends React.Component {
         return tileset._id
     }
 
-    getTilesetJson =() =>{
-        const{ tileset } = this.props
+    getTilesetJson = () => {
+        const { tileset } = this.props
         const dataJson = {}
         dataJson.firstgid = 1
         dataJson.image = "./tileset@DELIT.jpeg"
@@ -357,6 +357,12 @@ class DisplayPlace extends React.Component {
 
             this.setState({ selectedGrid: newGrids, copying: false })
         }
+    }
+
+    handleExport = () => {
+        const { name } = this.props.tileset
+        const imgData = this.handleGetImageNoGrid();
+        require("downloadjs")(imgData, `${name}.jpeg`, "image/jpeg");
     }
 
 

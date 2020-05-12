@@ -27,11 +27,11 @@ class TilesetWindow extends React.Component {
 
     handleZoomIn = () => {
         // console.log(this.props)
-        this.setState({ selectedTool: TOOLS.ZOOM_IN })
+        this.setState({ selectedTool: this.state.selectedTool === TOOLS.ZOOM_IN ? '' : TOOLS.ZOOM_IN })
     }
 
     handleZoomOut = () => {
-        this.setState({ selectedTool: TOOLS.ZOOM_OUT })
+        this.setState({ selectedTool: this.state.selectedTool === TOOLS.ZOOM_OUT ? '' : TOOLS.ZOOM_OUT })
     }
 
     handleUnselectZoom = () => {
@@ -87,7 +87,7 @@ class TilesetWindow extends React.Component {
     }
 
     getCollapsibleList = () => {
-        const { dimension, tilesets } = this.props
+        const { dimension, tilesets, transactions } = this.props
         const { selectedTool } = this.state
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - 86 - 24 * tilesets.length;
@@ -109,19 +109,19 @@ class TilesetWindow extends React.Component {
                     height={CollapsibleHeight}
                     window="tileset"
                     childRef={ref => this.tileMap = ref}
-                    selectedTool={selectedTool} />,
+                    selectedTool={selectedTool}
+                    transactions={transactions} />,
                 open: i === 0 ? true : false
             })
         }
         return li
     };
 
-    componentDidMount() {
-        window.onclick = e => {
-            if (e.target !== this.refs.zoom_in_btn && e.target !== this.refs.zoom_out_btn)
-                this.handleUnselectZoom()
-        }
+    handleOnClick = e => {
+        if (e.target !== this.refs.zoom_in_btn && e.target !== this.refs.zoom_out_btn)
+            this.handleUnselectZoom()
     }
+
 
     render() {
         const { resizing, selectTilesetDialogOpen, selectedTool } = this.state;
@@ -142,6 +142,7 @@ class TilesetWindow extends React.Component {
                     onResizeStart={() => this.props.handleToTop('tileset')}
                     onResize={this.handleOnResize}
                     onResizeStop={this.handleStopResize}
+                    onClick={this.handleOnClick}
                     id='tileset'
                     onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'tileset')}
                     style={{ zIndex: dimension.zIndex }}

@@ -36,7 +36,7 @@ class Draw extends React.Component {
     transactions = new Transactions();
     display = React.createRef();
 
-    handleExportJson =() =>{
+    handleExportJson = () => {
         const imgData = this.display.getTilesetJson()
         // console.log(imgData)
         // console.log(this.props)
@@ -195,8 +195,7 @@ class Draw extends React.Component {
     };
 
     handleExport = () => {
-        const imgData = this.display.handleGetImageNoGrid();
-        require("downloadjs")(imgData, "tileset@DELIT.jpeg", "image/jpeg");
+        this.display.handleExport();
     };
 
     handleSave = () => {
@@ -282,7 +281,7 @@ class Draw extends React.Component {
                             },
                             { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} onClick={this.handleExport} /> },
                             { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} onClick={this.handleSaveDialogOpen} /> },
-                            { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{fontSize: '24px' }} onClick={this.handleExportJson} />},
+                            { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{ fontSize: '24px' }} onClick={this.handleExportJson} /> },
                             { name: TOOLS.COPY, item: <i className={"fas fa-copy"} style={{ fontSize: '24px' }} onClick={this.handleCopy} /> },
                             { name: TOOLS.PASTE, item: <i className={"fas fa-paste"} style={{ fontSize: '24px' }} onClick={this.handlePaste} /> },
                         ]}
@@ -317,7 +316,7 @@ class Draw extends React.Component {
                             if (error) return 'error'
                             if (!data) return 'error'
                             const { tileset } = data
-
+                            console.log(tileset)
                             return (
                                 <DisplayPlace
                                     tileset={tileset}

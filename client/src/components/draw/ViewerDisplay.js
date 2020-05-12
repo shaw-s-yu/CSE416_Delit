@@ -52,6 +52,12 @@ class ViewerDisplay extends React.Component {
         return ''
     }
 
+    handleExport = () => {
+        const { name } = this.props.tileset
+        const imgData = this.handleGetImageNoGrid();
+        require("downloadjs")(imgData, `${name}.jpeg`, "image/jpeg");
+    }
+
 
     componentDidMount() {
         const { canvas } = this.refs;
