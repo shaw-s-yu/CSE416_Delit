@@ -26,7 +26,6 @@ class TilesetWindow extends React.Component {
     }
 
     handleZoomIn = () => {
-        // console.log(this.props)
         this.setState({ selectedTool: this.state.selectedTool === TOOLS.ZOOM_IN ? '' : TOOLS.ZOOM_IN })
     }
 
@@ -86,6 +85,7 @@ class TilesetWindow extends React.Component {
         })
     }
 
+
     getCollapsibleList = () => {
         const { dimension, tilesets, transactions } = this.props
         const { selectedTool } = this.state
@@ -111,7 +111,7 @@ class TilesetWindow extends React.Component {
                     childRef={ref => this.tileMap = ref}
                     selectedTool={selectedTool}
                     transactions={transactions} />,
-                open: i === 0 ? true : false
+                open: i === 0
             })
         }
         return li
