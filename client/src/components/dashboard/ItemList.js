@@ -49,12 +49,12 @@ class ItemList extends React.Component {
     }
 
     render() {
-        const { items, refetch, user, type } = this.props;
+        const { items, refetch, user, type, selected } = this.props;
         const numItem = items.length;
         const style = {
             height: numItem > 3 ? 600 : 300
         };
-        const showPublishBt = type === 'tileset';
+        const showPublishBt = selected === 'tilesetsOwned';
         return (
             <div className="dashboard-itemlist">
                 <div className="dashboard-itemlist-wrapper" style={style}>
