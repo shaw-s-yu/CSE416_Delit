@@ -36,7 +36,7 @@ so the back-end: http://localhost:5000 displays /client/build which is react bui
 so if you want your react app works in back-end, run the following command first then it will show in back-end URL (local/deployed)
 ```
 cd client
-npm run dev
+npm run build
 ```
 
 ## Deploy to Heroku
