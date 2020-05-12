@@ -31,11 +31,12 @@ const layerReducer = (state = initState, action) => {
         }
     } else if (action.type === actionCreators.LAYER_RENAME) {
         let { layerList } = state
-        for (let i = 0; i < layerList.length; i++)
-            if (layerList[i]._id === state.selected.id) {
+        for (let i = 0; i < layerList.length; i++) {
+            if (i === action.id) {
                 layerList[i].name = action.name
                 break;
             }
+        }
         return {
             ...state,
             layerList

@@ -52,8 +52,8 @@ export const layerUnselectHandler = () => (dispatch, getState) => {
     dispatch({ type: actionCreators.LAYER_UNSELECT });
 };
 
-export const layerRenameHandler = (name) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.LAYER_RENAME, name });
+export const layerRenameHandler = (name, id) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.LAYER_RENAME, name, id });
 };
 
 export const layerDeleteHandler = (id) => (dispatch, getState) => {

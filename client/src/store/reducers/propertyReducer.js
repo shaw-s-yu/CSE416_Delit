@@ -20,6 +20,7 @@ const propertyReducer = (state = initState, action) => {
             layerList.push({ ...state.layerList[i] })
         }
         layerList.push({
+            _id: action.layer._id,
             name: action.layer.name,
             visible: action.layer.visible + '',
             opacity: action.layer.opacity
@@ -28,6 +29,25 @@ const propertyReducer = (state = initState, action) => {
         return {
             ...state,
             layers: layerList,
+        }
+    }
+
+    else if (action.type === actionCreators.LAYER_RENAME) {
+        let layers = []
+        for (let i = 0; i < state.layers.length; i++) {
+            if (i === action.id)
+                layers.push({
+                    ...state.layers[i],
+                    name: action.name
+                })
+            else {
+                layers.push({ ...state.layers[i] })
+            }
+        }
+        return {
+            ...state,
+            layers,
+            display: layers[action.id]
         }
     }
 
@@ -149,9 +169,9 @@ const formateTilesets = (tilesetsInfo) => {
 const formateLayers = (layersInfo) => {
     let layers = []
     for (let i = 0; i < layersInfo.length; i++) {
-        const { opacity, visible, name } = layersInfo[i]
+        const { opacity, visible, name, _id } = layersInfo[i]
         layers.push({
-            opacity, visible: visible + '', name
+            opacity, visible: visible + '', name, _id
         })
     }
     return layers

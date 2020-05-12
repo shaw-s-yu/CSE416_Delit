@@ -48,6 +48,8 @@ class PropertyList extends React.Component {
         const names = Object.keys(data)
         let toReturn = []
         for (let i = names.length - 1; i >= 0; i--) {
+            if (names[i] === '_id')
+                continue
             toReturn.push({
                 name: names[i],
                 value: data[names[i]]

@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import ContentEditable from 'react-contenteditable'
 import * as handler from '../../../store/database/WorkScreenHandler';
 import LayerTransaction from '../../controller/LayerTransaction'
+import LayerRenameTransaction from '../../controller/LayerRenameTransaction'
 
 
 class LayerWindow extends React.Component {
 
-    handleRename = (e) => {
+    handleRename = (e, id) => {
         this.props.transactions.addTransaction(
-            new LayerTransaction(e.target.value, this.props.layerList, this.props.handleRename, this.props.restoreLayers)
+            new LayerRenameTransaction(e.target.value, id, this.props.layerList, this.props.handleRename, this.props.restoreLayers)
         )
     };
 
@@ -85,7 +86,7 @@ class LayerWindow extends React.Component {
                             <div className={this.getClassName(layer._id)} onMouseDown={e => this.handleOnMouseDown(e, index)} onClick={this.handleSelect.bind(this, layer._id)}>
                                 <ContentEditable
                                     innerRef={layer.ref}
-                                    onChange={this.handleRename}
+                                    onChange={e => this.handleRename(e, index)}
                                     onMouseDown={e => this.handleOnMouseDown(e, index)}
                                     html={layer.name}
                                     disabled={false}
@@ -126,7 +127,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    handleRename: (name) => dispatch(handler.layerRenameHandler(name)),
+    handleRename: (name, id) => dispatch(handler.layerRenameHandler(name, id)),
     handleSelect: (id) => dispatch(handler.layerSelectHandler(id)),
     handleUnselect: () => dispatch(handler.layerUnselectHandler()),
     handleDelete: (id) => dispatch(handler.layerDeleteHandler(id)),
