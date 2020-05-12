@@ -1,7 +1,7 @@
 const ProjectModel = require('../../models/mongo-project')
 const MapModel = require('../../models/mongo-map')
 const LayerModel = require('../../models/mongo-layer')
-
+const ImageModel = require('../../models/mongo-image')
 
 const {
     GraphQLList,
@@ -79,19 +79,27 @@ module.exports = {
             if (!newMap) throw new Error('create map fail')
         })
 
-        const newProject = new ProjectModel({
-            name: params.name,
-            owner: params.owner,
-            editors: params.editors ? params.editors : [],
-            imageId: params.imageId,
-            tilesetId: [],
-            tilesetFirstgid: [],
-            mapId: mapId,
-            layerId: layerId,
-            customPropertyName: [],
-            customPropertyValue: []
-        }).save()
-        if (!newProject) throw new Error('create project fail')
-        return newProject
+        ImageModel.findOne({ _id: '5eacb076d0ed064dec138c41' }).then(currentImage => {
+            if (!currentImage) throw new Error('find image fail')
+            new ImageModel({
+                data: currentImage.data
+            }).save().then(newImage => {
+                if (!newImage) throw new Error('create image fail')
+                const newProject = new ProjectModel({
+                    name: params.name,
+                    owner: params.owner,
+                    editors: params.editors ? params.editors : [],
+                    imageId: newImage._id,
+                    tilesetId: [],
+                    tilesetFirstgid: [],
+                    mapId: mapId,
+                    layerId: layerId,
+                    customPropertyName: [],
+                    customPropertyValue: []
+                }).save()
+                if (!newProject) throw new Error('create project fail')
+                return newProject
+            })
+        })
     }
 }

@@ -9,6 +9,7 @@ const {
 
 const TilesetType = require('../types/TilesetType')
 const mongoose = require('mongoose');
+const ImageModel = require('../../models/mongo-image')
 
 
 module.exports = {
@@ -30,19 +31,24 @@ module.exports = {
         published: { type: GraphQLBoolean }
     },
     resolve: (root, params) => {
-        const newTileset = new TilesetModel({
-            ...params,
-            _id: params._id ? params._id : mongoose.Types.ObjectId(),
-            columns: params.columns ? params.columns : Math.floor(params.width / params.tileWidth),
-            margin: params.margin ? params.margin : 0,
-            spacing: params.spacing ? params.spacing : 0,
-            tilecount: params.tilecount ? params.tilecount : Math.floor(params.width / params.tileHeight) * Math.floor(params.height / params.tileHeight),
-            published: params.published ? params.published : false,
-        }).save();
-        if (!newTileset) {
-            throw new Error('Error');
-        }
-        return newTileset
+        new ImageModel({
+        }).save().then(newImage => {
+            if (!newImage) throw new Error('create image fail')
+            const newTileset = new TilesetModel({
+                ...params,
+                imageId: newImage._id,
+                _id: params._id ? params._id : mongoose.Types.ObjectId(),
+                columns: params.columns ? params.columns : Math.floor(params.width / params.tileWidth),
+                margin: params.margin ? params.margin : 0,
+                spacing: params.spacing ? params.spacing : 0,
+                tilecount: params.tilecount ? params.tilecount : Math.floor(params.width / params.tileHeight) * Math.floor(params.height / params.tileHeight),
+                published: params.published ? params.published : false,
+            }).save();
+            if (!newTileset) {
+                throw new Error('Error');
+            }
+            return newTileset
+        })
     }
 }
 
