@@ -14,6 +14,15 @@ class MapWindow extends React.Component {
         resizing: false
     }
 
+    tileMap = React.createRef()
+
+    handleExportJson =() =>{
+        // const imgData = this.mapDisplay.getTilesetJson()
+        console.log(this.tileMap)
+        // console.log(imgData.columns)
+        // require("downloadjs")(imgData, "tilesetJson@DELIT.json", "json");
+    }
+
     handleOnResize = (e, direction, ref, delta, position) => {
         this.setState({ resizing: true }, () => {
             this.props.handleOnResize(ref, position, 'map')
@@ -69,6 +78,7 @@ class MapWindow extends React.Component {
                         { name: TOOLS.UPLOAD, item: <i className={"fas fa-upload"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.DOWNLOAD, item: <i className={"fas fa-download"} style={{ fontSize: '24px' }} /> },
                         { name: TOOLS.SAVE, item: <i className={"fas fa-save"} style={{ fontSize: '24px' }} /> },
+                        { name: TOOLS.EXPORT_JSON, item: <i className={"fas fa-box"} style={{fontSize: '24px' }} onClick={this.handleExportJson} />},
                     ]}
                     secondaryContent={[
                         { name: TOOLS.STAMP, item: <i className={"fas fa-stamp"} style={{ fontSize: '24px' }} /> },

@@ -38,8 +38,9 @@ class Draw extends React.Component {
 
     handleExportJson =() =>{
         const imgData = this.display.getTilesetJson()
-        console.log(imgData)
-        // console.log(imgData.columns)
+        // console.log(imgData)
+        // console.log(this.props)
+        // console.log(this.display)
         require("downloadjs")(imgData, "tilesetJson@DELIT.json", "json");
     }
 

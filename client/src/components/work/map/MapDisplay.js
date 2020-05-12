@@ -20,7 +20,7 @@ class ImageWrapper extends React.Component {
     scrollbar = React.createRef();
     mouseGridPosition = null
     mouseDown = false
-
+    
     getToolName = () => {
         const { selectedTool } = this.props
         if (selectedTool === TOOLS.ZOOM_IN)
@@ -303,6 +303,23 @@ class ImageWrapper extends React.Component {
             this.handleDrawLayers()
     }
 
+    getTilesetJson =() =>{
+        const{ tileset } = this.props
+        // const dataJson = {}
+        console.log(tileset)
+        // dataJson.firstgid = 1
+        // dataJson.image = "./tileset@DELIT.jpeg"
+        // dataJson.imageheight = tileset.height
+        // dataJson.imagewidth = tileset.width
+        // dataJson.margin = tileset.margin
+        // dataJson.name = tileset.name
+        // dataJson.properties = {}
+        // dataJson.spacing = tileset.spacing
+        // dataJson.tileheight = tileset.tileHeight
+        // dataJson.tilewidth = tileset.tileWidth
+        // console.log(JSON.stringify(dataJson))
+        // return JSON.stringify(dataJson)
+    }
 
     render() {
         const { style, width, height, layerList } = this.props;
