@@ -13,6 +13,7 @@ class TilesetWindow extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(this.props)
         let loaded = []
         for (let i = 0; i < this.props.tilesets.length; i++)
             loaded.push(false)
@@ -26,6 +27,7 @@ class TilesetWindow extends React.Component {
     }
 
     handleZoomIn = () => {
+        // console.log(this.props)
         this.setState({ selectedTool: TOOLS.ZOOM_IN })
     }
 
