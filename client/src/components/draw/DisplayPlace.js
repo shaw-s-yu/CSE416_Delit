@@ -335,6 +335,7 @@ class DisplayPlace extends React.Component {
         dataJson.spacing = tileset.spacing
         dataJson.tileheight = tileset.tileHeight
         dataJson.tilewidth = tileset.tileWidth
+        dataJson.tilecount = tileset.tilecount
         // console.log(JSON.stringify(dataJson))
         return JSON.stringify(dataJson)
     }
