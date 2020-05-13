@@ -140,3 +140,7 @@ export const handleAddProperty = () => (dispatch, getState) => {
 export const restoreCustomProperty = (custom) => (dispatch, getState) => {
     dispatch({ type: actionCreators.RESTORE_CUSTOM_PROPERTY, custom });
 };
+
+export const passSelectedTileset = (selectedItem) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.PASS_SELECTED_TILESET, selectedItem});
+};

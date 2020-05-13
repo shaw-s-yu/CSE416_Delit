@@ -3,7 +3,8 @@ import * as actionCreators from '../actions/actionCreators'
 const initState = {
     imgs: {},
     loaded: false,
-    selectedGrids: []
+    selectedGrids: [],
+    selectedItem: null,
 };
 
 const tilesetReducer = (state = initState, action) => {
@@ -81,6 +82,14 @@ const tilesetReducer = (state = initState, action) => {
         return{
             ...state,
             tilesets: newTilesets
+        }
+    }
+
+    else if (action.type === actionCreators.PASS_SELECTED_TILESET) {
+        console.log("redux: ", action.selectedItem)
+        return{
+            ...state,
+            selectedItem: action.selectedItem
         }
     }
     return state;
