@@ -124,8 +124,9 @@ class WorkScreen extends React.Component {
             compressionlevel: -1
         }
         delete toReturn._id
-        const layersToReturn = layers.map(e => {
+        const layersToReturn = layers.map((e, index) => {
             delete e.locked
+            e.id = index + 1
             delete e._id
             return e
         })
@@ -153,6 +154,7 @@ class WorkScreen extends React.Component {
     handleExport = () => {
         const { project } = this.props
         const data = this.handleFormatMapJson()
+        console.log(data)
         require("downloadjs")(JSON.stringify(data).toLowerCase(), `${project.name}.json`, "text/plain");
     }
 
