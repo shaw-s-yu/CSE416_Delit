@@ -27,6 +27,7 @@ class SelectTilesetDialog extends React.Component {
     };
 
     handleSortBy = (e, type) => {
+        console.log("class: ", e.target.classList);
         this.setState({ sortBy: type })
     };
 
@@ -40,7 +41,7 @@ class SelectTilesetDialog extends React.Component {
 
     getSelected = (type) => {
         const { sortBy } = this.state;
-        return sortBy === type ? 'dashboard-sort-btn-selected' : ''
+        return sortBy === type ? 'tileset-sort-btn-selected' : ''
     };
 
     getSortOrder = (type) => {
@@ -64,7 +65,7 @@ class SelectTilesetDialog extends React.Component {
 
     render() {
         const { open, close, user, history } = this.props;
-        const { page, search, sortBy, selectedTilesets } = this.state;
+        const { page, search, sortBy } = this.state;
         const query = QueryList.GET_SELECTABLE_TILESETS;
         const pageSkip = (page - 1) * 6;
         const sortOrder = this.state[sortBy];

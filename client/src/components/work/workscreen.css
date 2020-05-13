@@ -202,7 +202,7 @@
     padding-top: 4px !important;
 }
 
-.tileset-delete-btn{
+.tileset-delete-icon{
     transition: ease-in-out 0.5s;
     position: absolute;
     margin-left:50px;
@@ -212,6 +212,22 @@
     height: 24px !important;
     padding-left: 5px !important;
     padding-top: 4px !important;
+}
+
+.better-btn{
+    border-radius: 80%;
+    cursor: pointer;
+    transition: ease-in 0.3s;
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
+    padding-left: 3px;
+    padding-top: 2.7px;
+}
+
+.better-btn:hover{
+    background-color: rgb(255, 119, 7);
+    box-shadow: 0 0 3pt 2pt red
 }
 .tileset-display{
     height: 100%;
@@ -327,22 +343,6 @@ li.active{
 .layer-add-btn{
     margin-top: 5px;
     margin-left: 10px;
-}
-
-.better-btn{
-    border-radius: 80%;
-    cursor: pointer;
-    transition: ease-in 0.3s;
-    font-size: 16px;
-    width: 20px;
-    height: 20px;
-    padding-left: 3px;
-    padding-top: 2.7px;
-}
-
-.better-btn:hover{
-    background-color: rgb(255, 119, 7);
-    box-shadow: 0 0 3pt 2pt red
 }
 
 .opacity-text{

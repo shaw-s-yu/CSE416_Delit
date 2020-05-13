@@ -135,12 +135,13 @@ class TilesetDisplay extends React.Component {
             this.imageController.drawBackGround()
             const { imageId } = tileset
             axios.get(`/data/image?imageId=${imageId}`).then(res => {
-                const { err, msg, data } = res
+                const { err, msg, data } = res.data
                 if (err)
                     console.log(msg)
                 else {
                     const base64Flag = 'data:image/jpeg;base64,';
-                    const imageStr = arrayBufferToBase64(data.data.data)
+                    if (!data) return
+                    const imageStr = arrayBufferToBase64(data.data)
                     this.handleDrawImgToGrid(base64Flag + imageStr, () => {
                         this.props.handleTilesetLoaded()
                     })

@@ -426,14 +426,15 @@ class DisplayPlace extends React.Component {
             this.GridController.drawGrid()
             this.painter.setDimension(canvasWidth, canvasHeight)
             const { imageId } = this.props.tileset
-            if (imageId !== '' && imageId !== '5eacb076d0ed064dec138c41')
+            if (imageId !== '')
                 axios.get(`/data/image?imageId=${imageId}`).then(res => {
-                    const { err, msg, data } = res
+                    const { err, msg, data } = res.data
                     if (err)
                         console.log(msg)
                     else {
                         const base64Flag = 'data:image/jpeg;base64,';
-                        const imageStr = arrayBufferToBase64(data.data.data)
+                        if (!data) return
+                        const imageStr = arrayBufferToBase64(data.data)
                         this.handleDrawImgToGrid(base64Flag + imageStr)
                     }
                 })

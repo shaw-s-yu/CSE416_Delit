@@ -19,12 +19,25 @@ class Card extends React.Component {
         const { imageId } = this.props.item;
         if (imageId !== '')
             axios.get(`/data/image?imageId=${imageId}`).then(res => {
-                const { err, msg, data } = res;
+                const { err, msg, data } = res.data;
                 if (err)
                     console.log(msg);
+                else if (!data) {
+                    axios.get(`/data/image?imageId=5eacb076d0ed064dec138c41`).then(newRes => {
+                        const { err, msg, data } = newRes.data;
+                        if (err)
+                            console.log(msg)
+                        else {
+                            const base64Flag = 'data:image/jpeg;base64,';
+                            const imageStr = arrayBufferToBase64(data.data);
+                            this.setState({ imageData: base64Flag + imageStr })
+                        }
+
+                    })
+                }
                 else {
                     const base64Flag = 'data:image/jpeg;base64,';
-                    const imageStr = arrayBufferToBase64(data.data.data);
+                    const imageStr = arrayBufferToBase64(data.data);
                     this.setState({ imageData: base64Flag + imageStr })
                 }
             })
