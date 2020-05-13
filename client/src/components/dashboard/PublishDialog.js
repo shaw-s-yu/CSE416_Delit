@@ -14,6 +14,11 @@ class PublishDialog extends React.Component {
     };
 
     handleSubmit = (callback) => {
+        callback({
+            variables: {
+                id: this.props.item._id,
+            }
+        })
         this.props.handleClose('publish')
     };
 
@@ -23,7 +28,7 @@ class PublishDialog extends React.Component {
         const { checked } = this.state;
         if (!item) return null;
         const disabled = item.ownerInfo.username !== user.username;
-        const mutation = MutationList.UPDATE_TILESET;
+        const mutation = MutationList.PUBLISH_TILESET;
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(updateItem, res) => (

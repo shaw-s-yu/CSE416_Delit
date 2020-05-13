@@ -573,7 +573,7 @@ class DisplayPlace extends React.Component {
 
                     </div>
 
-                </ Scrollbars>
+                </Scrollbars>
                 <Dialog
                     header={'Attention'}
                     open={dialogOpen}

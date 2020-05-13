@@ -127,25 +127,25 @@ class TilesetViewer extends React.Component {
                             { name: TOOLS.ZOOM_OUT, item: <i className={"fas fa-search-minus"} style={{ fontSize: '24px' }} /> },
                             { name: TOOLS.ZOOM_IN, item: <i className={"fas fa-search-plus"} style={{ fontSize: '24px' }} /> },
                         ]}
-                    />
-                    <Query query={QueryList.GET_TILESET} variables={{ id: key }} fetchPolicy={'network-only'}>
-                        {({ loading, error, data }) => {
-                            if (loading) return 'loading'
-                            if (error) return 'error'
-                            if (!data) return 'error'
-                            const { tileset } = data
+                />
+                <Query query={QueryList.GET_TILESET} variables={{ id: key }} fetchPolicy={'network-only'}>
+                    {({ loading, error, data }) => {
+                        if (loading) return 'loading'
+                        if (error) return 'error'
+                        if (!data) return 'error'
+                        const { tileset } = data
 
-                            return (
-                                <ViewerDisplay
-                                    tileset={tileset}
-                                    handleZoomEffect={this.handleZoomEffect}
-                                    scale={scale}
-                                    childRef={ref => this.display = ref}
-                                />
-                            )
-                        }}
-                    </Query>
-                </div>
+                        return (
+                            <ViewerDisplay
+                                tileset={tileset}
+                                handleZoomEffect={this.handleZoomEffect}
+                                scale={scale}
+                                childRef={ref => this.display = ref}
+                            />
+                        )
+                    }}
+                </Query>
+            </div>
                 <Dialog
                     header="Saving Tileset"
                     open={open}
