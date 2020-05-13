@@ -96,8 +96,18 @@ class TilesetWindow extends React.Component {
 
     };
 
+    updateFirstgid(tilesets) {
+        tilesets[0].firstgid = 1;
+        for(let i = 1; i < tilesets.length; i++) {
+            const { firstgid, tilecount } = tilesets[i - 1];
+            tilesets[i].firstgid = firstgid + tilecount;
+        }
+        return tilesets;
+    }
+
     getCollapsibleList = () => {
-        const { dimension, tilesets, transactions } = this.props;
+        let { dimension, tilesets, transactions } = this.props;
+        tilesets = this.updateFirstgid(tilesets);
         const { selectedTool } = this.state;
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - 86 - 24 * tilesets.length;

@@ -1,18 +1,18 @@
 export default class TilesetTransaction {
-    constructor(id, tilesets, doCallback, undoCallback) {
-        this.id= id
+    constructor(oldValue, newValue, doCallback, undoCallback) {
+        this.oldValue= oldValue
         this.doCallback = doCallback
         this.undoCallback = undoCallback
-        this.tilesets = [...tilesets]
+        this.newValue = newValue
     }
 
     doTransaction = () => {
-        if (this.id !== undefined) this.doCallback(this.id)
+        if (this.oldValue !== undefined) this.doCallback(this.oldValue)
         else this.doCallback()
     }
 
     undoTransaction = () => {
-        if (this.tilesets !== undefined) this.undoCallback(this.tilesets)
+        if (this.newValue !== undefined) this.undoCallback(this.newValue)
         else this.undoCallback()
     }
 }

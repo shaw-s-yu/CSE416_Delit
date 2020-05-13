@@ -61,10 +61,11 @@ class SelectTilesetDialog extends React.Component {
     };
 
     handleSubmitButton = () => {
-        const newTilesets = this.props.tilesets.concat(this.selectedTilesets);
+        let oldTilesets = JSON.parse(JSON.stringify(this.props.tilesets));
+        let newTilesets = oldTilesets.concat(this.selectedTilesets);
         this.selectedTilesets=[];
         this.props.transactions.addTransaction(
-            new TilesetTransaction(newTilesets, this.props.tilesets, this.props.handleUpdateTilesets, this.props.restoreTileset)
+            new TilesetTransaction(newTilesets, oldTilesets, this.props.handleUpdateTilesets, this.props.restoreTileset)
         )
         this.props.close();
     };
