@@ -1,8 +1,8 @@
 import Dialog from '../tools/Dialog'
 import { Button } from "react-bootstrap";
 import React from 'react'
-import { Mutation } from 'react-apollo';
-import MutationList from '../../graphql/Mutation';
+import QueryList from '../../graphql/Query'
+import { Query } from 'react-apollo'
 
 class DownloadDialog extends React.Component {
     state = {
@@ -13,48 +13,84 @@ class DownloadDialog extends React.Component {
         this.setState({ checked: e.target.checked })
     };
 
-    handleSubmit = (callback) => {
+    handleDownload = (e) => {
+        const dataJson = {}
+        dataJson.firstgid = 1
+        dataJson.image = "./tileset@DELIT.jpeg"
+        dataJson.imageheight = e.height
+        dataJson.imagewidth = e.width
+        dataJson.margin = e.margin
+        dataJson.name = e.name
+        dataJson.properties = {}
+        dataJson.spacing = e.spacing
+        dataJson.tileheight = e.tileHeight
+        dataJson.tilewidth = e.tileWidth
+        dataJson.tilecount = e.tilecount
+        require("downloadjs")(dataJson, `${dataJson.name}.json`, "json");
+        console.log(e)
+        // this.handleSubmit()
+        
+    }
+
+    handleSubmit = () => {
+        console.log(this.props)
+        // this.handleDownload(this.tileset)
         this.props.handleClose('download')
     };
 
 
     render() {
         const { open, item, user, refetch,  handleClose } = this.props;
-        const { checked } = this.state;
         if (!item) return null;
-        const disabled = item.ownerInfo.username !== user.username;
-        const mutation = MutationList.UPDATE_TILESET;
+        const  downloadKey  = item._id
+        const query = QueryList.GET_TILESET
+        console.log(this.props)
+        console.log("=================")
         return (
-            <Mutation mutation={mutation} refetchQueries={[refetch]}>
-                {(updateItem, res) => (
-                    <Dialog
-                        header={<>Download <span className={"header-item-name"} >{item.name}</span> Tileset</>}
-                        open={open}
-                        maxWidth={'xl'}
-                        actions={[
-                            <Button key='1' onClick={this.handleSubmit.bind(this, updateItem)} disabled={disabled}>Download Now!</Button>,
-                            <Button key='2' onClick={handleClose.bind(this, 'download')}>Nah!</Button>,
-                        ]}
-                        // content={
-                        //     <>
-                        //         <label className="switch-btn-wrapper">
-                        //             {checked ?
-                        //                 <label htmlFor="switch-btn" className={"switch-btn-label download"}>Yes</label>
-                        //                 :
-                        //                 <label htmlFor="switch-btn" className={"switch-btn-label not-to-download"}>No</label>
-                        //             }
-                        //             <input type="checkbox" className="switch-btn" id="switch-btn" defaultChecked={true} onChange={this.handleOnChange}/>
-                        //             <span className="switch-btn-slider round"/>
-                        //         </label>
+            <Query query={QueryList.GET_TILESET} variables={{ id: downloadKey }} fetchPolicy={'network-only'}>
+                {({ loading, error, data }) => {
+                    if (loading) return 'loading'
+                    if (error) return 'error'
+                    if (!data) return 'error'
+                    const { tileset } = data
+                    return (
+                        <Dialog
+                            header={<>Download</>}
+                            open={open}
+                            maxWidth={'xl'}
+                            actions={[
+                                <Button key='1' onClick={this.handleSubmit.bind(this, tileset)} >Download Now!</Button>,
+                                <Button key='2' onClick={handleClose.bind(this, 'download')}>Nah!</Button>,
+                            ]}
+                            content={
+                                <p>Do you want to download <span className={"header-item-name"} >{item.name}</span> e.</p>
+                            }
+                        />
+                    )
+                }}
 
-                        //     </>
-                        // }
-                    />
-                )}
-            </Mutation>
+            </Query>
         )
     }
 
 }
 
 export default DownloadDialog;
+
+{/* <Query query={QueryList.GET_TILESET} variables={{ id: key }} fetchPolicy={'network-only'}>
+{({ loading, error, data }) => {
+    if (loading) return 'loading'
+    if (error) return 'error'
+    if (!data) return 'error'
+    const { tileset } = data
+
+    return (
+        <ViewerDisplay
+            tileset={tileset}
+            handleZoomEffect={this.handleZoomEffect}
+            scale={scale}
+            childRef={ref => this.display = ref}
+        />
+    )
+}}
+</Query> */}

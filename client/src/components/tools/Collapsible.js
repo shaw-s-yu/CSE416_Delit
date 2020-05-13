@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from "react-redux";
+import * as handler from "../../store/database/WorkScreenHandler";
 
 class Titlebar extends React.Component {
 
@@ -15,14 +17,17 @@ class Titlebar extends React.Component {
         this.setState({ open })
     }
 
-    handleClick = (index) => {
+    handleClick = (index, item) => {
         let { open } = this.state;
         open = open.map((e, i) => {
             if (i === index) return e;
             else return false;
         });
         open[index] = !open[index];
-        this.setState({ open: open });
+        this.setState({ open: open }, () => {
+            // console.log("this:",open[index])
+            open[index] ? this.props.passSelectedTileset(item) : this.props.passSelectedTileset(null)
+        });
     }
 
     handleAddProperty = () => {
@@ -55,10 +60,10 @@ class Titlebar extends React.Component {
                             <div key={index} >
                                 <div
                                     className="collapsible-title"
-                                    onClick={() => this.handleClick(index)}
+                                    onClick={() => this.handleClick(index, d.item)}
                                     onMouseDown={e => e.stopPropagation()}
                                 >
-                                    <i className={open[index] ? 'collapsible-title-icon fas fa-chevron-right' : 'collapsible-title-icon fas fa-chevron-down'}></i>
+                                    <i className={open[index] ? 'collapsible-title-icon fas fa-chevron-right' : 'collapsible-title-icon fas fa-chevron-down'}/>
                                     {d.title}
                                 </div>
                                 <div className={"collapsible-content "} style={style}>
@@ -73,6 +78,11 @@ class Titlebar extends React.Component {
         )
     }
 }
-
-export default Titlebar;
+const mapStateToProps = (state) => {
+    return{}
+};
+const mapDispatchToProps = (dispatch) => ({
+    passSelectedTileset: (selectedItem) => dispatch(handler.passSelectedTileset(selectedItem))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Titlebar)
 
