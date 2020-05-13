@@ -290,7 +290,8 @@ module.exports = new GraphQLObjectType({
                     searchName: { type: GraphQLString },
                     skip: { type: GraphQLInt },
                     sortBy: { type: GraphQLString },
-                    sortOrder: { type: GraphQLInt }
+                    sortOrder: { type: GraphQLInt },
+                    tilesetIds: { type: GraphQLList(GraphQLString)}
                 },
                 type: new GraphQLList(TilesetType),
                 resolve: (parent, args) => {
@@ -299,21 +300,25 @@ module.exports = new GraphQLObjectType({
                         $and: [
                             { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
                             { $or: [ {editors: parent._id}, { owner: parent._id }, {published: true} ] },
+                            { _id: { $nin: args.tilesetIds}},
                         ]
                     }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
-
                     if (!tilesets) throw new Error('Error');
                     return tilesets
                 }
             },
             tilesetsSelectableAmount: {
-                args: { searchName: { type: GraphQLString } },
+                args: {
+                    searchName: { type: GraphQLString },
+                    tilesetIds: { type: GraphQLList(GraphQLString)},
+                    },
                 type: GraphQLInt,
                 resolve: (parent, args) => {
                     let tilesetsAmount = TilesetModel.find({
                         $and: [
                             { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
                             { $or: [ {editors: parent._id}, { owner: parent._id }, {published: true},  ] },
+                            { _id: { $nin: args.tilesetIds}},
                         ]
                     }).countDocuments();
                     if (!tilesetsAmount) throw new Error('Error');

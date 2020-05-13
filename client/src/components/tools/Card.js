@@ -15,12 +15,6 @@ class Card extends React.Component {
         this.props.handleOpen(name);
     };
 
-    handleCheckBox = () => {
-        const { selectedTilesets, item } = this.props;
-        if (selectedTilesets)
-            return !!selectedTilesets.find((tileset) => tileset._id === item._id);
-        return false;
-    }
     componentDidMount() {
         const { imageId } = this.props.item;
         if (imageId !== '')
@@ -41,12 +35,6 @@ class Card extends React.Component {
         const { className, style, onClick, item, refetch, showEditeBts, handleCheckboxClick, showPublishBt, downloadBtn } = this.props;
         const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
-        const checked = this.handleCheckBox();
-        console.log(this.props)
-        // console.log("======")
-        // console.log(showPublishBt)
-        // console.log("------")
-        // console.log(downloadBtn)
         return (
             <div>
                 <div className={className} style={style} onClick={onClick.bind(this, item)}>
@@ -63,7 +51,7 @@ class Card extends React.Component {
                 {
                     showEditeBts ?
                         <div className="card-check-box-group" style={style}>
-                            <input type="checkbox" className={"card-check-box"} id={item._id} onChange={handleCheckboxClick.bind(this, item)} defaultChecked={checked} />
+                            <input type="checkbox" className={"card-check-box"} id={item._id} onChange={handleCheckboxClick.bind(this, item)} />
                         </div>
                         :
                         showPublishBt ?

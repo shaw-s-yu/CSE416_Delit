@@ -263,6 +263,7 @@ export default {
         $search: String!
         $sortBy: String!
         $sortOrder: Int!
+        $tilesetIds: [String]!
     ){
         user(
             id:$userId
@@ -272,6 +273,7 @@ export default {
                 skip: $pageSkip
                 sortBy: $sortBy
                 sortOrder: $sortOrder
+                tilesetIds: $tilesetIds
                 ){
                _id
                 name
@@ -296,7 +298,10 @@ export default {
                 tileWidth
                 published
             }
-            tilesetsSelectableAmount(searchName: $search)
+            tilesetsSelectableAmount(
+                searchName: $search
+                tilesetIds: $tilesetIds
+            )
         }
     }`,
     GET_ALL_MAPS: graphql`
