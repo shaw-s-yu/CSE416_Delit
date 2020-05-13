@@ -55,7 +55,6 @@ class ItemList extends React.Component {
         const style = {
             height: numItem > 3 ? 600 : 300
         };
-
         const showPublishBt = selected === 'tilesetsOwned';
         const downloadBtn = selected === 'tilesets';
         // console.log("XXXXXXXXXXXXXXX")
@@ -103,6 +102,7 @@ class ItemList extends React.Component {
                         handleOpen={this.handleDialogsOpen}
                         handleClose={this.handleDialogsClose}
                         handleSetItem={this.handleSetItem}
+                        selected={selected}
                         user={user}
                         type={type}
                     /> : null

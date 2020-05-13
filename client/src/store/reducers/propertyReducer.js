@@ -131,7 +131,7 @@ const propertyReducer = (state = initState, action) => {
         for (let i = 0; i < state.custom.length; i++) {
             custom.push({
                 ...state.custom[i],
-                [action.name]: i === action.index ? action.value : state.custom[i].value
+                [action.name]: i === action.index ? action.value : state.custom[i][action.name]
             })
         }
         return {

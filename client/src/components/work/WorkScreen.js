@@ -117,7 +117,7 @@ class WorkScreen extends React.Component {
 
 
     handleFormatMapJson = () => {
-        const { layers, map, tilesets } = this.props
+        const { layers, map, tilesets, custom } = this.props
         let toReturn = {
             ...map,
             tiledversion: `1.3.2`,
@@ -147,6 +147,7 @@ class WorkScreen extends React.Component {
             }
         })
         toReturn.tilesets = tilesetsToReturn
+        toReturn.properties = custom
         return toReturn
 
     }
@@ -154,7 +155,6 @@ class WorkScreen extends React.Component {
     handleExport = () => {
         const { project } = this.props
         const data = this.handleFormatMapJson()
-        console.log(data)
         require("downloadjs")(JSON.stringify(data).toLowerCase(), `${project.name}.json`, "text/plain");
     }
 

@@ -171,12 +171,30 @@ class InviteDialog extends React.Component {
     }
 
 
+    getMutation = () => {
+        const { selected } = this.props;
+        if (selected === 'all')
+            return MutationList.INVITE_2PROJECT
+        if (selected === 'create')
+            return MutationList.INVITE_2PROJECT
+        if (selected === 'share')
+            return MutationList.INVITE_2PROJECT
+        if (selected === 'tilesets')
+            return MutationList.INVITE_2TILESET
+        if (selected === 'tilesetsOwned')
+            return MutationList.INVITE_2TILESET
+        if (selected === 'tilesetsShared')
+            return MutationList.INVITE_2TILESET
+        return MutationList.INVITE_2PROJECT
+    };
+
+
     render() {
-        const { open, item, user, refetch, selected } = this.props
+        const { open, item, user, refetch } = this.props
         if (!item) return null
         const disabled = item.ownerInfo.username === user.username ? false : true
         const more = this.getMore()
-        const mutation = selected === 'tileset' ? MutationList.INVITE_2TILESET : MutationList.INVITE_2PROJECT
+        const mutation = this.getMutation()
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(inviteUser, res) => (
