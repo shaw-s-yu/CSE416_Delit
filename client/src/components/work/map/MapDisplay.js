@@ -20,6 +20,8 @@ class ImageWrapper extends React.Component {
     scrollbar = React.createRef();
     mouseGridPosition = null
     mouseDown = false
+    layerRefs = {}
+    layerList = {}
 
     getToolName = () => {
         const { selectedTool } = this.props
@@ -78,10 +80,8 @@ class ImageWrapper extends React.Component {
 
         const { layerList, tilesets } = this.props
         this.imageController.setTilesets(tilesets)
-
         let layersRefName = []
-        this.layerRefs = {}
-        this.layerList = {}
+
         for (let i = 0; i < layerList.length; i++) {
             const layerRefName = 'layer' + layerList[i]._id
             this.layerRefs[layerRefName] = this.refs[layerRefName]
@@ -301,24 +301,6 @@ class ImageWrapper extends React.Component {
         const { tilesetLoaded, resizing } = this.props
         if (tilesetLoaded && !resizing)
             this.handleDrawLayers()
-    }
-
-    getTilesetJson = () => {
-        const { tileset } = this.props
-        // const dataJson = {}
-        console.log(tileset)
-        // dataJson.firstgid = 1
-        // dataJson.image = "./tileset@DELIT.jpeg"
-        // dataJson.imageheight = tileset.height
-        // dataJson.imagewidth = tileset.width
-        // dataJson.margin = tileset.margin
-        // dataJson.name = tileset.name
-        // dataJson.properties = {}
-        // dataJson.spacing = tileset.spacing
-        // dataJson.tileheight = tileset.tileHeight
-        // dataJson.tilewidth = tileset.tileWidth
-        // console.log(JSON.stringify(dataJson))
-        // return JSON.stringify(dataJson)
     }
 
     render() {

@@ -140,7 +140,10 @@ class TilesetDisplay extends React.Component {
                     console.log(msg)
                 else {
                     const base64Flag = 'data:image/jpeg;base64,';
-                    if (!data) return
+                    if (!data) {
+                        this.props.handleTilesetLoaded()
+                        return
+                    }
                     const imageStr = arrayBufferToBase64(data.data)
                     this.handleDrawImgToGrid(base64Flag + imageStr, () => {
                         this.props.handleTilesetLoaded()
