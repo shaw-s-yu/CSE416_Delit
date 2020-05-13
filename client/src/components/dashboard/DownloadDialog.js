@@ -39,10 +39,9 @@ class DownloadDialog extends React.Component {
 
 
     render() {
-        const { open, item, user, refetch,  handleClose } = this.props;
+        const { open, item,  handleClose } = this.props;
         if (!item) return null;
         const  downloadKey  = item._id
-        const query = QueryList.GET_TILESET
         console.log(this.props)
         console.log("=================")
         return (

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import * as handler from "../../store/database/WorkScreenHandler";
 
-class Titlebar extends React.Component {
+class Collapsible extends React.Component {
 
     state = {
         open: []
@@ -41,7 +41,7 @@ class Titlebar extends React.Component {
         this.setState({ open })
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         if (this.props.childRef)
             this.props.childRef(this)
     }
@@ -88,5 +88,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     passSelectedTileset: (selectedItem) => dispatch(handler.passSelectedTileset(selectedItem))
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Titlebar)
+export default connect(mapStateToProps, mapDispatchToProps)(Collapsible)
 
