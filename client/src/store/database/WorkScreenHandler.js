@@ -130,7 +130,7 @@ export const restoreLayers = (layerList) => (dispatch, getState) => {
 };
 
 export const updateTilesetsHandler = (tilesets) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.UPDATE_TILESETS, tilesets });
+    dispatch({ type: actionCreators.TILESETS_UPDATE, tilesets });
 };
 
 export const handleAddProperty = () => (dispatch, getState) => {
@@ -146,7 +146,7 @@ export const passSelectedTileset = (selectedItem) => (dispatch, getState) => {
 };
 
 export const deleteTilesetHandler = (id) => (dispatch, getState) => {
-    dispatch({ type: actionCreators.DELETE_TILESET, id});
+    dispatch({ type: actionCreators.TILESET_DELETE, id});
 };
 
 export const restoreTileset = (tilesets) => (dispatch, getState) => {

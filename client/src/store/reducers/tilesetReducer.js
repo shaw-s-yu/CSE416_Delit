@@ -74,7 +74,7 @@ const tilesetReducer = (state = initState, action) => {
         }
     }
 
-    else if (action.type === actionCreators.UPDATE_TILESETS) {
+    else if (action.type === actionCreators.TILESETS_UPDATE) {
         let newTilesets = [];
         for (let i = 0; i < action.tilesets.length; i++) {
             newTilesets.push(action.tilesets[i])
@@ -92,7 +92,7 @@ const tilesetReducer = (state = initState, action) => {
         }
     }
 
-    else if (action.type === actionCreators.DELETE_TILESET) {
+    else if (action.type === actionCreators.TILESET_DELETE) {
         let newTilesets = state.tilesets.filter((tileset) => {
             return tileset._id !== action.id
         });
