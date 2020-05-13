@@ -58,7 +58,6 @@ class SelectTilesetDialog extends React.Component {
     };
 
     handleSubmitButton = () => {
-        console.log(this.selectedTilesets);
         this.props.handleUpdateTilesets(this.selectedTilesets);
         this.props.close();
     };

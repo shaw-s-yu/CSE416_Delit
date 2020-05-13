@@ -144,3 +144,11 @@ export const restoreCustomProperty = (custom) => (dispatch, getState) => {
 export const passSelectedTileset = (selectedItem) => (dispatch, getState) => {
     dispatch({ type: actionCreators.PASS_SELECTED_TILESET, selectedItem});
 };
+
+export const deleteTilesetHandler = (id) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.DELETE_TILESET, id});
+};
+
+export const restoreTileset = (tilesets) => (dispatch, getState) => {
+    dispatch({ type: actionCreators.TILESET_RESTORE, tilesets});
+};

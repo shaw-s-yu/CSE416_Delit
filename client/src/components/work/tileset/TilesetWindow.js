@@ -7,6 +7,7 @@ import Collapsible from '../../tools/Collapsible'
 import TilesetDisplay from './TilesetDisplay'
 import SelectTilesetDialog from "./SelectTilesetDialog";
 import TOOLS from '../../tools/ToolbarTools'
+import TilesetTransaction from '../../controller/TilesetTransaction';
 
 
 class TilesetWindow extends React.Component {
@@ -22,7 +23,6 @@ class TilesetWindow extends React.Component {
             loaded: loaded,
             selectTilesetDialogOpen: false,
             selectedTool: '',
-            disableDeleteBt:true,
         }
     }
 
@@ -88,22 +88,13 @@ class TilesetWindow extends React.Component {
 
     handleOnDeleteTileset = () => {
         let { tilesets, selectedItem } = this.props;
-        // console.log("selectedItem: ", selectedItem);
-        let newTilesets = null;
-        if (selectedItem !== null) {
-            newTilesets = tilesets.filter((tileset) => {
-                return tileset._id !== selectedItem._id
-            });
-            this.props.handleUpdateTilesets(newTilesets);
-            this.props.passSelectedTileset(null);
-        }
+        if (selectedItem === null)
+            return;
+        this.props.transactions.addTransaction(
+            new TilesetTransaction(selectedItem._id, tilesets, this.props.handleDeleteTileset, this.props.restoreTileset)
+        )
 
     };
-
-    handleOnDisableDeleteBt = (disable) => {
-        this.setState({disableDeleteBt: disable})
-    }
-
 
     getCollapsibleList = () => {
         const { dimension, tilesets, transactions } = this.props;
@@ -144,7 +135,7 @@ class TilesetWindow extends React.Component {
 
 
     render() {
-        const { resizing, selectTilesetDialogOpen, selectedTool, disableDeleteBt } = this.state;
+        const { resizing, selectTilesetDialogOpen, selectedTool} = this.state;
         const { open, dimension, tilesets, history } = this.props
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - (110 - 24 * tilesets.length);
@@ -172,7 +163,6 @@ class TilesetWindow extends React.Component {
                     <Collapsible data={
                         this.getCollapsibleList()
                     }
-                         handleODeleteBt={this.handleOnDisableDeleteBt}
                         maxHeight={style.maxHeight}
                         resizing={resizing}
                     />
@@ -209,7 +199,8 @@ const mapDispatchToProps = (dispatch) => ({
     handleTilesetLoaded: () => dispatch(handler.handleTilesetLoaded()),
     tilesetIdApplier: (id, index) => dispatch(handler.tilesetIdApplier(id, index)),
     handleUpdateTilesets: (tilesets) => dispatch(handler.updateTilesetsHandler(tilesets)),
-    passSelectedTileset: (selectedItem) => dispatch(handler.passSelectedTileset(selectedItem))
+    handleDeleteTileset: (id) => dispatch(handler.deleteTilesetHandler(id)),
+    restoreTileset: (tilesets) => dispatch(handler.restoreTileset(tilesets)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TilesetWindow)

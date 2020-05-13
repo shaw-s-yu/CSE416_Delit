@@ -86,10 +86,30 @@ const tilesetReducer = (state = initState, action) => {
     }
 
     else if (action.type === actionCreators.PASS_SELECTED_TILESET) {
-        console.log("redux: ", action.selectedItem)
         return{
             ...state,
             selectedItem: action.selectedItem
+        }
+    }
+
+    else if (action.type === actionCreators.DELETE_TILESET) {
+        console.log("redux: ", action.id);
+        let newTilesets = state.tilesets.filter((tileset) => {
+            return tileset._id !== action.id
+        });
+        return{
+            ...state,
+            selectedItem: null,
+            tilesets:newTilesets
+        }
+    }
+
+    else if (action.type === actionCreators.TILESET_RESTORE) {
+        const tilesets = action.tilesets.map(e => e)
+        if (!tilesets) return { ...state }
+        return {
+            ...state,
+            tilesets
         }
     }
     return state;
