@@ -176,6 +176,8 @@ class InviteDialog extends React.Component {
         if (!item) return null
         const disabled = item.ownerInfo.username === user.username ? false : true
         const more = this.getMore()
+        console.log("selected is ")
+        console.log(selected)
         const mutation = selected === 'tileset' ? MutationList.INVITE_2TILESET : MutationList.INVITE_2PROJECT
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>

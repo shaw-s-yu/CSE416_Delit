@@ -33,6 +33,7 @@ class DuplicateDialog extends React.Component {
         if (!item) return null;
         const mutation = type === 'tileset' ? MutationList.DUPLICATE_TILESET : MutationList.DUPLICATE_PROJECT;
         const label = type === 'tileset' ? "Enter Tileset Name" : "Enter Project Name";
+        console.log("555555555")
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(duplicateProject, res) => (
