@@ -178,6 +178,7 @@ class TilesetWindow extends React.Component {
                     close={this.handleCloseSelectTilesetDialog}
                     history={history}
                     tilesets={tilesets}
+                    transactions={this.props.transactions}
                 />
             </>
         )

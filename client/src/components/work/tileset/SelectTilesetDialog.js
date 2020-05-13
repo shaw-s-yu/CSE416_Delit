@@ -9,6 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "../../tools/Pagination";
 import TilesetList from "./TilesetList";
 import * as handler from "../../../store/database/WorkScreenHandler";
+import TilesetTransaction from "../../controller/TilesetTransaction";
 class SelectTilesetDialog extends React.Component {
     constructor(props) {
         super(props);
@@ -18,8 +19,10 @@ class SelectTilesetDialog extends React.Component {
             sortBy: 'lastUpdate',
             lastUpdate: -1,
             name: -1,
+            disabled: true,
         }
-        this.selectedTilesets =[...this.props.tilesets];
+        // this.selectedTilesets =[...this.props.tilesets];
+        this.selectedTilesets =[];
     }
 
     handleSearchChange = (e) => {
@@ -27,7 +30,6 @@ class SelectTilesetDialog extends React.Component {
     };
 
     handleSortBy = (e, type) => {
-        console.log("class: ", e.target.classList);
         this.setState({ sortBy: type })
     };
 
@@ -55,21 +57,27 @@ class SelectTilesetDialog extends React.Component {
             this.selectedTilesets.push(item);
         else
             this.selectedTilesets = this.selectedTilesets.filter((i) => i._id !== item._id);
+        const disabled = this.selectedTilesets.length === 0;
+        this.setState({disabled});
     };
 
     handleSubmitButton = () => {
-        this.props.handleUpdateTilesets(this.selectedTilesets);
+        const newTilesets = this.props.tilesets.concat(this.selectedTilesets);
+        this.selectedTilesets=[];
+        this.props.transactions.addTransaction(
+            new TilesetTransaction(newTilesets, this.props.tilesets, this.props.handleUpdateTilesets, this.props.restoreTileset)
+        )
         this.props.close();
     };
 
     render() {
         const { open, close, user, history } = this.props;
-        const { page, search, sortBy } = this.state;
+        const { page, search, sortBy,disabled } = this.state;
         const query = QueryList.GET_SELECTABLE_TILESETS;
         const pageSkip = (page - 1) * 6;
         const sortOrder = this.state[sortBy];
-        const disable = this.selectedTilesets.length === 0;
-        const tilesetIds = [...new Set(this.selectedTilesets.map((tileset) => tileset._id ))];
+        // const disable = this.selectedTilesets.length === 0;
+        const tilesetIds = [...new Set(this.props.tilesets.map((tileset) => tileset._id ))];
         return (
             <>
                 <Dialog
@@ -78,7 +86,7 @@ class SelectTilesetDialog extends React.Component {
                     fullWidth={true}
                     maxWidth="lg"
                     actions={[
-                        <Button variant="primary" size="sm"  key='1' disabled={disable} onClick={this.handleSubmitButton}>Confirm</Button>,
+                        <Button variant="primary" size="sm"  key='1' disabled={disabled} onClick={this.handleSubmitButton}>Confirm</Button>,
                         <Button variant="primary" size="sm" key='2' onClick={close}>Cancel</Button>
                     ]}
                     content={
@@ -143,5 +151,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     handleUpdateTilesets: (tilesets) => dispatch(handler.updateTilesetsHandler(tilesets)),
+    restoreTileset: (tilesets) => dispatch(handler.restoreTileset(tilesets)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SelectTilesetDialog);
