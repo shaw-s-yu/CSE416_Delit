@@ -90,7 +90,7 @@ class SelectTilesetDialog extends React.Component {
                                 <button className={"tileset-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
                                 <i className={"fa tileset-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
                             </div>
-                            <Query query={QueryList.GET_SELECTABLE_TILESETS} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder, tilesetIds:tilesetIds }} fetchPolicy={"no-cache"}>
+                            <Query query={QueryList.GET_SELECTABLE_TILESETS} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
                                 {({ loading, error, data }) => {
                                     if (loading)
                                         return <CircularProgress className="tileset-loading" />;
@@ -98,8 +98,16 @@ class SelectTilesetDialog extends React.Component {
                                     if (query === QueryList.EMPTY_QUERY)
                                         return;
                                     if (!data) return 'error';
-                                    const items = data.user.tilesetsSelectable;
-                                    let amount = data.user.tilesetsSelectableAmount;
+                                    let items = data.user.tilesetsSelectable;
+                                    items = items.filter((item) => {
+                                        for(let i = 0; i < tilesetIds.length; i++) {
+                                            if (tilesetIds[i] === item._id)
+                                                return false;
+                                        }
+                                        return true;
+                                    });
+                                    let amount = items.length;
+
                                     const pageAmount = amount % 6 === 0 ? amount / 6 : Math.floor(amount / 6) + 1;
                                     return(
                                         <div className="tileset-container">

@@ -263,7 +263,6 @@ export default {
         $search: String!
         $sortBy: String!
         $sortOrder: Int!
-        $tilesetIds: [String]!
     ){
         user(
             id:$userId
@@ -273,7 +272,6 @@ export default {
                 skip: $pageSkip
                 sortBy: $sortBy
                 sortOrder: $sortOrder
-                tilesetIds: $tilesetIds
                 ){
                _id
                 name
@@ -300,7 +298,6 @@ export default {
             }
             tilesetsSelectableAmount(
                 searchName: $search
-                tilesetIds: $tilesetIds
             )
         }
     }`,
