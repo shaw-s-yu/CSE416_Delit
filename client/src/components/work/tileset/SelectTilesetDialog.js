@@ -19,7 +19,6 @@ class SelectTilesetDialog extends React.Component {
             sortBy: 'lastUpdate',
             lastUpdate: -1,
             name: -1,
-            disabled: true,
         }
         this.selectedTilesets =[];
     }
@@ -56,8 +55,7 @@ class SelectTilesetDialog extends React.Component {
             this.selectedTilesets.push(item);
         else
             this.selectedTilesets = this.selectedTilesets.filter((i) => i._id !== item._id);
-        const disabled = this.selectedTilesets.length === 0;
-        this.setState({disabled});
+        this.forceUpdate()
     };
 
     handleSubmitButton = () => {
@@ -72,11 +70,12 @@ class SelectTilesetDialog extends React.Component {
 
     render() {
         const { open, close, user, history } = this.props;
-        const { page, search, sortBy,disabled } = this.state;
+        const { page, search, sortBy } = this.state;
         const query = QueryList.GET_SELECTABLE_TILESETS;
         const pageSkip = (page - 1) * 6;
         const sortOrder = this.state[sortBy];
         const tilesetIds = [...new Set(this.props.tilesets.map((tileset) => tileset._id ))];
+        const disabled = this.selectedTilesets.length === 0;
         return (
             <>
                 <Dialog
@@ -100,7 +99,7 @@ class SelectTilesetDialog extends React.Component {
                             <Query query={QueryList.GET_SELECTABLE_TILESETS} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
                                 {({ loading, error, data }) => {
                                     if (loading)
-                                        return <CircularProgress className="tileset-loading" />;
+                                        return <CircularProgress className="tileset-loading" size={220}/>;
                                     if (error) return 'error';
                                     if (query === QueryList.EMPTY_QUERY)
                                         return;

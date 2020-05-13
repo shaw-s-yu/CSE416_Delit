@@ -10,7 +10,7 @@ class TilesetList extends React.Component {
         const { _id } = item;
         const type = 'tilesetviewer';
         this.props.history.push(`/${type}/${_id}`);
-        window.location.reload(false);
+        this.forceUpdate();
     };
     render() {
         const { items, handleCheckboxClick } = this.props;

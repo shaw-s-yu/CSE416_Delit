@@ -97,10 +97,12 @@ class TilesetWindow extends React.Component {
     };
 
     updateFirstgid(tilesets) {
-        tilesets[0].firstgid = 1;
-        for(let i = 1; i < tilesets.length; i++) {
-            const { firstgid, tilecount } = tilesets[i - 1];
-            tilesets[i].firstgid = firstgid + tilecount;
+        if (tilesets && tilesets[0]) {
+            tilesets[0].firstgid = 1;
+            for (let i = 1; i < tilesets.length; i++) {
+                const {firstgid, tilecount} = tilesets[i - 1];
+                tilesets[i].firstgid = firstgid + tilecount;
+            }
         }
         return tilesets;
     }
