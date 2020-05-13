@@ -32,7 +32,7 @@ class Card extends React.Component {
 
     render() {
         const { imageData } = this.state;
-        const { className, style, onClick, item, refetch, showEditeBts, handleCheckboxClick, showPublishBt } = this.props;
+        const { className, style, onClick, item, refetch, showEditeBts, handleCheckboxClick, showPublishBt, downloadBtn } = this.props;
         const { name, ownerInfo } = item;
         const owner = ownerInfo.username;
         return (
@@ -57,19 +57,28 @@ class Card extends React.Component {
                         showPublishBt ?
                             <div className="card-info-btn-box" style={style}>
                                 <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', item, refetch)}>Rename</div>
-                                <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Dupliate</div>
+                                <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Duplicate</div>
                                 <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
                                 <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
                                 <div className="card-info-btn-center card-info-btn" onClick={this.handleOpen.bind(this, 'publish', item, refetch)}><span className="card-info-edit-btn-center">Edit</span><span className="card-info-publish-btn-center">Publish</span></div>
                             </div>
                             :
-                            <div className="card-info-btn-box" style={style}>
-                                <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', item, refetch)}>Rename</div>
-                                <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Dupliate</div>
-                                <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
-                                <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
-                                <div className="card-info-btn-center card-info-btn" >Edit</div>
-                            </div>
+                            downloadBtn ?
+                                <div className="card-info-btn-box" style={style}>
+                                    <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', item, refetch)}>Rename</div>
+                                    <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Duplicate</div>
+                                    <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
+                                    <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
+                                    <div className="card-info-btn-center card-info-btn" onClick={this.handleOpen.bind(this, 'download', item, refetch)}><span className="card-info-edit-btn-center">Edit</span><span className="card-info-download-btn-center">Download</span></div>
+                                </div>
+                                :
+                                <div className="card-info-btn-box" style={style}>
+                                    <div className="card-info-btn-tl card-info-btn" onClick={this.handleOpen.bind(this, 'rename', item, refetch)}>Rename</div>
+                                    <div className="card-info-btn-tr card-info-btn" onClick={this.handleOpen.bind(this, 'duplicate', item, refetch)}>Duplicate</div>
+                                    <div className="card-info-btn-bl card-info-btn" onClick={this.handleOpen.bind(this, 'team', item, refetch)}>Team</div>
+                                    <div className="card-info-btn-br card-info-btn" onClick={this.handleOpen.bind(this, 'remove', item, refetch)}>Delete</div>
+                                    <div className="card-info-btn-center card-info-btn" >Edit</div>
+                                </div>
 
                 }
             </div>

@@ -147,6 +147,14 @@ nav i{
     display: inline;
 }
 
+.card-info-btn-box .card-info-btn-center .card-info-download-btn-center {
+    display: none;
+}
+
+.card-info-btn-box:hover .card-info-btn-center .card-info-download-btn-center {
+    display: inline;
+}
+
 .card-info-btn-box:hover .card-info-btn-tl{
     margin-top:0px;
     margin-left: 0px;

@@ -18,6 +18,7 @@ class ItemList extends React.Component {
         publish: false,
         item: null,
         refetch: null,
+        download: false,
 
     };
 
@@ -54,7 +55,11 @@ class ItemList extends React.Component {
         const style = {
             height: numItem > 3 ? 600 : 300
         };
+
         const showPublishBt = selected === 'tilesetsOwned';
+        const downloadBtn = selected === 'tilesets';
+        // console.log("XXXXXXXXXXXXXXX")
+        // console.log(downloadBtn)
         return (
             <div className="dashboard-itemlist">
                 <div className="dashboard-itemlist-wrapper" style={style}>
@@ -85,6 +90,7 @@ class ItemList extends React.Component {
                                     handleSetItem={this.handleSetItem}
                                     refetch={refetch}
                                     showPublishBt={showPublishBt}
+                                    downloadBtn={downloadBtn}
                                 />
 
                             );

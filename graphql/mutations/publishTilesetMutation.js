@@ -2,6 +2,7 @@ const TilesetModel = require('../../models/mongo-tileset')
 const {
     GraphQLNonNull,
     GraphQLString,
+    GraphQLBoolean,
 } = require('graphql');
 
 
@@ -13,6 +14,9 @@ module.exports = {
         id: {
             type: new GraphQLNonNull(GraphQLString)
         },
+        // published: {
+        //     type: new GraphQLNonNull(GraphQLString)
+        // },
     },
     resolve: (root, params) => {
         TilesetModel.findOne({ _id: params.id }).then(currentTileset => {

@@ -164,3 +164,11 @@
 .publish-btn:hover{
     background-color: salmon;
 }
+
+.download-btn{
+    position: absolute;
+}
+
+.download-btn:hover{
+    background-color: salmon;
+}

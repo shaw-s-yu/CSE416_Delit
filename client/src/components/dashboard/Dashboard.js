@@ -81,6 +81,8 @@ class Dashboard extends React.Component {
             return QueryList.GET_MY_OWNED_TILESETS;
         if (selected === 'tilesetsShared')
             return QueryList.GET_MY_SHARED_TILESETS;
+        // if (selected === 'publishedTilesets')
+        //     return QueryList.GET_PUBLISHED_TILESETS;
         return QueryList.EMPTY_QUERY;
     };
 
@@ -127,7 +129,16 @@ class Dashboard extends React.Component {
                 amount: data.user.tilesetsSharedAmount,
                 type: "tileset",
             };
-        }
+        }        
+        // if (selected === 'publishedTilesets') {
+        //     return {
+        //         items: data.user.publishedTilesets,
+        //         amount: data.user.publishedTilesetsAmount,
+        //         type: "tileset",
+        //     };
+        // }
+
+
         return null
     };
 

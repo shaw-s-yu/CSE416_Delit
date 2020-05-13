@@ -109,5 +109,27 @@ export default {
         }
     }`,
 
-
+    GET_PUBLISHED_TILESETS: graphql`
+    {
+        publishedTilesets{
+            _id
+            name
+            imageId
+            
+            
+            owner
+            width
+            height
+            tileWidth
+            tileHeight
+            spacing
+            margin
+            columns
+            projectName
+            firstgid
+            ownerInfo{  
+                username
+            }
+        }
+    }`,
 }
