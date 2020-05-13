@@ -101,7 +101,7 @@ class ViewerDisplay extends React.Component {
                     else {
                         const base64Flag = 'data:image/jpeg;base64,';
                         if (!data) return
-                        const imageStr = arrayBufferToBase64(data.data.data)
+                        const imageStr = arrayBufferToBase64(data.data)
                         this.handleDrawImgToGrid(base64Flag + imageStr)
                     }
                 })

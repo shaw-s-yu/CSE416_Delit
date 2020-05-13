@@ -433,8 +433,7 @@ class DisplayPlace extends React.Component {
                         console.log(msg)
                     else {
                         const base64Flag = 'data:image/jpeg;base64,';
-                        console.log(data)
-                        if (!data.data) return
+                        if (!data) return
                         const imageStr = arrayBufferToBase64(data.data)
                         this.handleDrawImgToGrid(base64Flag + imageStr)
                     }
