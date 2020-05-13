@@ -143,7 +143,7 @@
             "margin": 0,
             "spacing": 0,
             "tilecount": 150,
-            "published": true
+            "published": false
         },
         {
             "_id": "tileset2",
@@ -162,7 +162,7 @@
             "margin": 0,
             "spacing": 0,
             "tilecount": 150,
-            "published": true
+            "published": false
         },
         {
             "_id": "tileset3",
@@ -180,7 +180,7 @@
             "margin": 0,
             "spacing": 0,
             "tilecount": 150,
-            "published": true
+            "published": false
         },
         {
             "_id": "tileset4",

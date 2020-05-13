@@ -312,7 +312,6 @@ class Draw extends React.Component {
                             if (error) return 'error'
                             if (!data) return 'error'
                             const { tileset } = data
-                            console.log(tileset)
                             return (
                                 <DisplayPlace
                                     tileset={tileset}
