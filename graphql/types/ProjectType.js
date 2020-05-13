@@ -3,6 +3,7 @@ const UserModel = require('../../models/mongo-user')
 const LayerModel = require('../../models/mongo-layer')
 const TilesetModel = require('../../models/mongo-tileset')
 const MapModel = require('../../models/mongo-map')
+const ImageModel = require('../../models/mongo-image')
 var GraphQLDate = require('graphql-date');
 
 module.exports = new GraphQLObjectType({
@@ -126,6 +127,15 @@ module.exports = new GraphQLObjectType({
                     return layer
                 }
             }
+            // ,
+            // getImage: {
+            //     type: ImageType,
+            //     resolve: (parent, args) => {
+            //         let image = ImageModel.findById(parent.imageId)
+            //         if (!image) throw new Error('cannot find image')
+            //         return image
+            //     }
+            // }
         }
     }
 });
@@ -134,3 +144,4 @@ const UserType = require('./UserType')
 const LayerType = require('./LayerType')
 const TilesetType = require('./TilesetType')
 const MapType = require('./MapType')
+const ImageType = require('./ImageType')

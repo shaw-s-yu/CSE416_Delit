@@ -5,11 +5,12 @@ import DeleteDialog from './DeleteDialog'
 import InviteDialog from './InviteDialog';
 import DuplicateDialog from './DuplicateDialog';
 import PublishDialog from "./PublishDialog";
+import DownloadDialog from "./DownloadDialog";
 
 class Dialogs extends React.Component {
 
     render() {
-        const { team, invite, rename, remove, duplicate, publish } = this.props;
+        const { team, invite, rename, remove, duplicate, publish, download } = this.props;
         return (
             <>
                 <TeamDialog {...this.props} open={team} />
@@ -34,6 +35,11 @@ class Dialogs extends React.Component {
                 <PublishDialog
                     {...this.props}
                     open={publish}
+                />
+
+                <DownloadDialog
+                    {...this.props}
+                    open={download}
                 />
             </>
         )

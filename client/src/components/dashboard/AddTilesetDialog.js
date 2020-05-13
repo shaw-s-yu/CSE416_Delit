@@ -48,7 +48,8 @@ class AddDialog extends React.Component {
                 imageId: '5eacb076d0ed064dec138c41'
             }
         })
-        this.props.handleSelectSide('tilesetsOwned')
+        this.props.handleSelectSide('tilesets')
+        // this.props.handleSelectSide('tilesets')
         this.props.handleClose()
     }
 

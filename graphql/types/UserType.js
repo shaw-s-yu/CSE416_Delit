@@ -320,6 +320,43 @@ module.exports = new GraphQLObjectType({
                     return tilesetsAmount
                 }
             },
+            publishedTilesets: {
+                args: {
+                    skip: { type: GraphQLInt },
+                    searchName: { type: GraphQLString },
+                    sortBy: { type: GraphQLString },
+                    sortOrder: { type: GraphQLInt }
+                },
+                type: new GraphQLList(TilesetType),
+                resolve: (parent, args) => {
+                    let tilesets = null;
+                    const { sortBy, skip, sortOrder } = args;
+                    tilesets = TilesetModel.find({
+                        $and: [
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
+                            { published: true }
+                        ]
+                    }).sort({ [sortBy]: sortOrder }).skip(skip).limit(6).exec();
+                    if (!tilesets) {
+                        throw new Error('Error');
+                    }
+                    return tilesets;
+                }
+            },
+            publishedTilesetsAmount: {
+                args: { searchName: { type: GraphQLString } },
+                type: GraphQLInt,
+                resolve: (parent, args) => {
+                    const publishedTilesetsAmount = TilesetModel.find({
+                        $and: [
+                            { name: new RegExp('^.*' + args.searchName + '.*$', 'i') },
+                            { published: true }
+                        ]
+                    }).countDocuments();
+                    if (!publishedTilesetsAmount) throw new Error('Error');
+                    return publishedTilesetsAmount
+                }
+            },
         }
     }
 });

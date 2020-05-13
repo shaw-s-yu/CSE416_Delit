@@ -477,5 +477,40 @@ export default {
     }
     `,
 
+    GET_PUBLISHED_TILESETS: graphql`
+    query user(
+        $userId: String!
+        $pageSkip: Int!
+        $search: String!
+        $sortBy: String!
+        $sortOrder: Int!
+    ){
+        user(
+            id:$userId
+        ){
+            publishedTilesets(
+                searchName: $search
+                skip: $pageSkip
+                sortBy: $sortBy
+                sortOrder: $sortOrder
+            ){
+                name
+                _id
+                imageId
+                ownerInfo{
+                    username
+                }
+                teamInfo{
+                    _id
+                    username
+                    picture
+                }
+                published
+            }
+            tilesetsAmount(searchName: $search)
+        }
+    }
+    `,
+
 
 }
