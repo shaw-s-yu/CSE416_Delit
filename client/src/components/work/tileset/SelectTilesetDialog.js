@@ -21,7 +21,6 @@ class SelectTilesetDialog extends React.Component {
             name: -1,
             disabled: true,
         }
-        // this.selectedTilesets =[...this.props.tilesets];
         this.selectedTilesets =[];
     }
 
@@ -76,7 +75,6 @@ class SelectTilesetDialog extends React.Component {
         const query = QueryList.GET_SELECTABLE_TILESETS;
         const pageSkip = (page - 1) * 6;
         const sortOrder = this.state[sortBy];
-        // const disable = this.selectedTilesets.length === 0;
         const tilesetIds = [...new Set(this.props.tilesets.map((tileset) => tileset._id ))];
         return (
             <>

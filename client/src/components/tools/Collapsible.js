@@ -17,7 +17,7 @@ class Titlebar extends React.Component {
         this.setState({ open })
     }
 
-    handleClick = (index, item) => {
+    handleClick = (index, item, type) => {
         let { open } = this.state;
         open = open.map((e, i) => {
             if (i === index) return e;
@@ -25,8 +25,11 @@ class Titlebar extends React.Component {
         });
         open[index] = !open[index];
         this.setState({ open: open }, () => {
-            // console.log("this:",open[index])
-            open[index] ? this.props.passSelectedTileset(item) : this.props.passSelectedTileset(null)
+            if (type === "tileset") {
+                this.props.passSelectedTileset(item)
+            }else {
+                this.props.passSelectedTileset(null)
+            }
         });
     }
 
@@ -57,11 +60,12 @@ class Titlebar extends React.Component {
                             transition: resizing ? 'none' : !open[index] ? 'ease-in-out 0.3s' : 'ease-in-out 0.4s',
                         }
                         return (
-                            <div key={index} >
+                            <div key={index} tabIndex="0" className="collapsible-wrapper">
                                 <div
                                     className="collapsible-title"
-                                    onClick={() => this.handleClick(index, d.item)}
+                                    onClick={() => this.handleClick(index, d.item, d.type)}
                                     onMouseDown={e => e.stopPropagation()}
+
                                 >
                                     <i className={open[index] ? 'collapsible-title-icon fas fa-chevron-right' : 'collapsible-title-icon fas fa-chevron-down'}/>
                                     {d.title}

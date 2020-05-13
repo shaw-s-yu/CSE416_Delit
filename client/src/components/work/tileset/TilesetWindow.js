@@ -108,6 +108,7 @@ class TilesetWindow extends React.Component {
         let li = []
         for (let i = 0; i < tilesets.length; i++) {
             li.push({
+                type:"tileset",
                 title: tilesets[i].name,
                 item: tilesets[i],
                 content: <TilesetDisplay

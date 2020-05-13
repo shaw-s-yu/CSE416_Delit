@@ -195,7 +195,7 @@ class TilesetDisplay extends React.Component {
                     onClick={this.handleOnClick}
                     onMouseDown={e => e.stopPropagation()}
                 >
-                    <canvas ref='backgroundCanvas' id={'tileset' + index} width={canvasWidth} height={canvasHeight}></canvas>
+                    <canvas ref='backgroundCanvas' id={'tileset' + index} width={canvasWidth} height={canvasHeight}/>
                     <SelectedBoxes
                         selectedGrids={selectedGrids}
                         width={tileWidth}

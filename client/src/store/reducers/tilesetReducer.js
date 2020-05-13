@@ -93,7 +93,6 @@ const tilesetReducer = (state = initState, action) => {
     }
 
     else if (action.type === actionCreators.DELETE_TILESET) {
-        console.log("redux: ", action.id);
         let newTilesets = state.tilesets.filter((tileset) => {
             return tileset._id !== action.id
         });
@@ -105,8 +104,8 @@ const tilesetReducer = (state = initState, action) => {
     }
 
     else if (action.type === actionCreators.TILESET_RESTORE) {
-        const tilesets = action.tilesets.map(e => e)
-        if (!tilesets) return { ...state }
+        const tilesets = action.tilesets.map(e => e);
+        if (!tilesets) return { ...state };
         return {
             ...state,
             tilesets
