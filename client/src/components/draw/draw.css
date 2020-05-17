@@ -214,6 +214,7 @@
     margin-top: 4px;
     padding: 8px 8px 8px 8px;
     position: relative;
+    cursor: auto;;
 }
 
 .chat-history-item-picture{
@@ -224,6 +225,7 @@
     display: inline-block;
     top: 0px;
     position: absolute;
+    cursor: auto;
 }
 
 .chat-history-item-username{
@@ -233,6 +235,7 @@
     margin-left:56px;
     position: absolute;
     margin-top: -12px;
+    cursor: auto;
 }
 
 .chat-history-item-msg{
@@ -243,7 +246,8 @@
     background-color: lightblue;
     border-radius: 5px;
     word-wrap: break-word;
-    padding:8px 8px 8px 8px
+    padding:8px 8px 8px 8px;
+    cursor: auto;
 }
 
 .chat-history-item-picture-right{
@@ -254,6 +258,7 @@
     display: inline-block;
     top: 0px;
     position: absolute;
+    cursor: auto;
 }
 
 .chat-history-item-username-right{
@@ -263,6 +268,7 @@
     right:56px;
     position: absolute;
     margin-top: -12px;
+    cursor: auto;
 }
 
 .chat-history-item-msg-right{
@@ -274,5 +280,6 @@
     background-color: lightblue;
     border-radius: 5px;
     word-wrap: break-word;
-    padding:8px 8px 8px 8px
+    padding:8px 8px 8px 8px;
+    cursor: auto;
 }

@@ -13,11 +13,13 @@ class ChatBox extends React.Component {
     }
 
     handleSubmit = () => {
-        this.props.socket.emit('chat', {
-            username: this.props.username,
-            userPicture: this.props.userPicture,
-            msg: this.state.inputText,
-            room: this.props.room
+        this.setState({ inputText: '' }, () => {
+            this.props.socket.emit('chat', {
+                username: this.props.username,
+                userPicture: this.props.userPicture,
+                msg: this.state.inputText,
+                room: this.props.room
+            })
         })
     }
 
@@ -37,7 +39,6 @@ class ChatBox extends React.Component {
         const { open } = this.props
         const { inputText, chatHistory } = this.state
         const currentUser = this.props.username
-        console.log(chatHistory)
         return (
             <>
                 <Rnd
@@ -72,6 +73,7 @@ class ChatBox extends React.Component {
                         variant="outlined"
                         size="small"
                         value={inputText}
+                        onClick={e => e.stopPropagation()}
                         onChange={this.handleChange} />
                     <Button className='chat-input-btn' size="sm" onClick={this.handleSubmit}>&#10148;</Button>
 
