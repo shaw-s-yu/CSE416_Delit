@@ -274,7 +274,7 @@ class Draw extends React.Component {
                 />
                 <Button className='publish-btn' size="sm" onClick={this.handlePublishDialogOpen}>Publish</Button>
                 <Button className='chat-btn' size="sm" onClick={this.handleChat}>Chat</Button>
-                <ChatBox open={showChatBox} socket={socket} username={username} userPicture={userPicture}
+                {/* <ChatBox open={showChatBox} socket={socket} username={username} userPicture={userPicture} */}
                     room={`draw/${key}`} />
                 <div className="painter-wrapper">
                     <Toolbar
