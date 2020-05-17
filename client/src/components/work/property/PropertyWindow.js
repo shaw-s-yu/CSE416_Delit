@@ -44,7 +44,6 @@ class PropertyWindow extends React.Component {
     }
 
     onlyNumber = (obj) => {
-        console.log(obj.value);
         obj.value = obj.value.replace(/[^\d]/gi, "");
     }
 

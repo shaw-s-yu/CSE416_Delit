@@ -336,7 +336,6 @@ class DisplayPlace extends React.Component {
         dataJson.tileheight = tileset.tileHeight
         dataJson.tilewidth = tileset.tileWidth
         dataJson.tilecount = tileset.tilecount
-        // console.log(JSON.stringify(dataJson))
         return JSON.stringify(dataJson)
     }
 
@@ -368,7 +367,6 @@ class DisplayPlace extends React.Component {
 
 
     componentDidMount() {
-
         if (this.userIsTeammember()) {
             this.room = `draw/${this.props.tileset._id}`
             this.props.socket.emit('join-room', this.room)

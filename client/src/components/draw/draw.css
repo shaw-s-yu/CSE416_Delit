@@ -159,6 +159,12 @@
 
 .publish-btn{
     position: absolute;
+    left: 10%;
+}
+
+.chat-btn{
+    position: absolute;
+    left: 18%;
 }
 
 .publish-btn:hover{
@@ -171,4 +177,102 @@
 
 .download-btn:hover{
     background-color: salmon;
+}
+
+.chat-box{
+    position: absolute;
+    background-color: white;
+    z-index: 10;
+    border: 2px solid black;
+}
+
+.chat-history{
+    width: 90%;
+    margin-left: 5%;
+    height: calc(100% - 144px);
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.chat-input{
+    position: absolute;
+    bottom: -16px;
+    width: 60%;
+    left: 5%;
+}
+
+.chat-input-btn{
+    position: absolute;
+    bottom: 20px;
+    width: 24%;
+    right: 5%;
+}
+
+.chat-history-item-box{
+    width: 100%;
+    min-height: 56px;
+    margin-top: 4px;
+    padding: 8px 8px 8px 8px;
+    position: relative;
+}
+
+.chat-history-item-picture{
+    width: 40px;
+    height: 40px;
+    margin-top: 8px;
+    margin-left: 8px;
+    display: inline-block;
+    top: 0px;
+    position: absolute;
+}
+
+.chat-history-item-username{
+    font-size: small;
+    display: inline-block;
+    height: 16px;
+    margin-left:56px;
+    position: absolute;
+    margin-top: -12px;
+}
+
+.chat-history-item-msg{
+    display: inline-block;
+    max-width: calc(100% - 64px);
+    margin-left: 56px;
+    margin-top: 8px;
+    background-color: lightblue;
+    border-radius: 5px;
+    word-wrap: break-word;
+    padding:8px 8px 8px 8px
+}
+
+.chat-history-item-picture-right{
+    width: 40px;
+    height: 40px;
+    margin-top: 8px;
+    margin-left: calc(100% - 56px);
+    display: inline-block;
+    top: 0px;
+    position: absolute;
+}
+
+.chat-history-item-username-right{
+    font-size: small;
+    display: inline-block;
+    height: 16px;
+    right:56px;
+    position: absolute;
+    margin-top: -12px;
+}
+
+.chat-history-item-msg-right{
+    position: absolute;
+    display: inline-block;
+    max-width: calc(100% - 64px);
+    right: 56px;
+    margin-top: 8px;
+    background-color: lightblue;
+    border-radius: 5px;
+    word-wrap: break-word;
+    padding:8px 8px 8px 8px
 }

@@ -18,6 +18,7 @@ exports.Socket = function (socket, io) {
         this.socket.on('join-room', this.joinRoomController)
         this.socket.on('duplicate-image', this.duplicateImageController)
         this.socket.on('project-save', this.projectSaveController)
+        this.socket.on('chat', this.chatController)
     }
 
     this.usernameController = data => {
@@ -70,6 +71,7 @@ exports.Socket = function (socket, io) {
 
     this.joinRoomController = req => {
         socket.join(req)
+        socket.emit('join-back', req)
     }
 
     this.duplicateImageController = req => {
@@ -108,7 +110,6 @@ exports.Socket = function (socket, io) {
         const customPropertyName = custom.map(e => e.name)
         const customPropertyValue = custom.map(e => e.value)
         for (let i = 0; i < layers.length; i++) {
-            console.log(layers[i]._id)
             LayerModel.findOne({ _id: layers[i]._id }).then(currentLayer => {
                 if (!currentLayer) {
                     new LayerModel({
@@ -201,10 +202,14 @@ exports.Socket = function (socket, io) {
                 }
             })
         })
-        console.log('success')
         socket.emit('project-save-back', {
             err: false, msg: 'project is saved'
         })
 
+    }
+
+    this.chatController = (req) => {
+        const { room } = req
+        io.in(room).emit('chat-back', req)
     }
 }

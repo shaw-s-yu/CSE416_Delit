@@ -70,7 +70,6 @@ class RegisterScreen extends React.Component {
     componentDidMount() {
         this.props.socket.on('authBack', data => {
             const { err, msg, auth } = data
-            console.log(data)
             if (err === false && this.popup) {
                 this.popup.close()
                 this.props.handleLoginSuccess(auth)

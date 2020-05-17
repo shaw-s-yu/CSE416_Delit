@@ -43,7 +43,6 @@ class MapManager extends React.Component {
                     if (layersRes.loading) return 'loading'
                     if (layersRes.error) return 'error'
                     const { layers } = layersRes.data
-                    console.log(layersRes)
                     const btn_disable = layers.length === 0 ? false : true
                     return (
                         <Mutation mutation={MutationList.ADD_LAYER} refetchQueries={[refetch]}>

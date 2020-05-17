@@ -48,7 +48,6 @@ class TilesetManager extends React.Component {
                     if (tilesetsRes.loading) return 'loading'
                     if (tilesetsRes.error) return 'error'
                     const { tilesets } = tilesetsRes.data
-                    console.log(tilesets)
                     const btn_disable = tilesets.length === 0 ? false : true
                     return (
                         <Mutation mutation={MutationList.ADD_TILESET} refetchQueries={[refetch]}>

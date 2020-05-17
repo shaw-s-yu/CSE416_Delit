@@ -14,6 +14,7 @@ import QueryList from '../../graphql/Query'
 import { Query } from 'react-apollo'
 import axios from 'axios';
 import { Button } from "react-bootstrap";
+import ChatBox from './ChatBox'
 
 class Draw extends React.Component {
 
@@ -29,11 +30,18 @@ class Draw extends React.Component {
         publishOpen: false,
         saved: false,
         username: null,
-        saveErrorMsg: ''
+        userPicture: '',
+        saveErrorMsg: '',
+        showChatBox: false,
     };
 
     transactions = new Transactions();
     display = React.createRef();
+
+    handleChat = () => {
+        const { showChatBox } = this.state
+        this.setState({ showChatBox: !showChatBox })
+    }
 
     handleExportJson = () => {
         const imgData = this.display.getTilesetJson()
@@ -218,11 +226,11 @@ class Draw extends React.Component {
 
     componentDidMount() {
         axios.get('/auth/current').then(res => {
-            const { username, _id } = res.data;
-            if (!username || !_id)
+            const { username, _id, picture } = res.data;
+            if (!username || !_id || !picture)
                 this.props.history.push('/');
             else {
-                this.setState({ username, userId: _id });
+                this.setState({ username, userId: _id, userPicture: picture });
             }
         })
     }
@@ -240,13 +248,16 @@ class Draw extends React.Component {
                 this.setState({ saved: true })
             }
         })
+
+        this.props.socket.on('join-back', res => {
+            console.log(res)
+        })
     }
 
     render() {
         const { key } = this.props.match.params
-        const { history } = this.props;
-        const { sliderValue, saved, borderColor, fillColor, scale, saveOpen, startAuthOpen, duplicaOpen, username, confirmSaveOpen, saveErrorMsg, publishOpen } = this.state;
-
+        const { history, socket } = this.props;
+        const { sliderValue, saved, borderColor, fillColor, scale, saveOpen, startAuthOpen, duplicaOpen, username, userPicture, confirmSaveOpen, saveErrorMsg, publishOpen, showChatBox } = this.state;
         return (
 
             <div onClick={this.handleUnselect}>
@@ -261,7 +272,10 @@ class Draw extends React.Component {
                     handleCopy={this.handleCopy}
                     handlePaste={this.handlePaste}
                 />
-                <Button className='publish-btn' onClick={this.handlePublishDialogOpen}>Publish</Button>
+                <Button className='publish-btn' size="sm" onClick={this.handlePublishDialogOpen}>Publish</Button>
+                <Button className='chat-btn' size="sm" onClick={this.handleChat}>Chat</Button>
+                <ChatBox open={showChatBox} socket={socket} username={username} userPicture={userPicture}
+                    room={`draw/${key}`} />
                 <div className="painter-wrapper">
                     <Toolbar
                         selectCallback={this.handleClearNoneToolOperation}

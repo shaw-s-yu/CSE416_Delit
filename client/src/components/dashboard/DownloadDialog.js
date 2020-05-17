@@ -27,23 +27,20 @@ class DownloadDialog extends React.Component {
         dataJson.tilewidth = e.tileWidth
         dataJson.tilecount = e.tilecount
         require("downloadjs")(dataJson, `${dataJson.name}.json`, "json");
-        console.log(e)
-        
+
     }
 
     handleSubmit = (tileset) => {
         this.handleDownload(tileset)
-        console.log(this.props)
         this.props.handleClose('download')
     };
 
 
     render() {
-        const { open, item,  handleClose } = this.props;
+        const { open, item, handleClose } = this.props;
         if (!item) return null;
-        const  downloadKey  = item._id
-        console.log(this.props)
-        console.log("=================")
+        const downloadKey = item._id
+
         return (
             <Query query={QueryList.GET_TILESET} variables={{ id: downloadKey }} fetchPolicy={'network-only'}>
                 {({ loading, error, data }) => {
