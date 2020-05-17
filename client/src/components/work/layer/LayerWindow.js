@@ -82,39 +82,42 @@ class LayerWindow extends React.Component {
             }
         }
         return (
-            <Rnd
-                className={"workscreen-window " + (open ? '' : 'invisible')}
-                size={dimension.size}
-                position={dimension.position}
-                onMouseDown={() => { this.props.handleToTop('layer') }}
-                onResize={this.handleOnResize}
-                onResizeStop={this.handleOnResize}
-                onResizeStart={() => this.props.handleToTop('layer')}
-                id='layer'
-                onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'layer')}
-                style={{ zIndex: dimension.zIndex }}
-            >
-                <Titlebar title="Layer Window" />
-                <LayerList maxWidth={maxWidth} transactions={transactions} />
-                <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} onClick={this.handleAddLayer} />
-                <span className="opacity-text">OPACITY:</span>
-                <div className="layer-range">
-                    <Slider
-                        defaultValue={0}
-                        value={opacity}
-                        getAriaValueText={value => value + "%"}
-                        aria-labelledby="discrete-slider"
-                        valueLabelDisplay="auto"
-                        marks
-                        min={0}
-                        max={100}
-                        onMouseDown={this.handleMouseDown}
-                        onChange={this.handleOpacityOnChange}
-                        onChangeCommitted={this.handleOnMouseUp}
-                        disabled={!selected}
-                    />
-                </div>
-            </Rnd>
+            <>
+                {open ? <Rnd
+                    className={"workscreen-window "}
+                    size={dimension.size}
+                    position={dimension.position}
+                    onMouseDown={() => { this.props.handleToTop('layer') }}
+                    onResize={this.handleOnResize}
+                    onResizeStop={this.handleOnResize}
+                    onResizeStart={() => this.props.handleToTop('layer')}
+                    id='layer'
+                    onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'layer')}
+                    style={{ zIndex: dimension.zIndex }}
+                >
+                    <Titlebar title="Layer Window" handleClose={this.props.handleClose.bind(this, 'layerOpen')} handleResetWindow={this.props.handleResetWindow} handleMaxWindow={this.props.handleMaxWindow} />
+                    <LayerList maxWidth={maxWidth} transactions={transactions} />
+                    <i className="fas fa-plus layer-add-btn better-btn" onMouseDown={e => e.stopPropagation()} onClick={this.handleAddLayer} />
+                    <span className="opacity-text">OPACITY:</span>
+                    <div className="layer-range">
+                        <Slider
+                            defaultValue={0}
+                            value={opacity}
+                            getAriaValueText={value => value + "%"}
+                            aria-labelledby="discrete-slider"
+                            valueLabelDisplay="auto"
+                            marks
+                            min={0}
+                            max={100}
+                            onMouseDown={this.handleMouseDown}
+                            onChange={this.handleOpacityOnChange}
+                            onChangeCommitted={this.handleOnMouseUp}
+                            disabled={!selected}
+                        />
+                    </div>
+                </Rnd> : null}
+            </>
+
 
         )
     }

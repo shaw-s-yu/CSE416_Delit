@@ -20,6 +20,7 @@ class WorkScreen extends React.Component {
         propertyOpen: true,
         layerOpen: true,
         tilesetOpen: true,
+        mapOpen: true,
         property: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 1 },
         map: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 2 },
         tileset: { size: { width: 0, height: 0 }, position: { x: 0, y: 0 }, zIndex: 3 },
@@ -64,27 +65,21 @@ class WorkScreen extends React.Component {
     }
 
     getScreen = () => {
-        const { propertyOpen, layerOpen, tilesetOpen, property, map, layer, tileset } = this.state;
+        const { propertyOpen, layerOpen, tilesetOpen, property, map, layer, tileset, mapOpen } = this.state;
         const { history } = this.props
         return (
             <>
-                <MapWindow key="map" handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} handleSave={this.handleSaveDialogOpen} handleExport={this.handleExport} />
-                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
-                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
-                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} />
+                <MapWindow key="map" open={mapOpen} handleToTop={this.handleToTop} dimension={map} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} handleSave={this.handleSaveDialogOpen} handleExport={this.handleExport} handleClose={this.handleClose} handleResetWindow={this.handleResetWindow.bind(this, 'map')} handleMaxWindow={this.handleMaxWindow.bind(this, 'map')} />
+                <PropertyWindow key="property" open={propertyOpen} handleToTop={this.handleToTop} dimension={property} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} handleClose={this.handleClose} handleResetWindow={this.handleResetWindow.bind(this, 'property')} handleMaxWindow={this.handleMaxWindow.bind(this, 'property')} />
+                <LayerWindow key="layer" open={layerOpen} handleToTop={this.handleToTop} dimension={layer} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} handleClose={this.handleClose} handleResetWindow={this.handleResetWindow.bind(this, 'layer')} handleMaxWindow={this.handleMaxWindow.bind(this, 'layer')} />
+                <TilesetWindow key="tileset" open={tilesetOpen} dimension={tileset} history={history} handleToTop={this.handleToTop} handleOnDragStop={this.handleOnDragStop} handleOnResize={this.handleOnResize} transactions={this.transactions} handleClose={this.handleClose} handleResetWindow={this.handleResetWindow.bind(this, 'tileset')} handleMaxWindow={this.handleMaxWindow.bind(this, 'tileset')} />
             </>
         )
     }
 
     handleWindowOpen = (e, window) => {
         e.stopPropagation()
-        const { propertyOpen, layerOpen, tilesetOpen } = this.state
-        if (window === 'property')
-            this.setState({ propertyOpen: !propertyOpen })
-        else if (window === 'layer')
-            this.setState({ layerOpen: !layerOpen })
-        else if (window === 'tileset')
-            this.setState({ tilesetOpen: !tilesetOpen })
+        this.setState({ [window]: !this.state[window] })
     }
 
     handleOnDragStop = (e, d, type) => {
@@ -181,6 +176,44 @@ class WorkScreen extends React.Component {
         this.setState({ saveDialogOpen: false, saving: false, saveConfirmed: false, savemsg: '' })
     }
 
+
+    handleClose = (type) => {
+        this.setState({ [type]: false })
+    }
+
+    handleResetWindow = (window) => {
+        const { width, height } = document.body.getBoundingClientRect();
+        if (window === 'property') {
+            this.setState({
+                property: { ...this.state.property, size: { width: width * 0.2, height: height * 0.88 }, position: { x: 0, y: 0 } }
+            })
+        } else if (window === 'map') {
+            this.setState({
+                map: { ...this.state.map, size: { width: width * 0.6, height: height * 0.88 }, position: { x: width * 0.2, y: 0 } }
+            })
+        } else if (window === 'layer') {
+            this.setState({
+                layer: { ...this.state.layer, size: { width: width * 0.2, height: height * 0.32 }, position: { x: width * 0.8, y: 0 } }
+            })
+        } else if (window === 'tileset') {
+            this.setState({
+                tileset: { ...this.state.tileset, size: { width: width * 0.2, height: height * 0.56 }, position: { x: width * 0.8, y: height * 0.32 } }
+            })
+        }
+    }
+
+    handleMaxWindow = window => {
+        const { width, height } = document.body.getBoundingClientRect();
+        console.log(window)
+        this.setState({
+            [window]: {
+                ...this.state[window],
+                size: { width: width, height: height * 0.88 },
+                position: { x: 0, y: 0 }
+            }
+        })
+    }
+
     componentDidMount() {
 
         const { width, height } = document.body.getBoundingClientRect();
@@ -216,7 +249,7 @@ class WorkScreen extends React.Component {
     }
 
     render = () => {
-        const { propertyOpen, layerOpen, tilesetOpen, saveDialogOpen, saving, savemsg, saveConfirmed } = this.state
+        const { propertyOpen, layerOpen, tilesetOpen, mapOpen, saveDialogOpen, saving, savemsg, saveConfirmed } = this.state
         const { history, loaded } = this.props
         const { key } = this.props.match.params
         return (
@@ -228,6 +261,7 @@ class WorkScreen extends React.Component {
                         propertyOpen={propertyOpen}
                         layerOpen={layerOpen}
                         tilesetOpen={tilesetOpen}
+                        mapOpen={mapOpen}
                         history={history}
                         handleDoTransaction={this.doTransaction}
                         handleUndoTransaction={this.undoTransaction}

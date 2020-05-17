@@ -60,38 +60,41 @@ class PropertyWindow extends React.Component {
         const { resizing } = this.state;
         return (
 
-            <Rnd
-                className={"workscreen-window " + (open ? '' : 'invisible')}
-                size={dimension.size}
-                position={dimension.position}
-                onMouseDown={() => this.props.handleToTop('property')}
-                onResizeStart={() => this.props.handleToTop('property')}
-                onResize={this.handleOnResize}
-                onResizeStop={this.handleStopResize}
-                onClick={this.props.handleUnselect}
-                minWidth={202}
-                minHeight={391}
-                id='property'
-                onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'property')}
-                style={{ zIndex: dimension.zIndex }}
-            >
-                <Titlebar title="Property Window" />
-                <Collapsible data={
-                    [
-                        { title: 'Property', content: <PropertyList data={display} window='layer' width={width} />, open: propertyOpen },
-                        { title: 'Custom Property', content: <PropertyList data={custom} window='layer' width={width} type='custom' transactions={transactions} />, open: customOpen },
-                        { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} resizing={resizing} />, open: mapOpen },
-                    ]
-                }
-                    maxHeight={style.maxHeight}
-                    resizing={resizing}
-                    childRef={ref => this.collapsible = ref}
-                />
-                <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={e => e.stopPropagation()} />
-                <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.handleAddProperty} onMouseDown={e => e.stopPropagation()} />
+            <>
+                {open ? <Rnd
+                    className={"workscreen-window "}
+                    size={dimension.size}
+                    position={dimension.position}
+                    onMouseDown={() => this.props.handleToTop('property')}
+                    onResizeStart={() => this.props.handleToTop('property')}
+                    onResize={this.handleOnResize}
+                    onResizeStop={this.handleStopResize}
+                    onClick={this.props.handleUnselect}
+                    minWidth={202}
+                    minHeight={391}
+                    id='property'
+                    onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'property')}
+                    style={{ zIndex: dimension.zIndex }}
+                >
+                    <Titlebar title="Property Window" handleClose={this.props.handleClose.bind(this, 'propertyOpen')} handleResetWindow={this.props.handleResetWindow} handleMaxWindow={this.props.handleMaxWindow} />
+                    <Collapsible data={
+                        [
+                            { title: 'Property', content: <PropertyList data={display} window='layer' width={width} />, open: propertyOpen },
+                            { title: 'Custom Property', content: <PropertyList data={custom} window='layer' width={width} type='custom' transactions={transactions} />, open: customOpen },
+                            { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} resizing={resizing} />, open: mapOpen },
+                        ]
+                    }
+                        maxHeight={style.maxHeight}
+                        resizing={resizing}
+                        childRef={ref => this.collapsible = ref}
+                    />
+                    <i className={"fas fa-trash-alt property-clear-btn better-btn " + (selected ? "" : "btn-disabled")} onClick={this.handleDelete} onMouseDown={e => e.stopPropagation()} />
+                    <i className={"fas fa-plus property-add-btn better-btn"} onClick={this.handleAddProperty} onMouseDown={e => e.stopPropagation()} />
 
 
-            </Rnd>
+                </Rnd> : null}
+            </>
+
 
 
         )

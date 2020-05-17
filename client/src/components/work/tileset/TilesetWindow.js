@@ -100,7 +100,7 @@ class TilesetWindow extends React.Component {
         if (tilesets && tilesets[0]) {
             tilesets[0].firstgid = 1;
             for (let i = 1; i < tilesets.length; i++) {
-                const {firstgid, tilecount} = tilesets[i - 1];
+                const { firstgid, tilecount } = tilesets[i - 1];
                 tilesets[i].firstgid = firstgid + tilecount;
             }
         }
@@ -120,7 +120,7 @@ class TilesetWindow extends React.Component {
         let li = []
         for (let i = 0; i < tilesets.length; i++) {
             li.push({
-                type:"tileset",
+                type: "tileset",
                 title: tilesets[i].name,
                 item: tilesets[i],
                 content: <TilesetDisplay
@@ -148,7 +148,7 @@ class TilesetWindow extends React.Component {
 
 
     render() {
-        const { resizing, selectTilesetDialogOpen, selectedTool} = this.state;
+        const { resizing, selectTilesetDialogOpen, selectedTool } = this.state;
         const { open, dimension, tilesets, history } = this.props
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - (110 - 24 * tilesets.length);
@@ -158,8 +158,8 @@ class TilesetWindow extends React.Component {
         };
         return (
             <>
-                <Rnd
-                    className={"workscreen-window " + (open ? '' : 'invisible')}
+                {open ? <Rnd
+                    className={"workscreen-window "}
                     position={dimension.position}
                     size={dimension.size}
                     onMouseDown={this.handleSelect}
@@ -171,7 +171,7 @@ class TilesetWindow extends React.Component {
                     onDragStop={(e, d) => this.props.handleOnDragStop(e, d, 'tileset')}
                     style={{ zIndex: dimension.zIndex }}
                 >
-                    <Titlebar title="Tileset Window" />
+                    <Titlebar title="Tileset Window" handleClose={this.props.handleClose.bind(this, 'tilesetOpen')} handleResetWindow={this.props.handleResetWindow} handleMaxWindow={this.props.handleMaxWindow} />
 
                     <Collapsible data={
                         this.getCollapsibleList()
@@ -185,7 +185,8 @@ class TilesetWindow extends React.Component {
                     <i ref='zoom_out_btn' className={"fas fa-search-minus tileset-zoomout-btn better-btn " + (selectedTool === TOOLS.ZOOM_OUT ? 'tool-selected' : '')} onMouseDown={e => e.stopPropagation()} onClick={this.handleZoomOut} />
                     <i className="fas fa-trash-alt tileset-delete-icon better-btn " onClick={this.handleOnDeleteTileset} onMouseDown={e => e.stopPropagation()} />
 
-                </Rnd>
+                </Rnd> : null}
+
                 <SelectTilesetDialog
                     open={selectTilesetDialogOpen}
                     close={this.handleCloseSelectTilesetDialog}

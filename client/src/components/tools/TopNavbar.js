@@ -76,7 +76,7 @@ class TopNavbar extends React.Component {
     }
 
     render() {
-        const { site, propertyOpen, layerOpen, tilesetOpen, handleWindowOpen } = this.props;
+        const { site, propertyOpen, layerOpen, mapOpen, tilesetOpen, handleWindowOpen } = this.props;
         const { username, picture, file, edit, view } = this.state;
         return (
             <div>
@@ -102,21 +102,28 @@ class TopNavbar extends React.Component {
                             ]} />
                         {site === 'workspace' ? <Dropdown title="VIEW" width={196} childRef={ref => this.view = ref} open={view} handleCloseDropDown={this.handleCloseDropDown}
                             items={[
-                                <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'property')}>
+                                <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'mapOpen')}>
+                                    <Checkbox
+                                        checked={mapOpen}
+                                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                                    />
+                                Show Map Window
+                            </div>,
+                                <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'propertyOpen')}>
                                     <Checkbox
                                         checked={propertyOpen}
                                         inputProps={{ 'aria-label': 'primary checkbox' }}
                                     />
                                 Show Property Window
                             </div>,
-                                <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'layer')}>
+                                <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'layerOpen')}>
                                     <Checkbox
                                         checked={layerOpen}
                                         inputProps={{ 'aria-label': 'primary checkbox' }}
                                     />
                                 Show Layer Window
                             </div>,
-                                <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'tileset')}>
+                                <div className="better-dropdown-item" key={v1()} style={{ paddingLeft: 0 }} onClick={e => handleWindowOpen(e, 'tilesetOpen')}>
                                     <Checkbox
                                         checked={tilesetOpen}
                                         inputProps={{ 'aria-label': 'primary checkbox' }}
