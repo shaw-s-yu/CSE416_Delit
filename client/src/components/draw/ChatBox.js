@@ -35,6 +35,10 @@ class ChatBox extends React.Component {
             size: {
                 width: parseInt(ref.style.width),
                 height: parseInt(ref.style.height)
+            },
+            position: {
+                x: parseInt(position.x),
+                y: parseInt(position.y)
             }
         })
     }
