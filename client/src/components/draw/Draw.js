@@ -43,6 +43,10 @@ class Draw extends React.Component {
         this.setState({ showChatBox: !showChatBox })
     }
 
+    handleChatClose = () => {
+        this.setState({ showChatBox: false })
+    }
+
     handleExportJson = () => {
         const imgData = this.display.getTilesetJson()
         require("downloadjs")(imgData, "tilesetJson@DELIT.json", "json");
@@ -275,7 +279,7 @@ class Draw extends React.Component {
                 <Button className='publish-btn' size="sm" onClick={this.handlePublishDialogOpen}>Publish</Button>
                 <Button className='chat-btn' size="sm" onClick={this.handleChat}>Chat</Button>
                 <ChatBox open={showChatBox} socket={socket} username={username} userPicture={userPicture}
-                    room={`draw/${key}`} />
+                    room={`draw/${key}`} handleClose={this.handleChatClose} />
                 <div className="painter-wrapper">
                     <Toolbar
                         selectCallback={this.handleClearNoneToolOperation}

@@ -8,7 +8,6 @@ class Titlebar extends React.Component {
             <TitleBar
                 title={this.props.title}
                 controls
-                isFullscreen={this.state.isFullscreen}
                 onCloseClick={this.props.handleClose}
                 onMinimizeClick={this.props.handleResetWindow}
                 onMaximizeClick={this.props.handleMaxWindow}

@@ -9,7 +9,9 @@ class ChatBox extends React.Component {
 
     state = {
         inputText: '',
-        chatHistory: []
+        chatHistory: [],
+        position: { x: 100, y: 100 },
+        size: { width: 320, height: 480 }
     }
 
     handleSubmit = () => {
@@ -27,6 +29,34 @@ class ChatBox extends React.Component {
         this.setState({ inputText: e.target.value })
     }
 
+    handleStopResize = (e, direction, ref, delta, position) => {
+        this.setState({
+            size: {
+                width: parseInt(ref.style.width),
+                height: parseInt(ref.style.height)
+            }
+        })
+    }
+
+    handleOnDragStop = (e, d) => {
+        this.setState({ position: { x: d.x, y: d.y } })
+    }
+
+    handleResetWindow = () => {
+        this.setState({
+            position: { x: 100, y: 100 },
+            size: { width: 320, height: 480 }
+        })
+    }
+
+    handleMaxWindow = () => {
+        const { width, height } = document.body.getBoundingClientRect();
+        this.setState({
+            position: { x: 0, y: 0 },
+            size: { width: width, height: height }
+        })
+    }
+
     UNSAFE_componentWillMount() {
         this.props.socket.on('chat-back', res => {
             let chatHistory = this.state.chatHistory.map(e => ({ ...e }))
@@ -37,20 +67,18 @@ class ChatBox extends React.Component {
 
     render() {
         const { open } = this.props
-        const { inputText, chatHistory } = this.state
+        const { inputText, chatHistory, size, position } = this.state
         const currentUser = this.props.username
         return (
             <>
-                <Rnd
-                    default={{
-                        x: 0,
-                        y: 100,
-                        width: 320,
-                        height: 480,
-                    }}
-                    className={'chat-box ' + (open ? '' : 'invisible')}
+                {open ? <Rnd
+                    size={size}
+                    position={position}
+                    className={'chat-box '}
+                    onResizeStop={this.handleStopResize}
+                    onDragStop={this.handleOnDragStop}
                 >
-                    <Titlebar title="Property Window" />
+                    <Titlebar title="Property Window" handleClose={this.props.handleClose} handleResetWindow={this.handleResetWindow} handleMaxWindow={this.handleMaxWindow} />
                     <h3 style={{ textAlign: 'center' }}>chat</h3>
                     <div className='chat-history'>
                         {
@@ -77,7 +105,8 @@ class ChatBox extends React.Component {
                         onChange={this.handleChange} />
                     <Button className='chat-input-btn' size="sm" onClick={this.handleSubmit}>&#10148;</Button>
 
-                </Rnd>
+                </Rnd> : null}
+
             </>
         )
     }
