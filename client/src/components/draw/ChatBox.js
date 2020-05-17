@@ -13,14 +13,14 @@ class ChatBox extends React.Component {
     }
 
     handleSubmit = () => {
-        this.setState({ inputText: '' }, () => {
-            this.props.socket.emit('chat', {
-                username: this.props.username,
-                userPicture: this.props.userPicture,
-                msg: this.state.inputText,
-                room: this.props.room
-            })
+
+        this.props.socket.emit('chat', {
+            username: this.props.username,
+            userPicture: this.props.userPicture,
+            msg: this.state.inputText,
+            room: this.props.room
         })
+        this.setState({ inputText: '' })
     }
 
     handleChange = e => {
