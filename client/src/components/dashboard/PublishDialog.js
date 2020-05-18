@@ -30,8 +30,6 @@ class PublishDialog extends React.Component {
         if (!item) return null;
         const disabled = item.ownerInfo.username !== user.username;
         const mutation = MutationList.PUBLISH_TILESET;
-        console.log("item: ", item);
-        console.log("ckecked: ", checked);
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(updateItem, res) => (
@@ -51,7 +49,7 @@ class PublishDialog extends React.Component {
                                         :
                                         <label htmlFor="switch-btn" className={"switch-btn-label not-to-publish"}>No</label>
                                     }
-                                    <input type="checkbox" className="switch-btn" id="switch-btn" onChange={this.handleOnChange}/>
+                                    <input type="checkbox" className="switch-btn" id="switch-btn" defaultChecked={item.published} onChange={this.handleOnChange}/>
                                     <span className="switch-btn-slider round"/>
                                 </label>
 
