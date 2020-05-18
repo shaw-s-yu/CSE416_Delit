@@ -6,7 +6,7 @@ import MutationList from '../../graphql/Mutation';
 
 class PublishDialog extends React.Component {
     state = {
-        checked: true,
+        checked: this.props.item.published,
     };
 
     handleOnChange = (e) => {
@@ -17,6 +17,7 @@ class PublishDialog extends React.Component {
         callback({
             variables: {
                 id: this.props.item._id,
+                published: this.state.checked
             }
         })
         this.props.handleClose('publish')
@@ -29,6 +30,8 @@ class PublishDialog extends React.Component {
         if (!item) return null;
         const disabled = item.ownerInfo.username !== user.username;
         const mutation = MutationList.PUBLISH_TILESET;
+        console.log("item: ", item);
+        console.log("ckecked: ", checked);
         return (
             <Mutation mutation={mutation} refetchQueries={[refetch]}>
                 {(updateItem, res) => (
@@ -48,7 +51,7 @@ class PublishDialog extends React.Component {
                                         :
                                         <label htmlFor="switch-btn" className={"switch-btn-label not-to-publish"}>No</label>
                                     }
-                                    <input type="checkbox" className="switch-btn" id="switch-btn" defaultChecked={true} onChange={this.handleOnChange}/>
+                                    <input type="checkbox" className="switch-btn" id="switch-btn" onChange={this.handleOnChange}/>
                                     <span className="switch-btn-slider round"/>
                                 </label>
 

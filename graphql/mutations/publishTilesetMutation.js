@@ -20,7 +20,6 @@ module.exports = {
         },
     },
     resolve: (root, params) => {
-        console.log("params.id", params.id);
         return TilesetModel.findByIdAndUpdate(params.id, { published: params.published }, function (err) {
             if (err) return next(err);
         });

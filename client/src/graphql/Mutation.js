@@ -343,10 +343,20 @@ export default {
     PUBLISH_TILESET: gql`
     mutation publishTileset(
         $id:String!
+        $published: Boolean!
     ){
         publishTileset(
             id:$id
-        )
+            published:$published
+        ){
+            _id
+            name
+            owner
+            editors
+            ownerInfo{
+                username
+            }
+        }
     }
     `,
 }
