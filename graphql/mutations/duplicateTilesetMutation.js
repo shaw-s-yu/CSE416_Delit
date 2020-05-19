@@ -5,7 +5,7 @@ const {
 } = require('graphql');
 
 const TilesetType = require('../types/TilesetType');
-
+const mongoose = require('mongoose');
 module.exports = {
     type: TilesetType,
     args: {
@@ -31,6 +31,7 @@ module.exports = {
                 }
                 editors.push(owner);
                 const newTileset = new TilesetModel({
+                    _id: params._id ? params._id : mongoose.Types.ObjectId(),
                     name: params.name,
                     name_lower: params.name.toLowerCase(),
                     owner: params.owner,
