@@ -28,6 +28,8 @@
     "graphql": "^15.0.0",
     "graphql-date": "^1.0.3",
     "graphql-tag": "^2.10.3",
+    "grommet-icons": "^4.4.0",
+    "grommet-styles": "^0.2.0",
     "jimp": "^0.10.3",
     "lodash": "^4.17.15",
     "material-table": "^1.57.2",
