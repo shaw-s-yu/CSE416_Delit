@@ -129,7 +129,7 @@ class Dashboard extends React.Component {
                 amount: data.user.tilesetsSharedAmount,
                 type: "tileset",
             };
-        }        
+        }
         // if (selected === 'publishedTilesets') {
         //     return {
         //         items: data.user.publishedTilesets,
@@ -195,7 +195,7 @@ class Dashboard extends React.Component {
                 />
 
                 <div className="dashboard-display" style={displayStyle}>
-                    <Searchbar value={search} onChange={this.handleSearchChange}/>
+                    <Searchbar value={search} onChange={this.handleSearchChange} />
                     <div className="dashboard-sort-btn-group">
                         <button className={"dashboard-sort-btn " + this.getSelected('name')} onClick={e => this.handleSortBy(e, 'name')}>Name </button>
                         <i className={"fa dashboard-sort-icon " + this.getSortOrder('name')} onClick={e => this.handleSortOrder(e, 'name')} />

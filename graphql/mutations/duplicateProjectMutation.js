@@ -31,7 +31,6 @@ module.exports = {
                 editors.push(currentProject.owner);
                 const newProject = new ProjectModel({
                     name: params.name,
-                    name_lower: params.name.toLowerCase(),
                     owner: params.owner,
                     editors: currentProject.editors,
                     imageId: currentProject.imageId

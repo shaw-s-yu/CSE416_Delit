@@ -6,6 +6,7 @@ import Dialog from '../tools/Dialog'
 import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
 import MutationList from '../../graphql/Mutation';
+import QueryList from '../../graphql/Query'
 
 class AddDialog extends React.Component {
     constructor(props) {
@@ -48,8 +49,6 @@ class AddDialog extends React.Component {
                 imageId: '5eacb076d0ed064dec138c41'
             }
         })
-        this.props.handleSelectSide('tilesets')
-        // this.props.handleSelectSide('tilesets')
         this.props.handleClose()
     }
 
@@ -57,79 +56,85 @@ class AddDialog extends React.Component {
         const { open, handleClose, refetch } = this.props;
         const { itemName, width, height, tileWidth, tileHeight, disableBt } = this.state
         const mutation = MutationList.ADD_TILESET
+        const newRefetch = {
+            ...refetch,
+            query: QueryList.GET_MY_OWNED_TILESETS
+        }
         return (
-            <Mutation mutation={mutation} refetchQueries={[refetch]}>
-                {(addItem, res) => (
-                    <Dialog
-                        header='Create New Dialog'
-                        open={open}
-                        fullWidth={true}
-                        maxWidth="xs"
-                        actions={[
-                            <Button variant="primary" size="sm" onClick={this.handleAddProject.bind(this, addItem)} key='1' disabled={disableBt}>Add</Button>,
-                            <Button variant="primary" size="sm" key='2' onClick={handleClose.bind(this, 'cancel')}>Cancel</Button>
-                        ]}
-                        content={
-                            <>
-                                <TextField
-                                    className="add-project-dialog-input"
-                                    label={`Enter New Tileset Name`}
-                                    name="itemName"
-                                    variant="outlined"
-                                    size="small"
-                                    value={itemName}
-                                    onChange={this.handleOnChange}
-                                />
-                                <div className='br'></div>
-                                <TextField
-                                    className="project-property-input"
-                                    label="Enter Tile Width"
-                                    name="tileWidth"
-                                    type="number"
-                                    variant="outlined"
-                                    size="small"
-                                    value={tileWidth.toString()}
-                                    onChange={this.handleOnChange}
-                                />
+            <Mutation mutation={mutation} refetchQueries={[newRefetch]} onCompleted={() => { this.props.handleSelectSide('tilesetsOwned') }}>
+                {(addItem, res) => {
+                    return (
+                        <Dialog
+                            header='Create New Dialog'
+                            open={open}
+                            fullWidth={true}
+                            maxWidth="xs"
+                            actions={[
+                                <Button variant="primary" size="sm" onClick={this.handleAddProject.bind(this, addItem)} key='1' disabled={disableBt}>Add</Button>,
+                                <Button variant="primary" size="sm" key='2' onClick={handleClose.bind(this, 'cancel')}>Cancel</Button>
+                            ]}
+                            content={
+                                <>
+                                    <TextField
+                                        className="add-project-dialog-input"
+                                        label={`Enter New Tileset Name`}
+                                        name="itemName"
+                                        variant="outlined"
+                                        size="small"
+                                        value={itemName}
+                                        onChange={this.handleOnChange}
+                                    />
+                                    <div className='br'></div>
+                                    <TextField
+                                        className="project-property-input"
+                                        label="Enter Tile Width"
+                                        name="tileWidth"
+                                        type="number"
+                                        variant="outlined"
+                                        size="small"
+                                        value={tileWidth.toString()}
+                                        onChange={this.handleOnChange}
+                                    />
 
-                                <TextField
-                                    className="project-property-input"
-                                    label="Enter Tile Height"
-                                    name="tileHeight"
-                                    type="number"
-                                    variant="outlined"
-                                    size="small"
-                                    value={tileHeight.toString()}
-                                    onChange={this.handleOnChange}
-                                />
-                                <div className='br'></div>
-                                <TextField
-                                    className="project-property-input"
-                                    label={`Enter Image Width`}
-                                    name="width"
-                                    type="number"
-                                    variant="outlined"
-                                    size="small"
-                                    value={width.toString()}
-                                    onChange={this.handleOnChange}
-                                />
+                                    <TextField
+                                        className="project-property-input"
+                                        label="Enter Tile Height"
+                                        name="tileHeight"
+                                        type="number"
+                                        variant="outlined"
+                                        size="small"
+                                        value={tileHeight.toString()}
+                                        onChange={this.handleOnChange}
+                                    />
+                                    <div className='br'></div>
+                                    <TextField
+                                        className="project-property-input"
+                                        label={`Enter Image Width`}
+                                        name="width"
+                                        type="number"
+                                        variant="outlined"
+                                        size="small"
+                                        value={width.toString()}
+                                        onChange={this.handleOnChange}
+                                    />
 
-                                <TextField
-                                    className="project-property-input"
-                                    label={`Enter Image Height`}
-                                    name="height"
-                                    type="number"
-                                    variant="outlined"
-                                    size="small"
-                                    value={height.toString()}
-                                    onChange={this.handleOnChange}
-                                />
-                                {
-                                    res.loading ? 'loading' : res.error ? res.error.message : null
-                                }
-                            </>
-                        } />
-                )}
+                                    <TextField
+                                        className="project-property-input"
+                                        label={`Enter Image Height`}
+                                        name="height"
+                                        type="number"
+                                        variant="outlined"
+                                        size="small"
+                                        value={height.toString()}
+                                        onChange={this.handleOnChange}
+                                    />
+                                    {
+                                        res.loading ? 'loading' : res.error ? res.error.message : null
+                                    }
+                                </>
+                            } />
+                    )
+                }}
             </Mutation>
         )
     }

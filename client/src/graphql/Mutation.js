@@ -321,12 +321,7 @@ export default {
             height:$height
             tileWidth:$tileWidth
             tileHeight:$tileHeight
-        ){
-            name
-            ownerInfo{
-                username
-            }
-        }
+        )
     }
     `,
 

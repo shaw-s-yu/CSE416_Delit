@@ -14,7 +14,7 @@ const ProjectType = require('../types/ProjectType')
 const mongoose = require('mongoose');
 
 module.exports = {
-    type: ProjectType,
+    type: GraphQLString,
     args: {
         name: {
             type: new GraphQLNonNull(GraphQLString)
@@ -98,7 +98,7 @@ module.exports = {
                     customPropertyValue: []
                 }).save()
                 if (!newProject) throw new Error('create project fail')
-                return newProject
+                return 'done'
             })
         })
     }

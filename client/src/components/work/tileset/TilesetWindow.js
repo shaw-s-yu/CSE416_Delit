@@ -158,8 +158,8 @@ class TilesetWindow extends React.Component {
         };
         return (
             <>
-                {open ? <Rnd
-                    className={"workscreen-window "}
+                <Rnd
+                    className={"workscreen-window " + (open ? '' : 'invisible')}
                     position={dimension.position}
                     size={dimension.size}
                     onMouseDown={this.handleSelect}
@@ -185,7 +185,7 @@ class TilesetWindow extends React.Component {
                     <i ref='zoom_out_btn' className={"fas fa-search-minus tileset-zoomout-btn better-btn " + (selectedTool === TOOLS.ZOOM_OUT ? 'tool-selected' : '')} onMouseDown={e => e.stopPropagation()} onClick={this.handleZoomOut} />
                     <i className="fas fa-trash-alt tileset-delete-icon better-btn " onClick={this.handleOnDeleteTileset} onMouseDown={e => e.stopPropagation()} />
 
-                </Rnd> : null}
+                </Rnd>
 
                 <SelectTilesetDialog
                     open={selectTilesetDialogOpen}
