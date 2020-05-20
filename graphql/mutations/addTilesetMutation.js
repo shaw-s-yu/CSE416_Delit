@@ -19,7 +19,7 @@ module.exports = {
         name: { type: new GraphQLNonNull(GraphQLString) },
         owner: { type: new GraphQLNonNull(GraphQLString) },
         editors: { type: new GraphQLList(GraphQLString) },
-        imageId: { type: new GraphQLNonNull(GraphQLString) },
+        imageId: { type: GraphQLString },
         tileWidth: { type: new GraphQLNonNull(GraphQLInt) },
         tileHeight: { type: new GraphQLNonNull(GraphQLInt) },
         width: { type: new GraphQLNonNull(GraphQLInt) },
@@ -36,7 +36,7 @@ module.exports = {
             if (!newImage) throw new Error('create image fail')
             const newTileset = new TilesetModel({
                 ...params,
-                imageId: newImage._id,
+                imageId: params.imageId ? params.imageId : newImage._id,
                 _id: params._id ? params._id : mongoose.Types.ObjectId(),
                 columns: params.columns ? params.columns : Math.floor(params.width / params.tileWidth),
                 margin: params.margin ? params.margin : 0,

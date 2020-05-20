@@ -6,7 +6,7 @@ import MutationList from '../../graphql/Mutation';
 
 class PublishDialog extends React.Component {
     state = {
-        checked: true,
+        checked: this.props.item.published,
     };
 
     handleOnChange = (e) => {
@@ -17,6 +17,7 @@ class PublishDialog extends React.Component {
         callback({
             variables: {
                 id: this.props.item._id,
+                published: this.state.checked
             }
         })
         this.props.handleClose('publish')
@@ -48,7 +49,7 @@ class PublishDialog extends React.Component {
                                         :
                                         <label htmlFor="switch-btn" className={"switch-btn-label not-to-publish"}>No</label>
                                     }
-                                    <input type="checkbox" className="switch-btn" id="switch-btn" defaultChecked={true} onChange={this.handleOnChange}/>
+                                    <input type="checkbox" className="switch-btn" id="switch-btn" defaultChecked={item.published} onChange={this.handleOnChange}/>
                                     <span className="switch-btn-slider round"/>
                                 </label>
 

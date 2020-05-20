@@ -28,7 +28,7 @@ module.exports = {
                 if (index !== -1) {
                     editors.splice(index, 1)
                 }
-                editors.push(currentProject.owner);
+                // editors.push(currentProject.owner);
                 const newProject = new ProjectModel({
                     name: params.name,
                     owner: params.owner,

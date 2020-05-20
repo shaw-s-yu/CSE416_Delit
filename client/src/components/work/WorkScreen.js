@@ -275,6 +275,7 @@ class WorkScreen extends React.Component {
                                     if (res.loading) return 'loading'
                                     if (res.error) return 'error'
                                     if (!loaded) {
+                                        res.data.project.tilesetsInfo = res.data.project.tilesetsInfo.filter((e) => e !== null)
                                         this.props.formatProjectPack(res.data.project)
                                     }
                                     return this.getScreen()

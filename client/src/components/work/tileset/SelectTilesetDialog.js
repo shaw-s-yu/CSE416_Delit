@@ -71,7 +71,7 @@ class SelectTilesetDialog extends React.Component {
     render() {
         const { open, close, user, history } = this.props;
         const { page, search, sortBy } = this.state;
-        const query = QueryList.GET_SELECTABLE_TILESETS;
+        const query = QueryList.GET_PUBLISHED_TILESETS;
         const pageSkip = (page - 1) * 6;
         const sortOrder = this.state[sortBy];
         const tilesetIds = [...new Set(this.props.tilesets.map((tileset) => tileset._id ))];
@@ -79,7 +79,7 @@ class SelectTilesetDialog extends React.Component {
         return (
             <>
                 <Dialog
-                    header='Select Your Tileset'
+                    header='Select Your Tilesets'
                     open={open}
                     fullWidth={true}
                     maxWidth="lg"
@@ -96,7 +96,7 @@ class SelectTilesetDialog extends React.Component {
                                 <button className={"tileset-sort-btn " + this.getSelected('lastUpdate')} onClick={e => this.handleSortBy(e, 'lastUpdate')}>Last Modified </button>
                                 <i className={"fa tileset-sort-icon " + this.getSortOrder('lastUpdate')} onClick={e => this.handleSortOrder(e, 'lastUpdate')} />
                             </div>
-                            <Query query={QueryList.GET_SELECTABLE_TILESETS} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
+                            <Query query={query} variables={{ userId: user._id, pageSkip: pageSkip, search: search, sortBy: sortBy, sortOrder: sortOrder }} fetchPolicy={"no-cache"}>
                                 {({ loading, error, data }) => {
                                     if (loading)
                                         return <CircularProgress className="tileset-loading" size={220}/>;
@@ -104,7 +104,7 @@ class SelectTilesetDialog extends React.Component {
                                     if (query === QueryList.EMPTY_QUERY)
                                         return;
                                     if (!data) return 'error';
-                                    let items = data.user.tilesetsSelectable;
+                                    let items = data.user.publishedTilesets;
                                     items = items.filter((item) => {
                                         for(let i = 0; i < tilesetIds.length; i++) {
                                             if (tilesetIds[i] === item._id)

@@ -20,7 +20,6 @@ class Sidebar extends React.Component {
 					<div className={'sidebar-item ' + this.getClassName("tilesets")} onClick={handleSelect.bind(this, 'tilesets')}><div className='item-text'>Published Tilesets</div></div>
 					<div className={'sidebar-item ' + this.getClassName("tilesetsOwned")} onClick={handleSelect.bind(this, 'tilesetsOwned')}><div className='item-text'>Tilesets Created By Me</div></div>
 					<div className={'sidebar-item ' + this.getClassName("tilesetsShared")} onClick={handleSelect.bind(this, 'tilesetsShared')}><div className='item-text'>Tilesets Shared With Me</div></div>
-					{/* <div className={'sidebar-item ' + this.getClassName("publishedTilesets")} onClick={handleSelect.bind(this, 'publishedTilesets')}><div className='item-text'>Download Tilesets</div></div> */}
 				</div>
 			</div>
 

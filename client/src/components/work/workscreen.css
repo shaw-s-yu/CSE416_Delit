@@ -280,9 +280,8 @@
 .workscreen-tilesetList{
     width:88%;
     height: calc(100% - 124px);
-    /*left:6%;*/
     right: 5%;
-    top:10px;
+    top: -15px;
     position: absolute;
     overflow: auto;
     margin: 50px;
@@ -296,7 +295,9 @@
 
 .tileset-pagination {
     display: flex;
-    justify-content: center
+    justify-content: center;
+    position:relative;
+    top: -50px;
 }
 
 li.active{
