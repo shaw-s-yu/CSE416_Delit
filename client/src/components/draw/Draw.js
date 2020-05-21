@@ -289,7 +289,7 @@ class Draw extends React.Component {
                             { name: TOOLS.REDO, item: <i className={"fas fa-redo"} style={{ fontSize: '24px' }} onClick={this.doTransaction} /> },
                             {
                                 name: TOOLS.UPLOAD, item:
-                                    <ReactFileReader ref='fileUploader' handleFiles={this.handleImport} base64={true}>
+                                    <ReactFileReader fileTypes={[".jpeg"]} ref='fileUploader' handleFiles={this.handleImport} base64={true}>
                                         <i className={"fas fa-upload"} style={{ fontSize: '24px' }} />
                                     </ReactFileReader>
                             },
