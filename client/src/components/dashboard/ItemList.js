@@ -101,6 +101,7 @@ class ItemList extends React.Component {
                         handleOpen={this.handleDialogsOpen}
                         handleClose={this.handleDialogsClose}
                         handleSetItem={this.handleSetItem}
+                        handleSelectSide={this.props.handleSelectSide}
                         selected={selected}
                         user={user}
                         type={type}

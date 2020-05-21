@@ -225,6 +225,7 @@ class Dashboard extends React.Component {
                                         refetch={refetch}
                                         type={type}
                                         selected={selected}
+                                        handleSelectSide={this.handleSelectSide}
                                     />
                                     <Pagination
                                         className="dashboard-pagination center"

@@ -1,4 +1,5 @@
 const ProjectModel = require('../../models/mongo-project');
+const LayerModel = require('../../models/mongo-layer');
 const MapModel = require('../../models/mongo-map');
 const mongoose = require('mongoose');
 const {
@@ -32,7 +33,7 @@ module.exports = {
                 }
                 // editors.push(currentProject.owner);
                 const mapId = mongoose.Types.ObjectId();
-                MapModel.findOne({_id: currentProject.mapId}).then(currentMap => {
+                MapModel.findOne({ _id: currentProject.mapId }).then(currentMap => {
                     const newMap = new MapModel({
                         _id: mapId,
                         width: currentMap.width,
@@ -50,6 +51,28 @@ module.exports = {
                     }).save();
                     if (!newMap) throw new Error('Error');
                 });
+
+                const newLayerId = currentProject.layerId.map(e => mongoose.Types.ObjectId())
+                for (let i = 0; i < currentProject.layerId.length; i++) {
+                    LayerModel.findOne({ _id: currentProject.layerId[i] }).then(currentLayer => {
+                        const newLayer = new LayerModel({
+                            _id: newLayerId[i],
+                            name: currentLayer.name,
+                            opacity: currentLayer.opacity,
+                            type: currentLayer.type,
+                            visible: currentLayer.visible,
+                            x: currentLayer.x,
+                            y: currentLayer.y,
+                            width: currentLayer.width,
+                            height: currentLayer.height,
+                            data: currentLayer.data,
+
+                        }).save();
+                        if (!newLayer) throw new Error('Error')
+                    })
+                }
+
+
                 const newProject = new ProjectModel({
                     name: params.name,
                     owner: params.owner,
@@ -58,7 +81,7 @@ module.exports = {
                     mapId: mapId,
                     tilesetId: currentProject.tilesetId,
                     tilesetFirstgid: currentProject.tilesetFirstgid,
-                    layerId: currentProject.layerId,
+                    layerId: newLayerId,
                     customPropertyName: currentProject.customPropertyName,
                     customPropertyValue: currentProject.customPropertyValue,
 

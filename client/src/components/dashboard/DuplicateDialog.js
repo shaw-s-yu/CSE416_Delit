@@ -4,6 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import React from 'react'
 import { Mutation } from 'react-apollo';
 import MutationList from '../../graphql/Mutation';
+import QueryList from '../../graphql/Query'
+
 
 class DuplicateDialog extends React.Component {
 
@@ -23,7 +25,6 @@ class DuplicateDialog extends React.Component {
                 owner: this.props.user._id
             }
         });
-        this.props.handleClose('duplicate')
     };
 
 
@@ -33,8 +34,22 @@ class DuplicateDialog extends React.Component {
         if (!item) return null;
         const mutation = type === 'tileset' ? MutationList.DUPLICATE_TILESET : MutationList.DUPLICATE_PROJECT;
         const label = type === 'tileset' ? "Enter Tileset Name" : "Enter Project Name";
+        const newRefetch = {
+            ...refetch,
+            query: type === 'tileset' ? QueryList.GET_MY_OWNED_TILESETS : QueryList.GET_MY_OWNED_PROJECTS
+        }
         return (
-            <Mutation mutation={mutation} refetchQueries={[refetch]}>
+            <Mutation mutation={mutation} refetchQueries={[newRefetch]} onCompleted={() => {
+                setTimeout(() => {
+                    this.props.handleClose('duplicate')
+
+                }, 200);
+                setTimeout(() => {
+                    this.props.handleSelectSide(type === 'tileset' ? 'tilesetsOwned' : 'create')
+                }, 200);
+
+            }
+            }>
                 {(duplicateProject, res) => (
                     <Dialog
                         header="Duplicate Project"
