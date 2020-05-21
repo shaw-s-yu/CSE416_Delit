@@ -24,7 +24,7 @@ module.exports = {
             if (!currentTileset) throw new Error('error');
             else {
                 let { width, height, editors, imageId, tileWidth, 
-                    tileHeight, owner, spacing, margin, tilecount, firstgid } = currentTileset;
+                    tileHeight, spacing, margin, tilecount, firstgid, columns } = currentTileset;
                 const index = editors.indexOf(params.owner);
                 if (index !== -1) {
                     editors.splice(index, 1)
@@ -34,8 +34,9 @@ module.exports = {
                     _id: params._id ? params._id : mongoose.Types.ObjectId(),
                     name: params.name,
                     owner: params.owner,
+                    published: false,
                     width, height, imageId, tileWidth, tileHeight, editors,
-                    spacing, margin, tilecount, firstgid
+                    spacing, margin, tilecount, firstgid, columns,
                 }).save();
                 if (!newTileset) throw new Error('Error');
                 return newTileset

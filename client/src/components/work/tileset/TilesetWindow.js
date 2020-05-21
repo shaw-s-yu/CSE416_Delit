@@ -142,6 +142,7 @@ class TilesetWindow extends React.Component {
     };
 
     handleOnClick = e => {
+        this.props.passSelectedTileset(null);
         if (e.target !== this.refs.zoom_in_btn && e.target !== this.refs.zoom_out_btn)
             this.handleUnselectZoom()
     }
@@ -216,6 +217,7 @@ const mapDispatchToProps = (dispatch) => ({
     handleUpdateTilesets: (tilesets) => dispatch(handler.updateTilesetsHandler(tilesets)),
     handleDeleteTileset: (id) => dispatch(handler.deleteTilesetHandler(id)),
     restoreTileset: (tilesets) => dispatch(handler.restoreTileset(tilesets)),
+    passSelectedTileset: (selectedItem) => dispatch(handler.passSelectedTileset(selectedItem)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TilesetWindow)
