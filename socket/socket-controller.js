@@ -16,6 +16,7 @@ exports.Socket = function (socket, io) {
         this.socket.on('draw-save', this.drawSaveController)
         this.socket.on('invite', this.inviteController)
         this.socket.on('join-room', this.joinRoomController)
+        this.socket.on('leave-room', this.leaveRoomController)
         this.socket.on('duplicate-image', this.duplicateImageController)
         this.socket.on('project-save', this.projectSaveController)
         this.socket.on('chat', this.chatController)
@@ -74,6 +75,10 @@ exports.Socket = function (socket, io) {
         setTimeout(() => {
             socket.emit('join-back', req)
         }, 500);
+    }
+
+    this.leaveRoomController = req => {
+        socket.leave(req)
     }
 
     this.duplicateImageController = req => {

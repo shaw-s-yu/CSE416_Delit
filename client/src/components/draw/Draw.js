@@ -97,6 +97,7 @@ class Draw extends React.Component {
 
     handleRefreshAfterPublished = () => {
         const { key } = this.props.match.params
+        this.props.socket.emit('leave-room', `draw/${key}`)
         this.props.history.push(`/tilesetviewer/${key}`)
     }
 
@@ -225,14 +226,19 @@ class Draw extends React.Component {
     }
 
     handleGoBack = () => {
+        const { key } = this.props.match.params
+        this.props.socket.emit('leave-room', `draw/${key}`)
         this.props.history.push('/dashboard')
     }
 
     componentDidMount() {
+        const { key } = this.props.match.params
         axios.get('/auth/current').then(res => {
             const { username, _id, picture } = res.data;
-            if (!username || !_id || !picture)
+            if (!username || !_id || !picture) {
+                this.props.socket.emit('leave-room', `draw/${key}`)
                 this.props.history.push('/');
+            }
             else {
                 this.setState({ username, userId: _id, userPicture: picture });
             }
@@ -241,6 +247,8 @@ class Draw extends React.Component {
 
     UNSAFE_componentWillMount() {
         this.props.socket.on('duplicate-image-back', res => {
+            const { key } = this.props.match.params
+            this.props.socket.emit('leave-room', `draw/${key}`)
             this.props.history.push(`/tileseteditor/${res}`)
         })
 
