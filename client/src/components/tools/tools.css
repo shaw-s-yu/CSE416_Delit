@@ -179,12 +179,12 @@ nav i{
     position:absolute;
     border: 1px solid black;
     border-radius: 5px;
-    font-size: x-small;
+    font-size: small;
     background-color: turquoise;
     transition: ease-in 0.2s;
     cursor: pointer;
     height: 25px;
-    width: 55px;
+    width: 58px;
     box-shadow: 0px 0px 4px 1px rgba(116, 116, 116, 0.75);
     text-align: center;
 }
