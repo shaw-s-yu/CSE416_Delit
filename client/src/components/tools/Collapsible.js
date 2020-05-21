@@ -46,10 +46,6 @@ class Collapsible extends React.Component {
             this.props.childRef(this)
     }
 
-    handleUnfocus = () => {
-        console.log("unfocus");
-        this.props.passSelectedTileset(null);
-    }
     render() {
 
         const { data, maxHeight, resizing } = this.props;
@@ -64,7 +60,7 @@ class Collapsible extends React.Component {
                             transition: resizing ? 'none' : !open[index] ? 'ease-in-out 0.3s' : 'ease-in-out 0.4s',
                         }
                         return (
-                            <div key={index} tabIndex="0" className="collapsible-wrapper" onBlur={this.handleUnfocus}>
+                            <div key={index} tabIndex="0" className="collapsible-wrapper" >
                                 <div
                                     className="collapsible-title"
                                     onClick={() => this.handleClick(index, d.item, d.type)}
