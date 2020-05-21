@@ -337,7 +337,7 @@ class DisplayPlace extends React.Component {
         dataJson.tilewidth = tileset.tileWidth
         dataJson.tilecount = tileset.tilecount
         return JSON.stringify(dataJson).toLowerCase()
-        
+
     }
 
     pasteCopiedGrid = () => {
@@ -524,7 +524,9 @@ class DisplayPlace extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-
+        this.props.socket.on('join-back', res => {
+            console.log(res)
+        })
     }
 
     render() {

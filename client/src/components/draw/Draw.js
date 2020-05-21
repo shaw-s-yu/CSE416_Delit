@@ -253,9 +253,7 @@ class Draw extends React.Component {
             }
         })
 
-        this.props.socket.on('join-back', res => {
-            console.log(res)
-        })
+
     }
 
     render() {
