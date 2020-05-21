@@ -3,13 +3,14 @@ import * as actionCreators from '../actions/actionCreators'
 const propertyReducer = (state = initState, action) => {
 
     if (action.type === actionCreators.FORMAT_PROJECT) {
-        const { mapInfo, tilesetsInfo, layersInfo } = action.project
+        const { mapInfo, tilesetsInfo, layersInfo, customPropertyName, customPropertyValue } = action.project
         const map = formateMap(mapInfo)
         const tilesets = formateTilesets(tilesetsInfo)
         const layers = formateLayers(layersInfo)
+        const custom = formateProperty(customPropertyName, customPropertyValue);
         return {
             ...state,
-            map, tilesets, layers,
+            map, tilesets, layers, custom,
             display: map,
         }
     }
@@ -218,4 +219,14 @@ const formateLayers = (layersInfo) => {
         })
     }
     return layers
+}
+
+const formateProperty = (customPropertyName, customPropertyValue) => {
+    let custom = [];
+    for (let i = 0; i < customPropertyName.length; i++) {
+        custom.push({
+            name:customPropertyName[i], type:"String", value:customPropertyValue[i],
+        })
+    }
+    return custom;
 }
