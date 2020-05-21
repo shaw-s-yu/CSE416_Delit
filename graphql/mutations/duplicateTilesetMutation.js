@@ -33,7 +33,6 @@ module.exports = {
                 const newTileset = new TilesetModel({
                     _id: params._id ? params._id : mongoose.Types.ObjectId(),
                     name: params.name,
-                    name_lower: params.name.toLowerCase(),
                     owner: params.owner,
                     width, height, imageId, tileWidth, tileHeight, editors,
                     spacing, margin, tilecount, firstgid
