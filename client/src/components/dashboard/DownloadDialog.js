@@ -26,7 +26,9 @@ class DownloadDialog extends React.Component {
         dataJson.tileheight = e.tileHeight
         dataJson.tilewidth = e.tileWidth
         dataJson.tilecount = e.tilecount
-        require("downloadjs")(dataJson, `${dataJson.name}.json`, "json");
+
+
+        require("downloadjs")(JSON.stringify(dataJson).toLowerCase(), `${dataJson.name}.json`, "json");
 
     }
 

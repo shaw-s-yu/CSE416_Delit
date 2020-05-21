@@ -336,7 +336,8 @@ class DisplayPlace extends React.Component {
         dataJson.tileheight = tileset.tileHeight
         dataJson.tilewidth = tileset.tileWidth
         dataJson.tilecount = tileset.tilecount
-        return JSON.stringify(dataJson)
+        return JSON.stringify(dataJson).toLowerCase()
+        
     }
 
     pasteCopiedGrid = () => {

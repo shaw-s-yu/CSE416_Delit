@@ -283,7 +283,7 @@ class WorkScreen extends React.Component {
                             </Query>
                         }
                     </div>
-                </div >
+                </div>
                 <SaveDialog
                     open={saveDialogOpen}
                     parent={this}
