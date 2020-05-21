@@ -17,8 +17,6 @@ class PropertyList extends React.Component {
 
 
     handleChange = (index, name, e) => {
-        // this.props.handleChange(index, name, e.target.value)
-
         if (this.props.data)
             this.props.transactions.addTransaction(new PropertyTransaction(index, name, e.target.value, this.props.data, this.props.handleChange, this.props.restoreCustomProperty))
     };

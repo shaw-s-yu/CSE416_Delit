@@ -149,7 +149,7 @@ class TilesetWindow extends React.Component {
 
     render() {
         const { resizing, selectTilesetDialogOpen, selectedTool } = this.state;
-        const { open, dimension, tilesets, history } = this.props
+        const { open, dimension, tilesets, history, selectedItem } = this.props
         const { width, height } = dimension.size;
         const CollapsibleHeight = height - (110 - 24 * tilesets.length);
         const style = {
@@ -183,7 +183,7 @@ class TilesetWindow extends React.Component {
                     <i className="fas fa-plus tileset-add-btn better-btn " onMouseDown={e => e.stopPropagation()} onClick={this.handleOpenSelectTilesetDialog} />
                     <i ref='zoom_in_btn' className={"fas fa-search-plus tileset-zoomin-btn better-btn " + (selectedTool === TOOLS.ZOOM_IN ? 'tool-selected' : '')} onMouseDown={e => e.stopPropagation()} onClick={this.handleZoomIn} />
                     <i ref='zoom_out_btn' className={"fas fa-search-minus tileset-zoomout-btn better-btn " + (selectedTool === TOOLS.ZOOM_OUT ? 'tool-selected' : '')} onMouseDown={e => e.stopPropagation()} onClick={this.handleZoomOut} />
-                    <i className="fas fa-trash-alt tileset-delete-icon better-btn " onClick={this.handleOnDeleteTileset} onMouseDown={e => e.stopPropagation()} />
+                    <i className={"fas fa-trash-alt tileset-delete-icon better-btn " + (selectedItem ? "" : "btn-disabled")} onClick={this.handleOnDeleteTileset} onMouseDown={e => e.stopPropagation()} />
 
                 </Rnd>
 

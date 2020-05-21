@@ -80,7 +80,7 @@ class PropertyWindow extends React.Component {
                     <Collapsible data={
                         [
                             { title: 'Property', content: <PropertyList data={display} window='layer' width={width} />, open: propertyOpen },
-                            { title: 'Custom Property', content: <PropertyList data={custom} window='layer' width={width} type='custom' transactions={transactions} />, open: customOpen },
+                            { title: 'Custom Property', content: <PropertyList data={custom} window='custom' width={width} type='custom' transactions={transactions} />, open: customOpen },
                             { title: 'Show Mini Map', content: <MiniMap window='minimap' style={style} width={width} height={height - 140} resizing={resizing} />, open: mapOpen },
                         ]
                     }
@@ -103,9 +103,9 @@ class PropertyWindow extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { display, custom } = state.property
+    const { display, custom, selected } = state.property
     return {
-        display, custom
+        display, custom, selected
     }
 };
 
