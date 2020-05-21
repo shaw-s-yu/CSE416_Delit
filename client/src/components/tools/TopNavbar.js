@@ -86,7 +86,7 @@ class TopNavbar extends React.Component {
                     {site === 'workspace' || site === 'tileset' ? <>
                         <Dropdown title="FILE" width={96} childRef={ref => this.file = ref} open={file} handleCloseDropDown={this.handleCloseDropDown}
                             items={[
-                                site === 'workspace' ? null : <ReactFileReader key='o' ref='fileUploader' handleFiles={this.props.handleImport} base64={true}>
+                                site === 'workspace' ? null : <ReactFileReader fileTypes={[".jpeg"]} key='o' ref='fileUploader' handleFiles={this.props.handleImport} base64={true}>
                                     <div className="better-dropdown-item">Import</div>
                                 </ReactFileReader>,
                                 <div className="better-dropdown-item" key={v1()} onClick={this.props.handleExport}>Export</div>,
