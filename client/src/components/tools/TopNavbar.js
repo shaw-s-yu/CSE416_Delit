@@ -137,7 +137,7 @@ class TopNavbar extends React.Component {
                         <Nav className="mr-auto">
 
                         </Nav>
-                        <Navbar.Brand><a href='/test'>Test</a></Navbar.Brand>
+                        {/* <Navbar.Brand><a href='/test'>Test</a></Navbar.Brand> */}
                         <Navbar.Brand><img src={picture} className="profile-img" alt="logo" /></Navbar.Brand>
                         <Navbar.Brand>{username}</Navbar.Brand>
                         <Navbar.Brand href={`${API_URL}/auth/logout`} >Log Out</Navbar.Brand>
