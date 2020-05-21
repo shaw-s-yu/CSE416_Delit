@@ -71,7 +71,9 @@ exports.Socket = function (socket, io) {
 
     this.joinRoomController = req => {
         socket.join(req)
-        socket.emit('join-back', req)
+        setTimeout(() => {
+            socket.emit('join-back', req)
+        }, 500);
     }
 
     this.duplicateImageController = req => {
