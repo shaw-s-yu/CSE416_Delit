@@ -41,7 +41,7 @@ class AddDialog extends React.Component {
             variables: {
                 name: itemName,
                 owner: userId,
-                imageId: '5eacb076d0ed064dec138c41',
+                imageId: '5ec6f35e3e2ef01724dd7c3b',
                 width: width,
                 height: height,
                 tileWidth: tileWidth,

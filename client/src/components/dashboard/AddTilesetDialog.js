@@ -46,7 +46,7 @@ class AddDialog extends React.Component {
                 height: parseInt(height),
                 tileWidth: parseInt(tileWidth),
                 tileHeight: parseInt(tileHeight),
-                imageId: '5eacb076d0ed064dec138c41'
+                imageId: '5ec6f35e3e2ef01724dd7c3b'
             }
         })
         this.props.handleClose()

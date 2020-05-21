@@ -34,9 +34,10 @@ module.exports = {
         new ImageModel({
         }).save().then(newImage => {
             if (!newImage) throw new Error('create image fail')
+            console.log(newImage, params.imageId)
             const newTileset = new TilesetModel({
                 ...params,
-                imageId: params.imageId ? params.imageId : newImage._id,
+                imageId: newImage._id,
                 _id: params._id ? params._id : mongoose.Types.ObjectId(),
                 columns: params.columns ? params.columns : Math.floor(params.width / params.tileWidth),
                 margin: params.margin ? params.margin : 0,

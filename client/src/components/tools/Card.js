@@ -23,7 +23,7 @@ class Card extends React.Component {
                 if (err)
                     console.log(msg);
                 else if (!data) {
-                    axios.get(`/data/image?imageId=5eacb076d0ed064dec138c41`).then(newRes => {
+                    axios.get(`/data/image?imageId=5ec6f35e3e2ef01724dd7c3b`).then(newRes => {
                         const { err, msg, data } = newRes.data;
                         if (err)
                             console.log(msg)

@@ -533,6 +533,7 @@ class DisplayPlace extends React.Component {
         const { canvasWidth, canvasHeight, DisplayBoxWidth, DisplayBoxHeight, selectedGrid, copying, dialogOpen, shiftSelecting } = this.state;
         const { scale, tileset } = this.props
         const { tileWidth, tileHeight } = tileset
+        console.log(tileset)
         const scrollStyle = {
             width: '100%',
             height: '100%',

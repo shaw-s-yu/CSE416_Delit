@@ -2,16 +2,6 @@
 export default class DrawGridController {
     constructor(ctx, visialWidth, visialHeight, tileWidth, tileHeight) {
         this.ctx = ctx
-
-        let min = Math.min(visialWidth, visialHeight, tileWidth, tileHeight)
-        while (min < 40) {
-            min *= 2
-            visialWidth *= 2
-            visialHeight *= 2
-            tileWidth *= 2
-            tileHeight *= 2
-        }
-
         this.visialWidth = visialWidth
         this.visialHeight = visialHeight
         this.tileWidth = tileWidth

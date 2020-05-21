@@ -93,7 +93,7 @@ class ViewerDisplay extends React.Component {
 
             this.GridController.drawGrid()
             const { imageId } = this.props.tileset
-            if (imageId !== '' && imageId !== '5eacb076d0ed064dec138c41')
+            if (imageId !== '')
                 axios.get(`/data/image?imageId=${imageId}`).then(res => {
                     const { err, msg, data } = res.data
                     if (err)

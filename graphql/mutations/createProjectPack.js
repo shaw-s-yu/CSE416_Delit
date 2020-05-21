@@ -79,27 +79,24 @@ module.exports = {
             if (!newMap) throw new Error('create map fail')
         })
 
-        ImageModel.findOne({ _id: '5eacb076d0ed064dec138c41' }).then(currentImage => {
-            if (!currentImage) throw new Error('find image fail')
-            new ImageModel({
-                data: currentImage.data
-            }).save().then(newImage => {
-                if (!newImage) throw new Error('create image fail')
-                const newProject = new ProjectModel({
-                    name: params.name,
-                    owner: params.owner,
-                    editors: params.editors ? params.editors : [],
-                    imageId: newImage._id,
-                    tilesetId: [],
-                    tilesetFirstgid: [],
-                    mapId: mapId,
-                    layerId: layerId,
-                    customPropertyName: [],
-                    customPropertyValue: []
-                }).save()
-                if (!newProject) throw new Error('create project fail')
-                return 'done'
-            })
+        new ImageModel({
+        }).save().then(newImage => {
+            if (!newImage) throw new Error('create image fail')
+            const newProject = new ProjectModel({
+                name: params.name,
+                owner: params.owner,
+                editors: params.editors ? params.editors : [],
+                imageId: newImage._id,
+                tilesetId: [],
+                tilesetFirstgid: [],
+                mapId: mapId,
+                layerId: layerId,
+                customPropertyName: [],
+                customPropertyValue: []
+            }).save()
+            if (!newProject) throw new Error('create project fail')
+            return 'done'
         })
+
     }
 }
