@@ -31,7 +31,7 @@ exports.initCallback = (req, res) => {
 
 exports.logoutCallback = (req, res) => {
     req.logout();
-    res.redirect(`${keys.url.client}`)
+    res.redirect(`${keys.url.server}`)
 }
 
 exports.authCallback = (req, res) => {
