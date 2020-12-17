@@ -1,7 +1,7 @@
 # Delit
 Tiled Web Version
 
-
+## Update 12/17/2020: Server hosted on: http://delit.shaw-yu.com/  (as long as my raspberrypi works)
 ## Demo: https://delit.herokuapp.com/
 you may need to wait a minute to let heroku warm up!
 
