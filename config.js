@@ -2,8 +2,8 @@
 
 module.exports = {
     google: {
-        clientID: '274483288325-8lm5aam4co15jskvak57q2ni7k1e4tqb.apps.googleusercontent.com',
-        clientSecret: '1LHc7hG0nCys5jyWAadhE5BO',
+        clientID: '114604120944-2rq7ioel4aid97nm7fqsp53fc5erees6.apps.googleusercontent.com',
+        clientSecret: 'lG8blOlU5DaegpU5jRKNqmPe',
     },
     facebook: {
         clientID: '534445027213769',
@@ -16,7 +16,7 @@ module.exports = {
         cookieKey: 'awesomeappdelitrevisedfromtiled'
     },
     url: {
-        client: process.env.NODE_ENV === 'production' ? 'https://delit.herokuapp.com' : 'http://localhost:3000',
-        server: process.env.NODE_ENV === 'production' ? 'https://delit.herokuapp.com' : 'http://localhost:5000',
+        client: 'http://delit.shaw-yu.com',
+        server: 'http://delit.shaw-yu.com',
     }
 };
