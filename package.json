@@ -35,7 +35,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "react-desktop": "^0.3.9",
-    "set-value": "^3.0.2",
+    "set-value": "^4.0.1",
     "socket.io": "^2.3.0"
   }
 }
